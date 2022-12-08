@@ -1,0 +1,18 @@
+no StageText in OpenFL => what should be used as the default text editor factory ?
+
+FeathersControl constructor :
+	if(Object(this).constructor == FeathersControl)
+	{
+		throw new Error(ABSTRACT_CLASS_ERROR);
+	}
+	
+FeathersControl.set_focusIndicatorSkin (and other classes, like LayoutGroup) :
+	if (this.processStyleRestriction(arguments.callee))
+	{
+		return value;
+	}
+	
+FeathersControl.validate :
+	for (flag in this._delayedInvalidationFlags.keys()) // TODO : don't iterate on a Map's String keys ?
+	
+SoftKeyboardEvent => replace with what ?
