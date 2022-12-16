@@ -7,20 +7,33 @@ accordance with the terms of the accompanying license agreement.
 */
 package feathers.core;
 
+import feathers.controls.supportClasses.LayoutViewPort;
 import feathers.events.FeathersEventType;
+import feathers.layout.RelativePosition;
+import feathers.system.DeviceCapabilities;
+import feathers.utils.ReverseIterator;
 import openfl.display.InteractiveObject;
+import openfl.display.Sprite;
 import openfl.display.Stage;
 import openfl.errors.ArgumentError;
 import openfl.errors.IllegalOperationError;
 import openfl.events.FocusEvent;
 import openfl.events.IEventDispatcher;
 import openfl.events.KeyboardEvent;
+import openfl.geom.Rectangle;
+import openfl.system.Capabilities;
+import openfl.ui.KeyLocation;
+import openfl.ui.Keyboard;
+import src.feathers.core.IFeathersControl;
 import starling.core.Starling;
 import starling.display.DisplayObject;
 import starling.display.DisplayObjectContainer;
 import starling.events.Event;
 import starling.events.EventDispatcher;
+import starling.events.Touch;
 import starling.events.TouchEvent;
+import starling.events.TouchPhase;
+import starling.utils.Pool;
 
 /**
  * The default <code>IFocusManager</code> implementation. This focus
@@ -371,12 +384,718 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 	**/
 	private function findPreviousContainerFocus(container:DisplayObjectContainer, beforeChild:DisplayObject, fallbackToGlobal:Bool):IFocusDisplayObject
 	{
-		if (Std.isOfType(container, 
+		if (Std.isOfType(container, LayoutViewPort))
+		{
+			container = container.parent;
+		}
+		var hasProcessedBeforeChild:Bool = beforeChild == null;
+		if (Std.isOfType(container, IFocusExtras)
+		{
+			var focusWithExtras:IFocusExtras = cast container;
+			var extras:Array<DisplayObject> = focusWithExtras.focusExtrasAfter;
+			if (extras != null)
+			{
+				var skip:Bool = false;
+				if (beforeChild != null)
+				{
+					var startIndex:Int = extras.indexOf(beforeChild) - 1;
+					hasProcessedBeforeChild = startIndex >= -1;
+					skip = !hasProcessedBeforeChild;
+				}
+				else
+				{
+					startIndex = extras.length - 1;
+				}
+				if (!skip)
+				{
+					for (i in new ReverseIterator(startIndex, 0))
+					{
+						var child:DisplayObject = extras[i];
+						var foundChild:IFocusDisplayObject = this.findPreviousChildFocus(child);
+						if (this.isValidFocus(foundChild))
+						{
+							return foundChild;
+						}
+					}
+				}
+			}
+		}
+		if (beforeChild != null && !hasProcessedBeforeChild)
+		{
+			startIndex = container.getChildIndex(beforeChild) - 1;
+			hasProcessedBeforeChild = startIndex >= -1;
+		}
+		else
+		{
+			startIndex = container.numChildren - 1;
+		}
+		for (i in new ReverseIterator(startIndex, 0))
+		{
+			child = container.getChildAt(i);
+			foundChild = this.findPreviousChildFocus(child);
+			if (this.isValidFocus(foundChild))
+			{
+				return foundChild;
+			}
+		}
+		if (Std.isOfType(container, IFocusExtras))
+		{
+			extras = focusWithExtras.focusExtrasBefore;
+			if (extras != null)
+			{
+				skip = false;
+				if (beforeChild != null && !hasProcessedBeforeChild)
+				{
+					startIndex = extras.indexOf(beforeChild) - 1;
+					hasProcessedBeforeChild = startIndex >= -1;
+					skip = !hasProcessedBeforeChild;
+				}
+				else
+				{
+					startIndex = extras.length - 1;
+				}
+				if (!skip)
+				{
+					for (i in new ReverseIterator(startIndex, 0))
+					{
+						child = extras[i];
+						foundChild = this.findPreviousChildFocus(child);
+						if (this.isValidFocus(foundChild))
+						{
+							return foundChild;
+						}
+					}
+				}
+			}
+		}
+		
+		if (fallbackToGlobal && container != this._root)
+		{
+			//try the container itself before moving backwards
+			if (Std.isOfType(container, IFocusDisplayObject))
+			{
+				var focusContainer:IFocusDisplayObject = cast container;
+				if (this.isValidFocus(focusContainer))
+				{
+					return focusContainer;
+				}
+			}
+			return this.findPreviousContainerFocus(container.parent, container, true);
+		}
+		return null;
+	}
+	
+	/**
+	 * @private
+	 */
+	private function findNextContainerFocus(container:DisplayObjectContainer, afterChild:DisplayObject, fallbackToGlobal:Bool):IFocusDisplayObject
+	{
+		if (Std.isOfType(container, LayoutViewPort)
+		{
+			container = container.parent;
+		}
+		var hasProcessedAfterChild:Bool = afterChild == null;
+		if (Std.isOfType(container, IFocusExtras))
+		{
+			var focusWithExtras:IFocusExtras = cast container;
+			var extras:Array<DisplayObject> = focusWithExtras.focusExtrasBefore;
+			if (extras != null)
+			{
+				var skip:Bool = false;
+				if (afterChild != null)
+				{
+					var startIndex:Int = extras.indexOf(afterChild) + 1;
+					hasProcessedAfterChild = startIndex > 0;
+					skip = !hasProcessedAfterChild;
+				}
+				else
+				{
+					startIndex = 0;
+				}
+				if (!skip)
+				{
+					var childCount:Int = extras.length;
+					for (i in startIndex...childCount)
+					{
+						var child:DisplayObject = extras[i];
+						var foundChild:IFocusDisplayObject = this.findNextChildFocus(child);
+						if (this.isValidFocus(foundChild))
+						{
+							return foundChild;
+						}
+					}
+				}
+			}
+		}
+		if (afterChild != null && !hasProcessedAfterChild)
+		{
+			startIndex = container.getChildIndex(afterChild) + 1;
+			hasProcessedAfterChild = startIndex > 0;
+		}
+		else
+		{
+			startIndex = 0;
+		}
+		childCount = container.numChildren;
+		for (i in startIndex...childCount)
+		{
+			child = container.getChildAt(i);
+			foundChild = this.findNextChildFocus(child);
+			if (this.isValidFocus(foundChild))
+			{
+				return foundChild;
+			}
+		}
+		if (Std.isOfType(container, IFocusExtras))
+		{
+			extras = focusWithExtras.focusExtrasAfter;
+			if (extras != null)
+			{
+				skip = false;
+				if (afterChild != null && !hasProcessedAfterChild)
+				{
+					startIndex = extras.indexOf(afterChild) + 1;
+					hasProcessedAfterChild = startIndex > 0;
+					skip = !hasProcessedAfterChild;
+				}
+				else
+				{
+					startIndex = 0;
+				}
+				if (!skip)
+				{
+					childCount = extras.length;
+					for (i in startIndex...childCount)
+					{
+						child = extras[i];
+						foundChild = this.findNextChildFocus(child);
+						if (this.isValidFocus(foundChild))
+						{
+							return foundChild;
+						}
+					}
+				}
+			}
+		}
+		
+		if (fallbackToGlobal && container != this._root)
+		{
+			return this.findNextContainerFocus(container.parent, container, true);
+		}
+		return null;
+	}
+	
+	/**
+	 * @private
+	 */
+	private function findPreviousChildFocus(child:DisplayObject):IFocusDisplayObject
+	{
+		if ((Std.isOfType(child, DisplayObjectContainer) && !Std.isOfType(child, IFocusDisplayObject)) ||
+			(Std.isOfType(child, IFocusContainer) && cast(child, IFocusContainer).isChildFocusEnabled))
+		{
+			var childContainer:DisplayObjectContainer = cast child;
+			var foundChild:IFocusDisplayObject = this.findPreviousContainerFocus(childContainer, null, false);
+			if (foundChild != null)
+			{
+				return foundChild;
+			}
+		}
+		if (Std.isOfType(child, IFocusDisplayObject)
+		{
+			var childWithFocus:IFocusDisplayObject = cast child;
+			if (this.isValidForFocus(childWithFocus))
+			{
+				return childWithFocus;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * @private
+	 */
+	private function findNextChildFocus(child:DisplayObject):IFocusDisplayObject
+	{
+		if (Std.isOfType(child, IFocusDisplayObject))
+		{
+			var childWithFocus:IFocusDisplayObject = cast child;
+			if (this.isValidFocus(childWithFocus))
+			{
+				return childWithFocus;
+			}
+		}
+		if ((Std.isOfType(child, DisplayObjectContainer) && !Std.isOfType(child, IFocusDisplayObject)) ||
+			(Std.isOfType(child, IFocusContainer) && cast(child, IFocusContainer).isChildFocusEnabled))
+		{
+			var childContainer:DisplayObjectContainer = cast child;
+			var foundChild:IFocusDisplayObject = this.findNextContainerFocus(childContainer, null, false);
+			if (foundChild != null)
+			{
+				return foundChild;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * @private
+	 */
+	private function findFocusAtRelativePosition(container:DisplayObjectContainer, position:String):IFocusDisplayObject
+	{
+		var focusableObjects:Array<IFocusDisplayObject> = new Array<IFocusDisplayObject>();
+		findAllFocusableObjects(container, focusableObjects);
+		if (this._focus == null)
+		{
+			if (focusableObjects.length != 0)
+			{
+				return focusableObjects[0];
+			}
+			return null;
+		}
+		var focusedRect:Rectangle = this._focus.getBounds(this._focus.stage, Pool.getRectangle());
+		var result:IFocusDisplayObject = null;
+		var count:Int = focusableObjects.length;
+		for (i in 0...count)
+		{
+			var focusableObject:IFocusDisplayObject = focusableObjects[i];
+			if (focusableObject == this._focus)
+			{
+				continue;
+			}
+			if (isBetterFocusForRelativePosition(focusableObject, result, focusedRect, position);
+			{
+				result = focusableObject;
+			}
+		}
+		Pool.putRectangle(focusedRect);
+		
+		if (result == null)
+		{
+			//default to keeping the current focus
+			return this._focus;
+		}
+		return result;
+	}
+	
+	/**
+	 * @private
+	 */
+	private function findAllFocusableObjects(child:DisplayObject, result:Array<IFocusDisplayObject>):Void
+	{
+		if (Std.isOfType(child, IFocusDisplayObject))
+		{
+			var focusableObject:IFocusDisplayObject = cast child;
+			if (isValidFocus(focusableObject))
+			{
+				result[result.length] = focusableObject;
+			}
+		}
+		if (Std.isOfType(child, IFocusExtras))
+		{
+			var focusExtras:IFocusExtras = cast child;
+			var extras:Array<DisplayObject> = focusExtras.focusExtrasBefore;
+			var count:Int = extras.length;
+			for (i in 0...count)
+			{
+				var childOfChild:DisplayObject = extras[i];
+				findAllFocusableObjects(childOfChild, result);
+			}
+		}
+		if (Std.isOfType(child, IFocusDisplayObject))
+		{
+			if (Std.isOfType(child, IFocusContainer) && cast(child, IFocusContainer).isChildFocusEnabled)
+			{
+				var otherContainer:DisplayObjectContainer = cast child;
+				count = otherContainer.numChildren;
+				for (i in 0...count)
+				{
+					childOfChild = otherContainer.getChildAt(i);
+					findAllFocusableObjects(childOfChild, result);
+				}
+			}
+		}
+		else if (Std.isOfType(child, DisplayObjectContainer))
+		{
+			otherContainer = cast child;
+			count = otherContainer.numChildren;
+			for (i in 0...count)
+			{
+				childOfChild = otherContainer.getChildAt(i);
+				findAllFocusableObjects(childOfChild, result);
+			}
+		}
+		if (Std.isOfType(child, IFocusExtras))
+		{
+			extras = focusExtras.focusExtrasAfter;
+			count = extras.length;
+			for(i = 0; i < count; i++)
+			{
+				childOfChild = extras[i];
+				findAllFocusableObjects(childOfChild, result);
+			}
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function isValidFocus(child:IFocusDisplayObject):Bool
+	{
+		if (child == null || child.focusManager != this)
+		{
+			return false;
+		}
+		if (!child.isFocusEnabled)
+		{
+			if (child.focusOwner == null || !isValidFocus(child.focusOwner))
+			{
+				return false;
+			}
+		}
+		var uiChild:IFeathersControl = cast child;
+		if (uiChild != null && !uiChild.isEnabled)
+		{
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * @private
+	 */
+	private function stage_mouseFocusChangeHandler(event:FocusEvent):Void
+	{
+		if (event.relatedObject)
+		{
+			//we need to allow mouse focus to be passed to native display
+			//objects. for instance, hyperlinks in TextField won't work
+			//unless the TextField can be focused.
+			this.focus = null;
+			return;
+		}
+		event.preventDefault();
+	}
+	
+	/**
+	 * @private
+	 */
+	private function stage_keyDownHandler(event:KeyboardEvent):Void
+	{
+		if (event.keyLocation != KeyLocation.D_PAD && !DeviceCapabilities.simulateDPad)
+		{
+			//focus is controlled only with a d-pad and not the regular
+			//keyboard arrow keys
+			return;
+		}
+		if(event.keyCode != Keyboard.UP && event.keyCode != Keyboard.DOWN &&
+			event.keyCode != Keyboard.LEFT && event.keyCode != Keyboard.RIGHT)
+		{
+			return;
+		}
+		if(event.isDefaultPrevented())
+		{
+			//something else has already handled this keyboard event
+			return;
+		}
+		var newFocus:IFocusDisplayObject;
+		var currentFocus:IFocusDisplayObject = this._focus;
+		if (currentFocus != null && currentFocus.focusOwner != null)
+		{
+			newFocus = currentFocus.focusOwner;
+		}
+		else
+		{
+			var position:String = RelativePosition.RIGHT;
+			switch (event.keyCode)
+			{
+				case Keyboard.UP :
+					position = RelativePosition.TOP;
+					if (currentFocus != null && currentFocus.nextUpFocus != null)
+					{
+						newFocus = currentFocus.nextUpFocus;
+					}
+				case Keyboard.RIGHT :
+					position = RelativePosition.RIGHT;
+					if (currentFocus != null && currentFocus.nextRightFocus != null)
+					{
+						newFocus = currentFocus.nextRightFocus;
+					}
+				case Keyboard.DOWN :
+					position = RelativePosition.BOTTOM;
+					if (currentFocus != null && currentFocus.nextDownFocus != null)
+					{
+						newFocus = currentFocus.nextDownFocus;
+					}
+				case Keyboard.LEFT :
+					position = RelativePosition.LEFT;
+					if (currentFocus != null && currentFocus.nextLeftFocus != null)
+					{
+						newFocus = currentFocus.nextLeftFocus;
+					}
+			}
+			if (newFocus == null)
+			{
+				newFocus = findFocusAtRelativePosition(this._root, position);
+			}
+		}
+		if (newFocus != this._focus)
+		{
+			event.preventDefault();
+			this.focus = newFocus;
+		}
+		if (this._focus != null)
+		{
+			this._focus.showFocus();
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function stage_gestureDirectionalTapHandler(event:TransformGestureEvent):Void
+	{
+		if(event.isDefaultPrevented())
+		{
+			//something else has already handled this event
+			return;
+		}
+		var position:String = null;
+		if(event.offsetY < 0)
+		{
+			position = RelativePosition.TOP;
+		}
+		else if(event.offsetY > 0)
+		{
+			position = RelativePosition.BOTTOM;
+		}
+		else if(event.offsetX > 0)
+		{
+			position = RelativePosition.RIGHT;
+		}
+		else if(event.offsetX < 0)
+		{
+			position = RelativePosition.LEFT;
+		}
+		if(position == null)
+		{
+			return;
+		}
+		var newFocus:IFocusDisplayObject = findFocusAtRelativePosition(this._root, position);
+		if(newFocus != this._focus)
+		{
+			event.preventDefault();
+			this.focus = newFocus;
+		}
+		if(this._focus)
+		{
+			this._focus.showFocus();
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function stage_keyFocusChangeHandler(event:FocusEvent):Void
+	{
+		//keyCode 0 is sent by IE, for some reason
+		if(event.keyCode != Keyboard.TAB && event.keyCode != 0)
+		{
+			return;
+		}
+		
+		var newFocus:IFocusDisplayObject;
+		var currentFocus:IFocusDisplayObject = this._focus;
+		if (currentFocus && currentFocus.focusOwner != null)
+		{
+			newFocus = currentFocus.focusOwner;
+		}
+		else if (event.shiftKey)
+		{
+			if (currentFocus != null)
+			{
+				if (currentFocus.previousTabFocus != null)
+				{
+					newFocus = currentFocus.previousTabFocus;
+				}
+				else
+				{
+					newFocus = this.findPreviousContainerFocus(currentFocus.parent, cast currentFocus, true);
+				}
+			}
+			if (newFocus == null)
+			{
+				newFocus = this.findPreviousContainerFocus(this._root, null, false);
+			}
+		}
+		else
+		{
+			if (currentFocus != null)
+			{
+				if (currentFocus.nextTabFocus != null)
+				{
+					newFocus = currentFocus.nextTabFocus;
+				}
+				else if (Std.isOfType(currentFocus, IFocusContainer) && cast(currentFocus, IFocusContainer).isChildFocusEnabled)
+				{
+					newFocus = this.findNextContainerFocus(cast currentFocus, null, true);
+				}
+				else
+				{
+					newFocus = this.findNextContainerFocus(currentFocus.parent, cast currentFocus, true);
+				}
+			}
+			if (newFocus == null)
+			{
+				newFocus = this.findNextContainerFocus(this._root, null, false);
+			}
+		}
+		if (newFocus != null)
+		{
+			event.preventDefault();
+		}
+		this.focus = newFocus;
+		if (this._focus != null)
+		{
+			this._focus.showFocus();
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function topLevelContainer_addedHandler(event:Event):Void
+	{
+		this.setFocusManager(cast event.target);
+	}
+	
+	/**
+	 * @private
+	 */
+	private function topLevelContainer_removedHandler(event:Event):Void
+	{
+		this.clearFocusManager(cast event.target);
+	}
+	
+	/**
+	 * @private
+	 */
+	private function topLevelContainer_touchHandler(event:TouchEvent):Void
+	{
+		if (Capabilities.os.indexOf("tvOS") != -1)
+		{
+			return;
+		}
+		var touch:Touch = event.getTouch(this._root, TouchPhase.BEGAN);
+		if (touch == null)
+		{
+			return;
+		}
+		if (this._focus != null && this._focus.maintainTouchFocus)
+		{
+			return;
+		}
+		var focusTarget:IFocusDisplayObject = null;
+		var target:DisplayObject = touch.target;
+		do
+		{
+			if (Std.isOfType(target, IFocusDisplayObject))
+			{
+				var tempFocusTarget:IFocusDisplayObject = cast target;
+				if (this.isValidFocus(tempFocusTarget))
+				{
+					if (focusTarget == null || !Std.isOfType(tempFocusTarget, IFocusContainer) || !cast(tempFocusTarget, IFocusContainer).isChildFocusEnabled)
+					{
+						focusTarget = tempFocusTarget;
+					}
+				}
+			}
+			target = target.parent;
+		}
+		while (target != null);
+		if (this._focus != null && focusTarget != null)
+		{
+			//ignore touches on focusOwner because we consider the
+			//focusOwner to indirectly have focus already
+			var focusOwner:IFocusDisplayObject = this._focus.focusOwner;
+			if(focusOwner == focusTarget)
+			{
+				return;
+			}
+			//similarly, ignore touches on display objects that have a
+			//focusOwner and that owner is the currently focused object
+			var result:DisplayObject = cast focusTarget;
+			while (result != null)
+			{
+				var focusResult:IFocusDisplayObject = cast result;
+				if (focusResult != null)
+				{
+					focusOwner = focusResult.focusOwner;
+					if (focusOwner != null)
+					{
+						if (focusOwner == this._focus)
+						{
+							//the current focus is the touch target's owner,
+							//so we don't need to clear focus
+							focusTarget = focusOwner;
+						}
+						//if we've found a display object with a focus owner,
+						//then we've gone far enough up the display list
+						break;
+					}
+					else if (focusResult.isFocusEnabled)
+					{
+						//if focus in enabled, then we've gone far enough up
+						//the display list
+						break;
+					}
+				}
+				result = result.parent;
+			}
+		}
+		this.focus = focusTarget;
+	}
+	
+	/**
+	 * @private
+	 */
+	private function nativeFocus_focusOutHandler(event:FocusEvent):Void
+	{
+		var nativeFocus:Dynamic = event.currentTarget;
+		var nativeStage:Stage = this._starling.nativeStage;
+		if (nativeStage.focus != null && nativeStage.focus != nativeFocus)
+		{
+			//we should stop listening for this event because something else
+			//has focus now
+			if (Std.isOfType(nativeFocus, IEventDispatcher))
+			{
+				cast(nativeFocus, IEventDispatcher).removeEventListener(FocusEvent.FOCUS_OUT, nativeFocus_focusOutHandler);
+			}
+		}
+		else if (this._focus != null)
+		{
+			if (Std.isOfType(this._focus, INativeFocusOwner) &&
+				cast(this._focus, INativeFocusOwner).nativeFocus != nativeFocus)
+			{
+				return;
+			}
+			//if there's still a feathers focus, but the native stage object has
+			//lost focus for some reason, and there's no focus at all, force it
+			//back into focus.
+			//this can happen on app deactivate!
+			if (Std.isOfType(nativeFocus, InteractiveObject))
+			{
+				nativeStage.focus = cast nativeFocus;
+			}
+			else //nativeFocus is IAdvancedNativeFocusOwner
+			{
+				//let the focused component handle giving focus to its
+				//nativeFocus because it may have a custom API
+				cast(this._focus, IAdvancedNativeFocusOwner).setFocus();
+			}
+		}
 	}
 
 }
-
-import openfl.display.Sprite;
 
 class NativeFocusTarget extends Sprite
 {

@@ -6,7 +6,7 @@ This program is free software. You can redistribute and/or modify it in
 accordance with the terms of the accompanying license agreement.
 */
 package feathers.core;
-import feathers.text.FontStyleSet;
+import feathers.text.FontStylesSet;
 import openfl.geom.Point;
 import src.feathers.core.IFeathersControl;
 
@@ -98,7 +98,7 @@ interface ITextEditor extends IFeathersControl extends ITextBaselineControl
 	 *
 	 * @see http://doc.starling-framework.org/current/starling/text/TextFormat.html starling.text.TextFormat
 	 */
-	public var fontStyles(get, set):FontStyleSet;
+	public var fontStyles(get, set):FontStylesSet;
 	
 	/**
 	 * Gives focus to the text editor. Includes an optional position which

@@ -9,20 +9,40 @@ package feathers.controls.text;
 
 import feathers.core.BaseTextEditor;
 import feathers.core.FeathersControl;
+import feathers.core.FocusManager;
+import feathers.events.FeathersEventType;
 import feathers.skins.IStyleProvider;
+import openfl.display.BitmapData;
+import openfl.display.Stage;
+import openfl.display3D.Context3DProfile;
 import openfl.errors.Error;
 import openfl.events.FocusEvent;
 import openfl.events.KeyboardEvent;
 import openfl.geom.Matrix;
+import openfl.geom.Matrix3D;
 import openfl.geom.Point;
 import openfl.geom.Rectangle;
+import openfl.geom.Vector3D;
 import openfl.text.AntiAliasType;
 import openfl.text.TextField;
+import openfl.text.TextFieldAutoSize;
+import openfl.text.TextFieldType;
+import openfl.ui.Keyboard;
+import src.feathers.core.IFeathersControl;
 import starling.core.Starling;
+import starling.display.DisplayObject;
 import starling.display.Image;
 import starling.events.Event;
+import starling.events.Touch;
+import starling.events.TouchEvent;
+import starling.events.TouchPhase;
 import starling.rendering.Painter;
 import starling.text.TextFormat;
+import starling.textures.ConcreteTexture;
+import starling.textures.Texture;
+import starling.utils.Align;
+import starling.utils.MathUtil;
+import starling.utils.MatrixUtil;
 import starling.utils.Pool;
 
 /**
@@ -159,7 +179,8 @@ class TextFieldTextEditor extends BaseTextEditor
 	/**
 	 * @inheritDoc
 	 */
-	public var baseLine(get, never):Float
+	public var baseline(get, never):Float;
+	private function get_baseline():Float
 	{
 		if (this.textField == null)
 		{
@@ -1200,8 +1221,1037 @@ class TextFieldTextEditor extends BaseTextEditor
 			{
 				this._pendingSelectionBeginIndex = this._pendingSelectionEndIndex = -1;
 			}
-			
+			if (!FocusManager.isEnabledForStage(this.stage))
+			{
+				starling.nativeStage.focus = this.textField;
+			}
+			this.textField.requestSoftKeyboard();
+			if (this._textFieldHasFocus)
+			{
+				this.invalidate(FeathersControl.INVALIDATION_FLAG_SELECTED);
+			}
+		}
+		else
+		{
+			this._isWaitingToSetFocus = true;
 		}
 	}
 	
+	/**
+	 * @inheritDoc
+	 */
+	public function clearFocus():Void
+	{
+		if (!this._textFieldHasFocus)
+		{
+			return;
+		}
+		var starling:Starling = this.stage != null ? this.stage.starling : Starling.current;
+		var nativeStage:Stage = starling.nativeStage;
+		if (nativeStage.focus == this.textField)
+		{
+			//only clear the native focus when our native target has focus
+			//because otherwise another component may lose focus.
+			
+			//setting the focus to Starling.current.nativeStage doesn't work
+			//here, so we need to use null. on Android, if we give focus to the
+			//nativeStage, focus will be removed from the StageText, but the
+			//soft keyboard will incorrectly remain open.
+			nativeStage.focus = null;
+			
+			//previously, there was a comment here that said that the native
+			//stage focus should not be set to null. this was due to an
+			//issue in focus manager where focus would be restored
+			//incorrectly if the stage focus became null. this issue was
+			//fixed, and it is now considered safe to use null.
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function selectRange(beginIndex:Int, endIndex:Int):Void
+	{
+		if (!this._isEditable && !this._isSelectable)
+		{
+			return;
+		}
+		if (this.textField != null)
+		{
+			if (!this._isValidating)
+			{
+				this.validate();
+			}
+			this.textField.setSelection(beginIndex, endIndex);
+		}
+		else
+		{
+			this._pendingSelectionBeginIndex = beginIndex;
+			this._pendingSelectionEndIndex = endIndex;
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function measureText(result:Point = null):Point
+	{
+		if (result == null)
+		{
+			result = new Point();
+		}
+		
+		var needsWidth:Bool = this._explicitWidth != this._explicitWidth; //isNaN
+		var needsHeight:Bool = this._explicitHeight != this._explicitHeight; //isNaN
+		if (!needsWidth && !needsHeight)
+		{
+			result.x = this._explicitWidth;
+			result.y = this._explicitHeight;
+			return result;
+		}
+		
+		//if a parent component validates before we're added to the stage,
+		//measureText() may be called before initialization, so we need to
+		//force it.
+		if(!this._isInitialized)
+		{
+			this.initializeNow();
+		}
+		
+		this.commit();
+		
+		result = this.measure(result);
+		
+		return result;
+	}
+	
+	/**
+	 * Gets the advanced <code>flash.text.TextFormat</code> font formatting
+	 * passed in using <code>setTextFormatForState()</code> for the
+	 * specified state.
+	 *
+	 * <p>If an <code>flash.text.TextFormat</code> is not defined for a
+	 * specific state, returns <code>null</code>.</p>
+	 *
+	 * @see #setTextFormatForState()
+	 */
+	public function getTextFormatForState(state:String):openfl.text.TextFormat
+	{
+		if (this._textFormatForState == null)
+		{
+			return null;
+		}
+		return this._textFormatForState[state];
+	}
+	
+	/**
+	 * Sets the advanced <code>flash.text.TextFormat</code> font formatting
+	 * to be used by the text editor when the <code>currentState</code>
+	 * property of the <code>stateContext</code> matches the specified state
+	 * value.
+	 *
+	 * <p>If an <code>TextFormat</code> is not defined for a specific
+	 * state, the value of the <code>textFormat</code> property will be
+	 * used instead.</p>
+	 *
+	 * <p>If the <code>disabledTextFormat</code> property is not
+	 * <code>null</code> and the <code>isEnabled</code> property is
+	 * <code>false</code>, all other text formats will be ignored.</p>
+	 *
+	 * @see #stateContext
+	 * @see #textFormat
+	 */
+	public function setTextFormatForState(state:String, textFormat:openfl.text.TextFormat):Void
+	{
+		if (textFormat != null)
+		{
+			if (this._textFormatForState == null)
+			{
+				this._textFormatForState = new Map<String, openfl.text.TextFormat>();
+			}
+			this._textFormatForState[state] = textFormat;
+		}
+		else
+		{
+			this._textFormatForState.remove(state);
+		}
+		//if the context's current state is the state that we're modifying,
+		//we need to use the new value immediately.
+		if(this._stateContext != null && this._stateContext.currentState == state)
+		{
+			this.invalidate(FeathersControl.INVALIDATION_FLAG_STATE);
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	override function initialize():Void 
+	{
+		this.textField = new TextField();
+		//let's ensure that the text field can only get keyboard focus
+		//through code. no need to set mouseEnabled to false since the text
+		//field won't be visible until it needs to be interactive, so it
+		//can't receive focus with mouse/touch anyway.
+		this.textField.tabEnabled = false;
+		this.textField.visible = false;
+		this.textField.needsSoftKeyboard = true;
+		this.textField.addEventListener(flash.events.Event.CHANGE, textField_changeHandler);
+		this.textField.addEventListener(FocusEvent.FOCUS_IN, textField_focusInHandler);
+		this.textField.addEventListener(FocusEvent.FOCUS_OUT, textField_focusOutHandler);
+		this.textField.addEventListener(FocusEvent.MOUSE_FOCUS_CHANGE, textField_mouseFocusChangeHandler);
+		this.textField.addEventListener(KeyboardEvent.KEY_DOWN, textField_keyDownHandler);
+		this.textField.addEventListener(SoftKeyboardEvent.SOFT_KEYBOARD_ACTIVATING, textField_softKeyboardActivatingHandler);
+		this.textField.addEventListener(SoftKeyboardEvent.SOFT_KEYBOARD_ACTIVATE, textField_softKeyboardActivateHandler);
+		this.textField.addEventListener(SoftKeyboardEvent.SOFT_KEYBOARD_DEACTIVATE, textField_softKeyboardDeactivateHandler);
+		//when adding more events here, don't forget to remove them when the
+		//text editor is disposed
+		
+		this.measureTextField = new TextField();
+		this.measureTextField.autoSize = TextFieldAutoSize.LEFT;
+		this.measureTextField.selectable = false;
+		this.measureTextField.tabEnabled = false;
+		this.measureTextField.mouseWheelEnabled = false;
+		this.measureTextField.mouseEnabled = false;
+	}
+	
+	/**
+	 * @private
+	 */
+	override function draw():Void 
+	{
+		var sizeInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_SIZE);
+		
+		this.commit();
+		
+		sizeInvalid = this.autoSizeIfNeeded() || sizeInvalid;
+		
+		this.layout(sizeInvalid);
+	}
+	
+	/**
+	 * @private
+	 */
+	private function commit():Void
+	{
+		var stylesInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_STYLES);
+		var dataInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_DATA);
+		var stateInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_STATE);
+		
+		if (dataInvalid || stylesInvalid || stateInvalid)
+		{
+			this.refreshTextFormat();
+			this.commitStylesAndData(this.textField);
+		}
+	}
+	
+	/**
+	 * If the component's dimensions have not been set explicitly, it will
+	 * measure its content and determine an ideal size for itself. If the
+	 * <code>explicitWidth</code> or <code>explicitHeight</code> member
+	 * variables are set, those value will be used without additional
+	 * measurement. If one is set, but not the other, the dimension with the
+	 * explicit value will not be measured, but the other non-explicit
+	 * dimension will still need measurement.
+	 *
+	 * <p>Calls <code>saveMeasurements()</code> to set up the
+	 * <code>actualWidth</code> and <code>actualHeight</code> member
+	 * variables used for layout.</p>
+	 *
+	 * <p>Meant for internal use, and subclasses may override this function
+	 * with a custom implementation.</p>
+	 */
+	private function autoSizeIfNeeded():Bool
+	{
+		var needsWidth:Bool = this._explicitWidth != this._explicitWidth; //isNaN
+		var needsHeight:Bool = this._explicitHeight != this._explicitHeight; //isNaN
+		var needsMinWidth:Bool = this._explicitMinWidth != this._explicitMinWidth; //isNaN
+		var needsMinHeight:Bool = this._explicitMinHeight != this._explicitMinHeight; //isNaN
+		if (!needsWidth && !needsHeight && !needsMinWidth && !needsMinHeight)
+		{
+			return false;
+		}
+		
+		var point:Point = Pool.getPoint();
+		this.measure(point);
+		var result:Bool = this.saveMeasurements(point.x, point.y, point.x, point.y);
+		Pool.putPoint(point);
+		return result;
+	}
+	
+	/**
+	 * @private
+	 */
+	private function measure(result:Point = null):Point
+	{
+		if (result == null)
+		{
+			result = new Point();
+		}
+		
+		var needsWidth:Bool = this._explicitWidth != this._explicitWidth; //isNaN
+		var needsHeight:Bool = this._explicitHeight != this._explicitHeight; //isNaN
+		
+		if (!needsWidth && !needsHeight)
+		{
+			result.x = this._explicitWidth;
+			result.y = this._explicitHeight;
+			return result;
+		}
+		
+		this.commitStylesAndData(this.measureTextField);
+		
+		var gutterDimensionsOffset:Number = 4;
+		if (this._useGutter || this._border)
+		{
+			gutterDimensionsOffset = 0;
+		}
+		
+		var newWidth:Float = this._explicitWidth;
+		if (needsWidth)
+		{
+			this.measureTextField.wordWrap = false;
+			newWidth = this.measureTextField.width - gutterDimensionsOffset;
+			if (newWidth < this._explicitMinWidth)
+			{
+				newWidth = this._explicitMinWidth;
+			}
+			else if (newWidth > this._explicitMaxWidth)
+			{
+				newWidth = this._explicitMaxWidth;
+			}
+		}
+		
+		var newHeight:Float = this._explicitHeight;
+		if (needsHeight)
+		{
+			this.measureTextField.wordWrap = this._wordWrap;
+			this.measureTextField.width = newWidth + gutterDimensionsOffset;
+			newHeight = this.measureTextField.height - gutterDimensionsOffset;
+			if (this._useGutter || this._border)
+			{
+				newHeight += 4;
+			}
+			if (newHeight < this._explicitMinHeight)
+			{
+				newHeight = this._explicitMinHeight;
+			}
+			else if (newHeight > this._explicitMaxHeight)
+			{
+				newHeight = this._explicitMaxHeight;
+			}
+		}
+		
+		result.x = newWidth;
+		result.y = newHeight;
+		
+		return result;
+	}
+	
+	/**
+	 * @private
+	 */
+	private function commitStylesAndData(textField:TextField):Void
+	{
+		textField.antiAliasType = this._antiAliasType;
+		textField.background = this._background;
+		textField.backgroundColor = this._backgroundColor;
+		textField.border = this._border;
+		textField.borderColor = this._borderColor;
+		textField.gridFitType = this._gridFitType;
+		textField.sharpness = this._sharpness;
+		textField.thickness = this._thickness;
+		textField.maxChars = this._maxChars;
+		textField.restrict = this._restrict;
+		textField.alwaysShowSelection = this._alwaysShowSelection;
+		textField.displayAsPassword = this._displayAsPassword;
+		textField.wordWrap = this._wordWrap;
+		textField.multiline = this._multiline;
+		//The softKeyboard property is not available in Flash Player.
+		//It's only available in AIR.
+		if ("softKeyboard" in textField)
+		{
+			textField["softKeyboard"] = this._softKeyboard;
+		}
+		if (!this._embedFonts &&
+			this._currentTextFormat == this._fontStylesTextFormat)
+		{
+			//when font styles are passed in from the parent component, we
+			//automatically determine if the TextField should use embedded
+			//fonts, unless embedFonts is explicitly true
+			textField.embedFonts = SystemUtil.isEmbeddedFont(
+				this._currentTextFormat.font, this._currentTextFormat.bold,
+				this._currentTextFormat.italic, FontType.EMBEDDED);
+		}
+		else
+		{
+			textField.embedFonts = this._embedFonts;
+		}
+		textField.type = this._isEditable ? TextFieldType.INPUT : TextFieldType.DYNAMIC;
+		textField.selectable = this._isEnabled && (this._isEditable || this._isSelectable);
+		
+		var isFormatDifferent:Bool = false;
+		if (textField == this.textField)
+		{
+			//for some reason, textField.defaultTextFormat always fails
+			//comparison against currentTextFormat. if we save to a member
+			//variable and compare against that instead, it works.
+			//I guess text field creates a different TextFormat object.
+			if (this._currentTextFormat == this._fontStylesTextFormat)
+			{
+				isFormatDifferent = this._previousStarlingTextFormat != this._currentStarlingTextFormat;
+			}
+			else
+			{
+				isFormatDifferent = this._previousTextFormat != this._currentTextFormat;
+			}
+			this._previousStarlingTextFormat = this._currentStarlingTextFormat;
+			this._previousTextFormat = this._currentTextFormat;
+		}
+		else
+		{
+			//for measurement
+			isFormatDifferent = true;
+		}
+		textField.defaultTextFormat = this._currentTextFormat;
+		
+		if( this._isHTML)
+		{
+			if (isFormatDifferent || textField.htmlText != this._text)
+			{
+				if (textField == this.textField && this._pendingSelectionBeginIndex < 0)
+				{
+					//if the TextFormat has changed from the last commit,
+					//the selection range may be lost when we set the text
+					//so we need to save it to restore later.
+					this._pendingSelectionBeginIndex = this.textField.selectionBeginIndex;
+					this._pendingSelectionEndIndex = this.textField.selectionEndIndex;
+				}
+				//the TextField's text should be updated after a TextFormat
+				//change because otherwise it will keep using the old one.
+				textField.htmlText = this._text;
+			}
+		}
+		else
+		{
+			if (isFormatDifferent || textField.text != this._text)
+			{
+				if(textField == this.textField && this._pendingSelectionBeginIndex < 0)
+				{
+					this._pendingSelectionBeginIndex = this.textField.selectionBeginIndex;
+					this._pendingSelectionEndIndex = this.textField.selectionEndIndex;
+				}
+				textField.text = this._text;
+			}
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function refreshTextFormat():void
+	{
+		var textFormat:flash.text.TextFormat;
+		if (this._stateContext != null)
+		{
+			if(this._textFormatForState != null)
+			{
+				var currentState:String = this._stateContext.currentState;
+				if(currentState in this._textFormatForState)
+				{
+					textFormat = flash.text.TextFormat(this._textFormatForState[currentState]);
+				}
+			}
+			if (textFormat == null && this._disabledTextFormat != null &&
+				Std.isOfType(this._stateContext, IFeathersControl) && !cast(this._stateContext, IFeathersControl).isEnabled)
+			{
+				textFormat = this._disabledTextFormat;
+			}
+		}
+		else //no state context
+		{
+			//we can still check if the text renderer is disabled to see if
+			//we should use disabledTextFormat
+			if (!this._isEnabled && this._disabledTextFormat != null)
+			{
+				textFormat = this._disabledTextFormat;
+			}
+		}
+		if (textFormat == null)
+		{
+			textFormat = this._textFormat;
+		}
+		//flash.text.TextFormat is considered more advanced, so it gets
+		//precedence over starling.text.TextFormat font styles
+		if (textFormat == null)
+		{
+			textFormat = this.getTextFormatFromFontStyles();
+		}
+		this._currentTextFormat = textFormat;
+	}
+	
+	/**
+	 * @private
+	 */
+	private function getTextFormatFromFontStyles():flash.text.TextFormat
+	{
+		if (this.isInvalid(INVALIDATION_FLAG_STYLES) ||
+			this.isInvalid(INVALIDATION_FLAG_STATE))
+		{
+			if (this._fontStyles != null)
+			{
+				this._currentStarlingTextFormat = this._fontStyles.getTextFormatForTarget(this);
+			}
+			else
+			{
+				this._currentStarlingTextFormat = null;
+			}
+			if (this._currentStarlingTextFormat !== null)
+			{
+				this._fontStylesTextFormat = this._currentStarlingTextFormat.toNativeFormat(this._fontStylesTextFormat);
+			}
+			else if (this._fontStylesTextFormat == null)
+			{
+				//fallback to a default so that something is displayed
+				this._fontStylesTextFormat = new flash.text.TextFormat();
+			}
+		}
+		return this._fontStylesTextFormat;
+	}
+	
+	/**
+	 * @private
+	 */
+	private function getVerticalAlignment():String
+	{
+		var verticalAlign:String = null;
+		if (this._fontStyles != null)
+		{
+			var format:starling.text.TextFormat = this._fontStyles.getTextFormatForTarget(this);
+			if (format != null)
+			{
+				verticalAlign = format.verticalAlign;
+			}
+		}
+		if (verticalAlign == null)
+		{
+			verticalAlign = Align.TOP;
+		}
+		return verticalAlign;
+	}
+	
+	/**
+	 * @private
+	 */
+	private function getVerticalAlignmentOffsetY():Float
+	{
+		var verticalAlign:String = this.getVerticalAlignment();
+		var textFieldTextHeight:Float = this.textField.textHeight;
+		if (textFieldTextHeight > this.actualHeight)
+		{
+			return 0;
+		}
+		if (verticalAlign == Align.BOTTOM)
+		{
+			return this.actualHeight - textFieldTextHeight;
+		}
+		else if (verticalAlign == Align.CENTER)
+		{
+			return (this.actualHeight - textFieldTextHeight) / 2;
+		}
+		return 0;
+	}
+	
+	/**
+	 * @private
+	 */
+	private function layout(sizeInvalid:Bool):Void
+	{
+		var stylesInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_STYLES);
+		var dataInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_DATA);
+		var stateInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_STATE);
+		
+		if(sizeInvalid)
+		{
+			this.refreshSnapshotParameters();
+			this.refreshTextFieldSize();
+			this.transformTextField();
+			this.positionSnapshot();
+		}
+		
+		this.checkIfNewSnapshotIsNeeded();
+		
+		if (!this._textFieldHasFocus && (sizeInvalid || stylesInvalid || dataInvalid || stateInvalid || this._needsNewTexture))
+		{
+			//we're going to update the texture in render() because
+			//there's a chance that it will be updated more than once per
+			//frame if we do it here.
+			this._needsTextureUpdate = true;
+			this.setRequiresRedraw();
+		}
+		this.doPendingActions();
+	}
+	
+	/**
+	 * @private
+	 */
+	private function getSelectionIndexAtPoint(pointX:Float, pointY:Float):Int
+	{
+		return this.textField.getCharIndexAtPoint(pointX, pointY);
+	}
+	
+	/**
+	 * @private
+	 */
+	private function refreshTextFieldSize():void
+	{
+		var gutterDimensionsOffset:Float = 4;
+		if (this._useGutter || this._border)
+		{
+			gutterDimensionsOffset = 0;
+		}
+		this.textField.width = this.actualWidth + gutterDimensionsOffset;
+		this.textField.height = this.actualHeight + gutterDimensionsOffset;
+	}
+	
+	/**
+	 * @private
+	 */
+	private function refreshSnapshotParameters():void
+	{
+		this._textFieldOffsetX = 0;
+		this._textFieldOffsetY = 0;
+		this._textFieldSnapshotClipRect.x = 0;
+		this._textFieldSnapshotClipRect.y = 0;
+		
+		var starling:Starling = this.stage !== null ? this.stage.starling : Starling.current;
+		var scaleFactor:Float = starling.contentScaleFactor;
+		var clipWidth:Float = this.actualWidth * scaleFactor;
+		if (this._updateSnapshotOnScaleChange)
+		{
+			var matrix:Matrix = Pool.getMatrix();
+			this.getTransformationMatrix(this.stage, matrix);
+			clipWidth *= matrixToScaleX(matrix);
+		}
+		if (clipWidth < 0)
+		{
+			clipWidth = 0;
+		}
+		var clipHeight:Float = this.actualHeight * scaleFactor;
+		if (this._updateSnapshotOnScaleChange)
+		{
+			clipHeight *= matrixToScaleY(matrix);
+			Pool.putMatrix(matrix);
+		}
+		if (clipHeight < 0)
+		{
+			clipHeight = 0;
+		}
+		this._textFieldSnapshotClipRect.width = clipWidth;
+		this._textFieldSnapshotClipRect.height = clipHeight;
+	}
+	
+	/**
+	 * @private
+	 */
+	private function transformTextField():Void
+	{
+		//there used to be some code here that returned immediately if the
+		//TextField wasn't visible. some mobile devices displayed the text
+		//at the wrong scale if the TextField weren't transformed before
+		//being made visible, so I had to remove it. I moved the visible
+		//check into render(), since it can still benefit from the
+		//optimization there. see issue #1104.
+		
+		var matrix:Matrix = Pool.getMatrix();
+		var point:Point = Pool.getPoint();
+		this.getTransformationMatrix(this.stage, matrix);
+		var globalScaleX:Float = matrixToScaleX(matrix);
+		var globalScaleY:Float = matrixToScaleY(matrix);
+		var smallerGlobalScale:Float = globalScaleX;
+		if(globalScaleY < smallerGlobalScale)
+		{
+			smallerGlobalScale = globalScaleY;
+		}
+		var starling:Starling = this.stage !== null ? this.stage.starling : Starling.current;
+		var nativeScaleFactor:Float = 1;
+		if(starling.supportHighResolutions)
+		{
+			nativeScaleFactor = starling.nativeStage.contentsScaleFactor;
+		}
+		var scaleFactor:Float = starling.contentScaleFactor / nativeScaleFactor;
+		var gutterPositionOffset:Float = 0;
+		if(!this._useGutter || this._border)
+		{
+			gutterPositionOffset = 2 * smallerGlobalScale;
+		}
+		var verticalAlignOffsetY:Float = this.getVerticalAlignmentOffsetY();
+		if (this.is3D)
+		{
+			var matrix3D:Matrix3D = Pool.getMatrix3D();
+			var point3D:Vector3D = Pool.getPoint3D();
+			this.getTransformationMatrix3D(this.stage, matrix3D);
+			MatrixUtil.transformCoords3D(matrix3D, -gutterPositionOffset, -gutterPositionOffset + verticalAlignOffsetY, 0, point3D);
+			point.setTo(point3D.x, point3D.y);
+			Pool.putPoint3D(point3D);
+			Pool.putMatrix3D(matrix3D);
+		}
+		else
+		{
+			MatrixUtil.transformCoords(matrix, -gutterPositionOffset, -gutterPositionOffset + verticalAlignOffsetY, point);
+		}
+		var starlingViewPort:Rectangle = starling.viewPort;
+		this.textField.x = Math.round(starlingViewPort.x + (point.x * scaleFactor));
+		this.textField.y = Math.round(starlingViewPort.y + (point.y * scaleFactor));
+		this.textField.rotation = matrixToRotation(matrix) * 180 / Math.PI;
+		this.textField.scaleX = matrixToScaleX(matrix) * scaleFactor;
+		this.textField.scaleY = matrixToScaleY(matrix) * scaleFactor;
+		
+		Pool.putPoint(point);
+		Pool.putMatrix(matrix);
+	}
+	
+	/**
+	 * @private
+	 */
+	private function positionSnapshot():void
+	{
+		if (this.textSnapshot == null)
+		{
+			return;
+		}
+		var matrix:Matrix = Pool.getMatrix();
+		this.getTransformationMatrix(this.stage, matrix);
+		this.textSnapshot.x = Math.round(matrix.tx) - matrix.tx;
+		this.textSnapshot.y = Math.round(matrix.ty) - matrix.ty;
+		this.textSnapshot.y += this.getVerticalAlignmentOffsetY();
+		Pool.putMatrix(matrix);
+	}
+	
+	/**
+	 * @private
+	 */
+	private function checkIfNewSnapshotIsNeeded():Void
+	{
+		var starling:Starling = this.stage != null ? this.stage.starling : Starling.current;
+		var canUseRectangleTexture:Bool = starling.profile != Context3DProfile.BASELINE_CONSTRAINED;
+		if (canUseRectangleTexture)
+		{
+			this._snapshotWidth = this._textFieldSnapshotClipRect.width;
+			this._snapshotHeight = this._textFieldSnapshotClipRect.height;
+		}
+		else
+		{
+			this._snapshotWidth = MathUtil.getNextPowerOfTwo(this._textFieldSnapshotClipRect.width);
+			this._snapshotHeight = MathUtil.getNextPowerOfTwo(this._textFieldSnapshotClipRect.height);
+		}
+		var textureRoot:ConcreteTexture = this.textSnapshot ? this.textSnapshot.texture.root : null;
+		this._needsNewTexture = this._needsNewTexture || this.textSnapshot == null ||
+			(textureRoot != null && (textureRoot.scale != starling.contentScaleFactor ||
+			this._snapshotWidth != textureRoot.nativeWidth || this._snapshotHeight != textureRoot.nativeHeight));
+	}
+	
+	/**
+	 * @private
+	 */
+	private function doPendingActions():Void
+	{
+		if (this._isWaitingToSetFocus)
+		{
+			this._isWaitingToSetFocus = false;
+			this.setFocus();
+		}
+		
+		if (this._pendingSelectionBeginIndex >= 0)
+		{
+			var startIndex:Int = this._pendingSelectionBeginIndex;
+			var endIndex:Int = this._pendingSelectionEndIndex;
+			this._pendingSelectionBeginIndex = -1;
+			this._pendingSelectionEndIndex = -1;
+			this.selectRange(startIndex, endIndex);
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function texture_onRestore():Void
+	{
+		var starling:Starling = this.stage != null ? this.stage.starling : Starling.current;
+		if (this.textSnapshot != null && this.textSnapshot.texture != null &&
+			this.textSnapshot.texture.scale != starling.contentScaleFactor)
+		{
+			//if we've changed between scale factors, we need to recreate
+			//the texture to match the new scale factor.
+			this.invalidate(INVALIDATION_FLAG_SIZE);
+		}
+		else
+		{
+			this.refreshSnapshot();
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function refreshSnapshot():Void
+	{
+		if (this._snapshotWidth <= 0 || this._snapshotHeight <= 0)
+		{
+			return;
+		}
+		var gutterPositionOffset:Float = 2;
+		if (this._useGutter || this._border)
+		{
+			gutterPositionOffset = 0;
+		}
+		var starling:Starling = this.stage !== null ? this.stage.starling : Starling.current;
+		var scaleFactor:Float = starling.contentScaleFactor;
+		var matrix:Matrix = Pool.getMatrix();
+		if (this._updateSnapshotOnScaleChange)
+		{
+			this.getTransformationMatrix(this.stage, matrix);
+			var globalScaleX:Float = matrixToScaleX(matrix);
+			var globalScaleY:Float = matrixToScaleY(matrix);
+		}
+		matrix.identity();
+		matrix.translate(this._textFieldOffsetX - gutterPositionOffset, this._textFieldOffsetY - gutterPositionOffset);
+		matrix.scale(scaleFactor, scaleFactor);
+		if (this._updateSnapshotOnScaleChange)
+		{
+			matrix.scale(globalScaleX, globalScaleY);
+		}
+		var bitmapData:BitmapData = new BitmapData(this._snapshotWidth, this._snapshotHeight, true, 0x00ff00ff);
+		bitmapData.draw(this.textField, matrix, null, null, this._textFieldSnapshotClipRect);
+		Pool.putMatrix(matrix);
+		var newTexture:Texture;
+		if (!this.textSnapshot || this._needsNewTexture)
+		{
+			//skip Texture.fromBitmapData() because we don't want
+			//it to create an onRestore function that will be
+			//immediately discarded for garbage collection.
+			newTexture = Texture.empty(bitmapData.width / scaleFactor, bitmapData.height / scaleFactor,
+				true, false, false, scaleFactor);
+			newTexture.root.uploadBitmapData(bitmapData);
+			newTexture.root.onRestore = texture_onRestore;
+		}
+		if (this.textSnapshot == null)
+		{
+			this.textSnapshot = new Image(newTexture);
+			this.textSnapshot.pixelSnapping = true;
+			this.addChild(this.textSnapshot);
+		}
+		else
+		{
+			if (this._needsNewTexture)
+			{
+				this.textSnapshot.texture.dispose();
+				this.textSnapshot.texture = newTexture;
+				this.textSnapshot.readjustSize();
+			}
+			else
+			{
+				//this is faster, if we haven't resized the bitmapdata
+				var existingTexture:Texture = this.textSnapshot.texture;
+				existingTexture.root.uploadBitmapData(bitmapData);
+				//however, the image won't be notified that its
+				//texture has changed, so we need to do it manually
+				this.textSnapshot.setRequiresRedraw();
+			}
+		}
+		if (this._updateSnapshotOnScaleChange)
+		{
+			this.textSnapshot.scaleX = 1 / globalScaleX;
+			this.textSnapshot.scaleY = 1 / globalScaleY;
+			this._lastGlobalScaleX = globalScaleX;
+			this._lastGlobalScaleY = globalScaleY;
+		}
+		this.textSnapshot.alpha = this._text.length != 0 ? 1 : 0;
+		bitmapData.dispose();
+		this._needsNewTexture = false;
+	}
+	
+	/**
+	 * @private
+	 */
+	private function textEditor_addedToStageHandler(event:Event):Void
+	{
+		if(this.textField.parent == null)
+		{
+			var starling:Starling = this.stage != null ? this.stage.starling : Starling.current;
+			//the text field needs to be on the native stage to measure properly
+			starling.nativeStage.addChild(this.textField);
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function hasFocus_enterFrameHandler(event:Event):Void
+	{
+		if (this.textSnapshot != null)
+		{
+			this.textSnapshot.visible = !this._textFieldHasFocus;
+		}
+		this.textField.visible = this._textFieldHasFocus;
+		
+		if (this._textFieldHasFocus)
+		{
+			var target:DisplayObject = this;
+			do
+			{
+				if(!target.visible)
+				{
+					this.clearFocus();
+					break;
+				}
+				target = target.parent;
+			}
+			while(target != null);
+		}
+		else
+		{
+			this.removeEventListener(Event.ENTER_FRAME, hasFocus_enterFrameHandler);
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function refreshSnapshot_enterFrameHandler(event:Event):Void
+	{
+		this.removeEventListener(Event.ENTER_FRAME, refreshSnapshot_enterFrameHandler);
+		this.refreshSnapshot();
+	}
+	
+	/**
+	 * @private
+	 */
+	private function stage_touchHandler(event:TouchEvent):Void
+	{
+		if (this._maintainTouchFocus || FocusManager.isEnabledForStage(this.stage))
+		{
+			return;
+		}
+		var touch:Touch = event.getTouch(this.stage, TouchPhase.BEGAN);
+		if (touch == null) //we only care about began touches
+		{
+			return;
+		}
+		var point:Point = Pool.getPoint();
+		touch.getLocation(this.stage, point);
+		var isInBounds:Bool = this.contains(this.stage.hitTest(point));
+		Pool.putPoint(point);
+		if (isInBounds) //if the touch is in the text editor, it's all good
+		{
+			return;
+		}
+		//if the touch begins anywhere else, it's a focus out!
+		this.clearFocus();
+	}
+	
+	/**
+	 * @private
+	 */
+	private function textField_changeHandler(event:flash.events.Event):Void
+	{
+		if (this._isHTML)
+		{
+			this.text = this.textField.htmlText;
+		}
+		else
+		{
+			this.text = this.textField.text;
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function textField_focusInHandler(event:FocusEvent):Void
+	{
+		this._textFieldHasFocus = true;
+		this.stage.addEventListener(TouchEvent.TOUCH, stage_touchHandler);
+		this.addEventListener(Event.ENTER_FRAME, hasFocus_enterFrameHandler);
+		this.dispatchEventWith(FeathersEventType.FOCUS_IN);
+	}
+	
+	/**
+	 * @private
+	 */
+	private function textField_focusOutHandler(event:FocusEvent):Void
+	{
+		this._textFieldHasFocus = false;
+		this.stage.removeEventListener(TouchEvent.TOUCH, stage_touchHandler);
+		
+		if (this._resetScrollOnFocusOut)
+		{
+			this.textField.scrollH = this.textField.scrollV = 0;
+		}
+		
+		//the text may have changed, so we invalidate the data flag
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_DATA);
+		this.dispatchEventWith(FeathersEventType.FOCUS_OUT);
+	}
+	
+	/**
+	 * @private
+	 */
+	private function textField_mouseFocusChangeHandler(event:FocusEvent):Void
+	{
+		if (!this._maintainTouchFocus)
+		{
+			return;
+		}
+		event.preventDefault();
+	}
+	
+	/**
+	 * @private
+	 */
+	private function textField_keyDownHandler(event:KeyboardEvent):Void
+	{
+		if (event.keyCode == Keyboard.ENTER)
+		{
+			this.dispatchEventWith(FeathersEventType.ENTER);
+		}
+		else if (!FocusManager.isEnabledForStage(this.stage) && event.keyCode == Keyboard.TAB)
+		{
+			this.clearFocus();
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function textField_softKeyboardActivateHandler(event:SoftKeyboardEvent):Void
+	{
+		this.dispatchEventWith(FeathersEventType.SOFT_KEYBOARD_ACTIVATE, true);
+	}
+	
+	/**
+	 * @private
+	 */
+	private function textField_softKeyboardActivatingHandler(event:SoftKeyboardEvent):Void
+	{
+		this.dispatchEventWith(FeathersEventType.SOFT_KEYBOARD_ACTIVATING, true);
+	}
+	
+	/**
+	 * @private
+	 */
+	private function textField_softKeyboardDeactivateHandler(event:SoftKeyboardEvent):Void
+	{
+		this.dispatchEventWith(FeathersEventType.SOFT_KEYBOARD_DEACTIVATE, true);
+	}
+	
+	/**
+	 * @private
+	 */
+	override function fontStylesSet_changeHandler(event:Event):Void
+	{
+		this._previousStarlingTextFormat = null;
+		super.fontStylesSet_changeHandler(event);
+	}
+
 }

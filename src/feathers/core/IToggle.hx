@@ -6,13 +6,14 @@ This program is free software. You can redistribute and/or modify it in
 accordance with the terms of the accompanying license agreement.
 */
 package feathers.core;
+import src.feathers.core.IFeathersControl;
 
 /**
  * An interface for something that may be selected.
  *
  * @productversion Feathers 1.0.0
  */
-interface IToggle 
+interface IToggle extends IFeathersControl
 {
 	/**
 	 * Indicates if the IToggle is selected or not.

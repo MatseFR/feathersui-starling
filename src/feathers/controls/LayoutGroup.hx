@@ -9,6 +9,7 @@ package feathers.controls;
 
 import feathers.core.FeathersControl;
 import feathers.core.IMeasureDisplayObject;
+import feathers.core.IValidating;
 import feathers.events.FeathersEventType;
 import feathers.layout.ILayout;
 import feathers.layout.ILayoutDisplayObject;
@@ -19,6 +20,7 @@ import feathers.skins.IStyleProvider;
 import openfl.geom.Point;
 import src.feathers.core.IFeathersControl;
 import starling.display.DisplayObject;
+import starling.display.Quad;
 import starling.events.Event;
 import starling.filters.FragmentFilter;
 import starling.rendering.Painter;
@@ -227,7 +229,7 @@ class LayoutGroup extends FeathersControl
 	{
 		if(this.processStyleRestriction(arguments.callee))
 		{
-			if(value !== null)
+			if(value != null)
 			{
 				value.dispose();
 			}
@@ -650,10 +652,370 @@ class LayoutGroup extends FeathersControl
 				}
 				else
 				{
-					
+					this._explicitBackgroundWidth = this.currentBackgroundSkin.width;
+					this._explicitBackgroundHeight = this.currentBackgroundSkin.height;
+					this._explicitBackgroundMinWidth = this._explicitBackgroundWidth;
+					this._explicitBackgroundMinHeight = this._explicitBackgroundHeight;
+					this._explicitBackgroundMaxWidth = this._explicitBackgroundWidth;
+					this._explicitBackgroundMaxHeight = this._explicitBackgroundHeight;
 				}
+				this.currentBackgroundSkin.__setParent(this);
 			}
 		}
+	}
+	
+	/**
+	 * @private
+	 */
+	@:access(starling.display.DisplayObject)
+	private function removeCurrentBackgroundSkin(skin:DisplayObject):Void
+	{
+		if (skin == null)
+		{
+			return;
+		}
+		if (skin.parent == this)
+		{
+			//we need to restore these values so that they won't be lost the
+			//next time that this skin is used for measurement
+			skin.width = this._explicitBackgroundWidth;
+			skin.height = this._explicitBackgroundHeight;
+			if (Std.isOfType(skin, IMeasureDisplayObject)
+			{
+				var measureSkin:IMeasureDisplayObject = cast skin;
+				measureSkin.minWidth = this._explicitBackgroundMinWidth;
+				measureSkin.minHeight = this._explicitBackgroundMinHeight;
+				measureSkin.maxWidth = this._explicitBackgroundMaxWidth;
+				measureSkin.maxHeight = this._explicitBackgroundMaxHeight;
+			}
+			this.setRequiresRedraw();
+			skin.__setParent(null);
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function getCurrentBackgroundSkin():DisplayObject
+	{
+		if (!this._isEnabled && this._backgroundDisabledSkin != null)
+		{
+			return this._backgroundDisabledSkin;
+		}
+		return this._backgroundSkin;
+	}
+	
+	/**
+	 * @private
+	 */
+	private function refreshBackgroundLayout():Void
+	{
+		if (this.currentBackgroundSkin == null)
+		{
+			return;
+		}
+		if (this.currentBackgroundSkin.width != this.actualWidth ||
+			this.currentBackgroundSkin.height != this.actualHeight)
+		{
+			this.currentBackgroundSkin.width = this.actualWidth;
+			this.currentBackgroundSkin.height = this.actualHeight;
+		}
+	}
+	
+	/**
+	 * Refreshes the values in the <code>viewPortBounds</code> variable that
+	 * is passed to the layout.
+	 */
+	private function refreshViewPortBounds():Void
+	{
+		var needsWidth:Bool = this._explicitWidth != this._explicitWidth; //isNaN
+		var needsHeight:Bool = this._explicitHeight != this._explicitHeight; //isNaN
+		var needsMinWidth:Bool = this._explicitMinWidth != this._explicitMinWidth; //isNaN
+		var needsMinHeight:Bool = this._explicitMinHeight != this._explicitMinHeight; //isNaN
+		
+		resetFluidChildDimensionsForMeasurement(this.currentBackgroundSkin,
+			this._explicitWidth, this._explicitHeight,
+			this._explicitMinWidth, this._explicitMinHeight,
+			this._explicitMaxWidth, this._explicitMaxHeight,
+			this._explicitBackgroundWidth, this._explicitBackgroundHeight,
+			this._explicitBackgroundMinWidth, this._explicitBackgroundMinHeight,
+			this._explicitBackgroundMaxWidth, this._explicitBackgroundMaxHeight);
+		
+		this.viewPortBounds.x = 0;
+		this.viewPortBounds.y = 0;
+		this.viewPortBounds.scrollX = 0;
+		this.viewPortBounds.scrollY = 0;
+		if (needsWidth && this._autoSizeMode == AutoSizeMode.STAGE &&
+			this.stage != null)
+		{
+			this.viewPortBounds.explicitWidth = this.stage.stageWidth;
+		}
+		else
+		{
+			this.viewPortBounds.explicitWidth = this._explicitWidth;
+		}
+		if (needsHeight && this._autoSizeMode == AutoSizeMode.STAGE && 
+			this.stage != null)
+		{
+			this.viewPortBounds.explicitHeight = this.stage.stageHeight;
+		}
+		else
+		{
+			this.viewPortBounds.explicitHeight = this._explicitHeight;
+		}
+		var viewPortMinWidth:Float = this._explicitMinWidth;
+		if (needsMinWidth)
+		{
+			viewPortMinWidth = 0;
+		}
+		var viewPortMinHeight:Float = this._explicitMinHeight;
+		if (needsMinHeight)
+		{
+			viewPortMinHeight = 0;
+		}
+		if (this.currentBackgroundSkin != null)
+		{
+			//because the layout might need it, we account for the
+			//dimensions of the background skin when determining the minimum
+			//dimensions of the view port.
+			//we can't use the minimum dimensions of the background skin
+			if (this.currentBackgroundSkin.width > viewPortMinWidth)
+			{
+				viewPortMinWidth = this.currentBackgroundSkin.width;
+			}
+			if (this.currentBackgroundSkin.height > viewPortMinHeight)
+			{
+				viewPortMinHeight = this.currentBackgroundSkin.height;
+			}
+		}
+		this.viewPortBounds.minWidth = viewPortMinWidth;
+		this.viewPortBounds.minHeight = viewPortMinHeight;
+		this.viewPortBounds.maxWidth = this._explicitMaxWidth;
+		this.viewPortBounds.maxHeight = this._explicitMaxHeight;
+	}
+	
+	/**
+	 * @private
+	 */
+	private function handleLayoutResult():Void
+	{
+		//the layout's dimensions are also the minimum dimensions
+		//we calculate the minimum dimensions for the background skin in
+		//refreshViewPortBounds() and let the layout handle it
+		var viewPortWidth:Float = this._layoutResult.viewPortWidth;
+		var viewPortHeight:Float = this._layoutResult.viewPortHeight;
+		this.saveMeasurements(viewPortWidth, viewPortHeight,
+			viewPortWidth, viewPortHeight);
+	}
+	
+	/**
+	 * @private
+	 */
+	private function handleManualLayout():Void
+	{
+		var maxX:Float = this.viewPortBounds.explicitWidth;
+		if (maxX != maxX) //isNaN
+		{
+			maxX = 0;
+		}
+		var maxY:Float = this.viewPortBounds.explicitHeight;
+		if (maxY != maxY) //isNaN
+		{
+			maxY = 0;
+		}
+		var oldIgnoreChanges:Bool = this._ignoreChildChanges;
+		this._ignoreChildChanges = true;
+		var itemCount:Int = this.items.length;
+		for (i in 0...itemCount)
+		{
+			var item:DisplayObject = this.items[i];
+			if (Std.isOfType(item, ILayoutDisplayObject && cast(item, ILayoutDisplayObject).includeInLayout)
+			{
+				continue;
+			}
+			if (Std.isOfType(item, IValidating)
+			{
+				cast(item, IValidating).validate();
+			}
+			var itemMaxX:Float = item.x - item.pivotX + item.width;
+			var itemMaxY:Float = item.y - item.pivotY + item.height;
+			if (itemMaxX == itemMaxX && //!isNaN
+				itemMaxX > maxX)
+			{
+				maxX = itemMaxX;
+			}
+			if (itemMaxY == itemMaxY && //!isNaN
+				itemMaxY > maxY)
+			{
+				maxY = itemMaxY;
+			}
+		}
+		this._ignoreChildChanges = oldIgnoreChildChanges;
+		this._layoutResult.contentX = 0;
+		this._layoutResult.contentY = 0;
+		this._layoutResult.contentWidth = maxX;
+		this._layoutResult.contentHeight = maxY;
+		if (this.viewPortBounds.explicitWidth == this.viewPortBounds.explicitWidth) //!isNaN
+		{
+			this._layoutResult.viewPortWidth = this.viewPortBounds.explicitWidth;
+		}
+		else
+		{
+			var viewPortMinWidth:Float = this.viewPortBounds.minWidth;
+			if (maxX < viewPortMinWidth)
+			{
+				maxX = viewPortMinWidth;
+			}
+			var viewPortMaxWidth:Float = this.viewPortBounds.maxWidth;
+			if (maxX > viewPortMaxWidth)
+			{
+				
+				maxX = viewPortMaxWidth;
+			}
+			this._layoutResult.viewPortWidth = maxX;
+		}
+		if (this.viewPortBounds.explicitHeight == this.viewPortBounds.explicitHeight)
+		{
+			this._layoutResult.viewPortHeight = this.viewPortBounds.explicitHeight;
+		}
+		else
+		{
+			var viewPortMinHeight:Float = this.viewPortBounds.minHeight;
+			if (maxY < viewPortMinHeight)
+			{
+				maxY = viewPortMinHeight;
+			}
+			var viewPortMaxHeight:Float = this.viewPortBounds.maxHeight;
+			if (maxY > viewPortMaxHeight)
+			{
+				maxY = viewPortMaxHeight;
+			}
+			this._layoutResult.viewPortHeight = maxY;
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function validateChildren():Void
+	{
+		if (Std.isOfType(this.currentBackgroundSkin, IValidating))
+		{
+			
+			cast(this.currentBackgroundSkin, IValidating).validate();
+		}
+		var itemCount:Int = this.items.length;
+		for (i in 0...itemCount)
+		{
+			var item:DisplayObject = this.items[i];
+			if (Std.isOfType(item, IValidating))
+			{
+				cast(item, IValidating).validate();
+			}
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function refreshClipRect():Void
+	{
+		if (this.clipContent)
+		{
+			return;
+		}
+		
+		var mask:Quad = cast this.mask;
+		if (mask != null)
+		{
+			mask.x = 0;
+			mask.y = 0;
+			mask.width = this.actualWidth;
+			mask.height = this.actualHeight;
+		}
+		else
+		{
+			mask = new Quad(1, 1, 0xff00ff);
+			//the initial dimensions cannot be 0 or there's a runtime error,
+			//and these values might be 0
+			mask.width = this.actualWidth;
+			mask.height = this.actualHeight;
+			this.mask = mask;
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function layoutGroup_addedToStageHandler(event:Event):Void
+	{
+		if(this._autoSizeMode == AutoSizeMode.STAGE)
+		{
+			//if we validated before being added to the stage, or if we've
+			//been removed from stage and added again, we need to be sure
+			//that the new stage dimensions are accounted for.
+			this.invalidate(INVALIDATION_FLAG_SIZE);
+			
+			this.stage.addEventListener(Event.RESIZE, stage_resizeHandler);
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function layoutGroup_removedFromStageHandler(event:Event):Void
+	{
+		this.stage.removeEventListener(Event.RESIZE, stage_resizeHandler);
+	}
+
+	/**
+	 * @private
+	 */
+	private function layout_changeHandler(event:Event):Void
+	{
+		this.invalidate(INVALIDATION_FLAG_LAYOUT);
+	}
+	
+	/**
+	 * @private
+	 */
+	private function child_resizeHandler(event:Event):Void
+	{
+		if (this._ignoreChildChanges)
+		{
+			return;
+		}
+		if (this._ignoreChildChangesButSetFlags)
+		{
+			this.setInvalidationFlag(FeathersControl.INVALIDATION_FLAG_LAYOUT);
+			return;
+		}
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_LAYOUT);
+	}
+	
+	/**
+	 * @private
+	 */
+	private function child_layoutDataChangeHandler(event:Event):Void
+	{
+		if (this._ignoreChildChanges)
+		{
+			return;
+		}
+		if (this._ignoreChildChangesButSetFlags)
+		{
+			this.setInvalidationFlag(FeathersControl.INVALIDATION_FLAG_LAYOUT);
+			return;
+		}
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_LAYOUT);
+	}
+	
+	/**
+	 * @private
+	 */
+	private function stage_resizeHandler(event:Event):Void
+	{
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_LAYOUT);
 	}
 	
 }

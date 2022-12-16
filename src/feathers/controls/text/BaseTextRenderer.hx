@@ -10,7 +10,7 @@ package feathers.controls.text;
 import feathers.core.FeathersControl;
 import feathers.core.IStateContext;
 import feathers.events.FeathersEventType;
-import feathers.text.FontStyleSet;
+import feathers.text.FontStylesSet;
 import starling.events.Event;
 
 /**
@@ -98,11 +98,11 @@ class BaseTextRenderer extends FeathersControl
 	}
 	
 	
-	public var fontStyles(get, set):FontStyleSet;
+	public var fontStyles(get, set):FontStylesSet;
 	
-	private var _fontStyles:FontStyleSet;
-	private function get_fontStyles():FontStyleSet { return this._fontStyles; }
-	private function set_fontStyles(value:FontStyleSet):FontStyleSet
+	private var _fontStyles:FontStylesSet;
+	private function get_fontStyles():FontStylesSet { return this._fontStyles; }
+	private function set_fontStyles(value:FontStylesSet):FontStylesSet
 	{
 		if (this._fontStyles == value)
 		{

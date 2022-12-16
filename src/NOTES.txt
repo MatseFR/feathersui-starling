@@ -16,3 +16,14 @@ FeathersControl.validate :
 	for (flag in this._delayedInvalidationFlags.keys()) // TODO : don't iterate on a Map's String keys ?
 	
 SoftKeyboardEvent => replace with what ?
+
+TransformGestureEvent => replace with what ?
+
+DefaultFocusManager.stage_gestureDirectionalTapHandler => missing TransformGestureEvent in openfl
+
+PropertyProxy 	=> call .dispose()
+				=> dot and array access ?
+
+vérifier les Math.round + Math.ceil + Math.floor et remplacer par fround / fceil / ffloor si besoin
+### as3 notes
+small documentation issue in FocusManager line 78 : IPopUpManager should be IFocusManager

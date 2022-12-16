@@ -1,5 +1,5 @@
 package feathers.core;
-import feathers.text.FontStyleSet;
+import feathers.text.FontStylesSet;
 import openfl.geom.Point;
 import src.feathers.core.IFeathersControl;
 
@@ -47,7 +47,7 @@ interface ITextRenderer extends IStateObserver extends IFeathersControl extends 
 	 *
 	 * @see http://doc.starling-framework.org/current/starling/text/TextFormat.html starling.text.TextFormat
 	 */
-	public var fontStyles(get, set):FontStyleSet;
+	public var fontStyles(get, set):FontStylesSet;
 	
 	/**
 	 * Measures the text's bounds (without a full validation, if

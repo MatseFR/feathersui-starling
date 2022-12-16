@@ -31,7 +31,7 @@ import starling.text.TextFormat;
  *
  * @productversion Feathers 3.1.0
  */
-class FontStyleSet extends EventDispatcher 
+class FontStylesSet extends EventDispatcher 
 {
 	/**
 	 * Constructor.

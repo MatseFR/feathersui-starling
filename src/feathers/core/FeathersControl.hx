@@ -128,7 +128,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 	 * @see ../../../help/text-renderers.html Introduction to Feathers text renderers
 	 * @see feathers.core.ITextRenderer
 	 */
-	public static var defaultTextRendererFactory:Function = function():ITextRenderer
+	public static var defaultTextRendererFactory:Void->ITextRenderer = function():ITextRenderer
 	{
 		return new BitmapFontTextRenderer();
 	};
@@ -145,7 +145,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 	 * @see ../../../help/text-editors.html Introduction to Feathers text editors
 	 * @see feathers.core.ITextEditor
 	 */
-	public static var defaultTextEditorFactory:Function = function():ITextEditor
+	public static var defaultTextEditorFactory:Void->ITextEditor = function():ITextEditor
 	{
 		
 	};
@@ -156,11 +156,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 	public function new() 
 	{
 		super();
-		// TODO : translate this code to haxe if possible ?
-		//if(Object(this).constructor == FeathersControl)
-		//{
-			//throw new Error(ABSTRACT_CLASS_ERROR);
-		//}
+		
 		this.styleProvider = this.defaultStyleProvider;
 		this.addEventListener(Event.ADDED_TO_STAGE, feathersControl_addedToStageHandler);
 		this.addEventListener(Event.REMOVED_FROM_STAGE, feathersControl_removedFromStageHandler);
