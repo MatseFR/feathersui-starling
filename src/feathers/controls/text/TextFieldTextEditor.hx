@@ -10,6 +10,8 @@ package feathers.controls.text;
 import feathers.core.BaseTextEditor;
 import feathers.core.FeathersControl;
 import feathers.core.FocusManager;
+import feathers.core.INativeFocusOwner;
+import feathers.core.ITextEditor;
 import feathers.events.FeathersEventType;
 import feathers.skins.IStyleProvider;
 import openfl.display.BitmapData;
@@ -77,7 +79,7 @@ import starling.utils.Pool;
  *
  * @productversion Feathers 1.0.0
  */
-class TextFieldTextEditor extends BaseTextEditor 
+class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implements INativeFocusOwner
 {
 	/**
 	 * The default <code>IStyleProvider</code> for all <code>TextFieldTextEditor</code>

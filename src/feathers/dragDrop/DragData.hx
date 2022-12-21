@@ -57,7 +57,7 @@ class DragData
 	/**
 	 * Removes all data for the specified format.
 	 */
-	public function clearDataForFormat(format:String):*
+	public function clearDataForFormat(format:String):Dynamic
 	{
 		var data:Dynamic = null;
 		if (this._data.exists(format))

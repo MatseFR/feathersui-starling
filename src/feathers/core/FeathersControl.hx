@@ -8,6 +8,7 @@ accordance with the terms of the accompanying license agreement.
 package feathers.core;
 
 import feathers.controls.text.BitmapFontTextRenderer;
+import feathers.controls.text.TextFieldTextEditor;
 import feathers.events.FeathersEventType;
 import feathers.layout.ILayoutData;
 import feathers.layout.ILayoutDisplayObject;
@@ -147,7 +148,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 	 */
 	public static var defaultTextEditorFactory:Void->ITextEditor = function():ITextEditor
 	{
-		
+		return new TextFieldTextEditor();
 	};
 	
 	/**

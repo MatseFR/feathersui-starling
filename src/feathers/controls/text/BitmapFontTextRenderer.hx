@@ -1539,7 +1539,7 @@ class BitmapFontTextRenderer extends BaseTextRenderer
 				currentX += currentKerning + charData.xAdvance * scale + customLetterSpacing;
 				previousCharID = charID;
 			}
-			currentX -) customLetterSpacing;
+			currentX -= customLetterSpacing;
 			if (charData != null)
 			{
 				currentX -= (charData.xAdvance - charData.width) * scale;

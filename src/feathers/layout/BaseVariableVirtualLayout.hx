@@ -35,7 +35,7 @@ abstract class BaseVariableVirtualLayout extends EventDispatcher
 	public var useVirtualLayout(get, set):Bool;
 	private var _useVirtualLayout:Bool = true;
 	private function get_useVirtualLayout():Bool { return this._useVirtualLayout; }
-	private function set_useVirutalLayout(value:Bool):Bool
+	private function set_useVirtualLayout(value:Bool):Bool
 	{
 		if (this._useVirtualLayout == value)
 		{
