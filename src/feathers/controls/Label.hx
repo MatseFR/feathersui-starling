@@ -8,15 +8,20 @@ accordance with the terms of the accompanying license agreement.
 package feathers.controls;
 
 import feathers.core.FeathersControl;
+import feathers.core.IMeasureDisplayObject;
 import feathers.core.ITextBaselineControl;
 import feathers.core.ITextRenderer;
 import feathers.core.IToolTip;
+import feathers.core.IValidating;
 import feathers.core.PropertyProxy;
 import feathers.skins.IStyleProvider;
 import feathers.text.FontStylesSet;
+import openfl.geom.Point;
+import src.feathers.core.IFeathersControl;
 import starling.display.DisplayObject;
 import starling.events.Event;
 import starling.text.TextFormat;
+import starling.utils.Pool;
 
 /**
  * Displays text using a text renderer.
@@ -654,7 +659,382 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 			this._fontStylesSet.dispose();
 			this._fontStylesSet = null;
 		}
+		if (this._textRendererProperties != null)
+		{
+			this._textRendererProperties.dispose();
+			this._textRendererProperties = null;
+		}
 		super.dispose();
+	}
+	
+	/**
+	 * @private
+	 */
+	override private function draw():Void
+	{
+		var dataInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_DATA);
+		var stylesInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_STYLES);
+		var sizeInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_SIZE);
+		var stateInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_STATE);
+		var textRendererInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_TEXT_RENDERER);
+		
+		if (sizeInvalid || stylesInvalid || stateInvalid)
+		{
+			this.refreshBackgroundSkin();
+		}
+		
+		if (textRendererInvalid)
+		{
+			this.createTextRenderer();
+		}
+		
+		if (textRendererInvalid || dataInvalid || stateInvalid)
+		{
+			this.refreshTextRendererData();
+		}
+		
+		if (textRendererInvalid || stateInvalid)
+		{
+			this.refreshEnabled();
+		}
+		
+		if (textRendererInvalid || stylesInvalid)
+		{
+			this.refreshTextRendererStyles();
+		}
+		
+		sizeInvalid = this.autoSizeIfNeeded() || sizeInvalid;
+		
+		this.layoutChildren();
+	}
+	
+	/**
+	 * If the component's dimensions have not been set explicitly, it will
+	 * measure its content and determine an ideal size for itself. If the
+	 * <code>explicitWidth</code> or <code>explicitHeight</code> member
+	 * variables are set, those value will be used without additional
+	 * measurement. If one is set, but not the other, the dimension with the
+	 * explicit value will not be measured, but the other non-explicit
+	 * dimension will still need measurement.
+	 *
+	 * <p>Calls <code>saveMeasurements()</code> to set up the
+	 * <code>actualWidth</code> and <code>actualHeight</code> member
+	 * variables used for layout.</p>
+	 *
+	 * <p>Meant for internal use, and subclasses may override this function
+	 * with a custom implementation.</p>
+	 */
+	private function autoSizeIfNeeded():Bool
+	{
+		var needsWidth:Bool = this._explicitWidth != this._explicitWidth; //isNaN
+		var needsHeight:Bool = this._explicitHeight != this._explicitHeight; //isNaN
+		var needsMinWidth:Bool = this._explicitMinWidth != this._explicitMinWidth; //isNaN
+		var needsMinHeight:Bool = this._explicitMinHeight != this._explicitMinHeight; //isNaN
+		if (!needsWidth && !needsHeight && !needsMinWidth && !needsMinHeight)
+		{
+			return false;
+		}
+		
+		resetFluidChildDimensionsForMeasurement(cast this.textRenderer,
+			this._explicitWidth - this._paddingLeft - this._paddingRight,
+			this._explicitHeight - this._paddingTop - this._paddingBottom,
+			this._explicitMinWidth - this._paddingLeft - this._paddingRight,
+			this._explicitMinHeight - this._paddingTop - this._paddingBottom,
+			this._explicitMaxWidth - this._paddingLeft - this._paddingRight,
+			this._explicitMaxHeight - this._paddingTop - this._paddingBottom,
+			this._explicitTextRendererWidth, this._explicitTextRendererHeight,
+			this._explicitTextRendererMinWidth, this._explicitTextRendererMinHeight,
+			this._explicitTextRendererMaxWidth, this._explicitTextRendererMaxHeight);
+		this.textRenderer.maxWidth = this._explicitMaxWidth - this._paddingLeft - this._paddingRight;
+		this.textRenderer.maxHeight = this._explicitMaxHeight - this._paddingTop - this._paddingBottom;
+		var point:Point = Pool.getPoint();
+		this.textRenderer.measureText(point);
+		
+		var measureBackground:IMeasureDisplayObject = cast this.currentBackgroundSkin;
+		resetFluidChildDimensionsForMeasurement(this.currentBackgroundSkin,
+			this._explicitWidth, this._explicitHeight,
+			this._explicitMinWidth, this._explicitMinHeight,
+			this._explicitMaxWidth, this._explicitMaxHeight,
+			this._explicitBackgroundWidth, this._explicitBackgroundHeight,
+			this._explicitBackgroundMinWidth, this._explicitBackgroundMinHeight,
+			this._explicitBackgroundMaxWidth, this._explicitBackgroundMaxHeight);
+		if (Std.isOfType(this.currentBackgroundSkin, IValidating))
+		{
+			cast(this.currentBackgroundSkin, IValidating).validate();
+		}
+		
+		//minimum dimensions
+		var newMinWidth:Float = this._explicitMinWidth;
+		if (needsMinWidth)
+		{
+			//if we don't have an explicitWidth, then the minimum width
+			//should be small to allow wrapping or truncation
+			if (this._text && !needsWidth)
+			{
+				newMinWidth = point.x;
+			}
+			else
+			{
+				newMinWidth = 0;
+			}
+			newMinWidth += this._paddingLeft + this._paddingRight;
+			var backgroundMinWidth:Float = 0;
+			if (measureBackground != null)
+			{
+				backgroundMinWidth = measureBackground.minWidth;
+			}
+			else if (this.currentBackgroundSkin != null)
+			{
+				backgroundMinWidth = this._explicitBackgroundMinWidth;
+			}
+			if (backgroundMinWidth > newMinWidth)
+			{
+				newMinWidth = backgroundMinWidth;
+			}
+		}
+		var newMinHeight:Float = this._explicitMinHeight;
+		if (needsMinHeight)
+		{
+			if (this._text)
+			{
+				newMinHeight = point.y;
+			}
+			else
+			{
+				newMinHeight = 0;
+			}
+			newMinHeight += this._paddingTop + this._paddingBottom;
+			var backgroundMinHeight:Float = 0;
+			if (measureBackground != null)
+			{
+				backgroundMinHeight = measureBackground.minHeight;
+			}
+			else if (this.currentBackgroundSkin != null)
+			{
+				backgroundMinHeight = this._explicitBackgroundMinHeight;
+			}
+			if (backgroundMinHeight > newMinHeight)
+			{
+				newMinHeight = backgroundMinHeight;
+			}
+		}
+		
+		var newWidth:Float = this._explicitWidth;
+		if (needsWidth)
+		{
+			if (this._text != null)
+			{
+				newWidth = point.x;
+			}
+			else
+			{
+				newWidth = 0;
+			}
+			newWidth += this._paddingLeft + this._paddingRight;
+			if (this.currentBackgroundSkin != null &&
+				this.currentBackgroundSkin.width > newWidth)
+			{
+				newWidth = this.currentBackgroundSkin.width;
+			}
+		}
+		
+		var newHeight:Float = this._explicitHeight;
+		if (needsHeight)
+		{
+			if (this._text != null)
+			{
+				newHeight = point.y;
+			}
+			else
+			{
+				newHeight = 0;
+			}
+			newHeight += this._paddingTop + this._paddingBottom;
+			if (this.currentBackgroundSkin != null &&
+				this.currentBackgroundSkin.height > newHeight) //!isNaN
+			{
+				newHeight = this.currentBackgroundSkin.height;
+			}
+		}
+		
+		Pool.putPoint(point);
+		
+		return this.saveMeasurements(newWidth, newHeight, newMinWidth, newMinHeight);
+	}
+	
+	/**
+	 * Creates and adds the <code>textRenderer</code> sub-component and
+	 * removes the old instance, if one exists.
+	 *
+	 * <p>Meant for internal use, and subclasses may override this function
+	 * with a custom implementation.</p>
+	 *
+	 * @see #textRenderer
+	 * @see #textRendererFactory
+	 */
+	private function createTextRenderer():Void
+	{
+		if (this.textRenderer != null)
+		{
+			this.removeChild(DisplayObject(this.textRenderer), true);
+			this.textRenderer = null;
+		}
+		
+		var factory:Void->ITextRenderer = this._textRendererFactory != null ? this._textRendererFactory : FeathersControl.defaultTextRendererFactory;
+		this.textRenderer = factory();
+		var textRendererStyleName:String = this._customTextRendererStyleName != null ? this._customTextRendererStyleName : this.textRendererStyleName;
+		this.textRenderer.styleNameList.add(textRendererStyleName);
+		this.addChild(DisplayObject(this.textRenderer));
+		
+		this.textRenderer.initializeNow();
+		this._explicitTextRendererWidth = this.textRenderer.explicitWidth;
+		this._explicitTextRendererHeight = this.textRenderer.explicitHeight;
+		this._explicitTextRendererMinWidth = this.textRenderer.explicitMinWidth;
+		this._explicitTextRendererMinHeight = this.textRenderer.explicitMinHeight;
+		this._explicitTextRendererMaxWidth = this.textRenderer.explicitMaxWidth;
+		this._explicitTextRendererMaxHeight = this.textRenderer.explicitMaxHeight;
+	}
+	
+	/**
+	 * Choose the appropriate background skin based on the control's current
+	 * state.
+	 */
+	private function refreshBackgroundSkin():Void
+	{
+		var newCurrentBackgroundSkin:DisplayObject = this._backgroundSkin;
+		if (!this._isEnabled && this._backgroundDisabledSkin != null)
+		{
+			newCurrentBackgroundSkin = this._backgroundDisabledSkin;
+		}
+		if (this.currentBackgroundSkin != newCurrentBackgroundSkin)
+		{
+			this.removeCurrentBackgroundSkin(this.currentBackgroundSkin);
+			this.currentBackgroundSkin = newCurrentBackgroundSkin;
+			if (this.currentBackgroundSkin != null)
+			{
+				if (Std.isOfType(this.currentBackgroundSkin, IFeathersControl))
+				{
+					cast(this.currentBackgroundSkin, IFeathersControl).initializeNow();
+				}
+				if (Std.isOfType(this.currentBackgroundSkin, IMeasureDisplayObject))
+				{
+					var measureSkin:IMeasureDisplayObject = cast this.currentBackgroundSkin;
+					this._explicitBackgroundWidth = measureSkin.explicitWidth;
+					this._explicitBackgroundHeight = measureSkin.explicitHeight;
+					this._explicitBackgroundMinWidth = measureSkin.explicitMinWidth;
+					this._explicitBackgroundMinHeight = measureSkin.explicitMinHeight;
+					this._explicitBackgroundMaxWidth = measureSkin.explicitMaxWidth;
+					this._explicitBackgroundMaxHeight = measureSkin.explicitMaxHeight;
+				}
+				else
+				{
+					this._explicitBackgroundWidth = this.currentBackgroundSkin.width;
+					this._explicitBackgroundHeight = this.currentBackgroundSkin.height;
+					this._explicitBackgroundMinWidth = this._explicitBackgroundWidth;
+					this._explicitBackgroundMinHeight = this._explicitBackgroundHeight;
+					this._explicitBackgroundMaxWidth = this._explicitBackgroundWidth;
+					this._explicitBackgroundMaxHeight = this._explicitBackgroundHeight;
+				}
+				this.addChildAt(this.currentBackgroundSkin, 0);
+			}
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function removeCurrentBackgroundSkin(skin:DisplayObject):Void
+	{
+		if (skin == null)
+		{
+			return;
+		}
+		if (skin.parent == this)
+		{
+			//we need to restore these values so that they won't be lost the
+			//next time that this skin is used for measurement
+			skin.width = this._explicitBackgroundWidth;
+			skin.height = this._explicitBackgroundHeight;
+			if (Std.isOfType(skin, IMeasureDisplayObject))
+			{
+				var measureSkin:IMeasureDisplayObject = cast skin;
+				measureSkin.minWidth = this._explicitBackgroundMinWidth;
+				measureSkin.minHeight = this._explicitBackgroundMinHeight;
+				measureSkin.maxWidth = this._explicitBackgroundMaxWidth;
+				measureSkin.maxHeight = this._explicitBackgroundMaxHeight;
+			}
+			skin.removeFromParent(false);
+		}
+	}
+	
+	/**
+	 * Positions and sizes children based on the actual width and height
+	 * values.
+	 */
+	private function layoutChildren():Void
+	{
+		if (this.currentBackgroundSkin != null)
+		{
+			this.currentBackgroundSkin.x = 0;
+			this.currentBackgroundSkin.y = 0;
+			this.currentBackgroundSkin.width = this.actualWidth;
+			this.currentBackgroundSkin.height = this.actualHeight;
+		}
+		this.textRenderer.x = this._paddingLeft;
+		this.textRenderer.y = this._paddingTop;
+		this.textRenderer.width = this.actualWidth - this._paddingLeft - this._paddingRight;
+		this.textRenderer.height = this.actualHeight - this._paddingTop - this._paddingBottom;
+		this.textRenderer.validate();
+	}
+	
+	/**
+	 * @private
+	 */
+	private function refreshEnabled():Void
+	{
+		this.textRenderer.isEnabled = this._isEnabled;
+	}
+	
+	/**
+	 * @private
+	 */
+	private function refreshTextRendererData():Void
+	{
+		this.textRenderer.text = this._text;
+		this.textRenderer.visible = this._text != null && this._text.length > 0;
+	}
+	
+	/**
+	 * @private
+	 */
+	private function refreshTextRendererStyles():Void
+	{
+		this.textRenderer.fontStyles = this._fontStylesSet;
+		this.textRenderer.wordWrap = this._wordWrap;
+		//for(var propertyName:String in this._textRendererProperties)
+		for (propertyName in this._textRendererProperties)
+		{
+			var propertyValue:Dynamic = this._textRendererProperties[propertyName];
+			//var propertyValue:Object = this._textRendererProperties[propertyName];
+			//this.textRenderer[propertyName] = propertyValue;
+			Reflect.setProperty(this.textRenderer, propertyName, propertyValue);
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function fontStyles_changeHandler(event:Event):Void
+	{
+		this.invalidate(INVALIDATION_FLAG_STYLES);
+	}
+	
+	/**
+	 * @private
+	 */
+	private function textRendererProperties_onChange(proxy:PropertyProxy, propertyName:String):Void
+	{
+		this.invalidate(INVALIDATION_FLAG_STYLES);
 	}
 	
 }

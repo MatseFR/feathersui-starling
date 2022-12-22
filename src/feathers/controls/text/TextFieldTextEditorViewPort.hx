@@ -8,7 +8,7 @@ accordance with the terms of the accompanying license agreement.
 package feathers.controls.text;
 import feathers.core.FeathersControl;
 import feathers.skins.IStyleProvider;
-import feathers.utils.MathUtils;
+import feathers.utils.math.MathUtils;
 import openfl.errors.ArgumentError;
 import openfl.events.Event;
 import openfl.events.FocusEvent;

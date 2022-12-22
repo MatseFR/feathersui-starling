@@ -17,7 +17,7 @@ import feathers.events.FeathersEventType;
 import feathers.layout.Direction;
 import feathers.layout.RelativePosition;
 import feathers.system.DeviceCapabilities;
-import feathers.utils.MathUtils;
+import feathers.utils.math.MathUtils;
 import openfl.errors.ArgumentError;
 import openfl.errors.Error;
 import openfl.errors.IllegalOperationError;

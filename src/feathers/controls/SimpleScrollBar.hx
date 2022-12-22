@@ -15,7 +15,7 @@ import feathers.core.PropertyProxy;
 import feathers.events.FeathersEventType;
 import feathers.layout.Direction;
 import feathers.skins.IStyleProvider;
-import feathers.utils.MathUtils;
+import feathers.utils.math.MathUtils;
 import openfl.events.TimerEvent;
 import openfl.geom.Point;
 import openfl.utils.Timer;

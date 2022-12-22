@@ -12,7 +12,7 @@ import feathers.core.IStateContext;
 import feathers.core.IStateObserver;
 import feathers.core.IToggle;
 import feathers.events.FeathersEventType;
-import feathers.utils.MathUtils;
+import feathers.utils.math.MathUtils;
 import openfl.errors.IllegalOperationError;
 import openfl.geom.Point;
 import openfl.geom.Rectangle;

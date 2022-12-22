@@ -10,7 +10,7 @@ package feathers.controls.text;
 import feathers.core.FocusManager;
 import feathers.events.FeathersEventType;
 import feathers.skins.IStyleProvider;
-import feathers.utils.MathUtils;
+import feathers.utils.math.MathUtils;
 import feathers.utils.text.TextInputNavigation;
 import feathers.utils.text.TextInputRestrict;
 import openfl.desktop.Clipboard;

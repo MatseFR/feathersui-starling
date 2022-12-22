@@ -6,9 +6,8 @@ This program is free software. You can redistribute and/or modify it in
 accordance with the terms of the accompanying license agreement.
 */
 package feathers.utils.keyboard;
-import feathers.controls.ButtonState;
 import feathers.core.IFocusDisplayObject;
-import feathers.core.IStateContext;
+import feathers.core.IToggle;
 import feathers.events.FeathersEventType;
 import feathers.system.DeviceCapabilities;
 import feathers.utils.math.MathUtils;
@@ -19,23 +18,46 @@ import starling.events.Event;
 import starling.events.KeyboardEvent;
 
 /**
- * Changes a target's state when a key is pressed or released on the
- * keyboard. Conveniently handles all <code>KeyboardEvent</code> listeners
- * automatically.
+ * Changes the <code>isSelected</code> property of the target when a key is
+ * pressed and released while the target has focus. The target will
+ * dispatch <code>Event.CHANGE</code>. Conveniently handles all
+ * <code>KeyboardEvent</code> listeners automatically.
  *
- * @see feathers.utils.touch.TouchToState
+ * <p>In the following example, a custom component will be selected when a
+ * key is pressed and released:</p>
  *
- * @productversion Feathers 3.2.0
+ * <listing version="3.0">
+ * public class CustomComponent extends FeathersControl implements IFocusDisplayObject
+ * {
+ *     public function CustomComponent()
+ *     {
+ *         super();
+ *         this._keyToSelect = new KeyToSelect(this);
+ *         this._keyToSelect.keyCode = Keyboard.SPACE;
+ *     }
+ * 
+ *     private var _keyToSelect:KeyToSelect;
+ * // ...</listing>
+ *
+ * <p>Note: When combined with a <code>KeyToTrigger</code> instance, the
+ * <code>KeyToSelect</code> instance should be created second because
+ * <code>Event.TRIGGERED</code> should be dispatched before
+ * <code>Event.CHANGE</code>.</p>
+ *
+ * @see feathers.utils.keyboard.KeyToTrigger
+ * @see feathers.utils.touch.TapToSelect
+ *
+ * @productversion Feathers 3.0.0
  */
-class KeyToState 
+class KeyToSelect 
 {
 	/**
 	 * Constructor.
 	 */
-	public function new(target:IFocusDisplayObject = null, callback:String->Void) 
+	public function new(target:IToggle = null, keyCode:Int = Keyboard.SPACE) 
 	{
 		this.target = target;
-		this.callback = callback;
+		this.keyCode = keyCode;
 	}
 	
 	/**
@@ -44,18 +66,12 @@ class KeyToState
 	private var _stage:Stage;
 	
 	/**
-	 * @private
+	 * The target component that should be selected when a key is pressed.
 	 */
-	private var _hasFocus:Bool = false;
-	
-	/**
-	 * The target component that should change state when a key is pressed
-	 * or released.
-	 */
-	public var target(get, set):IFocusDisplayObject;
-	private var _target:IFocusDisplayObject;
-	private function get_target():IFocusDisplayObject { return this._target; }
-	private function set_target(value:IFocusDisplayObject):IFocusDisplayObject
+	public var target(get, set):IToggle;
+	private var _target:IToggle;
+	private function get_target():IToggle { return this._target; }
+	private function set_target(value:IToggle):IToggle
 	{
 		if (this._target == value)
 		{
@@ -63,7 +79,7 @@ class KeyToState
 		}
 		if (value != null && !Std.isOfType(value, IFocusDisplayObject))
 		{
-			throw new ArgumentError("Target of KeyToState must implement IFocusDisplayObject");
+			throw new ArgumentError("Target of KeyToSelect must implement IFocusDisplayObject");
 		}
 		if (this._stage != null)
 		{
@@ -82,7 +98,6 @@ class KeyToState
 		this._target = value;
 		if (this._target != null)
 		{
-			this._currentState = this._upState;
 			this._target.addEventListener(FeathersEventType.FOCUS_IN, target_focusInHandler);
 			this._target.addEventListener(FeathersEventType.FOCUS_OUT, target_focusOutHandler);
 			this._target.addEventListener(Event.REMOVED_FROM_STAGE, target_removedFromStageHandler);
@@ -91,30 +106,7 @@ class KeyToState
 	}
 	
 	/**
-	 * The function to call when the state is changed.
-	 *
-	 * <p>The callback is expected to have the following signature:</p>
-	 * <pre>function(currentState:String):void</pre>
-	 */
-	public var callback(get, set):String->Void;
-	private var _callback:String->Void;
-	private function get_callback():String->Void { return this._callback; }
-	private function set_callback(value:String->Void):String->Void
-	{
-		if (this._callback == value)
-		{
-			return;
-		}
-		this._callback = value;
-		if (this._callback != null)
-		{
-			this._callback(this._currentState);
-		}
-		return this._callback;
-	}
-	
-	/**
-	 * The key that will change the state of the target, when pressed.
+	 * The key that will select the target, when pressed.
 	 *
 	 * @default flash.ui.Keyboard.SPACE
 	 */
@@ -127,7 +119,7 @@ class KeyToState
 	}
 	
 	/**
-	 * The key that will cancel the state change if the key is down.
+	 * The key that will cancel the selection if the key is down.
 	 *
 	 * @default flash.ui.Keyboard.ESCAPE
 	 */
@@ -140,10 +132,24 @@ class KeyToState
 	}
 	
 	/**
-	 * The location of the key that will change the state, when pressed.
-	 * If <code>feathers.utils.MathUtils.INT_MAX</code>, then any key location is allowed.
+	 * May be set to <code>true</code> to allow the target to be deselected
+	 * when the key is pressed.
 	 *
-	 * @default feathers.utils.MathUtils.INT_MAX
+	 * @default false
+	 */
+	public var keyToDeselect(get, set):Bool;
+	private var _keyToDeselect:Bool = false;
+	private function get_keyToDeselect():Bool { return this._keyToDeselect; }
+	private function set_keyToDeselect(value:Bool):Bool
+	{
+		return this._keyToDeselect = value;
+	}
+	
+	/**
+	 * The location of the key that will select the target, when pressed.
+	 * If <code>uint.MAX_VALUE</code>, then any key location is allowed.
+	 *
+	 * @default uint.MAX_VALUE
 	 *
 	 * @see flash.ui.KeyLocation
 	 */
@@ -156,7 +162,7 @@ class KeyToState
 	}
 	
 	/**
-	 * May be set to <code>false</code> to disable state changes temporarily
+	 * May be set to <code>false</code> to disable selection temporarily
 	 * until set back to <code>true</code>.
 	 */
 	public var isEnabled(get, set):Bool;
@@ -164,77 +170,7 @@ class KeyToState
 	private function get_isEnabled():Bool { return this._isEnabled; }
 	private function set_isEnabled(value:Bool):Bool
 	{
-		this._isEnabled = value
-	}
-	
-	/**
-	 * The current state of the utility. May be different than the state
-	 * of the target.
-	 */
-	public var currentState(get, never):String;
-	private var _currentState:String = ButtonState.UP;
-	private function get_currentState():String { return this._currentState; }
-	
-	/**
-	 * The value for the "up" state.
-	 *
-	 * @default feathers.controls.ButtonState.UP
-	 */
-	public var upState(get, set):String;
-	private var _upState:String = ButtonState.UP;
-	private function get_upState():String { return this._upState; }
-	private function set_upState(value:String):String
-	{
-		return this._upState = value;
-	}
-	
-	/**
-	 * The value for the "down" state.
-	 *
-	 * @default feathers.controls.ButtonState.DOWN
-	 */
-	public var downState(get, set):String;
-	private var _downState:String = ButtonState.DOWN;
-	private function get_downState():String { return this._downState; }
-	private function set_downState(value:String):String
-	{
-		return this._downState = value;
-	}
-	
-	/**
-	 * @private
-	 */
-	private function changeState(value:String):Void
-	{
-		var oldState:String = this._currentState;
-		if (Std.isOfType(this._target, IStateContext))
-		{
-			oldState = cast(this._target, IStateContext).currentState;
-		}
-		this._currentState = value;
-		if (oldState == value)
-		{
-			return;
-		}
-		if (this._callback != null)
-		{
-			this._callback(value);
-		}
-	}
-	
-	/**
-	 * @private
-	 */
-	private function focusOut():Void
-	{
-		this._hasFocus = false;
-		if (this._stage != null)
-		{
-			this._stage.removeEventListener(KeyboardEvent.KEY_DOWN, stage_keyDownHandler);
-			this._stage.removeEventListener(KeyboardEvent.KEY_UP, stage_keyUpHandler);
-			this._stage = null;
-		}
-		this.changeState(this._upState);
+		return this._isEnabled = value:
 	}
 	
 	/**
@@ -242,12 +178,8 @@ class KeyToState
 	 */
 	private function target_focusInHandler(event:Event):Void
 	{
-		this._hasFocus = true;
 		this._stage = this._target.stage;
 		this._stage.addEventListener(KeyboardEvent.KEY_DOWN, stage_keyDownHandler);
-		
-		//don't change the state on focus in because the state may be
-		//managed by another utility
 	}
 	
 	/**
@@ -255,7 +187,12 @@ class KeyToState
 	 */
 	private function target_focusOutHandler(event:Event):Void
 	{
-		this.focusOut();
+		if (this._stage != null)
+		{
+			this._stage.removeEventListener(KeyboardEvent.KEY_DOWN, stage_keyDownHandler);
+			this._stage.removeEventListener(KeyboardEvent.KEY_UP, stage_keyUpHandler);
+			this._stage = null;
+		}
 	}
 	
 	/**
@@ -263,7 +200,12 @@ class KeyToState
 	 */
 	private function target_removedFromStageHandler(event:Event):Void
 	{
-		this.focusOut();
+		if (this._stage != null)
+		{
+			this._stage.removeEventListener(KeyboardEvent.KEY_DOWN, stage_keyDownHandler);
+			this._stage.removeEventListener(KeyboardEvent.KEY_UP, stage_keyUpHandler);
+			this._stage = null;
+		}
 	}
 	
 	/**
@@ -284,7 +226,6 @@ class KeyToState
 		if (event.keyCode == this._cancelKeyCode)
 		{
 			this._stage.removeEventListener(KeyboardEvent.KEY_UP, stage_keyUpHandler);
-			this.changeState(this._upState);
 			return;
 		}
 		if (event.keyCode != this._keyCode)
@@ -297,7 +238,6 @@ class KeyToState
 			return;
 		}
 		this._stage.addEventListener(KeyboardEvent.KEY_UP, stage_keyUpHandler);
-		this.changeState(this._downState);
 	}
 	
 	/**
@@ -305,26 +245,33 @@ class KeyToState
 	 */
 	private function stage_keyUpHandler(event:KeyboardEvent):Void
 	{
-		if(!this._isEnabled)
+		if (!this._isEnabled)
 		{
 			return;
 		}
-		if(event.keyCode != this._keyCode)
+		if (event.keyCode != this._keyCode)
 		{
 			return;
 		}
-		if(this._keyLocation != uint.MAX_VALUE &&
+		if (this._keyLocation != MathUtils.INT_MAX &&
 			!((event.keyLocation == this._keyLocation) || (this._keyLocation == 4 && DeviceCapabilities.simulateDPad)))
 		{
 			return;
 		}
 		var stage:Stage = Stage(event.currentTarget);
 		stage.removeEventListener(KeyboardEvent.KEY_UP, stage_keyUpHandler);
-		if(this._stage != stage)
+		if (this._stage != stage)
 		{
 			return;
 		}
-		this.changeState(this._upState);
+		if (this._keyToDeselect)
+		{
+			this._target.isSelected = !this._target.isSelected;
+		}
+		else
+		{
+			this._target.isSelected = true;
+		}
 	}
 	
 }

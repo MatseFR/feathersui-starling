@@ -16,7 +16,7 @@ import feathers.motion.effectClasses.IEffectContext;
 import feathers.motion.effectClasses.IMoveEffectContext;
 import feathers.motion.effectClasses.IResizeEffectContext;
 import feathers.skins.IStyleProvider;
-import feathers.utils.MathUtils;
+import feathers.utils.math.MathUtils;
 import haxe.Constraints.Function;
 import openfl.errors.ArgumentError;
 import openfl.errors.Error;

@@ -9,7 +9,7 @@ package feathers.controls.text;
 import feathers.core.FeathersControl;
 import feathers.core.ITextRenderer;
 import feathers.skins.IStyleProvider;
-import feathers.utils.MathUtils;
+import feathers.utils.math.MathUtils;
 import openfl.display.BitmapData;
 import openfl.display3D.Context3DProfile;
 import openfl.filters.BitmapFilter;

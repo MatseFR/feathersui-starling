@@ -10,6 +10,7 @@ import feathers.core.DefaultFocusManager;
 import feathers.core.IFocusDisplayObject;
 import feathers.events.FeathersEventType;
 import feathers.system.DeviceCapabilities;
+import feathers.utils.math.MathUtils;
 import openfl.ui.Keyboard;
 import starling.display.Stage;
 import starling.events.Event;

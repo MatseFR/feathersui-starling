@@ -7,7 +7,7 @@ accordance with the terms of the accompanying license agreement.
 */
 package feathers.display;
 
-import feathers.utils.MathUtils;
+import feathers.utils.math.MathUtils;
 import openfl.geom.Matrix;
 import openfl.geom.Point;
 import openfl.geom.Rectangle;
