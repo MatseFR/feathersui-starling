@@ -1,7 +1,7 @@
 package feathers.core;
 import feathers.text.FontStylesSet;
 import openfl.geom.Point;
-import src.feathers.core.IFeathersControl;
+import feathers.core.IFeathersControl;
 
 /**
  * @author Matse

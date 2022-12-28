@@ -12,6 +12,7 @@ import feathers.core.IFocusContainer;
 import feathers.events.FeathersEventType;
 import feathers.layout.ILayout;
 import feathers.layout.ILayoutDisplayObject;
+import feathers.layout.IVirtualLayout;
 import feathers.skins.IStyleProvider;
 import openfl.errors.ArgumentError;
 import starling.display.DisplayObject;
@@ -470,6 +471,192 @@ class ScrollContainer extends Scroller implements IScrollContainer implements IF
 		this.displayListBypassEnabled = false;
 		super.swapChildrenAt(index1, index2);
 		this.displayListBypassEnabled = oldBypass;
+	}
+	
+	/**
+	 * @private
+	 */
+	override public function sortChildren(compareFunction:DisplayObject->DisplayObject->Int):Void
+	{
+		if (!this.displayListBypassEnabled)
+		{
+			super.sortChildren(compareFunction);
+			return;
+		}
+		cast(this.viewPort, DisplayObjectContainer).sortChildren(compareFunction);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function sortRawChildren(compareFunction:DisplayObject->DisplayObject->Int):Void
+	{
+		var oldBypass:Bool = this.displayListBypassEnabled;
+		this.displayListBypassEnabled = false;
+		super.sortChildren(compareFunction);
+		this.displayListBypassEnabled = oldBypass;
+	}
+	
+	/**
+	 * Readjusts the layout of the container according to its current
+	 * content. Call this method when changes to the content cannot be
+	 * automatically detected by the container. For instance, Feathers
+	 * components dispatch <code>FeathersEventType.RESIZE</code> when their
+	 * width and height values change, but standard Starling display objects
+	 * like <code>Sprite</code> and <code>Image</code> do not.
+	 */
+	public function readjustLayout():Void
+	{
+		this.layoutViewPort.readjustLayout();
+		this.invalidate(INVALIDATION_FLAG_SIZE);
+	}
+	
+	/**
+	 * @private
+	 */
+	override public function validate():Void
+	{
+		//for the start of validation, we're going to ignore when children
+		//resize or dispatch changes to layout data. this allows subclasses
+		//to modify children in draw() before the layout is applied.
+		var oldIgnoreChildChanges:Bool = this._ignoreChildChangesButSetFlags;
+		this._ignoreChildChangesButSetFlags = true;
+		super.validate();
+		//if super.validate() returns without calling draw(), the flag
+		//won't be reset before layout is called, so we need reset manually.
+		this._ignoreChildChangesButSetFlags = oldIgnoreChildChanges;
+	}
+	
+	/**
+	 * @private
+	 */
+	override protected function initialize():Void
+	{
+		if (this.stage != null)
+		{
+			//we use starling.root because a pop-up's root and the stage
+			//root may be different.
+			if (this.stage.starling.root == this)
+			{
+				this.autoSizeMode = AutoSizeMode.STAGE;
+			}
+		}
+		super.initialize();
+	}
+	
+	/**
+	 * @private
+	 */
+	override function draw():Void
+	{
+		//children are allowed to change during draw() in a subclass up
+		//until it calls super.draw().
+		this._ignoreChildChangesButSetFlags = false;
+		
+		var layoutInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_LAYOUT);
+		
+		if (layoutInvalid)
+		{
+			if (Std.isOfType(this._layout, IVirtualLayout))
+			{
+				cast(this._layout, IVirtualLayout).useVirtualLayout = false;
+			}
+			this.layoutViewPort.layout = this._layout;
+		}
+		
+		var oldIgnoreChildChanges:Bool = this._ignoreChildChanges;
+		this._ignoreChildChanges = true;
+		super.draw();
+		this._ignoreChildChanges = oldIgnoreChildChanges;
+	}
+	
+	/**
+	 * @private
+	 */
+	override protected function autoSizeIfNeeded():Boolean
+	{
+		var needsWidth:Bool = this._explicitWidth != this._explicitWidth; //isNaN
+		var needsHeight:Bool = this._explicitHeight != this._explicitHeight; //isNaN
+		var needsMinWidth:Bool = this._explicitMinWidth != this._explicitMinWidth; //isNaN
+		var needsMinHeight:Bool = this._explicitMinHeight != this._explicitMinHeight; //isNaN
+		if (!needsWidth && !needsHeight && !needsMinWidth && !needsMinHeight)
+		{
+			return false;
+		}
+		if (this._autoSizeMode == AutoSizeMode.STAGE &&
+			this.stage != null)
+		{
+			var newWidth:Float = this.stage.stageWidth;
+			var newHeight:Float = this.stage.stageHeight;
+			return this.saveMeasurements(newWidth, newHeight, newWidth, newHeight);
+		}
+		return super.autoSizeIfNeeded();
+	}
+	
+	/**
+	 * @private
+	 */
+	private function scrollContainer_addedToStageHandler(event:Event):Void
+	{
+		if (this._autoSizeMode == AutoSizeMode.STAGE)
+		{
+			//if we validated before being added to the stage, or if we've
+			//been removed from stage and added again, we need to be sure
+			//that the new stage dimensions are accounted for.
+			this.invalidate(INVALIDATION_FLAG_SIZE);
+			
+			this.stage.addEventListener(Event.RESIZE, scrollContainer_stage_resizeHandler);
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function scrollContainer_removedFromStageHandler(event:Event):Void
+	{
+		this.stage.removeEventListener(Event.RESIZE, scrollContainer_stage_resizeHandler);
+	}
+	
+	/**
+	 * @private
+	 */
+	private function child_resizeHandler(event:Event):Void
+	{
+		if (this._ignoreChildChanges)
+		{
+			return;
+		}
+		if (this._ignoreChildChangesButSetFlags)
+		{
+			this.setInvalidationFlag(INVALIDATION_FLAG_SIZE);
+			return;
+		}
+		this.invalidate(INVALIDATION_FLAG_SIZE);
+	}
+	
+	/**
+	 * @private
+	 */
+	private function child_layoutDataChangeHandler(event:Event):Void
+	{
+		if (this._ignoreChildChanges)
+		{
+			return;
+		}
+		if (this._ignoreChildChangesButSetFlags)
+		{
+			this.setInvalidationFlag(INVALIDATION_FLAG_SIZE);
+			return;
+		}
+		this.invalidate(INVALIDATION_FLAG_SIZE);
+	}
+	
+	/**
+	 * @private
+	 */
+	private function scrollContainer_stage_resizeHandler(event:Event):Void
+	{
+		this.invalidate(INVALIDATION_FLAG_SIZE);
 	}
 	
 }

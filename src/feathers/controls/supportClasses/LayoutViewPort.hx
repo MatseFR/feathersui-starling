@@ -375,7 +375,7 @@ class LayoutViewPort extends LayoutGroup implements IViewPort
 		//isNaN() can allocate an object, so we should call a different
 		//function without allocation.
 		this.doNothing();
-		if(maxX !== maxX) //isNaN
+		if(maxX != maxX) //isNaN
 		{
 			maxX = 0;
 		}
