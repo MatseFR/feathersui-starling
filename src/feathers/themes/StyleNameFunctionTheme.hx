@@ -25,7 +25,7 @@ import starling.events.EventDispatcher;
  *
  * @productversion Feathers 2.0.0
  */
-class SyleNameFunctionTheme extends EventDispatcher 
+class StyleNameFunctionTheme extends EventDispatcher 
 {
 	/**
 	 * @private

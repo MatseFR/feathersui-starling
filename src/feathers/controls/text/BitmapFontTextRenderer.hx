@@ -706,10 +706,10 @@ class BitmapFontTextRenderer extends BaseTextRenderer
 			sizeInvalid = newWidth < this._lastLayoutWidth;
 			
 			//...unless the text was previously truncated!
-			sizeInvalid ||= (this._lastLayoutIsTruncated && newWidth != this._lastLayoutWidth);
+			sizeInvalid = sizeInvalid || (this._lastLayoutIsTruncated && newWidth != this._lastLayoutWidth);
 			
 			//...or the text is aligned
-			sizeInvalid ||= this._currentTextFormat.align != TextFormatAlign.LEFT;
+			sizeInvalid = sizeInvalid || this._currentTextFormat.align != TextFormatAlign.LEFT;
 		}
 		
 		if (dataInvalid || sizeInvalid || stylesInvalid || this._textFormatChanged)

@@ -661,7 +661,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 	override function checkIfNewSnapshotIsNeeded():Void
 	{
 		super.checkIfNewSnapshotIsNeeded();
-		this._needsNewTexture ||= this.isInvalid(INVALIDATION_FLAG_SCROLL);
+		this._needsNewTexture = this._needsNewTexture || this.isInvalid(INVALIDATION_FLAG_SCROLL);
 	}
 	
 	/**
