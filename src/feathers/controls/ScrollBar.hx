@@ -13,13 +13,19 @@ import feathers.core.IFocusDisplayObject;
 import feathers.core.IMeasureDisplayObject;
 import feathers.core.IValidating;
 import feathers.core.PropertyProxy;
+import feathers.events.FeathersEventType;
 import feathers.layout.Direction;
 import feathers.skins.IStyleProvider;
 import feathers.utils.math.MathUtils;
+import openfl.events.TimerEvent;
+import openfl.geom.Point;
 import openfl.utils.Timer;
 import starling.display.DisplayObject;
 import starling.events.Event;
+import starling.events.Touch;
 import starling.events.TouchEvent;
+import starling.events.TouchPhase;
+import starling.utils.Pool;
 
 /**
  * Select a value between a minimum and a maximum by dragging a thumb over
@@ -630,7 +636,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	/**
 	 * @private
 	 */
-	private var currentRepeatAction:Function;
+	private var currentRepeatAction:Void->Void;
 
 	/**
 	 * @private
@@ -2038,6 +2044,823 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 			this._minimumTrackSkinExplicitMinWidth = this._minimumTrackSkinExplicitWidth;
 			this._minimumTrackSkinExplicitMinHeight = this._minimumTrackSkinExplicitHeight;
 		}
+	}
+	
+	/**
+	 * Creates and adds the <code>maximumTrack</code> sub-component and
+	 * removes the old instance, if one exists. If the maximum track is not
+	 * needed, it will not be created.
+	 *
+	 * <p>Meant for internal use, and subclasses may override this function
+	 * with a custom implementation.</p>
+	 *
+	 * @see #maximumTrack
+	 * @see #maximumTrackFactory
+	 * @see #style:customMaximumTrackStyleName
+	 */
+	private function createMaximumTrack():Void
+	{
+		if (this.maximumTrack != null)
+		{
+			this.maximumTrack.removeFromParent(true);
+			this.maximumTrack = null;
+		}
+		if (this._trackLayoutMode != TrackLayoutMode.SPLIT)
+		{
+			return;
+		}
+		var factory:Void->BasicButton = this._maximumTrackFactory != null ? this._maximumTrackFactory : defaultMaximumTrackFactory;
+		var maximumTrackStyleName:String = this._customMaximumTrackStyleName != null ? this._customMaximumTrackStyleName : this.maximumTrackStyleName;
+		var maximumTrack:BasicButton = factory();
+		maximumTrack.styleNameList.add(maximumTrackStyleName);
+		maximumTrack.keepDownStateOnRollOut = true;
+		if (Std.isOfType(maximumTrack, IFocusDisplayObject))
+		{
+			maximumTrack.isFocusEnabled = false;
+		}
+		maximumTrack.addEventListener(TouchEvent.TOUCH, track_touchHandler);
+		this.addChildAt(maximumTrack, 1);
+		this.maximumTrack = maximumTrack;
+
+		if (Std.isOfType(this.maximumTrack, IFeathersControl))
+		{
+			cast(this.maximumTrack, IFeathersControl).initializeNow();
+		}
+		if (Std.isOfType(this.maximumTrack, IMeasureDisplayObject))
+		{
+			var measureMaxTrack:IMeasureDisplayObject = cast this.maximumTrack;
+			this._maximumTrackSkinExplicitWidth = measureMaxTrack.explicitWidth;
+			this._maximumTrackSkinExplicitHeight = measureMaxTrack.explicitHeight;
+			this._maximumTrackSkinExplicitMinWidth = measureMaxTrack.explicitMinWidth;
+			this._maximumTrackSkinExplicitMinHeight = measureMaxTrack.explicitMinHeight;
+		}
+		else
+		{
+			//this is a regular display object, and we'll treat its
+			//measurements as explicit when we auto-size the scroll bar
+			this._maximumTrackSkinExplicitWidth = this.maximumTrack.width;
+			this._maximumTrackSkinExplicitHeight = this.maximumTrack.height;
+			this._maximumTrackSkinExplicitMinWidth = this._maximumTrackSkinExplicitWidth;
+			this._maximumTrackSkinExplicitMinHeight = this._maximumTrackSkinExplicitHeight;
+		}
+	}
+	
+	/**
+	 * Creates and adds the <code>decrementButton</code> sub-component and
+	 * removes the old instance, if one exists.
+	 *
+	 * <p>Meant for internal use, and subclasses may override this function
+	 * with a custom implementation.</p>
+	 *
+	 * @see #decrementButton
+	 * @see #decrementButtonFactory
+	 * @see #style:customDecremenButtonStyleName
+	 */
+	private function createDecrementButton():Void
+	{
+		if (this.decrementButton != null)
+		{
+			this.decrementButton.removeFromParent(true);
+			this.decrementButton = null;
+		}
+		
+		var factory:Void->BasicButton = this._decrementButtonFactory != null ? this._decrementButtonFactory : defaultDecrementButtonFactory;
+		var decrementButtonStyleName:String = this._customDecrementButtonStyleName != null ? this._customDecrementButtonStyleName : this.decrementButtonStyleName;
+		this.decrementButton = factory();
+		this.decrementButton.styleNameList.add(decrementButtonStyleName);
+		this.decrementButton.keepDownStateOnRollOut = true;
+		if (Std.isOfType(this.decrementButton, IFocusDisplayObject))
+		{
+			this.decrementButton.isFocusEnabled = false;
+		}
+		this.decrementButton.addEventListener(TouchEvent.TOUCH, decrementButton_touchHandler);
+		this.addChild(this.decrementButton);
+	}
+	
+	/**
+	 * Creates and adds the <code>incrementButton</code> sub-component and
+	 * removes the old instance, if one exists.
+	 *
+	 * <p>Meant for internal use, and subclasses may override this function
+	 * with a custom implementation.</p>
+	 *
+	 * @see #incrementButton
+	 * @see #incrementButtonFactory
+	 * @see #style:customIncrementButtonStyleName
+	 */
+	private function createIncrementButton():Void
+	{
+		if (this.incrementButton != null)
+		{
+			this.incrementButton.removeFromParent(true);
+			this.incrementButton = null;
+		}
+		
+		var factory:Void->BasicButton = this._incrementButtonFactory != null ? this._incrementButtonFactory : defaultIncrementButtonFactory;
+		var incrementButtonStyleName:String = this._customIncrementButtonStyleName != null ? this._customIncrementButtonStyleName : this.incrementButtonStyleName;
+		this.incrementButton = factory();
+		this.incrementButton.styleNameList.add(incrementButtonStyleName);
+		this.incrementButton.keepDownStateOnRollOut = true;
+		if (Std.isOfType(this.incrementButton, IFocusDisplayObject))
+		{
+			this.incrementButton.isFocusEnabled = false;
+		}
+		this.incrementButton.addEventListener(TouchEvent.TOUCH, incrementButton_touchHandler);
+		this.addChild(this.incrementButton);
+	}
+	
+	/**
+	 * @private
+	 */
+	private function refreshThumbStyles():Void
+	{
+		for (propertyName in this._thumbProperties)
+		{
+			var propertyValue:Dynamic = this._thumbProperties[propertyName];
+			//this.thumb[propertyName] = propertyValue;
+			Reflect.setProperty(this.thumb, propertyName, propertyValue);
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function refreshMinimumTrackStyles():Void
+	{
+		for (propertyName in this._minimumTrackProperties)
+		{
+			var propertyValue:Dynamic = this._minimumTrackProperties[propertyName];
+			//this.minimumTrack[propertyName] = propertyValue;
+			Reflect.setProperty(this.minimumTrack, propertyName, propertyValue);
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function refreshMaximumTrackStyles():Void
+	{
+		if (this.maximumTrack == null)
+		{
+			return;
+		}
+		for (propertyName in this._maximumTrackProperties)
+		{
+			var propertyValue:Dynamic = this._maximumTrackProperties[propertyName];
+			//this.maximumTrack[propertyName] = propertyValue;
+			Reflect.setProperty(this.maximumTrack, propertyName, propertyValue);
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function refreshDecrementButtonStyles():Void
+	{
+		for (propertyName in this._decrementButtonProperties)
+		{
+			var propertyValue:Dynamic = this._decrementButtonProperties[propertyName];
+			//this.decrementButton[propertyName] = propertyValue;
+			Reflect.setProperty(this.decrementButton, propertyName, propertyValue);
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function refreshIncrementButtonStyles():Void
+	{
+		for (propertyName in this._incrementButtonProperties)
+		{
+			var propertyValue:Dynamic = this._incrementButtonProperties[propertyName];
+			//this.incrementButton[propertyName] = propertyValue;
+			Reflect.setProperty(this.incrementButton, propertyName, propertyValue);
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function refreshEnabled():Void
+	{
+		var isEnabled:Bool = this._isEnabled && this._maximum > this._minimum;
+		if (Std.isOfType(this.thumb, IFeathersControl))
+		{
+			cast(this.thumb, IFeathersControl).isEnabled = isEnabled;
+		}
+		if (Std.isOfType(this.minimumTrack, IFeathersControl))
+		{
+			cast(this.minimumTrack, IFeathersControl).isEnabled = isEnabled;
+		}
+		if (Std.isOfType(this.maximumTrack, IFeathersControl))
+		{
+			cast(this.maximumTrack, IFeathersControl).isEnabled = isEnabled;
+		}
+		this.decrementButton.isEnabled = isEnabled;
+		this.incrementButton.isEnabled = isEnabled;
+	}
+	
+	/**
+	 * @private
+	 */
+	private function layout():Void
+	{
+		this.layoutStepButtons();
+		this.layoutThumb();
+		
+		if (this._trackLayoutMode == TrackLayoutMode.SPLIT)
+		{
+			this.layoutTrackWithMinMax();
+		}
+		else //single
+		{
+			this.layoutTrackWithSingle();
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function layoutStepButtons():Void
+	{
+		if (this._direction == Direction.VERTICAL)
+		{
+			this.decrementButton.x = (this.actualWidth - this.decrementButton.width) / 2;
+			this.decrementButton.y = 0;
+			this.incrementButton.x = (this.actualWidth - this.incrementButton.width) / 2;
+			this.incrementButton.y = this.actualHeight - this.incrementButton.height;
+		}
+		else
+		{
+			this.decrementButton.x = 0;
+			this.decrementButton.y = (this.actualHeight - this.decrementButton.height) / 2;
+			this.incrementButton.x = this.actualWidth - this.incrementButton.width;
+			this.incrementButton.y = (this.actualHeight - this.incrementButton.height) / 2;
+		}
+		var showButtons:Bool = this._maximum != this._minimum;
+		this.decrementButton.visible = showButtons;
+		this.incrementButton.visible = showButtons;
+	}
+	
+	/**
+	 * @private
+	 */
+	private function layoutThumb():Void
+	{
+		var range:Float = this._maximum - this._minimum;
+		this.thumb.visible = range > 0 && range < Math.POSITIVE_INFINITY && this._isEnabled;
+		if (!this.thumb.visible)
+		{
+			return;
+		}
+		
+		//this will auto-size the thumb, if needed
+		if (Std.isOfType(this.thumb, IValidating))
+		{
+			cast(this.thumb, IValidating).validate();
+		}
+		
+		var contentWidth:Float = this.actualWidth - this._paddingLeft - this._paddingRight;
+		var contentHeight:Float = this.actualHeight - this._paddingTop - this._paddingBottom;
+		var adjustedPage:Float = this._page;
+		if (this._page == 0)
+		{
+			adjustedPage = this._step;
+		}
+		if (adjustedPage > range)
+		{
+			adjustedPage = range;
+		}
+		if (this._direction == Direction.VERTICAL)
+		{
+			contentHeight -= (this.decrementButton.height + this.incrementButton.height);
+			var thumbMinHeight:Float = this.thumbOriginalHeight;
+			if (Std.isOfType(this.thumb, IMeasureDisplayObject))
+			{
+				thumbMinHeight = cast(this.thumb, IMeasureDisplayObject).minHeight;
+			}
+			this.thumb.width = this.thumbOriginalWidth;
+			if (this._fixedThumbSize)
+			{
+				this.thumb.height = this.thumbOriginalHeight;
+			}
+			else
+			{
+				this.thumb.height = Math.max(thumbMinHeight, contentHeight * adjustedPage / range);
+			}
+			var trackScrollableHeight:Float = contentHeight - this.thumb.height;
+			this.thumb.x = this._paddingLeft + (this.actualWidth - this._paddingLeft - this._paddingRight - this.thumb.width) / 2;
+			this.thumb.y = this.decrementButton.height + this._paddingTop + Math.max(0, Math.min(trackScrollableHeight, trackScrollableHeight * (this._value - this._minimum) / range));
+		}
+		else //horizontal
+		{
+			contentWidth -= (this.decrementButton.width + this.decrementButton.width);
+			var thumbMinWidth:Float = this.thumbOriginalWidth;
+			if (Std.isOfType(this.thumb, IMeasureDisplayObject))
+			{
+				thumbMinWidth = cast(this.thumb, IMeasureDisplayObject).minWidth;
+			}
+			if (this._fixedThumbSize)
+			{
+				this.thumb.width = this.thumbOriginalWidth;
+			}
+			else
+			{
+				this.thumb.width = Math.max(thumbMinWidth, contentWidth * adjustedPage / range);
+			}
+			this.thumb.height = this.thumbOriginalHeight;
+			var trackScrollableWidth:Float = contentWidth - this.thumb.width;
+			this.thumb.x = this.decrementButton.width + this._paddingLeft + Math.max(0, Math.min(trackScrollableWidth, trackScrollableWidth * (this._value - this._minimum) / range));
+			this.thumb.y = this._paddingTop + (this.actualHeight - this._paddingTop - this._paddingBottom - this.thumb.height) / 2;
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function layoutTrackWithMinMax():Void
+	{
+		var range:Float = this._maximum - this._minimum;
+		this.minimumTrack.touchable = range > 0 && range < Math.POSITIVE_INFINITY;
+		if (this.maximumTrack != null)
+		{
+			this.maximumTrack.touchable = range > 0 && range < Math.POSITIVE_INFINITY;
+		}
+		
+		var showButtons:Bool = this._maximum != this._minimum;
+		if (this._direction == Direction.VERTICAL)
+		{
+			this.minimumTrack.x = 0;
+			if (showButtons)
+			{
+				this.minimumTrack.y = this.decrementButton.height;
+			}
+			else
+			{
+				this.minimumTrack.y = 0;
+			}
+			this.minimumTrack.width = this.actualWidth;
+			this.minimumTrack.height = (this.thumb.y + this.thumb.height / 2) - this.minimumTrack.y;
+			
+			this.maximumTrack.x = 0;
+			this.maximumTrack.y = this.minimumTrack.y + this.minimumTrack.height;
+			this.maximumTrack.width = this.actualWidth;
+			if (showButtons)
+			{
+				this.maximumTrack.height = this.actualHeight - this.incrementButton.height - this.maximumTrack.y;
+			}
+			else
+			{
+				this.maximumTrack.height = this.actualHeight - this.maximumTrack.y;
+			}
+		}
+		else //horizontal
+		{
+			if (showButtons)
+			{
+				this.minimumTrack.x = this.decrementButton.width;
+			}
+			else
+			{
+				this.minimumTrack.x = 0;
+			}
+			this.minimumTrack.y = 0;
+			this.minimumTrack.width = (this.thumb.x + this.thumb.width / 2) - this.minimumTrack.x;
+			this.minimumTrack.height = this.actualHeight;
+			
+			this.maximumTrack.x = this.minimumTrack.x + this.minimumTrack.width;
+			this.maximumTrack.y = 0;
+			if (showButtons)
+			{
+				this.maximumTrack.width = this.actualWidth - this.incrementButton.width - this.maximumTrack.x;
+			}
+			else
+			{
+				this.maximumTrack.width = this.actualWidth - this.maximumTrack.x;
+			}
+			this.maximumTrack.height = this.actualHeight;
+		}
+		
+		//final validation to avoid juggler next frame issues
+		if (Std.isOfType(this.minimumTrack, IValidating))
+		{
+			cast(this.minimumTrack, IValidating).validate();
+		}
+		if (Std.isOfType(this.maximumTrack, IValidating))
+		{
+			cast(this.maximumTrack, IValidating).validate();
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function layoutTrackWithSingle():Void
+	{
+		var range:Float = this._maximum - this._minimum;
+		this.minimumTrack.touchable = range > 0 && range < Math.POSITIVE_INFINITY;
+		
+		var showButtons:Bool = this._maximum != this._minimum;
+		if (this._direction == Direction.VERTICAL)
+		{
+			this.minimumTrack.x = 0;
+			if (showButtons)
+			{
+				this.minimumTrack.y = this.decrementButton.height;
+			}
+			else
+			{
+				this.minimumTrack.y = 0;
+			}
+			this.minimumTrack.width = this.actualWidth;
+			if (showButtons)
+			{
+				this.minimumTrack.height = this.actualHeight - this.minimumTrack.y - this.incrementButton.height;
+			}
+			else
+			{
+				this.minimumTrack.height = this.actualHeight - this.minimumTrack.y;
+			}
+		}
+		else //horizontal
+		{
+			if (showButtons)
+			{
+				this.minimumTrack.x = this.decrementButton.width;
+			}
+			else
+			{
+				this.minimumTrack.x = 0;
+			}
+			this.minimumTrack.y = 0;
+			if (showButtons)
+			{
+				this.minimumTrack.width = this.actualWidth - this.minimumTrack.x - this.incrementButton.width;
+			}
+			else
+			{
+				this.minimumTrack.width = this.actualWidth - this.minimumTrack.x;
+			}
+			this.minimumTrack.height = this.actualHeight;
+		}
+		
+		//final validation to avoid juggler next frame issues
+		if (Std.isOfType(this.minimumTrack, IValidating))
+		{
+			cast(this.minimumTrack, IValidating).validate();
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function locationToValue(location:Point):Float
+	{
+		var percentage:Float = 0;
+		if (this._direction == Direction.VERTICAL)
+		{
+			var trackScrollableHeight:Float = this.actualHeight - this.thumb.height - this.decrementButton.height - this.incrementButton.height - this._paddingTop - this._paddingBottom;
+			if (trackScrollableHeight > 0)
+			{
+				var yOffset:Float = location.y - this._touchStartY - this._paddingTop;
+				var yPosition:Float = Math.min(Math.max(0, this._thumbStartY + yOffset - this.decrementButton.height), trackScrollableHeight);
+				percentage = yPosition / trackScrollableHeight;
+			}
+		}
+		else //horizontal
+		{
+			var trackScrollableWidth:Float = this.actualWidth - this.thumb.width - this.decrementButton.width - this.incrementButton.width - this._paddingLeft - this._paddingRight;
+			if (trackScrollableWidth > 0)
+			{
+				var xOffset:Float = location.x - this._touchStartX - this._paddingLeft;
+				var xPosition:Float = Math.min(Math.max(0, this._thumbStartX + xOffset - this.decrementButton.width), trackScrollableWidth);
+				percentage = xPosition / trackScrollableWidth;
+			}
+		}
+		
+		return this._minimum + percentage * (this._maximum - this._minimum);
+	}
+	
+	/**
+	 * @private
+	 */
+	private function decrement():Void
+	{
+		this.value -= this._step;
+	}
+
+	/**
+	 * @private
+	 */
+	private function increment():Void
+	{
+		this.value += this._step;
+	}
+	
+	/**
+	 * @private
+	 */
+	private function adjustPage():Void
+	{
+		var range:Float = this._maximum - this._minimum;
+		var adjustedPage:Float = this._page;
+		if (this._page == 0)
+		{
+			adjustedPage = this._step;
+		}
+		if (adjustedPage > range)
+		{
+			adjustedPage = range;
+		}
+		if (this._touchValue < this._pageStartValue)
+		{
+			var newValue:Float = Math.max(this._touchValue, this._value - adjustedPage);
+			if (this._step != 0 && newValue != this._maximum && newValue != this._minimum)
+			{
+				newValue = MathUtils.roundDownToNearest(newValue, this._step);
+			}
+			this.value = newValue;
+		}
+		else if(this._touchValue > this._pageStartValue)
+		{
+			newValue = Math.min(this._touchValue, this._value + adjustedPage);
+			if(this._step != 0 && newValue != this._maximum && newValue != this._minimum)
+			{
+				newValue = MathUtils.roundUpToNearest(newValue, this._step);
+			}
+			this.value = newValue;
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function startRepeatTimer(action:Void->Void):Void
+	{
+		this.currentRepeatAction = action;
+		if (this._repeatDelay > 0)
+		{
+			if (this._repeatTimer == null)
+			{
+				this._repeatTimer = new Timer(this._repeatDelay * 1000);
+				this._repeatTimer.addEventListener(TimerEvent.TIMER, repeatTimer_timerHandler);
+			}
+			else
+			{
+				this._repeatTimer.reset();
+				this._repeatTimer.delay = this._repeatDelay * 1000;
+			}
+			this._repeatTimer.start();
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function thumbProperties_onChange(proxy:PropertyProxy, name:Dynamic):Void
+	{
+		this.invalidate(INVALIDATION_FLAG_STYLES);
+	}
+
+	/**
+	 * @private
+	 */
+	private function minimumTrackProperties_onChange(proxy:PropertyProxy, name:Dynamic):Void
+	{
+		this.invalidate(INVALIDATION_FLAG_STYLES);
+	}
+
+	/**
+	 * @private
+	 */
+	private function maximumTrackProperties_onChange(proxy:PropertyProxy, name:Dynamic):Void
+	{
+		this.invalidate(INVALIDATION_FLAG_STYLES);
+	}
+
+	/**
+	 * @private
+	 */
+	private function decrementButtonProperties_onChange(proxy:PropertyProxy, name:Dynamic):Void
+	{
+		this.invalidate(INVALIDATION_FLAG_STYLES);
+	}
+
+	/**
+	 * @private
+	 */
+	private function incrementButtonProperties_onChange(proxy:PropertyProxy, name:Dynamic):Void
+	{
+		this.invalidate(INVALIDATION_FLAG_STYLES);
+	}
+	
+	/**
+	 * @private
+	 */
+	private function removedFromStageHandler(event:Event):Void
+	{
+		this._touchPointID = -1;
+		if (this._repeatTimer != null)
+		{
+			this._repeatTimer.stop();
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function track_touchHandler(event:TouchEvent):Void
+	{
+		if (!this._isEnabled)
+		{
+			this._touchPointID = -1;
+			return;
+		}
+		
+		var track:DisplayObject = cast event.currentTarget;
+		if (this._touchPointID >= 0)
+		{
+			var touch:Touch = event.getTouch(track, null, this._touchPointID);
+			if (touch == null)
+			{
+				return;
+			}
+			if (touch.phase == TouchPhase.MOVED)
+			{
+				var location:Point = touch.getLocation(this, Pool.getPoint());
+				this._touchValue = this.locationToValue(location);
+				Pool.putPoint(location);
+			}
+			else if (touch.phase == TouchPhase.ENDED)
+			{
+				this._touchPointID = -1;
+				this._repeatTimer.stop();
+				this.dispatchEventWith(FeathersEventType.END_INTERACTION);
+			}
+		}
+		else
+		{
+			touch = event.getTouch(track, TouchPhase.BEGAN);
+			if (touch == null)
+			{
+				return;
+			}
+			this._touchPointID = touch.id;
+			this.dispatchEventWith(FeathersEventType.BEGIN_INTERACTION);
+			location = touch.getLocation(this, Pool.getPoint());
+			this._touchStartX = location.x;
+			this._touchStartY = location.y;
+			this._thumbStartX = this._touchStartX;
+			this._thumbStartY = this._touchStartY;
+			this._touchValue = this.locationToValue(location);
+			Pool.putPoint(location);
+			this._pageStartValue = this._value;
+			this.adjustPage();
+			this.startRepeatTimer(this.adjustPage);
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function thumb_touchHandler(event:TouchEvent):Void
+	{
+		if (!this._isEnabled)
+		{
+			this._touchPointID = -1;
+			return;
+		}
+		
+		if (this._touchPointID >= 0)
+		{
+			var touch:Touch = event.getTouch(this.thumb, null, this._touchPointID);
+			if (touch == null)
+			{
+				return;
+			}
+			if (touch.phase == TouchPhase.MOVED)
+			{
+				var location:Point = touch.getLocation(this, Pool.getPoint());
+				var newValue:Float = this.locationToValue(location);
+				Pool.putPoint(location);
+				if (this._step != 0 && newValue != this._maximum && newValue != this._minimum)
+				{
+					newValue = MathUtils.roundToNearest(newValue, this._step);
+				}
+				this.value = newValue;
+			}
+			else if (touch.phase == TouchPhase.ENDED)
+			{
+				this._touchPointID = -1;
+				this.isDragging = false;
+				if (!this.liveDragging)
+				{
+					this.dispatchEventWith(Event.CHANGE);
+				}
+				this.dispatchEventWith(FeathersEventType.END_INTERACTION);
+			}
+		}
+		else
+		{
+			touch = event.getTouch(this.thumb, TouchPhase.BEGAN);
+			if(touch == null)
+			{
+				return;
+			}
+			location = touch.getLocation(this, Pool.getPoint());
+			this._touchPointID = touch.id;
+			this._thumbStartX = this.thumb.x;
+			this._thumbStartY = this.thumb.y;
+			this._touchStartX = location.x;
+			this._touchStartY = location.y;
+			Pool.putPoint(location);
+			this.isDragging = true;
+			this.dispatchEventWith(FeathersEventType.BEGIN_INTERACTION);
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function decrementButton_touchHandler(event:TouchEvent):Void
+	{
+		if (!this._isEnabled)
+		{
+			this._touchPointID = -1;
+			return;
+		}
+		
+		if (this._touchPointID >= 0)
+		{
+			var touch:Touch = event.getTouch(this.decrementButton, TouchPhase.ENDED, this._touchPointID);
+			if (touch == null)
+			{
+				return;
+			}
+			this._touchPointID = -1;
+			this._repeatTimer.stop();
+			this.dispatchEventWith(FeathersEventType.END_INTERACTION);
+		}
+		else //if we get here, we don't have a saved touch ID yet
+		{
+			touch = event.getTouch(this.decrementButton, TouchPhase.BEGAN);
+			if (touch == null)
+			{
+				return;
+			}
+			this._touchPointID = touch.id;
+			this.dispatchEventWith(FeathersEventType.BEGIN_INTERACTION);
+			this.decrement();
+			this.startRepeatTimer(this.decrement);
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function incrementButton_touchHandler(event:TouchEvent):Void
+	{
+		if (!this._isEnabled)
+		{
+			this._touchPointID = -1;
+			return;
+		}
+		
+		if (this._touchPointID >= 0)
+		{
+			var touch:Touch = event.getTouch(this.incrementButton, TouchPhase.ENDED, this._touchPointID);
+			if (touch == null)
+			{
+				return;
+			}
+			this._touchPointID = -1;
+			this._repeatTimer.stop();
+			this.dispatchEventWith(FeathersEventType.END_INTERACTION);
+		}
+		else //if we get here, we don't have a saved touch ID yet
+		{
+			touch = event.getTouch(this.incrementButton, TouchPhase.BEGAN);
+			if (touch == null)
+			{
+				return;
+			}
+			this._touchPointID = touch.id;
+			this.dispatchEventWith(FeathersEventType.BEGIN_INTERACTION);
+			this.increment();
+			this.startRepeatTimer(this.increment);
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function repeatTimer_timerHandler(event:TimerEvent):Void
+	{
+		if (this._repeatTimer.currentCount < 5)
+		{
+			return;
+		}
+		this.currentRepeatAction();
 	}
 	
 }
