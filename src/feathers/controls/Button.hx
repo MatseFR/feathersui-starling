@@ -22,6 +22,7 @@ import feathers.skins.IStyleProvider;
 import feathers.text.FontStylesSet;
 import feathers.utils.keyboard.KeyToState;
 import feathers.utils.keyboard.KeyToTrigger;
+import feathers.utils.skins.SkinsUtils;
 import feathers.utils.touch.LongPress;
 import openfl.geom.Matrix;
 import openfl.geom.Point;
@@ -318,9 +319,9 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_label():String { return this._label; }
 	private function set_label(value:String):String
 	{
-		if(this._label == value)
+		if (this._label == value)
 		{
-			return;
+			return value;
 		}
 		this._label = value;
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_DATA);
@@ -335,7 +336,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_hasLabelTextRenderer():Bool { return this._hasLabelTextRenderer; }
 	private function set_hasLabelTextRenderer(value:Bool):Bool
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_hasLabelTextRenderer))
 		{
 			return value;
 		}
@@ -356,13 +357,13 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_iconPosition():String { return this._iconPosition; }
 	private function set_iconPosition(value:String):String
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_iconPosition))
 		{
-			return;
+			return value;
 		}
 		if (this._iconPosition == value)
 		{
-			return;
+			return value;
 		}
 		this._iconPosition = value;
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
@@ -377,7 +378,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_gap():Float { return this._gap; }
 	private function set_gap(value:Float):Float
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_gap))
 		{
 			return value;
 		}
@@ -398,7 +399,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_minGap():Float { return this._minGap; }
 	private function set_minGap(value:Float):Float
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_minGap))
 		{
 			return value;
 		}
@@ -516,7 +517,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_paddingBottom():Float { return this._paddingBottom; }
 	private function set_paddingBottom(value:Float):Float
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_paddingBottom))
 		{
 			return value;
 		}
@@ -537,7 +538,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_paddingLeft():Float { return this._paddingLeft; }
 	private function set_paddingLeft(value:Float):Float
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_paddingLeft))
 		{
 			return value;
 		}
@@ -558,7 +559,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_labelOffsetX():Float { return this._labelOffsetX; }
 	private function set_labelOffsetX(value:Float):Float
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_labelOffsetX))
 		{
 			return value;
 		}
@@ -567,7 +568,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 			return value;
 		}
 		this._labelOffsetX = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._labelOffsetX;
 	}
 	
@@ -579,7 +580,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_labelOffsetY():Float { return this._labelOffsetY; }
 	private function set_labelOffsetY(value:Float):Float
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_labelOffsetY))
 		{
 			return value;
 		}
@@ -600,7 +601,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_iconOffsetX():Float { return this._iconOffsetX; }
 	private function set_iconOffsetX(value:Float):Float
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_iconOffsetX))
 		{
 			return value;
 		}
@@ -621,7 +622,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_iconOffsetY():Float { return this._iconOffsetY; }
 	private function set_iconOffsetY(value:Float):Float
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_iconOffsetY))
 		{
 			return value;
 		}
@@ -646,14 +647,14 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_fontStyles():TextFormat { return this._fontStylesSet.format; }
 	private function set_fontStyles(value:TextFormat):TextFormat
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_fontStyles))
 		{
 			return value;
 		}
-		var savedCallee:Function = arguments.callee;
+		//var savedCallee:Function = arguments.callee;
 		function changeHandler(event:Event):Void
 		{
-			processStyleRestriction(savedCallee);
+			processStyleRestriction(this.set_fontStyles);
 		}
 		if (value != null)
 		{
@@ -674,14 +675,14 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_disabledFontStyles():TextFormat { return this._fontStylesSet.disabledFormat; }
 	private function set_disabledFontStyles(value:TextFormat):TextFormat
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_disabledFontStyles))
 		{
 			return value;
 		}
-		var savedCallee:Function = arguments.callee;
+		//var savedCallee:Function = arguments.callee;
 		function changeHandler(event:Event):Void
 		{
-			processStyleRestriction(savedCallee);
+			processStyleRestriction(this.set_disabledFontStyles);
 		}
 		if (value != null)
 		{
@@ -703,7 +704,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_wordWrap():Bool { return this._wordWrap; }
 	private function set_wordWrap(value:Bool):Bool
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_wordWrap))
 		{
 			return value;
 		}
@@ -800,7 +801,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	 */
 	public var defaultLabelProperties(get, set):Dynamic;
 	private var _defaultLabelProperties:PropertyProxy;
-	private function get_defaultLabelProperties():String
+	private function get_defaultLabelProperties():Dynamic
 	{
 		if (this._defaultLabelProperties == null)
 		{
@@ -836,17 +837,17 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_defaultIcon():DisplayObject { return this._defaultIcon; }
 	private function set_defaultIcon(value:DisplayObject):DisplayObject
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_defaultIcon))
 		{
 			if(value != null)
 			{
 				value.dispose();
 			}
-			return;
+			return value;
 		}
 		if (this._defaultIcon == value)
 		{
-			return;
+			return value;
 		}
 		if(this._defaultIcon != null &&
 			this.currentIcon == this._defaultIcon)
@@ -930,7 +931,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	{
 		if (this._longPressDuration == value)
 		{
-			return;
+			return value;
 		}
 		this._longPressDuration = value;
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
@@ -962,7 +963,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	{
 		if (this._isLongPressEnabled == value)
 		{
-			return;
+			return value;
 		}
 		this._isLongPressEnabled = value;
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
@@ -993,6 +994,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function set_scaleWhenHovering(value:Float):Float
 	{
 		this.setScaleForState(ButtonState.HOVER, value);
+		return value;
 	}
 	
 	/**
@@ -1001,7 +1003,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	public var baseline(get, never):Float;
 	private function get_baseline():Float
 	{
-		if (this.labelRenderer == null)
+		if (this.labelTextRenderer == null)
 		{
 			return this.scaledActualHeight;
 		}
@@ -1368,7 +1370,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 			adjustedGap = this._minGap;
 		}
 		
-		resetFluidChildDimensionsForMeasurement(this.currentSkin,
+		SkinsUtils.resetFluidChildDimensionsForMeasurement(this.currentSkin,
 			this._explicitWidth, this._explicitHeight,
 			this._explicitMinWidth, this._explicitMinHeight,
 			this._explicitMaxWidth, this._explicitMaxHeight,
@@ -1837,7 +1839,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 			this.positionSingleChild(this.currentIcon);
 		}
 		
-		if (this.currentIcon)
+		if (this.currentIcon != null)
 		{
 			if (this._iconPosition == RelativePosition.MANUAL)
 			{

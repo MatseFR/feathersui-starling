@@ -261,14 +261,16 @@ class DefaultToolTipManager
 	 */
 	private function root_touchHandler(event:TouchEvent):Void
 	{
+		var touch:Touch;
+		
 		if (this._toolTip != null && this._toolTip.parent != null)
 		{
-			var touch:Touch = event.getTouch(cast this._target, null, this._touchPointID);
+			touch = event.getTouch(cast this._target, null, this._touchPointID);
 			if (touch == null || touch.phase != TouchPhase.HOVER)
 			{
 				//to avoid excessive garbage collection, we reuse the
 				//tooltip object
-				PopUpManager.removePopUp(DisplayObject(this._toolTip), false);
+				PopUpManager.removePopUp(cast this._toolTip, false);
 				this._touchPointID = -1;
 				this._target = null;
 				this._hideTime = getTimer();

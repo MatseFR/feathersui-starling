@@ -12,7 +12,7 @@ package feathers.core;
  *
  * @productversion Feathers 3.0.0
  */
-interface IMeasureDisplayObject 
+interface IMeasureDisplayObject extends IFeathersDisplayObject
 {
 	/**
 	 * @copy feathers.core.FeathersControl#explicitWidth

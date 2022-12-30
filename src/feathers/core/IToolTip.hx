@@ -15,7 +15,7 @@ package feathers.core;
  *
  * @productversion Feathers 3.0.0
  */
-interface IToolTip 
+interface IToolTip extends IFeathersControl
 {
 	public var text(get, set):String;
 }

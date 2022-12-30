@@ -47,7 +47,7 @@ class DefaultPopUpManager implements IPopUpManager
 	/**
 	 * @private
 	 */
-	private var _popUps:Array<DisplayObject> = new Array<DisplayObject>;
+	private var _popUps:Array<DisplayObject> = new Array<DisplayObject>();
 	
 	/**
 	 * @copy PopUpManager#popUpCount
@@ -98,13 +98,15 @@ class DefaultPopUpManager implements IPopUpManager
 		{
 			return value;
 		}
+		var popUp:DisplayObject;
+		var overlay:DisplayObject;
 		var popUpCount:Int = this._popUps.length;
 		var oldIgnoreRemoval:Bool = this._ignoreRemoval; //just in case
 		this._ignoreRemoval = true;
 		for (i in 0...popUpCount)
 		{
-			var popUp:DisplayObject = this._popUps[i];
-			var overlay:DisplayObject = _popUpToOverlay[popUp];
+			popUp = this._popUps[i];
+			overlay = _popUpToOverlay[popUp];
 			popUp.removeFromParent(false);
 			if (overlay != null)
 			{
@@ -238,7 +240,7 @@ class DefaultPopUpManager implements IPopUpManager
 				//we haven't encountered an overlay yet, so it is top-level
 				return true;
 			}
-			var overlay:DisplayObject = this._popUpToOverlay[otherPopUp] as DisplayObject;
+			var overlay:DisplayObject = this._popUpToOverlay[otherPopUp];
 			if (overlay != null)
 			{
 				//this is the first overlay, and we haven't found the pop-up
@@ -295,7 +297,7 @@ class DefaultPopUpManager implements IPopUpManager
 		if (overlay != null)
 		{
 			overlay.removeFromParent(true);
-			delete _popUpToOverlay[popUp];
+			_popUpToOverlay.remove(popUp);
 		}
 		var focusManager:IFocusManager = this._popUpToFocusManager[popUp];
 		if (focusManager != null)
@@ -326,10 +328,12 @@ class DefaultPopUpManager implements IPopUpManager
 	{
 		var stage:Stage = this._root.stage;
 		var popUpCount:Int = this._popUps.length;
-		for(i in 0...popUpCount)
+		var popUp:DisplayObject;
+		var overlay:DisplayObject;
+		for (i in 0...popUpCount)
 		{
-			var popUp:DisplayObject = this._popUps[i];
-			var overlay:DisplayObject = this._popUpToOverlay[popUp];
+			popUp = this._popUps[i];
+			overlay = this._popUpToOverlay[popUp];
 			if (overlay != null)
 			{
 				overlay.width = stage.stageWidth;

@@ -52,7 +52,7 @@ class SkinsUtils
 		{
 			child.height = parentExplicitHeight;
 		}
-		var measureChild:IMeasureDisplayObject = child as IMeasureDisplayObject;
+		var measureChild:IMeasureDisplayObject = Std.isOfType(child, IMeasureDisplayObject) ? cast child : null;
 		if (measureChild != null)
 		{
 			var childMinWidth:Float = parentExplicitMinWidth;

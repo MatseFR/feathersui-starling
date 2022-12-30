@@ -795,12 +795,13 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 	**/
 	override function set_x(value:Float):Float 
 	{
+		var moveEffectContext:IMoveEffectContext;
 		var newY:Float = this.y;
 		if (this._suspendEffectsCount == 0 && this._moveEffectContext != null)
 		{
 			if (Std.isOfType(this._moveEffectContext, IMoveEffectContext))
 			{
-				var moveEffectContext:IMoveEffectContext = cast this._moveEffectContext;
+				moveEffectContext = cast this._moveEffectContext;
 				newY = moveEffectContext.newY;
 			}
 			this._moveEffectContext.interrupt();
@@ -836,12 +837,13 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 	**/
 	override function set_y(value:Float):Float
 	{
+		var moveEffectContext:IMoveEffectContext;
 		var newX:Float = this.x;
 		if (this._suspendEffectsCount == 0 && this._moveEffectContext != null)
 		{
 			if (Std.isOfType(this._moveEffectContext, IMoveEffectContext))
 			{
-				var moveEffectContext:IMoveEffectContext = cast this._moveEffectContext;
+				moveEffectContext = cast this._moveEffectContext;
 				newX = moveEffectContext.newX;
 			}
 			this._moveEffectContext.interrupt();
@@ -2268,7 +2270,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 			
 			if (this._suspendEffectsCount == 0 && this.stage != null && this._addedEffect != null)
 			{
-				this._addedEffectContext = cast this._adddEffect(this);
+				this._addedEffectContext = cast this._addedEffect(this);
 				this._addedEffectContext.addEventListener(Event.COMPLETE, addedEffectContext_completeHandler);
 				this._addedEffectContext.play();
 			}

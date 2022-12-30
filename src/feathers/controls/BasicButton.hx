@@ -14,6 +14,7 @@ import feathers.core.IStateObserver;
 import feathers.core.IValidating;
 import feathers.events.FeathersEventType;
 import feathers.skins.IStyleProvider;
+import feathers.utils.skins.SkinsUtils;
 import feathers.utils.touch.TapToTrigger;
 import feathers.utils.touch.TouchToState;
 import openfl.geom.Point;
@@ -108,6 +109,7 @@ class BasicButton extends FeathersControl implements IStateContext
 		{
 			this.changeState(ButtonState.DISABLED);
 		}
+		return this._isEnabled;
 	}
 	
 	/**
@@ -118,7 +120,7 @@ class BasicButton extends FeathersControl implements IStateContext
 	private function get_keepDownStateOnRollOut():Bool { return this._keepDownStateOnRollOut; }
 	private function set_keepDownStateOnRollOut(value:Bool):Bool
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_keepDownStateOnRollOut))
 		{
 			return value;
 		}
@@ -135,7 +137,7 @@ class BasicButton extends FeathersControl implements IStateContext
 	private function get_defaultSkin():DisplayObject { return this._defaultSkin; }
 	private function set_defaultSkin(value:DisplayObject):DisplayObject
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_defaultSkin))
 		{
 			if (value != null)
 			{
@@ -390,7 +392,7 @@ class BasicButton extends FeathersControl implements IStateContext
 			return false;
 		}
 		
-		resetFluidChildDimensionsForMeasurement(this.currentSkin,
+		SkinsUtils.resetFluidChildDimensionsForMeasurement(this.currentSkin,
 			this._explicitWidth, this._explicitHeight,
 			this._explicitMinWidth, this._explicitMinHeight,
 			this._explicitMaxWidth, this._explicitMaxHeight,
@@ -485,7 +487,7 @@ class BasicButton extends FeathersControl implements IStateContext
 				{
 					cast(this.currentSkin, IFeathersControl).initializeNow();
 				}
-				if (Std.isOfTypr(this.currentSkin, IMeasureDisplayObject))
+				if (Std.isOfType(this.currentSkin, IMeasureDisplayObject))
 				{
 					var measureSkin:IMeasureDisplayObject = cast this.currentSkin;
 					this._explicitSkinWidth = measureSkin.explicitWidth;

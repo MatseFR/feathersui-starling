@@ -14,7 +14,7 @@ package feathers.core;
  *
  * @productversion Feathers 1.3.0
  */
-interface IValidating 
+interface IValidating extends IFeathersDisplayObject
 {
 	/**
 	 * The component's depth in the display list, relative to the stage. If
