@@ -127,6 +127,15 @@ class Header extends FeathersControl
 	public static inline var DEFAULT_CHILD_STYLE_NAME_ITEM:String = "feathers-header-item";
 	
 	/**
+	 * The default value added to the <code>styleNameList</code> of the
+	 * header's title text renderer.
+	 *
+	 * @see feathers.core.FeathersControl#styleNameList
+	 * @see ../../../help/text-renderers.html Introduction to Feathers text renderers
+	 */
+	public static inline var DEFAULT_CHILD_STYLE_NAME_TITLE:String = "feathers-header-title";
+	
+	/**
 	 * @private
 	 */
 	private static var HELPER_BOUNDS:ViewPortBounds = new ViewPortBounds();
@@ -270,7 +279,7 @@ class Header extends FeathersControl
 	 * @see feathers.core.ITextRenderer
 	 * @see feathers.core.FeathersControl#defaultTextRendererFactory
 	 */
-	public var titleFactory(get, set):Void->ITextRenderer
+	public var titleFactory(get, set):Void->ITextRenderer;
 	private var _titleFactory:Void->ITextRenderer;
 	private function get_titleFactory():Void->ITextRenderer { return this._titleFactory; }
 	private function set_titleFactory(value:Void->ITextRenderer):Void->ITextRenderer
@@ -642,7 +651,7 @@ class Header extends FeathersControl
 		{
 			return value;
 		}
-		if(this._verticalAlign === value)
+		if (this._verticalAlign == value)
 		{
 			return value;
 		}
@@ -1014,7 +1023,7 @@ class Header extends FeathersControl
 	/**
 	 * @private
 	 */
-	override protected function initialize():Void
+	override function initialize():Void
 	{
 		if (this._layout == null)
 		{
@@ -1885,7 +1894,7 @@ class Header extends FeathersControl
 	 */
 	private function nativeStage_fullScreenHandler(event:FullScreenEvent):Void
 	{
-		this.invalidate(INVALIDATION_FLAG_SIZE);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 	}
 	
 	/**
@@ -1893,7 +1902,7 @@ class Header extends FeathersControl
 	 */
 	private function fontStyles_changeHandler(event:Event):Void
 	{
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 	}
 	
 	/**
@@ -1901,7 +1910,7 @@ class Header extends FeathersControl
 	 */
 	private function titleProperties_onChange(proxy:PropertyProxy, propertyName:String):Void
 	{
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 	}
 	
 	/**

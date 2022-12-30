@@ -6,7 +6,7 @@ This program is free software. You can redistribute and/or modify it in
 accordance with the terms of the accompanying license agreement.
 */
 package feathers.skins;
-import src.feathers.core.IFeathersControl;
+import feathers.core.IFeathersControl;
 
 /**
  * A style provider that chooses between two different style providers.

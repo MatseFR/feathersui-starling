@@ -170,7 +170,7 @@ class KeyToSelect
 	private function get_isEnabled():Bool { return this._isEnabled; }
 	private function set_isEnabled(value:Bool):Bool
 	{
-		return this._isEnabled = value:
+		return this._isEnabled = value;
 	}
 	
 	/**

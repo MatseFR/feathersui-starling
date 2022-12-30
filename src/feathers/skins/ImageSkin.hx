@@ -16,7 +16,7 @@ import feathers.utils.math.MathUtils;
 import openfl.errors.IllegalOperationError;
 import openfl.geom.Point;
 import openfl.geom.Rectangle;
-import src.feathers.core.IFeathersControl;
+import feathers.core.IFeathersControl;
 import starling.display.DisplayObject;
 import starling.display.Image;
 import starling.events.Event;
@@ -496,14 +496,14 @@ class ImageSkin extends Image implements IMeasureDisplayObject implements IState
 	 * The maximum width of the component.
 	 */
 	public var maxWidth(get, set):Float;
-	private function get_maxWidth():Float { return this._explicitMaxWidth }
+	private function get_maxWidth():Float { return this._explicitMaxWidth; }
 	private function set_maxWidth(value:Float):Float
 	{
 		if (this._explicitMaxWidth == value)
 		{
 			return value;
 		}
-		if  (value != value && this._explicitMaxWidth != this._explicitMaxWidth) //isNaN
+		if (value != value && this._explicitMaxWidth != this._explicitMaxWidth) //isNaN
 		{
 			return value;
 		}

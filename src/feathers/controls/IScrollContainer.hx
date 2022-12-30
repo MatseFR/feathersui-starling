@@ -45,7 +45,7 @@ interface IScrollContainer
 	 * Gets the direct child of the <code>Scroller</code> at a specific
 	 * index rather than delegating the call to the view port.
 	 */
-	function getRawChildAt(index:int):DisplayObject;
+	function getRawChildAt(index:Int):DisplayObject;
 
 	/**
 	 * Sets the index of a direct child of the <code>Scroller</code> rather
@@ -87,7 +87,7 @@ interface IScrollContainer
 	 * Swaps the children of the <code>Scroller</code> rather than
 	 * delegating the call to the view port.
 	 */
-	function swapRawChildrenAt(index1:Int, index2:Int):void;
+	function swapRawChildrenAt(index1:Int, index2:Int):Void;
 
 	/**
 	 * Sorts the children of the <code>Scroller</code> rather than

@@ -16,6 +16,7 @@ import feathers.motion.effectClasses.IEffectContext;
 import feathers.motion.effectClasses.IMoveEffectContext;
 import feathers.motion.effectClasses.IResizeEffectContext;
 import feathers.skins.IStyleProvider;
+import feathers.utils.display.DisplayUtils;
 import feathers.utils.math.MathUtils;
 import haxe.Constraints.Function;
 import openfl.errors.ArgumentError;
@@ -24,7 +25,7 @@ import openfl.errors.IllegalOperationError;
 import openfl.geom.Matrix;
 import openfl.geom.Point;
 import openfl.geom.Rectangle;
-import src.feathers.core.IFeathersControl;
+import feathers.core.IFeathersControl;
 import starling.display.DisplayObject;
 import starling.display.Sprite;
 import starling.events.Event;
@@ -161,7 +162,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 		this.styleProvider = this.defaultStyleProvider;
 		this.addEventListener(Event.ADDED_TO_STAGE, feathersControl_addedToStageHandler);
 		this.addEventListener(Event.REMOVED_FROM_STAGE, feathersControl_removedFromStageHandler);
-		if (Std.isOfType(this, IFocusDisplayObject)
+		if (Std.isOfType(this, IFocusDisplayObject))
 		{
 			this.addEventListener(FeathersEventType.FOCUS_IN, focusInHandler);
 			this.removeEventListener(FeathersEventType.FOCUS_OUT, focusOutHandler);
@@ -558,7 +559,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 		{
 			throw new IllegalOperationError("Cannot change styleProvider while the current style provider is applying styles.");
 		}
-		if (this._styleProvider != null && Std.isOfType(this._styleProvider, EventDispatcher)
+		if (this._styleProvider != null && Std.isOfType(this._styleProvider, EventDispatcher))
 		{
 			cast(this._styleProvider, EventDispatcher).removeEventListener(Event.CHANGE, styleProvider_changeHandler);
 		}
@@ -576,6 +577,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 				cast(this._styleProvider, EventDispatcher).addEventListener(Event.CHANGE, styleProvider_changeHandler);
 			}
 		}
+		return this._styleProvider;
 	}
 	
 	/**
@@ -837,7 +839,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 		var newX:Float = this.x;
 		if (this._suspendEffectsCount == 0 && this._moveEffectContext != null)
 		{
-			if (Std.isOfType(this._moveEffectContext, IMoveEffectContext)
+			if (Std.isOfType(this._moveEffectContext, IMoveEffectContext))
 			{
 				var moveEffectContext:IMoveEffectContext = cast this._moveEffectContext;
 				newX = moveEffectContext.newX;
@@ -948,7 +950,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 		{
 			if (Std.isOfType(this._resizeEffectContext, IResizeEffectContext))
 			{
-				var resizeEffectContext:IResizeEffectContext = cast this._resizeEffectContext);
+				var resizeEffectContext:IResizeEffectContext = cast this._resizeEffectContext;
 				newHeight = resizeEffectContext.newHeight;
 			}
 			this._resizeEffectContext.interrupt();
@@ -1081,7 +1083,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 		var newWidth:Float = this.actualWidth;
 		if (this._suspendEffectsCount == 0 && this._resizeEffectContext != null)
 		{
-			if (Std.isOfType(this._resizeEffectContext, IResizeEffectContext)
+			if (Std.isOfType(this._resizeEffectContext, IResizeEffectContext))
 			{
 				var resizeEffectContext:IResizeEffectContext = cast this._resizeEffectContext;
 				newWidth = resizeEffectContext.newWidth;
@@ -1391,7 +1393,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 		}
 		if (this._explicitMaxWidth == value)
 		{
-			return;
+			return value;
 		}
 		if (value != value) //isNaN
 		{
@@ -1405,6 +1407,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 			//only invalidate if this change might affect the width
 			this.invalidate(INVALIDATION_FLAG_SIZE);
 		}
+		return this._explicitMaxWidth;
 	}
 	
 	/**
@@ -1446,7 +1449,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 		}
 		if (this._explicitMaxHeight == value)
 		{
-			return;
+			return value;
 		}
 		if (value != value) //isNaN
 		{
@@ -1460,6 +1463,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 			//only invalidate if this change might affect the width
 			this.invalidate(INVALIDATION_FLAG_SIZE);
 		}
+		return this._explicitMaxHeight;
 	}
 	
 	/**
@@ -2397,7 +2401,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 		{
 			this._moveEffectContext = cast this._moveEffect(this);
 			this._moveEffectContext.addEventListener(Event.COMPLETE, moveEffectContext_completeHandler);
-			if (Std.isOfType(this._moveEffectContext, IMoveEffectContext)
+			if (Std.isOfType(this._moveEffectContext, IMoveEffectContext))
 			{
 				var moveEffectContext:IMoveEffectContext = cast this._moveEffectContext;
 				moveEffectContext.oldX = this.x;
@@ -3001,7 +3005,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 		{
 			this.initializeNow();
 		}
-		this._depth = getDisplayObjectDepthFromStage(this);
+		this._depth = DisplayUtils.getDisplayObjectDepthFromStage(this);
 		this._validationQueue = ValidationQueue.forStarling(this.stage.starling);
 		if (this.isInvalid())
 		{
@@ -3019,7 +3023,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 		if (this.isCreated && this._suspendEffectsCount == 0 && this._addedEffect != null)
 		{
 			this._addedEffectContext = cast this._addedEffect(this);
-			this._addedEffectContext.addEventListener(Event.COMPLETE, addEffectContext_completeHandler);
+			this._addedEffectContext.addEventListener(Event.COMPLETE, addedEffectContext_completeHandler);
 			this._addedEffectContext.play();
 		}
 	}
@@ -3029,7 +3033,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 	**/
 	private function feathersControl_removedFromStageHandler(event:Event):Void
 	{
-		if(this._addedEffectContext !== null)
+		if (this._addedEffectContext != null)
 		{
 			this._addedEffectContext.interrupt();
 		}

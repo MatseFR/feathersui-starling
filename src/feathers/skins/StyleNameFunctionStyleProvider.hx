@@ -7,7 +7,7 @@ accordance with the terms of the accompanying license agreement.
 */
 package feathers.skins;
 import feathers.core.TokenList;
-import src.feathers.core.IFeathersControl;
+import feathers.core.IFeathersControl;
 
 /**
  * Similar to <code>FunctionStyleProvider</code>, sets styles on a Feathers

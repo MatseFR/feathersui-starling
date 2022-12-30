@@ -216,7 +216,8 @@ class ScrollContainer extends Scroller implements IScrollContainer implements IF
 	/**
 	 * @inheritDoc
 	 */
-	public var numRawChildren(get, never):Int
+	public var numRawChildren(get, never):Int;
+	private function get_numRawChildren():Int
 	{
 		var oldBypass:Bool = this.displayListBypassEnabled;
 		this.displayListBypassEnabled = false;
@@ -264,7 +265,7 @@ class ScrollContainer extends Scroller implements IScrollContainer implements IF
 	/**
 	 * @inheritDoc
 	 */
-	public function getRawChildAt(index:int):DisplayObject
+	public function getRawChildAt(index:Int):DisplayObject
 	{
 		var oldBypass:Bool = this.displayListBypassEnabled;
 		this.displayListBypassEnabled = false;
@@ -303,7 +304,7 @@ class ScrollContainer extends Scroller implements IScrollContainer implements IF
 	/**
 	 * @private
 	 */
-	override public function addChildAt(child:DisplayObject, index:int):DisplayObject
+	override public function addChildAt(child:DisplayObject, index:Int):DisplayObject
 	{
 		if (!this.displayListBypassEnabled)
 		{
@@ -530,7 +531,7 @@ class ScrollContainer extends Scroller implements IScrollContainer implements IF
 	/**
 	 * @private
 	 */
-	override protected function initialize():Void
+	override function initialize():Void
 	{
 		if (this.stage != null)
 		{
@@ -573,7 +574,7 @@ class ScrollContainer extends Scroller implements IScrollContainer implements IF
 	/**
 	 * @private
 	 */
-	override protected function autoSizeIfNeeded():Boolean
+	override function autoSizeIfNeeded():Bool
 	{
 		var needsWidth:Bool = this._explicitWidth != this._explicitWidth; //isNaN
 		var needsHeight:Bool = this._explicitHeight != this._explicitHeight; //isNaN

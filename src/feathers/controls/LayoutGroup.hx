@@ -18,7 +18,7 @@ import feathers.layout.LayoutBoundsResult;
 import feathers.layout.ViewPortBounds;
 import feathers.skins.IStyleProvider;
 import openfl.geom.Point;
-import src.feathers.core.IFeathersControl;
+import feathers.core.IFeathersControl;
 import starling.display.DisplayObject;
 import starling.display.Quad;
 import starling.events.Event;
@@ -227,9 +227,9 @@ class LayoutGroup extends FeathersControl
 	private function get_backgroundSkin():DisplayObject { return _backgroundSkin; }
 	private function set_backgroundSkin(value:DisplayObject):DisplayObject
 	{
-		if(this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_backgroundSkin))
 		{
-			if(value != null)
+			if (value != null)
 			{
 				value.dispose();
 			}
@@ -258,9 +258,9 @@ class LayoutGroup extends FeathersControl
 	private function get_backgroundDisabledSkin():DisplayObject { return this._backgroundDisabledSkin; }
 	private function set_backgroundDisabledSkin(value:DisplayObject):DisplayObject
 	{
-		if(this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_backgroundDisabledSkin))
 		{
-			if(value !== null)
+			if (value != null)
 			{
 				value.dispose();
 			}
@@ -333,7 +333,7 @@ class LayoutGroup extends FeathersControl
 	 * This is similar to _ignoreChildChanges, but setInvalidationFlag()
 	 * may still be called.
 	 */
-	private var _ignoreChildChangesButSetFlags:Bool = false
+	private var _ignoreChildChangesButSetFlags:Bool = false;
 	
 	/**
 	   @private
@@ -636,7 +636,7 @@ class LayoutGroup extends FeathersControl
 			this.removeCurrentBackgroundSkin(oldBackgroundSkin);
 			if (this.currentBackgroundSkin != null)
 			{
-				if (Std.isOfType(this.currentBackgroundSkin, IFeathersControl)
+				if (Std.isOfType(this.currentBackgroundSkin, IFeathersControl))
 				{
 					cast(this.currentBackgroundSkin, IFeathersControl).initializeNow();
 				}
@@ -680,7 +680,7 @@ class LayoutGroup extends FeathersControl
 			//next time that this skin is used for measurement
 			skin.width = this._explicitBackgroundWidth;
 			skin.height = this._explicitBackgroundHeight;
-			if (Std.isOfType(skin, IMeasureDisplayObject)
+			if (Std.isOfType(skin, IMeasureDisplayObject))
 			{
 				var measureSkin:IMeasureDisplayObject = cast skin;
 				measureSkin.minWidth = this._explicitBackgroundMinWidth;
@@ -829,11 +829,11 @@ class LayoutGroup extends FeathersControl
 		for (i in 0...itemCount)
 		{
 			var item:DisplayObject = this.items[i];
-			if (Std.isOfType(item, ILayoutDisplayObject && cast(item, ILayoutDisplayObject).includeInLayout)
+			if (Std.isOfType(item, ILayoutDisplayObject) && cast(item, ILayoutDisplayObject).includeInLayout)
 			{
 				continue;
 			}
-			if (Std.isOfType(item, IValidating)
+			if (Std.isOfType(item, IValidating))
 			{
 				cast(item, IValidating).validate();
 			}

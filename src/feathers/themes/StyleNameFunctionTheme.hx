@@ -11,7 +11,7 @@ import feathers.skins.ConditionalStyleProvider;
 import feathers.skins.IStyleProvider;
 import feathers.skins.StyleNameFunctionStyleProvider;
 import feathers.skins.StyleProviderRegistry;
-import src.feathers.core.IFeathersControl;
+import feathers.core.IFeathersControl;
 import starling.core.Starling;
 import starling.events.EventDispatcher;
 
@@ -30,7 +30,7 @@ class StyleNameFunctionTheme extends EventDispatcher
 	/**
 	 * @private
 	 */
-	private static const GLOBAL_STYLE_PROVIDER_PROPERTY_NAME:String = "globalStyleProvider";
+	private static inline var GLOBAL_STYLE_PROVIDER_PROPERTY_NAME:String = "globalStyleProvider";
 	
 	/**
 	 * Constructor.

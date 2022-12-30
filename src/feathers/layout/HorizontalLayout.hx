@@ -13,7 +13,7 @@ import openfl.errors.IllegalOperationError;
 import openfl.errors.RangeError;
 import openfl.geom.Point;
 import openfl.ui.Keyboard;
-import src.feathers.core.IFeathersControl;
+import feathers.core.IFeathersControl;
 import starling.display.DisplayObject;
 import starling.events.Event;
 
@@ -24,7 +24,7 @@ import starling.events.Event;
  *
  * @productversion Feathers 1.0.0
  */
-class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayout implements ITrimmedVirtualLayout, implements IDragDropLayout
+class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayout implements ITrimmedVirtualLayout implements IDragDropLayout
 {
 	/**
 	 * Constructor.
@@ -142,11 +142,11 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 	private function get_maxColumnCount():Int { return this._maxColumnCount; }
 	private function set_maxColumnCount(value:Int):Int
 	{
-		if(value < 0)
+		if (value < 0)
 		{
 			throw RangeError("maxColumnCount requires a value >= 0");
 		}
-		if(this._maxColumnCount == value)
+		if (this._maxColumnCount == value)
 		{
 			return value;
 		}
@@ -165,7 +165,7 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 	 * @see feathers.layout.HorizontalAlign#CENTER
 	 * @see feathers.layout.HorizontalAlign#RIGHT
 	 */
-	public var scrollPositionHorizontalAlign():String;
+	public var scrollPositionHorizontalAlign(get, set):String;
 	private var _scrollPositionHorizontalAlign:String = HorizontalAlign.CENTER;
 	private function get_scrollPositionHorizontalAlign():String { return this._scrollPositionHorizontalAlign; }
 	private function set_scrollPositionHorizontalAlign(value:String):String
@@ -379,8 +379,8 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 							//attempt to adjust the scroll position so that
 							//it looks like we're scrolling smoothly after
 							//this item resizes.
-							if(positionX < scrollX &&
-								cachedWidth !== cachedWidth && //isNaN
+							if (positionX < scrollX &&
+								cachedWidth != cachedWidth && //isNaN
 								itemWidth != calculatedTypicalItemWidth)
 							{
 								this.dispatchEventWith(Event.SCROLL, false, new Point(itemWidth - calculatedTypicalItemWidth, 0));
@@ -394,7 +394,7 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 						//if all items must have the same width, we will
 						//use the width of the typical item (calculatedTypicalItemWidth).
 						itemWidth = calculatedTypicalItemWidth;
-						if(item != this._typicalItem || item.width != itemWidth)
+						if (item != this._typicalItem || item.width != itemWidth)
 						{
 							//ensure that the typical item's width is not
 							//set explicitly so that it can resize
@@ -1222,7 +1222,7 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 		}
 		var indexMinusOffset:Int = index - indexOffset;
 		
-		if (Std.isOfType(dropIndicator, IValidating)
+		if (Std.isOfType(dropIndicator, IValidating))
 		{
 			cast(dropIndicator, IValidating).validate();
 		}
@@ -1368,7 +1368,7 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 		for (i in 0...itemCount)
 		{
 			var item:DisplayObject = items[i];
-			if (item == null || Std.isOfType(item, ILayoutDisplayObject) && !cast(item, ILayoutDisplayObject).includeInLayout))
+			if (item == null || (Std.isOfType(item, ILayoutDisplayObject) && !cast(item, ILayoutDisplayObject).includeInLayout))
 			{
 				continue;
 			}

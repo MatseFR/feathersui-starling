@@ -70,7 +70,7 @@ class StyleProviderRegistry
 	/**
 	 * @private
 	 */
-	private var _classToStyleProvider:Map<Class<Dynamic>, IStyleProvider> = new Map<Class<Dynamic>, IStyleProvider>;
+	private var _classToStyleProvider:Map<Class<Dynamic>, IStyleProvider> = new Map<Class<Dynamic>, IStyleProvider>();
 	
 	/**
 	 * Disposes the theme.
@@ -92,7 +92,7 @@ class StyleProviderRegistry
 	 * Determines if an <code>IStyleProvider</code> for the specified
 	 * component class has been created.
 	 *
-	 * @param forClass					The class that may have a style provider.
+	 * @param forClass	The class that may have a style provider.
 	 */
 	public function hasStyleProvider(forClass:Class<Dynamic>):Bool
 	{
@@ -114,7 +114,7 @@ class StyleProviderRegistry
 		}
 		else
 		{
-			result = new Array<Class<Dynamic>>;
+			result = new Array<Class<Dynamic>>();
 		}
 		var index:Int = 0;
 		for (forClass in this._classToStyleProvider.keys())

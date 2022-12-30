@@ -15,7 +15,7 @@ import feathers.skins.IStyleProvider;
  *
  * @productversion Feathers 1.0.0
  */
-interface IFeathersControl 
+interface IFeathersControl extends IValidating extends IMeasureDisplayObject
 {
 	
 	/**
@@ -36,7 +36,7 @@ interface IFeathersControl
 	/**
 	 * @copy feathers.core.FeathersControl#styleNameList
 	 */
-	public var styleNameList(get, never):TokenList
+	public var styleNameList(get, never):TokenList;
 	
 	/**
 	 * @copy feathers.core.FeathersControl#styleName

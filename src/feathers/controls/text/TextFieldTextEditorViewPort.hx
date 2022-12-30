@@ -164,7 +164,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 	public var minVisibleHeight(get, set):Float;
 	private function get_minVisibleWidth():Float
 	{
-		if(this._explicitMinVisibleHeight != this._explicitMinVisibleHeight) //isNaN
+		if (this._explicitMinVisibleHeight != this._explicitMinVisibleHeight) //isNaN
 		{
 			return this._actualMinVisibleHeight;
 		}
@@ -178,14 +178,14 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 			return;
 		}
 		var valueIsNaN:Bool = value != value; //isNaN
-		if(valueIsNaN &&
+		if (valueIsNaN &&
 			this._explicitMinVisibleHeight != this._explicitMinVisibleHeight) //isNaN
 		{
 			return;
 		}
 		var oldValue:Float = this._explicitMinVisibleHeight;
 		this._explicitMinVisibleHeight = value;
-		if(valueIsNaN)
+		if (valueIsNaN)
 		{
 			this._actualMinVisibleHeight = 0;
 			this.invalidate(INVALIDATION_FLAG_SIZE);
@@ -193,7 +193,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 		else
 		{
 			this._actualMinVisibleHeight = value;
-			if(this._explicitVisibleHeight !== this._explicitVisibleHeight && //isNaN
+			if (this._explicitVisibleHeight != this._explicitVisibleHeight && //isNaN
 				(this._actualVisibleHeight < value || this._actualVisibleHeight == oldValue))
 			{
 				//only invalidate if this change might affect the visibleHeight
@@ -207,17 +207,17 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 	private function get_maxVisibleHeight():Float { return this._maxVisibleHeight; } 
 	private function set_maxVisibleHeight(value:Float):Float
 	{
-		if(this._maxVisibleHeight == value)
+		if (this._maxVisibleHeight == value)
 		{
 			return;
 		}
-		if(value != value) //isNaN
+		if (value != value) //isNaN
 		{
 			throw new ArgumentError("maxVisibleHeight cannot be NaN");
 		}
 		var oldValue:Float = this._maxVisibleHeight;
 		this._maxVisibleHeight = value;
-		if(this._explicitVisibleHeight != this._explicitVisibleHeight && //isNaN
+		if (this._explicitVisibleHeight != this._explicitVisibleHeight && //isNaN
 			(this._actualVisibleHeight > value || this._actualVisibleHeight == oldValue))
 		{
 			//only invalidate if this change might affect the visibleHeight
@@ -232,7 +232,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 	public var visibleHeight(get, set):Float;
 	private function get_visibleHeight():Float
 	{
-		if(this._explicitVisibleHeight != this._explicitVisibleHeight) //isNaN
+		if (this._explicitVisibleHeight != this._explicitVisibleHeight) //isNaN
 		{
 			return this._actualVisibleHeight;
 		}
@@ -241,7 +241,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 	
 	private function set_visibleHeight(value:Float):Float
 	{
-		if(this._explicitVisibleHeight == value ||
+		if (this._explicitVisibleHeight == value ||
 			(value != value && this._explicitVisibleHeight != this._explicitVisibleHeight)) //isNaN
 		{
 			return;

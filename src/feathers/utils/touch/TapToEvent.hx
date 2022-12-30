@@ -164,16 +164,16 @@ class TapToEvent
 		{
 			//a touch has begun, so we'll ignore all other touches.
 			var touch:Touch = event.getTouch(this._target, null, this._touchPointID);
-			if(touch == null)
+			if (touch == null)
 			{
 				//this should not happen.
 				return;
 			}
 			
-			if(touch.phase == TouchPhase.ENDED)
+			if (touch.phase == TouchPhase.ENDED)
 			{
 				var stage:Stage = this._target.stage;
-				if (stage !== null)
+				if (stage != null)
 				{
 					var point:Point = Pool.getPoint();
 					touch.getLocation(stage, point);

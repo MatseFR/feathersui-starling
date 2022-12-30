@@ -21,7 +21,7 @@ interface IPopUpManager
 	/**
 	 * @copy PopUpManager#overlayFactory
 	 */
-	public var overlayFactory(get, set):Void->DisplayObject
+	public var overlayFactory(get, set):Void->DisplayObject;
 	
 	/**
 	 * @copy PopUpManager#root

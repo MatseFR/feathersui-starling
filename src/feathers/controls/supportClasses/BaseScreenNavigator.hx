@@ -617,7 +617,7 @@ abstract class BaseScreenNavigator extends FeathersControl
 			this._previousScreenInTransitionID = null;
 			this._isTransitionActive = false;
 		}
-		else if (item.transitionDelayEvent !== null && this._waitingForDelayedTransition)
+		else if (item.transitionDelayEvent != null && this._waitingForDelayedTransition)
 		{
 			this._waitingForDelayedTransition = false;
 			this._activeScreen.visible = false;
@@ -625,7 +625,7 @@ abstract class BaseScreenNavigator extends FeathersControl
 		}
 		else
 		{
-			if (item.transitionDelayEvent !== null)
+			if (item.transitionDelayEvent != null)
 			{
 				//if we skipped the delay because the event was already
 				//dispatched, then don't forget to remove the listener
@@ -918,7 +918,7 @@ abstract class BaseScreenNavigator extends FeathersControl
 	/**
 	 * @private
 	 */
-	private function waitingForTransition_enterFrameHandler(event:Event):void
+	private function waitingForTransition_enterFrameHandler(event:Event):Void
 	{
 		//we need to wait a couple of frames before we can start the
 		//transition to make it as smooth as possible. this feels a little

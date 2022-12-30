@@ -10,7 +10,7 @@ package feathers.text;
 import feathers.core.IStateContext;
 import feathers.core.IStateObserver;
 import feathers.core.IToggle;
-import src.feathers.core.IFeathersControl;
+import feathers.core.IFeathersControl;
 import starling.events.Event;
 import starling.events.EventDispatcher;
 import starling.text.TextFormat;

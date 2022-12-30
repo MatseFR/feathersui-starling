@@ -19,7 +19,7 @@ import feathers.utils.math.MathUtils;
 import openfl.events.TimerEvent;
 import openfl.geom.Point;
 import openfl.utils.Timer;
-import src.feathers.core.IFeathersControl;
+import feathers.core.IFeathersControl;
 import starling.display.DisplayObject;
 import starling.display.Quad;
 import starling.events.Event;
@@ -158,7 +158,7 @@ class SimpleScrollBar extends FeathersControl
 	private function get_direction():String { return this._direction; }
 	private function set_direction(value:String):String
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_direction))
 		{
 			return value;
 		}
@@ -180,11 +180,11 @@ class SimpleScrollBar extends FeathersControl
 	private function get_fixedThumbSize():Bool { return this._fixedThumbSize; }
 	private function set_fixedThumbSize(value:Bool):Bool
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_fixedThumbSize))
 		{
 			return value;
 		}
-		if (this._fixedThumbSize === value)
+		if (this._fixedThumbSize == value)
 		{
 			return value;
 		}

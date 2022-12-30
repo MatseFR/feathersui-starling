@@ -26,7 +26,7 @@ import feathers.utils.touch.LongPress;
 import openfl.geom.Matrix;
 import openfl.geom.Point;
 import openfl.ui.Keyboard;
-import src.feathers.core.IFeathersControl;
+import feathers.core.IFeathersControl;
 import starling.display.DisplayObject;
 import starling.events.Event;
 import starling.rendering.Painter;
@@ -419,7 +419,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_horizontalAlign():String { return this._horizontalAlign; }
 	private function set_horizontalAlign(value:String):String
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_horizontalAlign))
 		{
 			return value;
 		}
@@ -440,11 +440,11 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_verticalAlign():String { return this._verticalAlign; }
 	private function set_verticalAlign(value:String):String
 	{
-		if(this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_verticalAlign))
 		{
 			return value;
 		}
-		if(this._verticalAlign === value)
+		if(this._verticalAlign == value)
 		{
 			return value;
 		}
@@ -474,7 +474,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_paddingTop():Float { return this._paddingTop; }
 	private function set_paddingTop(value:Float):Float
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_paddingTop))
 		{
 			return value;
 		}
@@ -495,7 +495,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_paddingRight():Float { return this._paddingRight; }
 	private function set_paddingRight(value:Float):Float
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_paddingRight))
 		{
 			return value;
 		}
@@ -761,11 +761,11 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_customLabelStyleName():String { return this._customLabelStyleName; }
 	private function set_customLabelStyleName(value:String):String
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_customLabelStyleName))
 		{
 			return value;
 		}
-		if(this._customLabelStyleName === value)
+		if (this._customLabelStyleName == value)
 		{
 			return value;
 		}
@@ -815,7 +815,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 		{
 			value = PropertyProxy.fromObject(value);
 		}
-		if (this._defaultLabelProperties = null)
+		if (this._defaultLabelProperties != null)
 		{
 			this._defaultLabelProperties.removeOnChangeCallback(childProperties_onChange);
 		}
@@ -1144,7 +1144,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 		{
 			return;
 		}
-		function changeHandler(event:Event):void
+		function changeHandler(event:Event):Void
 		{
 			processStyleRestriction(key);
 		}
@@ -1184,7 +1184,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	 * @see #getIconForState()
 	 * @see feathers.controls.ButtonState
 	 */
-	public function setIconForState(state:String, icon:DisplayObject):void
+	public function setIconForState(state:String, icon:DisplayObject):Void
 	{
 		var key:String = "setIconForState--" + state;
 		if (this.processStyleRestriction(key))
@@ -1263,7 +1263,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	/**
 	 * @private
 	 */
-	override protected function initialize():void
+	override function initialize():Void
 	{
 		super.initialize();
 		if (this.keyToState == null)
@@ -1334,7 +1334,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 			this.layoutContent();
 		}
 		
-		if(sizeInvalid || focusInvalid)
+		if (sizeInvalid || focusInvalid)
 		{
 			this.refreshFocusIndicator();
 		}
@@ -1349,7 +1349,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 		var needsHeight:Bool = this._explicitHeight != this._explicitHeight; //isNaN
 		var needsMinWidth:Bool = this._explicitMinWidth != this._explicitMinWidth; //isNaN
 		var needsMinHeight:Bool = this._explicitMinHeight != this._explicitMinHeight; //isNaN
-		if(!needsWidth && !needsHeight && !needsMinWidth && !needsMinHeight)
+		if (!needsWidth && !needsHeight && !needsMinWidth && !needsMinHeight)
 		{
 			return false;
 		}
@@ -1547,9 +1547,9 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 			{
 				if (labelRenderer != null) //both label and icon
 				{
-					if (this._iconPosition !== RelativePosition.TOP &&
-						this._iconPosition !== RelativePosition.BOTTOM &&
-						this._iconPosition !== RelativePosition.MANUAL)
+					if (this._iconPosition != RelativePosition.TOP &&
+						this._iconPosition != RelativePosition.BOTTOM &&
+						this._iconPosition != RelativePosition.MANUAL)
 					{
 						newWidth += adjustedGap + this.currentIcon.width;
 					}

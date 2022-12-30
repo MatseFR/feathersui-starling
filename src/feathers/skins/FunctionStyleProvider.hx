@@ -7,7 +7,7 @@ accordance with the terms of the accompanying license agreement.
 */
 package feathers.skins;
 import haxe.Constraints.Function;
-import src.feathers.core.IFeathersControl;
+import feathers.core.IFeathersControl;
 
 /**
  * Sets styles on a Feathers UI component by passing the component to a

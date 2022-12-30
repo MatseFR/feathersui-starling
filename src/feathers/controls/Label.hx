@@ -17,7 +17,7 @@ import feathers.core.PropertyProxy;
 import feathers.skins.IStyleProvider;
 import feathers.text.FontStylesSet;
 import openfl.geom.Point;
-import src.feathers.core.IFeathersControl;
+import feathers.core.IFeathersControl;
 import starling.display.DisplayObject;
 import starling.events.Event;
 import starling.text.TextFormat;
@@ -256,7 +256,7 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 	 * @see feathers.core.ITextRenderer
 	 * @see feathers.core.FeathersControl#defaultTextRendererFactory
 	 */
-	public var textRendererFactory(get, set):Void->ITextRenderer
+	public var textRendererFactory(get, set):Void->ITextRenderer;
 	private var _textRendererFactory:Void->ITextRenderer;
 	private function get_textRendererFactory():Void->ITextRenderer { return this._textRendererFactory; }
 	private function set_textRendererFactory(value:Void->ITextRenderer):Void->ITextRenderer
@@ -490,7 +490,7 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 	private function get_backgroundSkin():DisplayObject { return this._backgroundSkin; }
 	private function set_backgroundSkin(value:DisplayObject):DisplayObject
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_backgroundSkin))
 		{
 			if (value != null)
 			{
@@ -521,7 +521,7 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 	private function get_backgroundDisabledSkin():DisplayObject { return this._backgroundDisabledSkin; }
 	private function set_backgroundDisabledSkin(value:DisplayObject):DisplayObject
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_backgroundDisabledSkin))
 		{
 			if(value != null)
 			{
@@ -561,7 +561,7 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 	private function get_paddingTop():Float { return this._paddingTop; }
 	private function set_paddingTop(value:Float):Float
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_paddingTop))
 		{
 			return value;
 		}
@@ -579,16 +579,16 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 	 */
 	public var paddingRight(get, set):Float;
 	private var _paddingRight:Float = 0;
-	private function get_paddingTop():Float { return this._paddingRight; }
-	private function set_paddingTop(value:Float):Float
+	private function get_paddingRight():Float { return this._paddingRight; }
+	private function set_paddingRight(value:Float):Float
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_paddingRight))
 		{
 			return value;
 		}
 		if (this._paddingRight == value)
 		{
-			return;
+			return value;
 		}
 		this._paddingRight = value;
 		this.invalidate(INVALIDATION_FLAG_STYLES);
@@ -603,7 +603,7 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 	private function get_paddingBottom():Float { return this._paddingBottom; }
 	private function set_paddingBottom(value:Float):Float
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_paddingBottom))
 		{
 			return value;
 		}
@@ -624,7 +624,7 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 	private function get_paddingLeft():Float { return this._paddingLeft; }
 	private function set_paddingLeft(value:Float):Float
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_paddingLeft))
 		{
 			return value;
 		}

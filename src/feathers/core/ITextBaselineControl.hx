@@ -1,5 +1,5 @@
 package feathers.core;
-import src.feathers.core.IFeathersControl;
+import feathers.core.IFeathersControl;
 
 /**
  * @author Matse

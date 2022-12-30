@@ -11,7 +11,7 @@ import feathers.core.IMeasureDisplayObject;
 import feathers.core.IValidating;
 import openfl.errors.IllegalOperationError;
 import openfl.geom.Point;
-import src.feathers.core.IFeathersControl;
+import feathers.core.IFeathersControl;
 import starling.display.DisplayObject;
 import starling.events.EventDispatcher;
 import starling.utils.Pool;
@@ -310,11 +310,11 @@ class AnchorLayout extends EventDispatcher implements ILayout
 			//for some reason, if we don't call a function right here,
 			//compiling with the flex 4.6 SDK will throw a VerifyError
 			//for a stack overflow.
-			//we could change the === check back to !isNaN() instead, but
+			//we could change the == check back to !isNaN() instead, but
 			//isNaN() can allocate an object, so we should call a different
 			//function without allocation.
 			this.doNothing();
-			if(percentHeight == percentHeight) //!isNaN
+			if (percentHeight == percentHeight) //!isNaN
 			{
 				itemHeight = cast(item, IFeathersControl).minHeight;
 			}
@@ -755,7 +755,7 @@ class AnchorLayout extends EventDispatcher implements ILayout
 					xPositionOfRight = viewPortWidth - right;
 				}
 				itemWidth = 2 * (xPositionOfRight - xPositionOfCenter);
-				if (uiItem.explicitMaxWidth === uiItem.explicitMaxWidth && //!isNaN
+				if (uiItem.explicitMaxWidth == uiItem.explicitMaxWidth && //!isNaN
 					uiItem.explicitMaxWidth < itemWidth)
 				{
 					itemWidth = uiItem.explicitMaxWidth;

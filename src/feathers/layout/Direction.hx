@@ -27,13 +27,13 @@ class Direction
 	 *
 	 * @productversion Feathers 3.0.0
 	 */
-	public static inline HORIZONTAL:String = "horizontal";
+	public static inline var HORIZONTAL:String = "horizontal";
 
 	/**
 	 * The object will be oriented in no particular direction.
 	 *
 	 * @productversion Feathers 3.3.0
 	 */
-	public static inline NONE:String = "none";
+	public static inline var NONE:String = "none";
 	
 }

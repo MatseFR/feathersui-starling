@@ -12,7 +12,7 @@ import feathers.core.FeathersControl;
 import feathers.core.IValidating;
 import feathers.layout.ILayoutDisplayObject;
 import openfl.errors.ArgumentError;
-import src.feathers.controls.supportClasses.IViewPort;
+import feathers.controls.supportClasses.IViewPort;
 import starling.display.DisplayObject;
 
 /**
@@ -371,11 +371,11 @@ class LayoutViewPort extends LayoutGroup implements IViewPort
 		//for some reason, if we don't call a function right here,
 		//compiling with the flex 4.6 SDK will throw a VerifyError
 		//for a stack overflow.
-		//we could change the !== check back to isNaN() instead, but
+		//we could change the != check back to isNaN() instead, but
 		//isNaN() can allocate an object, so we should call a different
 		//function without allocation.
 		this.doNothing();
-		if(maxX != maxX) //isNaN
+		if (maxX != maxX) //isNaN
 		{
 			maxX = 0;
 		}
@@ -383,7 +383,7 @@ class LayoutViewPort extends LayoutGroup implements IViewPort
 		var maxY:Float = explicitViewPortHeight;
 		//see explanation above the previous call to this function.
 		this.doNothing();
-		if(maxY !== maxY) //isNaN
+		if (maxY != maxY) //isNaN
 		{
 			maxY = 0;
 		}
@@ -392,7 +392,7 @@ class LayoutViewPort extends LayoutGroup implements IViewPort
 		for (i in 0...itemCount)
 		{
 			var item:DisplayObject = this.items[i];
-			if (Std.isOfType(item, ILayoutDisplayObject && !cast(item, ILayoutDisplayObject).includeInLayout)
+			if (Std.isOfType(item, ILayoutDisplayObject) && !cast(item, ILayoutDisplayObject).includeInLayout)
 			{
 				continue;
 			}
@@ -401,7 +401,7 @@ class LayoutViewPort extends LayoutGroup implements IViewPort
 				cast(item, IValidating).validate();
 			}
 			var itemX:Float = item.x - item.pivotX * item.scaleX;
-			var itemY:Float ) item.y - item.pivotY * item.scaleY;
+			var itemY:Float = item.y - item.pivotY * item.scaleY;
 			var itemMaxX:Float = itemX + item.width;
 			var itemMaxY:Float = itemY + item.height;
 			if (itemX == itemX && //!isNaN

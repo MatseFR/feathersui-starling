@@ -9,7 +9,7 @@ package feathers.core;
 import feathers.events.FeathersEventType;
 import feathers.utils.ReverseIterator;
 import openfl.errors.ArgumentError;
-import src.feathers.core.IFeathersControl;
+import feathers.core.IFeathersControl;
 import starling.display.DisplayObject;
 import starling.display.DisplayObjectContainer;
 import starling.display.Quad;
@@ -253,7 +253,7 @@ class DefaultPopUpManager implements IPopUpManager
 	/**
 	 * @copy PopUpManager#centerPopUp()
 	 */
-	public function centerPopUp(popUp:DisplayObject):void
+	public function centerPopUp(popUp:DisplayObject):Void
 	{
 		var stage:Stage = this._root.stage;
 		if (Std.isOfType(popUp, IValidating))

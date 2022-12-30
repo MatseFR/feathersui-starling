@@ -13,7 +13,7 @@ import openfl.errors.IllegalOperationError;
 import openfl.errors.RangeError;
 import openfl.geom.Point;
 import openfl.ui.Keyboard;
-import src.feathers.core.IFeathersControl;
+import feathers.core.IFeathersControl;
 import starling.display.DisplayObject;
 import starling.display.DisplayObjectContainer;
 import starling.events.Event;
@@ -1460,7 +1460,7 @@ class VerticalLayout extends BaseLinearLayout
 	{
 		var indexOffset:Int = 0;
 		var itemCount:Int = items.length;
-		var totalItemCount:int = itemCount;
+		var totalItemCount:Int = itemCount;
 		if (this._useVirtualLayout && !this._hasVariableItemDimensions)
 		{
 			//if the layout is virtualized, and the items all have the same
@@ -1510,8 +1510,8 @@ class VerticalLayout extends BaseLinearLayout
 			var calculatedTypicalItemWidth:Float = this._typicalItem != null ? this._typicalItem.width : 0;
 			var calculatedTypicalItemHeight:Float = this._typicalItem != null ? this._typicalItem.height : 0;
 		}
-		var hasFirstGap:Bool = this._firstGap === this._firstGap; //!isNaN
-		var hasLastGap:Bool = this._lastGap === this._lastGap; //!isNaN
+		var hasFirstGap:Bool = this._firstGap == this._firstGap; //!isNaN
+		var hasLastGap:Bool = this._lastGap == this._lastGap; //!isNaN
 		var positionY:Float = boundsY + this._paddingTop;
 		var lastHeight:Float = 0;
 		var gap:Float = this._gap;

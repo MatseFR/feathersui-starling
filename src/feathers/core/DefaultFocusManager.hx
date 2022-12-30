@@ -24,7 +24,7 @@ import openfl.geom.Rectangle;
 import openfl.system.Capabilities;
 import openfl.ui.KeyLocation;
 import openfl.ui.Keyboard;
-import src.feathers.core.IFeathersControl;
+import feathers.core.IFeathersControl;
 import starling.core.Starling;
 import starling.display.DisplayObject;
 import starling.display.DisplayObjectContainer;
@@ -145,7 +145,7 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 			if (this._nativeFocusTarget.referenceCount <= 0)
 			{
 				this._nativeFocusTarget.parent.removeChild(this._nativeFocusTarget);
-				NATIVE_STAGE_TO_FOCUS_TARGET.remove(this._starling.nativeStage];
+				NATIVE_STAGE_TO_FOCUS_TARGET.remove(this._starling.nativeStage);
 			}
 			this._nativeFocusTarget = null;
 			this._root.removeEventListener(Event.ADDED, topLevelContainer_addedHandler);
@@ -226,7 +226,7 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 			if (this._focus != null)
 			{
 				nativeFocus = null;
-				if (Std.isOfType(this._focus, INativeFocusOwner)
+				if (Std.isOfType(this._focus, INativeFocusOwner))
 				{
 					nativeFocus = cast(this._focus, INativeFocusOwner).nativeFocus;
 					if (Std.isOfType(nativeFocus, InteractiveObject))
@@ -283,7 +283,7 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 	**/
 	private function setFocusManager(target:DisplayObject):Void
 	{
-		if (Std.isOfType(target, IFocusDisplayObject)
+		if (Std.isOfType(target, IFocusDisplayObject))
 		{
 			var targetWithFocus:IFocusDisplayObject = cast target;
 			targetWithFocus.focusManager = this;
@@ -352,7 +352,7 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 				var child:DisplayObject = container.getChildAt(i);
 				this.clearFocusManager(child);
 			}
-			if (Std.isOfType(container, IFocusExtras)
+			if (Std.isOfType(container, IFocusExtras))
 			{
 				var containerWithExtras:IFocusExtras = cast container;
 				var extras:Array<DisplayObject> = containerWithExtras.focusExtrasBefore;
@@ -389,7 +389,7 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 			container = container.parent;
 		}
 		var hasProcessedBeforeChild:Bool = beforeChild == null;
-		if (Std.isOfType(container, IFocusExtras)
+		if (Std.isOfType(container, IFocusExtras))
 		{
 			var focusWithExtras:IFocusExtras = cast container;
 			var extras:Array<DisplayObject> = focusWithExtras.focusExtrasAfter;
@@ -490,7 +490,7 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 	 */
 	private function findNextContainerFocus(container:DisplayObjectContainer, afterChild:DisplayObject, fallbackToGlobal:Bool):IFocusDisplayObject
 	{
-		if (Std.isOfType(container, LayoutViewPort)
+		if (Std.isOfType(container, LayoutViewPort))
 		{
 			container = container.parent;
 		}
@@ -600,7 +600,7 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 				return foundChild;
 			}
 		}
-		if (Std.isOfType(child, IFocusDisplayObject)
+		if (Std.isOfType(child, IFocusDisplayObject))
 		{
 			var childWithFocus:IFocusDisplayObject = cast child;
 			if (this.isValidForFocus(childWithFocus))
@@ -662,7 +662,7 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 			{
 				continue;
 			}
-			if (isBetterFocusForRelativePosition(focusableObject, result, focusedRect, position);
+			if (isBetterFocusForRelativePosition(focusableObject, result, focusedRect, position))
 			{
 				result = focusableObject;
 			}
@@ -728,7 +728,7 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 		{
 			extras = focusExtras.focusExtrasAfter;
 			count = extras.length;
-			for(i = 0; i < count; i++)
+			for (i in 0...count)
 			{
 				childOfChild = extras[i];
 				findAllFocusableObjects(childOfChild, result);
@@ -854,39 +854,39 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 	 */
 	private function stage_gestureDirectionalTapHandler(event:TransformGestureEvent):Void
 	{
-		if(event.isDefaultPrevented())
+		if (event.isDefaultPrevented())
 		{
 			//something else has already handled this event
 			return;
 		}
 		var position:String = null;
-		if(event.offsetY < 0)
+		if (event.offsetY < 0)
 		{
 			position = RelativePosition.TOP;
 		}
-		else if(event.offsetY > 0)
+		else if (event.offsetY > 0)
 		{
 			position = RelativePosition.BOTTOM;
 		}
-		else if(event.offsetX > 0)
+		else if (event.offsetX > 0)
 		{
 			position = RelativePosition.RIGHT;
 		}
-		else if(event.offsetX < 0)
+		else if (event.offsetX < 0)
 		{
 			position = RelativePosition.LEFT;
 		}
-		if(position == null)
+		if (position == null)
 		{
 			return;
 		}
 		var newFocus:IFocusDisplayObject = findFocusAtRelativePosition(this._root, position);
-		if(newFocus != this._focus)
+		if (newFocus != this._focus)
 		{
 			event.preventDefault();
 			this.focus = newFocus;
 		}
-		if(this._focus)
+		if (this._focus)
 		{
 			this._focus.showFocus();
 		}

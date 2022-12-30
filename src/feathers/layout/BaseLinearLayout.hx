@@ -241,7 +241,7 @@ abstract class BaseLinearLayout extends BaseVariableVirtualLayout
 	{
 		if (this._horizontalAlign == value)
 		{
-			return;
+			return value;
 		}
 		this._horizontalAlign = value;
 		this.dispatchEventWith(Event.CHANGE);

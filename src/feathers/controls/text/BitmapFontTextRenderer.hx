@@ -7,6 +7,7 @@ accordance with the terms of the accompanying license agreement.
 */
 package feathers.controls.text;
 import feathers.core.FeathersControl;
+import feathers.core.ITextRenderer;
 import feathers.core.IToggle;
 import feathers.skins.IStyleProvider;
 import feathers.text.BitmapFontTextFormat;
@@ -14,11 +15,12 @@ import feathers.utils.ReverseIterator;
 import openfl.geom.Point;
 import openfl.geom.Rectangle;
 import openfl.text.TextFormatAlign;
-import src.feathers.core.IFeathersControl;
+import feathers.core.IFeathersControl;
 import starling.display.Image;
 import starling.display.MeshBatch;
 import starling.rendering.Painter;
 import starling.styles.MeshStyle;
+import starling.text.BitmapChar;
 import starling.text.BitmapFont;
 import starling.text.TextField;
 import starling.text.TextFormat;
@@ -49,7 +51,7 @@ import starling.utils.Pool;
  *
  * @productversion Feathers 1.0.0
  */
-class BitmapFontTextRenderer extends BaseTextRenderer 
+class BitmapFontTextRenderer extends BaseTextRenderer implements ITextRenderer
 {
 	/**
 	 * @private
@@ -529,10 +531,10 @@ class BitmapFontTextRenderer extends BaseTextRenderer
 			fontSizeScale = 1;
 		}
 		var baseLine:Float = font.baseline;
-		//for some reason, if we do the !== check on a local variable right
+		//for some reason, if we do the != check on a local variable right
 		//here, compiling with the flex 4.6 SDK will throw a VerifyError
 		//for a stack overflow.
-		//we could change the !== check back to isNaN() instead, but
+		//we could change the != check back to isNaN() instead, but
 		//isNaN() can allocate an object that needs garbage collection.
 		this._compilerWorkaround = baseLine;
 		if (baseLine != baseLine) // isNaN
@@ -743,7 +745,7 @@ class BitmapFontTextRenderer extends BaseTextRenderer
 		}
 		this.saveMeasurements(this._lastLayoutWidth, this._lastLayoutHeight,
 			this._lastLayoutWidth, this._lastLayoutHeight);
-		this._verticalAlignOffsetY = this.getVertivalAlignOffsetY();
+		this._verticalAlignOffsetY = this.getVerticalAlignOffsetY();
 	}
 	
 	/**
@@ -798,14 +800,15 @@ class BitmapFontTextRenderer extends BaseTextRenderer
 		var maxX:Float = 0;
 		var currentX:Float = 0;
 		var currentY:Float = 0;
-		var previousCharID:Float = Math.NaN;
+		var previousCharID:Int = -1;
 		var isWordComplete:Bool = false;
 		var startXOfPreviousWord:Float = 0;
 		var widthOfWhitespaceAfterWord:Float = 0;
 		var wordLength:Int = 0;
 		var wordCountForLine:Int = 0;
 		var charData:BitmapChar = null;
-		var charCount:Int = textToDraw ? textToDraw.length : 0;
+		var previousCharData:BitmapChar;
+		var charCount:Int = textToDraw != null ? textToDraw.length : 0;
 		for (i in 0...charCount)
 		{
 			isWordComplete = false;
@@ -831,7 +834,7 @@ class BitmapFontTextRenderer extends BaseTextRenderer
 				{
 					maxX = currentX;
 				}
-				previousCharID = Math.NaN;
+				previousCharID = -1;
 				currentX = 0;
 				currentY += lineHeight;
 				startXOfPreviousWord = 0;
@@ -849,7 +852,7 @@ class BitmapFontTextRenderer extends BaseTextRenderer
 				continue;
 			}
 			
-			if (isKerningEnabled && previousCharID == previousCharID) //!isNaN
+			if (isKerningEnabled && previousCharID != -1)
 			{
 				currentX += charData.getKerning(previousCharID) * scale;
 			}
@@ -865,7 +868,7 @@ class BitmapFontTextRenderer extends BaseTextRenderer
 					{
 						//this is the spacing after the last character
 						//that isn't whitespace
-						var previousCharData:BitmapChar = font.getChar(previousCharID);
+						previousCharData = font.getChar(previousCharID);
 						widthOfWhitespaceAfterWord = customLetterSpacing + (previousCharData.xAdvance - previousCharData.width) * scale;
 					}
 					widthOfWhitespaceAfterWord += xAdvance;
@@ -900,7 +903,7 @@ class BitmapFontTextRenderer extends BaseTextRenderer
 						wordLength = 0;
 						startXOfPreviousWord = currentX;
 						widthOfWhitespaceAfterWord = 0;
-						if (previousCharID == previousCharID) //!isNaN
+						if (previousCharID != -1)
 						{
 							previousCharData = font.getChar(previousCharID);
 							widthOfWhitespaceAfterWord = customLetterSpacing + (previousCharData.xAdvance - previousCharData.width) * scale;
@@ -924,7 +927,7 @@ class BitmapFontTextRenderer extends BaseTextRenderer
 					{
 						maxX = widthOfWhitespaceAfterWord;
 					}
-					previousCharID = Math.NaN;
+					previousCharID = -1;
 					currentX -= startXOfPreviousWord;
 					currentY += lineHeight;
 					startXOfPreviousWord = 0;
@@ -960,7 +963,7 @@ class BitmapFontTextRenderer extends BaseTextRenderer
 		currentX = currentX - customLetterSpacing;
 		if (charData != null)
 		{
-			currentX -= (charData.xAdvance - charData.width * scale;
+			currentX -= (charData.xAdvance - charData.width) * scale;
 		}
 		if (currentX < 0)
 		{
@@ -995,11 +998,11 @@ class BitmapFontTextRenderer extends BaseTextRenderer
 		if (isAligned && !hasExplicitWidth)
 		{
 			var align:String = this._currentTextFormat.align;
-			if (alignPivot == TextFormatAlign.CENTER)
+			if (align == TextFormatAlign.CENTER)
 			{
 				this._batchX = (maxX - maxLineWidth) / 2;
 			}
-			else if (alignPivot == TextFormatAlign.RIGHT)
+			else if (align == TextFormatAlign.RIGHT)
 			{
 				this._batchX = maxX - maxLineWidth;
 			}
@@ -1022,6 +1025,7 @@ class BitmapFontTextRenderer extends BaseTextRenderer
 	{
 		var countToRemove:Int = 0;
 		var charCount:Int = CHARACTER_BUFFER.length - skipCount;
+		var index:Int;
 		for (i in new ReverseIterator(charCount - 1, 0))
 		{
 			var charLocation:CharLocation = CHARACTER_BUFFER[i];
@@ -1033,12 +1037,13 @@ class BitmapFontTextRenderer extends BaseTextRenderer
 			}
 			else
 			{
+				index = i;
 				break;
 			}
 		}
 		if (countToRemove > 0)
 		{
-			CHARACTER_BUFFER.splice(i + 1, countToRemove);
+			CHARACTER_BUFFER.splice(index + 1, countToRemove);
 		}
 	}
 	
@@ -1232,7 +1237,7 @@ class BitmapFontTextRenderer extends BaseTextRenderer
 				//text format has been specified
 				
 				//if it's not registered, do that first
-				if (TextField.getBitmapFont(BitmapFont.MINI))
+				if (TextField.getBitmapFont(BitmapFont.MINI) != null)
 				{
 					var font:BitmapFont = new BitmapFont();
 					TextField.registerCompositor(font, font.name);
@@ -1293,7 +1298,8 @@ class BitmapFontTextRenderer extends BaseTextRenderer
 		var maxX:Float = 0;
 		var currentX:Float = 0;
 		var currentY:Float = 0;
-		var previousCharID:Float = Math.NaN;
+		var previousCharID:Int = -1;
+		var previousCharData:BitmapChar;
 		var charCount:Int = this._text.length;
 		var startXOfPreviousWord:Float = 0;
 		var widthOfWhiteSpaceAfterWord:Float = 0;
@@ -1320,7 +1326,7 @@ class BitmapFontTextRenderer extends BaseTextRenderer
 				{
 					maxX = currentX;
 				}
-				previousCharID = Math.NaN;
+				previousCharID = -1;
 				currentX = 0;
 				currentY += lineHeight;
 				startXOfPreviousWord = 0;
@@ -1337,7 +1343,7 @@ class BitmapFontTextRenderer extends BaseTextRenderer
 			}
 			
 			if (isKerningEnabled && 
-				previousCharID == previousCharID) //!isNaN
+				previousCharID != -1) //!isNaN
 			{
 				currentX += charData.getKerning(previousCharID) * scale;
 			}
@@ -1353,7 +1359,7 @@ class BitmapFontTextRenderer extends BaseTextRenderer
 					{
 						//this is the spacing after the last character
 						//that isn't whitespace
-						var previousCharData:BitmapChar = font.getChar(previousCharID);
+						previousCharData = font.getChar(previousCharID);
 						widthOfWhiteSpaceAfterWord = customLetterSpacing + (previousCharData.xAdvance - previousCharData.width) * scale;
 					}
 					widthOfWhiteSpaceAfterWord += xAdvance;
@@ -1373,9 +1379,9 @@ class BitmapFontTextRenderer extends BaseTextRenderer
 					{
 						// if we are breaking long words, this is where we break
 						startXOfPreviousWord = currentX;
-						if (previousCharID == previousCharID) //!isNaN
+						if (previousCharID != -1) //!isNaN
 						{
-							previousCharID = font.getChar(previousCharID);
+							previousCharData = font.getChar(previousCharID);
 							widthOfWhiteSpaceAfterWord = customLetterSpacing + (previousCharData.xAdvance - previousCharData.width) * scale;
 						}
 					}
@@ -1386,7 +1392,7 @@ class BitmapFontTextRenderer extends BaseTextRenderer
 					{
 						maxX = widthOfWhiteSpaceAfterWord;
 					}
-					previousCharID = Math.NaN;
+					previousCharID = -1;
 					currentX -= startXOfPreviousWord;
 					currentY += lineHeight;
 					startXOfPreviousWord = 0;
@@ -1477,20 +1483,23 @@ class BitmapFontTextRenderer extends BaseTextRenderer
 			scale = 1;
 		}
 		var currentX:Float = 0;
-		var previousCharID:Float = Math.NaN;
+		var charID:Int;
+		var charData:BitmapChar;
+		var previousCharID:Int = -1;
+		var currentKerning:Float;
 		var charCount:Int = this._text.length;
 		var truncationIndex:Int = -1;
 		for (i in 0...charCount)
 		{
-			var charID:Int = this._text.charCodeAt(i);
-			var charData:BitmapChar = font.getChar(charID);
+			charID = this._text.charCodeAt(i);
+			charData = font.getChar(charID);
 			if (charData == null)
 			{
 				continue;
 			}
-			var currentKerning:Float = 0;
+			currentKerning = 0;
 			if (isKerningEnabled &&
-				previousCharID == previousCharID) //!isNaN
+				previousCharID != -1)
 			{
 				currentKerning = charData.getKerning(previousCharID) * scale;
 			}
@@ -1532,7 +1541,7 @@ class BitmapFontTextRenderer extends BaseTextRenderer
 				}
 				currentKerning = 0;
 				if (isKerningEnabled &&
-					previousCharID == previousCharID) //!isNaN
+					previousCharID != -1)
 				{
 					currentKerning = charData.getKerning(previousCharID) * scale;
 				}
@@ -1549,7 +1558,7 @@ class BitmapFontTextRenderer extends BaseTextRenderer
 			for (i in new ReverseIterator(truncationIndex, 0))
 			{
 				charID = this._text.charCodeAt(i);
-				previousCharID = (i > 0) ? this._text.charCodeAt(i - 1) : Math.NaN;
+				previousCharID = (i > 0) ? this._text.charCodeAt(i - 1) : -1;
 				charData = font.getChar(charID);
 				if (charData == null)
 				{
@@ -1557,7 +1566,7 @@ class BitmapFontTextRenderer extends BaseTextRenderer
 				}
 				currentKerning = 0;
 				if (isKerningEnabled &&
-					previousCharID == previousCharID) //!isNaN
+					previousCharID != -1)
 				{
 					currentKerning = charData.getKerning(previousCharID) * scale;
 				}
@@ -1602,8 +1611,6 @@ class BitmapFontTextRenderer extends BaseTextRenderer
 	}
 	
 }
-
-import starling.text.BitmapChar;
 
 class CharLocation
 {

@@ -22,7 +22,7 @@ import openfl.text.GridFitType;
 import openfl.text.StyleSheet;
 import openfl.text.TextField;
 import openfl.text.TextFieldAutoSize;
-import src.feathers.controls.supportClasses.IViewPort;
+import feathers.controls.supportClasses.IViewPort;
 import starling.core.Starling;
 import starling.display.DisplayObject;
 import starling.events.Event;

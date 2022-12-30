@@ -30,7 +30,7 @@ import openfl.text.TextField;
 import openfl.text.TextFieldAutoSize;
 import openfl.text.TextFieldType;
 import openfl.ui.Keyboard;
-import src.feathers.core.IFeathersControl;
+import feathers.core.IFeathersControl;
 import starling.core.Starling;
 import starling.display.DisplayObject;
 import starling.display.Image;
@@ -866,7 +866,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 	/**
 	 * @inheritDoc
 	 */
-	public var selectionBeginIndex(get, never):Int
+	public var selectionBeginIndex(get, never):Int;
 	private function get_selectionBeginIndex():Int
 	{
 		if (this._pendingSelectionBeginIndex >= 0)
@@ -916,12 +916,12 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 	 *
 	 * @default false
 	 */
-	public var maintainTouchFocus(get, set):Bool;
+	//public var maintainTouchFocus(get, set):Bool;
 	private var _maintainTouchFocus:Bool;
-	private function get_maintainTouchFocus():Bool { return this._maintainTouchFocus; }
-	private function set_maintainTouchFocus(value:Bool):Bool
+	override function get_maintainTouchFocus():Bool { return this._maintainTouchFocus; }
+	override function set_maintainTouchFocus(value:Bool):Bool
 	{
-		this._maintainTouchFocus = value;
+		return this._maintainTouchFocus = value;
 	}
 	
 	/**
@@ -1121,7 +1121,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 	{
 		if (this.textField != null)
 		{
-			var starling:Starling = this.stage !== null ? this.stage.starling : Starling.current;
+			var starling:Starling = this.stage != null ? this.stage.starling : Starling.current;
 			if (this.textField.parent == null)
 			{
 				starling.nativeStage.addChild(this.textField);
@@ -1166,7 +1166,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 					var maxPositionY:Float = (this.textField.height / scaleY) - gutterPositionOffset;
 					if (positionY > maxPositionY)
 					{
-						positionY = maxPositionY
+						positionY = maxPositionY;
 					}
 				}
 				this._pendingSelectionBeginIndex = this.getSelectionIndexAtPoint(positionX, positionY);
@@ -1651,15 +1651,15 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 	/**
 	 * @private
 	 */
-	private function refreshTextFormat():void
+	private function refreshTextFormat():Void
 	{
 		var textFormat:flash.text.TextFormat;
 		if (this._stateContext != null)
 		{
-			if(this._textFormatForState != null)
+			if (this._textFormatForState != null)
 			{
 				var currentState:String = this._stateContext.currentState;
-				if(currentState in this._textFormatForState)
+				if (this._textFormatForState.exists(currentState))
 				{
 					textFormat = flash.text.TextFormat(this._textFormatForState[currentState]);
 				}
@@ -1708,7 +1708,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 			{
 				this._currentStarlingTextFormat = null;
 			}
-			if (this._currentStarlingTextFormat !== null)
+			if (this._currentStarlingTextFormat != null)
 			{
 				this._fontStylesTextFormat = this._currentStarlingTextFormat.toNativeFormat(this._fontStylesTextFormat);
 			}
@@ -1805,7 +1805,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 	/**
 	 * @private
 	 */
-	private function refreshTextFieldSize():void
+	private function refreshTextFieldSize():Void
 	{
 		var gutterDimensionsOffset:Float = 4;
 		if (this._useGutter || this._border)
@@ -1819,14 +1819,14 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 	/**
 	 * @private
 	 */
-	private function refreshSnapshotParameters():void
+	private function refreshSnapshotParameters():Void
 	{
 		this._textFieldOffsetX = 0;
 		this._textFieldOffsetY = 0;
 		this._textFieldSnapshotClipRect.x = 0;
 		this._textFieldSnapshotClipRect.y = 0;
 		
-		var starling:Starling = this.stage !== null ? this.stage.starling : Starling.current;
+		var starling:Starling = this.stage != null ? this.stage.starling : Starling.current;
 		var scaleFactor:Float = starling.contentScaleFactor;
 		var clipWidth:Float = this.actualWidth * scaleFactor;
 		if (this._updateSnapshotOnScaleChange)
@@ -1875,7 +1875,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		{
 			smallerGlobalScale = globalScaleY;
 		}
-		var starling:Starling = this.stage !== null ? this.stage.starling : Starling.current;
+		var starling:Starling = this.stage != null ? this.stage.starling : Starling.current;
 		var nativeScaleFactor:Float = 1;
 		if(starling.supportHighResolutions)
 		{
@@ -1916,7 +1916,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 	/**
 	 * @private
 	 */
-	private function positionSnapshot():void
+	private function positionSnapshot():Void
 	{
 		if (this.textSnapshot == null)
 		{
@@ -2007,7 +2007,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		{
 			gutterPositionOffset = 0;
 		}
-		var starling:Starling = this.stage !== null ? this.stage.starling : Starling.current;
+		var starling:Starling = this.stage != null ? this.stage.starling : Starling.current;
 		var scaleFactor:Float = starling.contentScaleFactor;
 		var matrix:Matrix = Pool.getMatrix();
 		if (this._updateSnapshotOnScaleChange)

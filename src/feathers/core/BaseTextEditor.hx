@@ -66,7 +66,7 @@ class BaseTextEditor extends FeathersControl implements IStateObserver
 	{
 		if (this._stateContext == value)
 		{
-			return;
+			return value;
 		}
 		if (this._stateContext != null)
 		{
@@ -98,7 +98,7 @@ class BaseTextEditor extends FeathersControl implements IStateObserver
 			this._fontStyles.removeEventListener(Event.CHANGE, fontStyleSet_changeHandler);
 		}
 		this._fontStyles = value;
-		if (this._fontStles != null)
+		if (this._fontStyles != null)
 		{
 			this._fontStyles.addEventListener(Event.CHANGE, fontStyleSet_changeHandler);
 		}
@@ -126,7 +126,7 @@ class BaseTextEditor extends FeathersControl implements IStateObserver
 	**/
 	private function fontStyleSet_changeHandler(event:Event):Void
 	{
-		this.invaliddate(FeathersControl.INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 	}
 	
 }

@@ -1446,7 +1446,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	/**
 	 * @private
 	 */
-	override protected function draw():void
+	override function draw():Void
 	{
 		var dataInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_DATA);
 		var stylesInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_STYLES);
@@ -1541,7 +1541,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	/**
 	 * @private
 	 */
-	protected function measureHorizontal():Boolean
+	private function measureHorizontal():Bool
 	{
 		var needsWidth:Bool = this._explicitWidth != this._explicitWidth; //isNaN
 		var needsHeight:Bool = this._explicitHeight != this._explicitHeight; //isNaN

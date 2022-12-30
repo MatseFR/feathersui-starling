@@ -17,7 +17,7 @@ import feathers.skins.IStyleProvider;
 import feathers.utils.touch.TapToTrigger;
 import feathers.utils.touch.TouchToState;
 import openfl.geom.Point;
-import src.feathers.core.IFeathersControl;
+import feathers.core.IFeathersControl;
 import starling.display.DisplayObject;
 
 /**
@@ -122,7 +122,7 @@ class BasicButton extends FeathersControl implements IStateContext
 		{
 			return value;
 		}
-		if (this.touchToState !== null)
+		if (this.touchToState != null)
 		{
 			this.touchToState.keepDownStateOnRollOut = value;
 		}
@@ -141,11 +141,11 @@ class BasicButton extends FeathersControl implements IStateContext
 			{
 				value.dispose();
 			}
-			return;
+			return value;
 		}
 		if (this._defaultSkin == value)
 		{
-			return;
+			return value;
 		}
 		if (this._defaultSkin != null &&
 			this.currentSkin == this._defaultSkin)
@@ -264,12 +264,12 @@ class BasicButton extends FeathersControl implements IStateContext
 	 * @see #getSkinForState()
 	 * @see feathers.controls.ButtonState
 	 */
-	public function setSkinForState(state:String, skin:DisplayObject):void
+	public function setSkinForState(state:String, skin:DisplayObject):Void
 	{
 		var key:String = "setSkinForState--" + state;
 		if (this.processStyleRestriction(key))
 		{
-			if (skin !== null)
+			if (skin != null)
 			{
 				skin.dispose();
 			}
@@ -308,7 +308,7 @@ class BasicButton extends FeathersControl implements IStateContext
 		}
 		for (skin in this._stateToSkin)
 		{
-			if(skin != null && skin.parent != this)
+			if (skin != null && skin.parent != this)
 			{
 				skin.dispose();
 			}

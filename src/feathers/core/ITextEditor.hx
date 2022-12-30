@@ -8,7 +8,7 @@ accordance with the terms of the accompanying license agreement.
 package feathers.core;
 import feathers.text.FontStylesSet;
 import openfl.geom.Point;
-import src.feathers.core.IFeathersControl;
+import feathers.core.IFeathersControl;
 
 /**
  * Handles the editing of text.

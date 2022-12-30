@@ -79,14 +79,14 @@ class KeyToEvent
 			this._stage.removeEventListener(KeyboardEvent.KEY_UP, stage_keyUpHandler);
 			this._stage = null;
 		}
-		if(this._target !== null)
+		if (this._target != null)
 		{
 			this._target.removeEventListener(FeathersEventType.FOCUS_IN, target_focusInHandler);
 			this._target.removeEventListener(FeathersEventType.FOCUS_OUT, target_focusOutHandler);
 			this._target.removeEventListener(Event.REMOVED_FROM_STAGE, target_removedFromStageHandler);
 		}
 		this._target = value;
-		if(this._target !== null)
+		if (this._target != null)
 		{
 			this._target.addEventListener(FeathersEventType.FOCUS_IN, target_focusInHandler);
 			this._target.addEventListener(FeathersEventType.FOCUS_OUT, target_focusOutHandler);

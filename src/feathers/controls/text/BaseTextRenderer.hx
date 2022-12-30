@@ -9,6 +9,7 @@ package feathers.controls.text;
 
 import feathers.core.FeathersControl;
 import feathers.core.IStateContext;
+import feathers.core.IStateObserver;
 import feathers.events.FeathersEventType;
 import feathers.text.FontStylesSet;
 import starling.events.Event;
@@ -18,7 +19,7 @@ import starling.events.Event;
  *
  * @productversion Feathers 3.1.0
  */
-class BaseTextRenderer extends FeathersControl 
+class BaseTextRenderer extends FeathersControl implements IStateObserver
 {
 	/**
 	   Constructor
@@ -32,17 +33,17 @@ class BaseTextRenderer extends FeathersControl
 	 * @copy feathers.core.ITextRenderer#text
 	 */
 	public var text(get, set):String;
-	
 	private var _text:String = null;
 	private function get_text():String { return this._text; }
 	private function set_text(value:String):String
 	{
 		if (this._text == value)
 		{
-			return;
+			return value;
 		}
 		this._text = value;
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_DATA);
+		return this._text;
 	}
 	
 	/**
@@ -57,7 +58,6 @@ class BaseTextRenderer extends FeathersControl
 	 * @see #setFontStylesForState()
 	 */
 	public var stateContext(get, set):IStateContext;
-	
 	private var _stateContext:IStateContext;
 	private function get_stateContext():IStateContext { return _stateContext; }
 	private function set_stateContext(value:IStateContext):IStateContext
@@ -83,7 +83,6 @@ class BaseTextRenderer extends FeathersControl
 	 * @copy feathers.core.ITextRenderer#wordWrap
 	 */
 	public var wordWrap(get, set):Bool;
-	
 	private var _wordWrap:Bool = false;
 	private function get_wordWrap():Bool { return this._wordWrap; }
 	private function set_wordWrap(value:Bool):Bool
@@ -99,7 +98,6 @@ class BaseTextRenderer extends FeathersControl
 	
 	
 	public var fontStyles(get, set):FontStylesSet;
-	
 	private var _fontStyles:FontStylesSet;
 	private function get_fontStyles():FontStylesSet { return this._fontStyles; }
 	private function set_fontStyles(value:FontStylesSet):FontStylesSet

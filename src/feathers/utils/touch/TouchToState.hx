@@ -213,7 +213,7 @@ class TouchToState
 	 */
 	private function handleCustomHitTest(touch:Touch):Bool
 	{
-		if(this._customHitTest === null)
+		if (this._customHitTest == null)
 		{
 			return true;
 		}
@@ -230,16 +230,16 @@ class TouchToState
 	private function changeState(value:String):Void
 	{
 		var oldState:String = this._currentState;
-		if(Std.isOfType(this._target, IStateContext))
+		if (Std.isOfType(this._target, IStateContext))
 		{
 			oldState = cast(this._target, IStateContext).currentState;
 		}
 		this._currentState = value;
-		if(oldState == value)
+		if (oldState == value)
 		{
 			return;
 		}
-		if(this._callback != null)
+		if (this._callback != null)
 		{
 			this._callback(value);
 		}

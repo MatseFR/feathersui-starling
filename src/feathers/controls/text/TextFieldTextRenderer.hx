@@ -23,7 +23,7 @@ import openfl.text.StyleSheet;
 import openfl.text.TextField;
 import openfl.text.TextFieldAutoSize;
 import openfl.text.TextFormat;
-import src.feathers.core.IFeathersControl;
+import feathers.core.IFeathersControl;
 import starling.core.Starling;
 import starling.display.Image;
 import starling.events.Event;
@@ -1629,7 +1629,7 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 		{
 			//we can still check if the text renderer is disabled to see if
 			//we should use disabledTextFormat
-			if(!this._isEnabled && this._disabledTextFormat != null)
+			if (!this._isEnabled && this._disabledTextFormat != null)
 			{
 				textFormat = this._disabledTextFormat;
 			}
@@ -1640,7 +1640,7 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 		}
 		//flash.text.TextFormat is considered more advanced, so it gets
 		//precedence over starling.text.TextFormat font styles
-		if(textFormat === null)
+		if (textFormat == null)
 		{
 			textFormat = this.getTextFormatFromFontStyles();
 		}
@@ -1657,20 +1657,20 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 	**/
 	private function getTextFormatFromFontStyles():openfl.text.TextFormat
 	{
-		if(this.isInvalid(INVALIDATION_FLAG_STYLES) ||
+		if (this.isInvalid(INVALIDATION_FLAG_STYLES) ||
 			this.isInvalid(INVALIDATION_FLAG_STATE))
 		{
 			var fontStylesFormat:starling.text.TextFormat;
-			if(this._fontStyles !== null)
+			if (this._fontStyles != null)
 			{
 				fontStylesFormat = this._fontStyles.getTextFormatForTarget(this);
 			}
-			if(fontStylesFormat !== null)
+			if (fontStylesFormat != null)
 			{
 				this._fontStylesTextFormat = fontStylesFormat.toNativeFormat(this._fontStylesTextFormat);
 				this._currentVerticalAlign = fontStylesFormat.verticalAlign;
 			}
-			else if(this._fontStylesTextFormat === null)
+			else if (this._fontStylesTextFormat == null)
 			{
 				//fallback to a default so that something is displayed
 				this._fontStylesTextFormat = new openfl.text.TextFormat();
@@ -1728,7 +1728,7 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 	private function drawTextFieldRegionToBitmapData(textFieldX:Float, textFieldY:Float,
 		bitmapWidth:Float, bitmapHeight:Float, bitmapData:BitmapData = null):BitmapData
 	{
-		var starling:Starling = this.stage !== null ? this.stage.starling : Starling.current;
+		var starling:Starling = this.stage != null ? this.stage.starling : Starling.current;
 		var scaleFactor:Float = starling.contentScaleFactor;
 		var clipWidth:Float = this._snapshotVisibleWidth - textFieldX;
 		var clipHeight:Float = this._snapShotVisibleHeight - textFieldY;
@@ -1815,13 +1815,13 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 	**/
 	private function refreshSnapshot():Void
 	{
-		if(this._snapshotWidth <= 0 || this._snapshotHeight <= 0)
+		if (this._snapshotWidth <= 0 || this._snapshotHeight <= 0)
 		{
 			return;
 		}
-		var starling:Starling = this.stage !== null ? this.stage.starling : Starling.current;
+		var starling:Starling = this.stage != null ? this.stage.starling : Starling.current;
 		var scaleFactor:Float = starling.contentScaleFactor;
-		if(this._updateSnapshotOnScaleChange)
+		if (this._updateSnapshotOnScaleChange)
 		{
 			this.getTransformationMatrix(this.stage, HELPER_MATRIX);
 			var globalScaleX:Float = matrixToScaleX(HELPER_MATRIX);
@@ -1829,7 +1829,7 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 		}
 		HELPER_MATRIX.identity();
 		HELPER_MATRIX.scale(scaleFactor, scaleFactor);
-		if(this._updateSnapshotOnScaleChange)
+		if (this._updateSnapshotOnScaleChange)
 		{
 			HELPER_MATRIX.scale(globalScaleX, globalScaleY);
 		}

@@ -7,7 +7,7 @@ accordance with the terms of the accompanying license agreement.
 */
 package feathers.core;
 import feathers.controls.Label;
-import src.feathers.core.IFeathersControl;
+import feathers.core.IFeathersControl;
 import starling.animation.DelayedCall;
 import starling.core.Starling;
 import starling.display.DisplayObject;

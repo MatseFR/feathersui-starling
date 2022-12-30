@@ -65,7 +65,7 @@ class ScreenDensityScaleCalculator
 	 * selector.addScaleForDensity( 320, 2 );
 	 * selector.removeScaleForDensity( 320 );</listing>
 	 */
-	public function removeScaleForDensity(density:int):void
+	public function removeScaleForDensity(density:Int):Void
 	{
 		var bucketCount:Int = this._buckets.length;
 		for (i in 0...bucketCount)

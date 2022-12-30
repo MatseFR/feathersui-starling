@@ -26,8 +26,8 @@ import openfl.events.MouseEvent;
 import openfl.geom.Point;
 import openfl.geom.Rectangle;
 import openfl.ui.Keyboard;
-import src.feathers.controls.supportClasses.IViewPort;
-import src.feathers.core.IFeathersControl;
+import feathers.controls.supportClasses.IViewPort;
+import feathers.core.IFeathersControl;
 import starling.animation.Transitions;
 import starling.animation.Tween;
 import starling.core.Starling;
@@ -1367,7 +1367,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			return value;
 		}
 		var valueIsNaN:Bool = value != value; //isNaN
-		if (valueIsNaN && this.explicitPageWidth !== this.explicitPageWidth) //isNaN
+		if (valueIsNaN && this.explicitPageWidth != this.explicitPageWidth) //isNaN
 		{
 			return value;
 		}
@@ -2750,8 +2750,8 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		//have only one type of pending scroll at a time.
 		this.pendingHorizontalScrollPosition = Math.NaN;
 		this.pendingVerticalScrollPosition = Math.NaN;
-		this.hasPendingHorizontalPageIndex = this._horizontalPageIndex !== horizontalPageIndex;
-		this.hasPendingVerticalPageIndex = this._verticalPageIndex !== verticalPageIndex;
+		this.hasPendingHorizontalPageIndex = this._horizontalPageIndex != horizontalPageIndex;
+		this.hasPendingVerticalPageIndex = this._verticalPageIndex != verticalPageIndex;
 		if (!this.hasPendingHorizontalPageIndex && !this.hasPendingVerticalPageIndex)
 		{
 			return;
@@ -2913,7 +2913,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	{
 		if (this._snapScrollPositionsToPixels)
 		{
-			var starling:Starling = this.stage !== null ? this.stage.starling : Starling.current;
+			var starling:Starling = this.stage != null ? this.stage.starling : Starling.current;
 			var pixelSize:Float = 1 / starling.contentScaleFactor;
 			this._viewPort.horizontalScrollPosition = Math.fround(this._horizontalScrollPosition / pixelSize) * pixelSize;
 			this._viewPort.verticalScrollPosition = Math.fround(this._verticalScrollPosition / pixelSize) * pixelSize;
@@ -2952,7 +2952,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			this.refreshViewPortBoundsForLayout();
 			this.refreshScrollValues();
 			loopCount++;
-			if(loopCount >= 10)
+			if (loopCount >= 10)
 			{
 				//if it still fails after ten tries, we've probably entered
 				//an infinite loop. it could be things like rounding errors,
@@ -2961,7 +2961,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 				throw new Error(Type.getClassName(Type.getClass(this)) + " stuck in an infinite loop during measurement and validation. This may be an issue with the layout or children, such as custom item renderers.");
 			}
 		}
-		while(this._hasViewPortBoundsChanged);
+		while (this._hasViewPortBoundsChanged);
 		this._lastViewPortWidth = this._viewPort.width;
 		this._lastViewPortHeight = this._viewPort.height;
 	}
@@ -3388,7 +3388,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		{
 			viewPortMinHeight = this._explicitHeight;
 		}
-		if (this.currentBackgroundSkin !== null)
+		if (this.currentBackgroundSkin != null)
 		{
 			var backgroundMinHeight:Float = this.currentBackgroundSkin.height;
 			if (measureBackground != null)
@@ -4381,7 +4381,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 				(this.actualHeight - this._leftPullView.height) / 2;
 			//if the animation is active, we don't want to interrupt it.
 			//if the user starts dragging, the animation will be stopped.
-			if (this._leftPullTween === null)
+			if (this._leftPullTween == null)
 			{
 				pullViewSize = this._leftPullView.width;
 				finalRatio = this._leftPullViewRatio;
@@ -4401,7 +4401,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 				}
 				if (finalRatio > 0)
 				{
-					if(this._leftPullViewDisplayMode == PullViewDisplayMode.FIXED)
+					if (this._leftPullViewDisplayMode == PullViewDisplayMode.FIXED)
 					{
 						this._leftPullView.x = this._leftViewPortOffset +
 							this._leftPullView.pivotX * this._leftPullView.scaleX;
@@ -4679,7 +4679,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 					this.leftPullViewRatio = (adjustedMinScrollPosition - position) / this._leftPullView.width;
 				}
 			}
-			if (this._rightPullView !== null && !this._isRightPullViewActive)
+			if (this._rightPullView != null && !this._isRightPullViewActive)
 			{
 				this.rightPullViewRatio = 0;
 			}

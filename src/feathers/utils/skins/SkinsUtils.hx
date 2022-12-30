@@ -56,10 +56,10 @@ class SkinsUtils
 		if (measureChild != null)
 		{
 			var childMinWidth:Float = parentExplicitMinWidth;
-			//for some reason, if we do the !== check on a local variable right
+			//for some reason, if we do the != check on a local variable right
 			//here, compiling with the flex 4.6 SDK will throw a VerifyError
 			//for a stack overflow.
-			//we could change the !== check back to isNaN() instead, but
+			//we could change the != check back to isNaN() instead, but
 			//isNaN() can allocate an object that needs garbage collection.
 			//compilerWorkaround = childMinWidth;
 			if (childMinWidth != childMinWidth || //isNaN
@@ -87,7 +87,7 @@ class SkinsUtils
 			measureChild.maxWidth = childMaxWidth;
 			var childMaxHeight:Float = parentExplicitMaxHeight;
 			//compilerWorkaround = childMaxHeight;
-			if(childMaxHeight != childMaxHeight || //isNaN
+			if (childMaxHeight != childMaxHeight || //isNaN
 				childExplicitMaxHeight < childMaxHeight)
 			{
 				childMaxHeight = childExplicitMaxHeight;
