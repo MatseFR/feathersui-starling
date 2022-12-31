@@ -343,12 +343,12 @@ class ImageSkin extends Image implements IMeasureDisplayObject implements IState
 		{
 			return value;
 		}
-		if (this._stateContext)
+		if (this._stateContext != null)
 		{
 			this._stateContext.removeEventListener(FeathersEventType.STATE_CHANGE, stateContext_stageChangeHandler);
 		}
 		this._stateContext = value;
-		if (this._stateContext)
+		if (this._stateContext != null)
 		{
 			this._stateContext.addEventListener(FeathersEventType.STATE_CHANGE, stateContext_stageChangeHandler);
 		}
@@ -743,9 +743,10 @@ class ImageSkin extends Image implements IMeasureDisplayObject implements IState
 			}
 			var rect:Rectangle = Pool.getRectangle();
 			this.getBounds(this, rect);
+			var difference:Float;
 			if (rect.width < this._minTouchWidth)
 			{
-				var difference:Float = this._minTouchWidth - rect.width;
+			difference = this._minTouchWidth - rect.width;
 				rect.width += difference;
 				rect.x -= difference / 2;
 			}

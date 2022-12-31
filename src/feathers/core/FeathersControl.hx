@@ -292,7 +292,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 	{
 		if (value == this._pendingVisible)
 		{
-			return;
+			return value;
 		}
 		this._pendingVisible = value;
 		if (this._suspendEffectsCount == 0 && this._hideEffectContext != null)
@@ -317,7 +317,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 		}
 		else
 		{
-			if (!this.dispatchEvent || this._suspendEffectsCount > 0 || this._hideEffect == null || this.stage == null)
+			if (!this.isCreated || this._suspendEffectsCount > 0 || this._hideEffect == null || this.stage == null)
 			{
 				super.visible = this._pendingVisible;
 			}
@@ -328,6 +328,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 				this._hideEffectContext.play();
 			}
 		}
+		return value;
 	}
 	
 	/**
@@ -944,15 +945,16 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 		}
 		if (this._explicitWidth == value)
 		{
-			return;
+			return value;
 		}
 		var hasSetExplicitWidth:Bool = false;
 		var newHeight:Float = this.actualHeight;
+		var resizeEffectContext:IResizeEffectContext;
 		if (this._suspendEffectsCount == 0 && this._resizeEffectContext != null)
 		{
 			if (Std.isOfType(this._resizeEffectContext, IResizeEffectContext))
 			{
-				var resizeEffectContext:IResizeEffectContext = cast this._resizeEffectContext;
+				resizeEffectContext = cast this._resizeEffectContext;
 				newHeight = resizeEffectContext.newHeight;
 			}
 			this._resizeEffectContext.interrupt();
@@ -998,6 +1000,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 				}
 			}
 		}
+		return value;
 	}
 	
 	/**
@@ -1079,15 +1082,16 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 		}
 		if (this._explicitHeight == value)
 		{
-			return;
+			return value;
 		}
 		var hasSetExplicitHeight:Bool = false;
 		var newWidth:Float = this.actualWidth;
+		var resizeEffectContext:IResizeEffectContext;
 		if (this._suspendEffectsCount == 0 && this._resizeEffectContext != null)
 		{
 			if (Std.isOfType(this._resizeEffectContext, IResizeEffectContext))
 			{
-				var resizeEffectContext:IResizeEffectContext = cast this._resizeEffectContext;
+				resizeEffectContext = cast this._resizeEffectContext;
 				newWidth = resizeEffectContext.newWidth;
 			}
 			this._resizeEffectContext.interrupt();
@@ -1133,6 +1137,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 				}
 			}
 		}
+		return value;
 	}
 	
 	/**
@@ -1184,6 +1189,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 		}
 		this._minTouchHeight = value;
 		this.refreshHitAreaY();
+		return this._minTouchHeight;
 	}
 	
 	/**
@@ -1357,6 +1363,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 				this.invalidate(INVALIDATION_FLAG_SIZE);
 			}
 		}
+		return this._explicitMinHeight;
 	}
 	
 	/**
@@ -1575,7 +1582,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 		{
 			return value;
 		}
-		this._focusManager = value;
+		return this._focusManager = value;
 	}
 	
 	/**
@@ -1856,7 +1863,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 		this.focusPaddingTop = value;
 		this.focusPaddingRight = value;
 		this.focusPaddingBottom = value;
-		this.focusPaddingLeft = value;
+		return this.focusPaddingLeft = value;
 	}
 	
 	/**
@@ -1867,11 +1874,10 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 	private function get_focusPaddingTop():Float { return this._focusPaddingTop; }
 	private function set_focusPaddingTop(value:Float):Float
 	{
-		// TODO: translate this code to haxe
-		//if (this.processStyleRestriction(arguments.callee))
-		//{
-			//return value;
-		//}
+		if (this.processStyleRestriction(this.set_focusPaddingTop))
+		{
+			return value;
+		}
 		if (this._focusPaddingTop == value)
 		{
 			return value;
@@ -1889,11 +1895,10 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 	private function get_focusPaddingRight():Float { return this._focusPaddingRight; }
 	private function set_focusPaddingRight(value:Float):Float
 	{
-		// TODO: translate this code to haxe
-		//if (this.processStyleRestriction(arguments.callee))
-		//{
-			//return value;
-		//}
+		if (this.processStyleRestriction(this.set_focusPaddingRight))
+		{
+			return value;
+		}
 		if (this._focusPaddingRight == value)
 		{
 			return value;
@@ -1911,11 +1916,10 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 	private function get_focusPaddingBottom():Float { return this._focusPaddingBottom; }
 	private function set_focusPaddingBottom(value:Float):Float
 	{
-		// TODO: translate this code to haxe
-		//if (this.processStyleRestriction(arguments.callee))
-		//{
-			//return value;
-		//}
+		if (this.processStyleRestriction(this.set_focusPaddingBottom))
+		{
+			return value;
+		}
 		if (this._focusPaddingBottom == value)
 		{
 			return value;
@@ -1934,10 +1938,10 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 	private function set_focusPaddingLeft(value:Float):Float
 	{
 		// TODO: translate this code to haxe
-		//if (this.processStyleRestriction(arguments.callee))
-		//{
-			//return value;
-		//}
+		if (this.processStyleRestriction(this.set_focusPaddingLeft))
+		{
+			return value;
+		}
 		if (this._focusPaddingLeft == value)
 		{
 			return value;
@@ -1954,7 +1958,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 	 * @see #resumeEffects()
 	 */
 	public var effectsSuspended(get, never):Bool;
-	private function get_effectsSuspended():Bool { return this._suspendedEffectsCount > 0; }
+	private function get_effectsSuspended():Bool { return this._suspendEffectsCount > 0; }
 	
 	/**
 	   @private

@@ -8,6 +8,7 @@ accordance with the terms of the accompanying license agreement.
 package feathers.skins;
 import feathers.core.TokenList;
 import feathers.core.IFeathersControl;
+import haxe.Constraints.Function;
 
 /**
  * Similar to <code>FunctionStyleProvider</code>, sets styles on a Feathers
@@ -81,10 +82,10 @@ class StyleNameFunctionStyleProvider implements IStyleProvider
 	 *
 	 * @see #setFunctionForStyleName()
 	 */
-	public var defaultStyleFunction(get, set):IFeathersControl->Void;
-	private var _defaultStyleFunction:IFeathersControl->Void;
-	private function get_defaultStyleFunction():IFeathersControl->Void { return this._defaultStyleFunction; }
-	private function set_defaultStyleFunction(value:IFeathersControl->Void):IFeathersControl->Void
+	public var defaultStyleFunction(get, set):Function;
+	private var _defaultStyleFunction:Function;
+	private function get_defaultStyleFunction():Function { return this._defaultStyleFunction; }
+	private function set_defaultStyleFunction(value:Function):Function
 	{
 		return this._defaultStyleFunction = value;
 	}
@@ -92,7 +93,7 @@ class StyleNameFunctionStyleProvider implements IStyleProvider
 	/**
 	 * @private
 	 */
-	private var _styleNameMap:Map<String, IFeathersControl->Void>;
+	private var _styleNameMap:Map<String, Function>;
 	
 	/**
 	 * The target Feathers UI component is passed to this function when
@@ -104,11 +105,11 @@ class StyleNameFunctionStyleProvider implements IStyleProvider
 	 *
 	 * @see #defaultStyleFunction
 	 */
-	public function setFunctionForStyleName(styleName:String, styleFunction:IFeathersControl->Void):Void
+	public function setFunctionForStyleName(styleName:String, styleFunction:Function):Void
 	{
 		if (this._styleNameMap == null)
 		{
-			this._styleNameMap = new Map<String, IFeathersControl->Void>();
+			this._styleNameMap = new Map<String, Function>();
 		}
 		this._styleNameMap[styleName] = styleFunction;
 	}

@@ -114,6 +114,7 @@ class DefaultToolTipManager
 			this._toolTip.removeFromParent(true);
 			this._toolTip = null;
 		}
+		return this._toolTipFactory;
 	}
 	
 	/**
@@ -209,7 +210,7 @@ class DefaultToolTipManager
 			if (Std.isOfType(target, IFeathersControl))
 			{
 				var toolTipSource:IFeathersControl = cast target;
-				if (toolTipSource.toolTip)
+				if (toolTipSource.toolTip != null)
 				{
 					return toolTipSource;
 				}

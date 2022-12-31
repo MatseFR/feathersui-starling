@@ -99,7 +99,7 @@ abstract class BaseVariableVirtualLayout extends EventDispatcher
 	 */
 	public function resetVariableVirtualCache():Void
 	{
-		this._virtualCache.length = 0;
+		this._virtualCache.resize(0);
 	}
 	
 	/**

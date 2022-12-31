@@ -113,12 +113,12 @@ class PopUpManager
 	 *     return overlay;
 	 * };</listing>
 	 */
-	public static var overlayFactory(get, set):Void->IPopUpManager;
-	private static function get_overlayFactory():Void->IPopUpManager
+	public static var overlayFactory(get, set):Void->DisplayObject;
+	private static function get_overlayFactory():Void->DisplayObject
 	{
 		return PopUpManager.forStarling(Starling.current).overlayFactory;
 	}
-	private static function set_overlayFactory(value:Void->IPopUpManager):Void->IPopUpManager
+	private static function set_overlayFactory(value:Void->DisplayObject):Void->DisplayObject
 	{
 		return PopUpManager.forStarling(Starling.current).overlayFactory = value;
 	}

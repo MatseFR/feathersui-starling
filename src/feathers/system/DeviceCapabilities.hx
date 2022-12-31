@@ -142,7 +142,7 @@ class DeviceCapabilities
 	 *
 	 * @see http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/system/Capabilities.html#screenDPI Full description of flash.system.Capabilities.screenDPI in Adobe's Flash Platform API Reference
 	 */
-	public static var dpi:Float = Capabilities.screenDPI;
+	public static var dpi:Int = Std.int(Capabilities.screenDPI);
 	
 	/**
 	 * Determines if this device is probably a tablet, based on the physical

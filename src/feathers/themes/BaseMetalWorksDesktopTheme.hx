@@ -74,6 +74,11 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	 * in normal and bold weights.
 	 */
 	public static inline var FONT_NAME:String = "SourceSansPro";
+	
+	/**
+	 * The stack of fonts to use for controls that don't use embedded fonts.
+	 */
+	public static inline var FONT_NAME_STACK:String = "Source Sans Pro,Helvetica,_sans";
 
 	private static inline var PRIMARY_BACKGROUND_COLOR:Int = 0x4a4137;
 	private static inline var LIGHT_TEXT_COLOR:Int = 0xe5e5e5;
@@ -826,9 +831,9 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		// TODO : restore when ready
 		//alert
 		//this.getStyleProviderForClass(Alert).defaultStyleFunction = this.setAlertStyles;
-		this.getStyleProviderForClass(Header).setFunctionForStyleName(Alert.DEFAULT_CHILD_STYLE_NAME_HEADER, this.setPopupHeaderStyles);
+		//this.getStyleProviderForClass(Header).setFunctionForStyleName(Alert.DEFAULT_CHILD_STYLE_NAME_HEADER, this.setPopupHeaderStyles);
 		//this.getStyleProviderForClass(ButtonGroup).setFunctionForStyleName(Alert.DEFAULT_CHILD_STYLE_NAME_BUTTON_GROUP, this.setAlertButtonGroupStyles);
-		this.getStyleProviderForClass(Button).setFunctionForStyleName(THEME_STYLE_NAME_ALERT_BUTTON_GROUP_BUTTON, this.setAlertButtonGroupButtonStyles);
+		//this.getStyleProviderForClass(Button).setFunctionForStyleName(THEME_STYLE_NAME_ALERT_BUTTON_GROUP_BUTTON, this.setAlertButtonGroupButtonStyles);
 		
 		//autocomplete
 		//this.getStyleProviderForClass(AutoComplete).defaultStyleFunction = this.setTextInputStyles;
@@ -1227,11 +1232,13 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		otherSkin.setTextureForState(ButtonState.DOWN, this.buttonDownSkinTexture);
 		button.hoverSkin = otherSkin;
 		button.downSkin = otherSkin;
+		
+		var toggleButton:ToggleButton;
 		if (Std.isOfType(button, ToggleButton))
 		{
 			//for convenience, this function can style both a regular button
 			//and a toggle button
-			var toggleButton:ToggleButton = ToggleButton(button);
+			toggleButton = cast button;
 			otherSkin.selectedTexture = this.toggleButtonSelectedUpSkinTexture;
 			otherSkin.setTextureForState(ButtonState.DISABLED_AND_SELECTED, this.toggleButtonSelectedDisabledSkinTexture);
 			toggleButton.defaultSelectedSkin = otherSkin;

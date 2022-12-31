@@ -23,14 +23,15 @@ import feathers.skins.IStyleProvider;
 import feathers.system.DeviceCapabilities;
 import feathers.text.FontStylesSet;
 import feathers.utils.display.ScreenDensityScaleCalculator;
+import feathers.utils.skins.SkinsUtils;
 import haxe.Constraints.Function;
-import openfl.display.DisplayObject;
+import openfl.display.Stage;
 import openfl.display.StageDisplayState;
 import openfl.events.FullScreenEvent;
 import openfl.geom.Point;
 import openfl.system.Capabilities;
 import starling.core.Starling;
-import starling.display.Stage;
+import starling.display.DisplayObject;
 import starling.events.Event;
 import starling.text.TextFormat;
 import starling.utils.Pool;
@@ -238,10 +239,10 @@ class Header extends FeathersControl
 	{
 		if (this._title == value)
 		{
-			return;
+			return value;
 		}
 		this._title = value;
-		this.invalidate(INVALIDATION_FLAG_DATA);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_DATA);
 		return this._title;
 	}
 	
@@ -289,7 +290,7 @@ class Header extends FeathersControl
 			return value;
 		}
 		this._titleFactory = value;
-		this.invalidate(INVALIDATION_FLAG_TEXT_RENDERER);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_TEXT_RENDERER);
 		return this._titleFactory;
 	}
 	
@@ -396,7 +397,7 @@ class Header extends FeathersControl
 	{
 		if (this._centerItems == value)
 		{
-			return;
+			return value;
 		}
 		if (this._centerItems != null)
 		{
@@ -450,7 +451,7 @@ class Header extends FeathersControl
 	{
 		if (this._rightItems == value)
 		{
-			return;
+			return value;
 		}
 		if (this._rightItems != null)
 		{
@@ -509,7 +510,7 @@ class Header extends FeathersControl
 			return value;
 		}
 		this._paddingTop = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._paddingTop;
 	}
 	
@@ -530,7 +531,7 @@ class Header extends FeathersControl
 			return value;
 		}
 		this._paddingRight = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._paddingRight;
 	}
 	
@@ -551,7 +552,7 @@ class Header extends FeathersControl
 			return value;
 		}
 		this._paddingBottom = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._paddingBottom;
 	}
 	
@@ -572,7 +573,7 @@ class Header extends FeathersControl
 			return value;
 		}
 		this._paddingLeft = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._paddingLeft;
 	}
 	
@@ -593,7 +594,7 @@ class Header extends FeathersControl
 			return value;
 		}
 		this._gap = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._gap;
 	}
 	
@@ -614,7 +615,7 @@ class Header extends FeathersControl
 			return value;
 		}
 		this._titleGap = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._titleGap;
 	}
 	
@@ -635,7 +636,7 @@ class Header extends FeathersControl
 			return value;
 		}
 		this._useExtraPaddingForOSStatusBar = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._useExtraPaddingForOSStatusBar;
 	}
 	
@@ -656,7 +657,7 @@ class Header extends FeathersControl
 			return value;
 		}
 		this._verticalAlign = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._verticalAlign;
 	}
 	
@@ -722,7 +723,7 @@ class Header extends FeathersControl
 			this.currentBackgroundSkin = null;
 		}
 		this._backgroundSkin = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._backgroundSkin;
 	}
 	
@@ -753,7 +754,7 @@ class Header extends FeathersControl
 			this.currentBackgroundSkin = null;
 		}
 		this._backgroundDisabledSkin = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._backgroundDisabledSkin;
 	}
 	
@@ -773,10 +774,10 @@ class Header extends FeathersControl
 		{
 			return value;
 		}
-		var savedCallee:Function = this.set_fontStyles;
+		//var savedCallee:Function = this.set_fontStyles;
 		function changeHandler(event:Event):Void
 		{
-			processStyleRestriction(savedCallee);
+			processStyleRestriction(this.set_fontStyles);
 		}
 		if (value != null)
 		{
@@ -801,10 +802,10 @@ class Header extends FeathersControl
 		{
 			return value;
 		}
-		var savedCallee:Function = this.set_disabledFontStyles;
+		//var savedCallee:Function = this.set_disabledFontStyles;
 		function changeHandler(event:Event):Void
 		{
-			processStyleRestriction(savedCallee);
+			processStyleRestriction(this.set_disabledFontStyles);
 		}
 		if (value != null)
 		{
@@ -835,7 +836,7 @@ class Header extends FeathersControl
 			return value;
 		}
 		this._wordWrap = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return value;
 	}
 	
@@ -856,7 +857,7 @@ class Header extends FeathersControl
 			return value;
 		}
 		this._customTitleStyleName = value;
-		this.invalidate(INVALIDATION_FLAG_TEXT_RENDERER);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_TEXT_RENDERER);
 		return this._customTitleStyleName;
 	}
 	
@@ -923,7 +924,7 @@ class Header extends FeathersControl
 		{
 			this._titleProperties.addOnChangeCallback(titleProperties_onChange);
 		}
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._titleProperties;
 	}
 	
@@ -952,7 +953,7 @@ class Header extends FeathersControl
 			return value;
 		}
 		this._titleAlign = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._titleAlign;
 	}
 	
@@ -1039,14 +1040,14 @@ class Header extends FeathersControl
 	 */
 	override function draw():Void
 	{
-		var sizeInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_SIZE);
-		var dataInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_DATA);
-		var stylesInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_STYLES);
-		var stateInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_STATE);
+		var sizeInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_SIZE);
+		var dataInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_DATA);
+		var stylesInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_STYLES);
+		var stateInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_STATE);
 		var leftContentInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_LEFT_CONTENT);
 		var rightContentInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_RIGHT_CONTENT);
 		var centerContentInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_CENTER_CONTENT);
-		var textRendererInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_TEXT_RENDERER);
+		var textRendererInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_TEXT_RENDERER);
 		
 		if (textRendererInvalid)
 		{
@@ -1180,7 +1181,7 @@ class Header extends FeathersControl
 			return false;
 		}
 		
-		resetFluidChildDimensionsForMeasurement(this.currentBackgroundSkin,
+		SkinsUtils.resetFluidChildDimensionsForMeasurement(this.currentBackgroundSkin,
 			this._explicitWidth, this._explicitHeight,
 			this._explicitMinWidth, this._explicitMinHeight,
 			this._explicitMaxWidth, this._explicitMaxHeight,
@@ -1201,18 +1202,22 @@ class Header extends FeathersControl
 		var hasRightItems:Bool = this._rightItems != null && this._rightItems.length > 0;
 		var hasCenterItems:Bool = this._centerItems != null && this._centerItems.length > 0;
 		var oldIgnoreItemResizing:Bool = this._ignoreItemResizing;
+		var item:DisplayObject;
+		var itemCount:Int;
+		var itemWidth:Float;
+		var itemHeight:Float;
 		this._ignoreItemResizing = true;
 		if (hasLeftItems)
 		{
-			var itemCount:Int = this._leftItems.length;
+			itemCount = this._leftItems.length;
 			for (i in 0...itemCount)
 			{
-				var item:DisplayObject = this._leftItems[i];
+				item = this._leftItems[i];
 				if (Std.isOfType(item, IValidating))
 				{
 					cast(item, IValidating).validate();
 				}
-				var itemWidth:Float = item.width;
+				itemWidth = item.width;
 				if (itemWidth == itemWidth) //!isNaN
 				{
 					totalContentWidth += itemWidth;
@@ -1221,7 +1226,7 @@ class Header extends FeathersControl
 						totalContentWidth += this._gap;
 					}
 				}
-				var itemHeight:Float = item.height;
+				itemHeight = item.height;
 				if (itemHeight == itemHeight && //!isNaN
 					itemHeight > maxContentHeight)
 				{
@@ -1454,7 +1459,7 @@ class Header extends FeathersControl
 	 */
 	private function createTitle():Void
 	{
-		if (this.titleTextRenderer)
+		if (this.titleTextRenderer != null)
 		{
 			this.removeChild(cast this.titleTextRenderer, true);
 			this.titleTextRenderer = null;
@@ -1689,7 +1694,7 @@ class Header extends FeathersControl
 	{
 		for (item in this._leftItems)
 		{
-			if (Std.isOfType(item is IValidating))
+			if (Std.isOfType(item, IValidating))
 			{
 				cast(item, IValidating).validate();
 			}
@@ -1799,9 +1804,10 @@ class Header extends FeathersControl
 			//rightItemsWidth already includes padding
 			rightOffset = this.rightItemsWidth + calculatedTitleGap;
 		}
+		var titleMaxWidth:Float;
 		if (this._titleAlign == HorizontalAlign.LEFT)
 		{
-			var titleMaxWidth:Float = this.actualWidth - leftOffset - rightOffset;
+			titleMaxWidth = this.actualWidth - leftOffset - rightOffset;
 			if (titleMaxWidth < 0)
 			{
 				titleMaxWidth = 0;
@@ -1854,20 +1860,13 @@ class Header extends FeathersControl
 		switch (this._verticalAlign)
 		{
 			case VerticalAlign.TOP:
-			{
 				this.titleTextRenderer.y = paddingTop;
-				break;
-			}
+			
 			case VerticalAlign.BOTTOM:
-			{
 				this.titleTextRenderer.y = this.actualHeight - this._paddingBottom - this.titleTextRenderer.height;
-				break;
-			}
+			
 			default: //center
-			{
 				this.titleTextRenderer.y = paddingTop + Math.fround((this.actualHeight - paddingTop - this._paddingBottom - this.titleTextRenderer.height) / 2);
-				break;
-			}
 		}
 	}
 	
@@ -1922,7 +1921,7 @@ class Header extends FeathersControl
 		{
 			return;
 		}
-		this.invalidate(INVALIDATION_FLAG_SIZE);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 	}
 	
 }
