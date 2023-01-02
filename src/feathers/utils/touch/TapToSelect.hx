@@ -172,7 +172,7 @@ class TapToSelect
 				{
 					point = Pool.getPoint();
 					touch.getLocation(stage, point);
-					if (Std.is(this._target, DisplayObjectContainer))
+					if (Std.isOfType(this._target, DisplayObjectContainer))
 					{
 						isInBounds = cast(this._target, DisplayObjectContainer).contains(stage.hitTest(point));
 					}

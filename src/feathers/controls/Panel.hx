@@ -684,6 +684,22 @@ class Panel extends ScrollContainer implements IFocusExtras
 	 */
 	private var _ignoreFooterResizing:Bool = false;
 	
+	override public function dispose():Void 
+	{
+		if (this._headerProperties != null)
+		{
+			this._headerProperties.dispose();
+			this._headerProperties = null;
+		}
+		if (this._footerProperties != null)
+		{
+			this._footerProperties.dispose();
+			this._footerProperties = null;
+		}
+		
+		super.dispose();
+	}
+	
 	/**
 	 * @private
 	 */

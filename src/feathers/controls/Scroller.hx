@@ -12,6 +12,7 @@ import feathers.core.IFocusDisplayObject;
 import feathers.core.IMeasureDisplayObject;
 import feathers.core.IValidating;
 import feathers.core.PropertyProxy;
+import feathers.core.PropertyProxyReal;
 import feathers.events.ExclusiveTouch;
 import feathers.events.FeathersEventType;
 import feathers.layout.Direction;
@@ -6132,7 +6133,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	/**
 	 * @private
 	 */
-	private function childProperties_onChange(proxy:PropertyProxy, name:String):Void
+	private function childProperties_onChange(proxy:PropertyProxyReal, name:String):Void
 	{
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 	}

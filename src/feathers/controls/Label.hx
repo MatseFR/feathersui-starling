@@ -14,6 +14,7 @@ import feathers.core.ITextRenderer;
 import feathers.core.IToolTip;
 import feathers.core.IValidating;
 import feathers.core.PropertyProxy;
+import feathers.core.PropertyProxyReal;
 import feathers.skins.IStyleProvider;
 import feathers.text.FontStylesSet;
 import feathers.utils.skins.SkinsUtils;
@@ -408,6 +409,7 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 		if (this._textRendererProperties != null)
 		{
 			this._textRendererProperties.removeOnChangeCallback(textRendererProperties_onChange);
+			this._textRendererProperties.dispose();
 		}
 		this._textRendererProperties = cast value;
 		if (this._textRendererProperties != null)
@@ -1033,7 +1035,7 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 	/**
 	 * @private
 	 */
-	private function textRendererProperties_onChange(proxy:PropertyProxy, propertyName:String):Void
+	private function textRendererProperties_onChange(proxy:PropertyProxyReal, propertyName:String):Void
 	{
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 	}

@@ -18,6 +18,7 @@ import feathers.motion.effectClasses.IResizeEffectContext;
 import feathers.skins.IStyleProvider;
 import feathers.utils.display.DisplayUtils;
 import feathers.utils.math.MathUtils;
+import feathers.utils.type.SafeCast;
 import haxe.Constraints.Function;
 import openfl.errors.ArgumentError;
 import openfl.errors.Error;
@@ -1850,7 +1851,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 		{
 			cast(this._focusIndicatorSkin, IStateObserver).stateContext = cast this;
 		}
-		if (this._focusManager != null && this._focusManager.focus == this)
+		if (this._focusManager != null && this._focusManager.focus == SafeCast.safe_cast(this, DisplayObject))
 		{
 			this.invalidate(INVALIDATION_FLAG_STYLES);
 		}

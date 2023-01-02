@@ -13,6 +13,7 @@ import feathers.core.IMeasureDisplayObject;
 import feathers.core.ITextRenderer;
 import feathers.core.IValidating;
 import feathers.core.PropertyProxy;
+import feathers.core.PropertyProxyReal;
 import feathers.events.FeathersEventType;
 import feathers.layout.HorizontalAlign;
 import feathers.layout.HorizontalLayout;
@@ -1017,6 +1018,7 @@ class Header extends FeathersControl
 		if (this._titleProperties != null)
 		{
 			this._titleProperties.dispose();
+			this._titleProperties = null;
 		}
 		super.dispose();
 	}
@@ -1908,7 +1910,7 @@ class Header extends FeathersControl
 	/**
 	 * @private
 	 */
-	private function titleProperties_onChange(proxy:PropertyProxy, propertyName:String):Void
+	private function titleProperties_onChange(proxy:PropertyProxyReal, propertyName:String):Void
 	{
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 	}

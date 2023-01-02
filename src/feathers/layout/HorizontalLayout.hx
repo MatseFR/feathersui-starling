@@ -536,10 +536,10 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 			}
 			if (horizontalAlignOffsetX != 0)
 			{
-				for(i in 0...discoveredItemCount)
+				for (i in 0...discoveredItemCount)
 				{
 					item = discoveredItems[i];
-					if (Std.is(item, ILayoutDisplayObject) && !cast(item, ILayoutDisplayObject).includeInLayout)
+					if (Std.isOfType(item, ILayoutDisplayObject) && !cast(item, ILayoutDisplayObject).includeInLayout)
 					{
 						continue;
 					}

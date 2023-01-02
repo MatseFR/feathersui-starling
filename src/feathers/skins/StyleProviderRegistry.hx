@@ -70,7 +70,9 @@ class StyleProviderRegistry
 	/**
 	 * @private
 	 */
-	private var _classToStyleProvider:Map<Class<Dynamic>, IStyleProvider> = new Map<Class<Dynamic>, IStyleProvider>();
+	private var _classToStyleProvider:Map<String, IStyleProvider> = new Map<String, IStyleProvider>();
+	
+	private var _classList:Array<Class<Dynamic>> = new Array<Class<Dynamic>>();
 	
 	/**
 	 * Disposes the theme.
@@ -80,7 +82,11 @@ class StyleProviderRegistry
 		//clear the global style providers, but only if they still match the
 		//ones that the theme created. a developer could replace the global
 		//style providers with different ones.
-		for (type in this._classToStyleProvider.keys())
+		//for (type in this._classToStyleProvider.keys())
+		//{
+			//this.clearStyleProvider(type);
+		//}
+		for (type in this._classList)
 		{
 			this.clearStyleProvider(type);
 		}
@@ -100,7 +106,7 @@ class StyleProviderRegistry
 		{
 			return false;
 		}
-		return this._classToStyleProvider.exists(forClass);
+		return this._classToStyleProvider.exists(Type.getClassName(forClass));
 	}
 	
 	/**
@@ -114,14 +120,20 @@ class StyleProviderRegistry
 		}
 		else
 		{
-			result = new Array<Class<Dynamic>>();
+			//result = new Array<Class<Dynamic>>();
+			return this._classList.copy();
 		}
-		var index:Int = 0;
-		for (forClass in this._classToStyleProvider.keys())
+		
+		var count:Int = this._classList.length;
+		for (i in 0...count)
 		{
-			result[index] = forClass;
-			index++;
+			result[i] = this._classList[i];
 		}
+		//for (forClass in this._classToStyleProvider.keys())
+		//{
+			//result[index] = forClass;
+			//index++;
+		//}
 		return result;
 	}
 	
@@ -137,12 +149,14 @@ class StyleProviderRegistry
 	 */
 	public function getStyleProvider(forClass:Class<Dynamic>):IStyleProvider
 	{
+		var className:String = Type.getClassName(forClass);
 		this.validateComponentClass(forClass);
-		var styleProvider:IStyleProvider = this._classToStyleProvider[forClass];
+		var styleProvider:IStyleProvider = this._classToStyleProvider[className];
 		if (styleProvider == null)
 		{
 			styleProvider = this._styleProviderFactory();
-			this._classToStyleProvider[forClass] = styleProvider;
+			this._classToStyleProvider[className] = styleProvider;
+			_classList.push(forClass);
 			if (this._registerGlobally)
 			{
 				//forClass[GLOBAL_STYLE_PROVIDER_PROPERTY_NAME] = styleProvider;
@@ -163,11 +177,13 @@ class StyleProviderRegistry
 	 */
 	public function clearStyleProvider(forClass:Class<Dynamic>):IStyleProvider
 	{
+		var className:String = Type.getClassName(forClass);
 		this.validateComponentClass(forClass);
-		if (this._classToStyleProvider.exists(forClass))
+		if (this._classToStyleProvider.exists(className))
 		{
-			var styleProvider:IStyleProvider = this._classToStyleProvider[forClass];
-			this._classToStyleProvider.remove(forClass);
+			var styleProvider:IStyleProvider = this._classToStyleProvider[className];
+			this._classToStyleProvider.remove(className);
+			this._classList.remove(forClass);
 			if (this._registerGlobally &&
 				Reflect.field(forClass, GLOBAL_STYLE_PROVIDER_PROPERTY_NAME) == styleProvider)
 				//forClass[GLOBAL_STYLE_PROVIDER_PROPERTY_NAME] == styleProvider)

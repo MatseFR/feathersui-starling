@@ -13,6 +13,7 @@ import feathers.core.IFocusDisplayObject;
 import feathers.core.IMeasureDisplayObject;
 import feathers.core.IValidating;
 import feathers.core.PropertyProxy;
+import feathers.core.PropertyProxyReal;
 import feathers.events.FeathersEventType;
 import feathers.layout.Direction;
 import feathers.skins.IStyleProvider;
@@ -1443,6 +1444,37 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 		}
 	}
 	
+	override public function dispose():Void 
+	{
+		if (this._decrementButtonProperties != null)
+		{
+			this._decrementButtonProperties.dispose();
+			this._decrementButtonProperties = null;
+		}
+		if (this._incrementButtonProperties != null)
+		{
+			this._incrementButtonProperties.dispose();
+			this._incrementButtonProperties = null;
+		}
+		if (this._maximumTrackProperties != null)
+		{
+			this._maximumTrackProperties.dispose();
+			this._maximumTrackProperties = null;
+		}
+		if (this._minimumTrackProperties != null)
+		{
+			this._minimumTrackProperties.dispose();
+			this._minimumTrackProperties = null;
+		}
+		if (this._thumbProperties != null)
+		{
+			this._thumbProperties.dispose();
+			this._thumbProperties = null;
+		}
+		
+		super.dispose();
+	}
+	
 	/**
 	 * @private
 	 */
@@ -2622,7 +2654,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	/**
 	 * @private
 	 */
-	private function thumbProperties_onChange(proxy:PropertyProxy, name:Dynamic):Void
+	private function thumbProperties_onChange(proxy:PropertyProxyReal, name:Dynamic):Void
 	{
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 	}
@@ -2630,7 +2662,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	/**
 	 * @private
 	 */
-	private function minimumTrackProperties_onChange(proxy:PropertyProxy, name:Dynamic):Void
+	private function minimumTrackProperties_onChange(proxy:PropertyProxyReal, name:Dynamic):Void
 	{
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 	}
@@ -2638,7 +2670,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	/**
 	 * @private
 	 */
-	private function maximumTrackProperties_onChange(proxy:PropertyProxy, name:Dynamic):Void
+	private function maximumTrackProperties_onChange(proxy:PropertyProxyReal, name:Dynamic):Void
 	{
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 	}
@@ -2646,7 +2678,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	/**
 	 * @private
 	 */
-	private function decrementButtonProperties_onChange(proxy:PropertyProxy, name:Dynamic):Void
+	private function decrementButtonProperties_onChange(proxy:PropertyProxyReal, name:Dynamic):Void
 	{
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 	}
@@ -2654,7 +2686,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	/**
 	 * @private
 	 */
-	private function incrementButtonProperties_onChange(proxy:PropertyProxy, name:Dynamic):Void
+	private function incrementButtonProperties_onChange(proxy:PropertyProxyReal, name:Dynamic):Void
 	{
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 	}

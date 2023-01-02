@@ -14,6 +14,7 @@ import feathers.core.ITextBaselineControl;
 import feathers.core.ITextRenderer;
 import feathers.core.IValidating;
 import feathers.core.PropertyProxy;
+import feathers.core.PropertyProxyReal;
 import feathers.events.FeathersEventType;
 import feathers.layout.HorizontalAlign;
 import feathers.layout.RelativePosition;
@@ -819,6 +820,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 		if (this._defaultLabelProperties != null)
 		{
 			this._defaultLabelProperties.removeOnChangeCallback(childProperties_onChange);
+			this._defaultLabelProperties.dispose();
 		}
 		this._defaultLabelProperties = cast value;
 		if (this._defaultLabelProperties != null)
@@ -1098,6 +1100,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 		if (this._defaultLabelProperties != null)
 		{
 			this._defaultLabelProperties.dispose();
+			this._defaultLabelProperties = null;
 		}
 		super.dispose();
 	}
@@ -2102,7 +2105,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	/**
 	 * @private
 	 */
-	private function childProperties_onChange(proxy:PropertyProxy, name:String):Void
+	private function childProperties_onChange(proxy:PropertyProxyReal, name:String):Void
 	{
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 	}

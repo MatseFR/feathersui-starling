@@ -1999,7 +1999,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 	/**
 	 * @private
 	 */
-	private function texture_onRestore():Void
+	private function texture_onRestore(texture:ConcreteTexture):Void
 	{
 		var starling:Starling = this.stage != null ? this.stage.starling : Starling.current;
 		if (this.textSnapshot != null && this.textSnapshot.texture != null &&

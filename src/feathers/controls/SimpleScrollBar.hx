@@ -12,6 +12,7 @@ import feathers.core.IFocusDisplayObject;
 import feathers.core.IMeasureDisplayObject;
 import feathers.core.IValidating;
 import feathers.core.PropertyProxy;
+import feathers.core.PropertyProxyReal;
 import feathers.events.FeathersEventType;
 import feathers.layout.Direction;
 import feathers.skins.IStyleProvider;
@@ -598,6 +599,7 @@ class SimpleScrollBar extends FeathersControl implements IDirectionalScrollBar
 		if (this._thumbProperties != null)
 		{
 			this._thumbProperties.removeOnChangeCallback(thumbProperties_onChange);
+			this._thumbProperties.dispose();
 		}
 		this._thumbProperties = cast value;
 		if (this._thumbProperties != null)
@@ -663,6 +665,16 @@ class SimpleScrollBar extends FeathersControl implements IDirectionalScrollBar
 		{
 			this.value = this._maximum;
 		}
+	}
+	
+	override public function dispose():Void 
+	{
+		if (this._thumbProperties != null)
+		{
+			this._thumbProperties.dispose();
+			this._thumbProperties = null;
+		}
+		super.dispose();
 	}
 	
 	/**
@@ -1109,7 +1121,7 @@ class SimpleScrollBar extends FeathersControl implements IDirectionalScrollBar
 	/**
 	 * @private
 	 */
-	private function thumbProperties_onChange(proxy:PropertyProxy, name:String):Void
+	private function thumbProperties_onChange(proxy:PropertyProxyReal, name:String):Void
 	{
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 	}
