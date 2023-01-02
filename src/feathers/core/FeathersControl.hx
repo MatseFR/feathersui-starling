@@ -1654,8 +1654,12 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 	 *
 	 * @see feathers.core.IFocusDisplayObject
 	 */
-	public var maintainTouchFocus(get, never):Bool;
+	public var maintainTouchFocus(get, set):Bool;
 	private function get_maintainTouchFocus():Bool { return false; }
+	private function set_maintainTouchFocus(value:Bool):Bool
+	{
+		throw new Error("FeathersControl maintainTouchFocus setter must be override by sub class");
+	}
 	
 	/**
 	 * <p>The implementation of this property is provided for convenience,

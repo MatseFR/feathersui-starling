@@ -1570,9 +1570,10 @@ class Header extends FeathersControl
 	{
 		this.titleTextRenderer.fontStyles = this._fontStylesSet;
 		this.titleTextRenderer.wordWrap = this._wordWrap;
+		var propertyValue:Dynamic;
 		for (propertyName in this._titleProperties)
 		{
-			var propertyValue:Dynamic = this._titleProperties[propertyName];
+			propertyValue = this._titleProperties[propertyName];
 			//this.titleTextRenderer[propertyName] = propertyValue;
 			Reflect.setProperty(this.titleTextRenderer, propertyName, propertyValue);
 		}

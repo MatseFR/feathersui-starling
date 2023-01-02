@@ -132,7 +132,8 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 			this._starling.nativeStage.addEventListener(KeyboardEvent.KEY_DOWN, stage_keyDownHandler, false, 0, true);
 			//TransformGestureEvent.GESTURE_DIRECTIONAL_TAP requires
 			//AIR 24, but we want to support older versions too
-			this._starling.nativeStage.addEventListener("gestureDirectionalTap", stage_gestureDirectionalTapHandler, false, 0, true);
+			// TODO : openfl has no TransformGestureEvent
+			//this._starling.nativeStage.addEventListener("gestureDirectionalTap", stage_gestureDirectionalTapHandler, false, 0, true);
 			if (this._savedFocus != null && this._savedFocus.stage == null)
 			{
 				this._savedFocus = null;
@@ -155,7 +156,8 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 			this._starling.nativeStage.removeEventListener(FocusEvent.KEY_FOCUS_CHANGE, stage_keyFocusChangeHandler);
 			this._starling.nativeStage.removeEventListener(FocusEvent.MOUSE_FOCUS_CHANGE, stage_mouseFocusChangeHandler);
 			this._starling.nativeStage.removeEventListener(KeyboardEvent.KEY_DOWN, stage_keyDownHandler);
-			this._starling.nativeStage.removeEventListener("gestureDirectionalTap", stage_gestureDirectionalTapHandler);
+			// TODO : openfl has no TransformGestureEvent
+			//this._starling.nativeStage.removeEventListener("gestureDirectionalTap", stage_gestureDirectionalTapHandler);
 			var focusToSave:IFocusDisplayObject = this.focus;
 			this.focus = null;
 			this._savedFocus = focusToSave;
@@ -352,9 +354,10 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 		{
 			var container:DisplayObjectContainer = cast target;
 			var childCount:Int = container.numChildren;
+			var child:DisplayObject;
 			for (i in 0...childCount)
 			{
-				var child:DisplayObject = container.getChildAt(i);
+				child = container.getChildAt(i);
 				this.clearFocusManager(child);
 			}
 			if (Std.isOfType(container, IFocusExtras))
@@ -394,16 +397,21 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 			container = container.parent;
 		}
 		var hasProcessedBeforeChild:Bool = beforeChild == null;
+		var startIndex:Int;
+		var child:DisplayObject;
+		var foundChild:IFocusDisplayObject;
+		var extras:Array<DisplayObject>;
+		var focusWithExtras:IFocusExtras;
+		var skip:Bool = false;
 		if (Std.isOfType(container, IFocusExtras))
 		{
-			var focusWithExtras:IFocusExtras = cast container;
-			var extras:Array<DisplayObject> = focusWithExtras.focusExtrasAfter;
+			focusWithExtras = cast container;
+			extras = focusWithExtras.focusExtrasAfter;
 			if (extras != null)
 			{
-				var skip:Bool = false;
 				if (beforeChild != null)
 				{
-					var startIndex:Int = extras.indexOf(beforeChild) - 1;
+					startIndex = extras.indexOf(beforeChild) - 1;
 					hasProcessedBeforeChild = startIndex >= -1;
 					skip = !hasProcessedBeforeChild;
 				}
@@ -415,8 +423,8 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 				{
 					for (i in new ReverseIterator(startIndex, 0))
 					{
-						var child:DisplayObject = extras[i];
-						var foundChild:IFocusDisplayObject = this.findPreviousChildFocus(child);
+						child = extras[i];
+						foundChild = this.findPreviousChildFocus(child);
 						if (this.isValidFocus(foundChild))
 						{
 							return foundChild;
@@ -500,16 +508,23 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 			container = container.parent;
 		}
 		var hasProcessedAfterChild:Bool = afterChild == null;
+		var startIndex:Int;
+		var childCount:Int;
+		var child:DisplayObject;
+		var foundChild:IFocusDisplayObject;
+		var focusWithExtras:IFocusExtras;
+		var extras:Array<DisplayObject>;
+		var skip:Bool;
 		if (Std.isOfType(container, IFocusExtras))
 		{
-			var focusWithExtras:IFocusExtras = cast container;
-			var extras:Array<DisplayObject> = focusWithExtras.focusExtrasBefore;
+			focusWithExtras = cast container;
+			extras = focusWithExtras.focusExtrasBefore;
 			if (extras != null)
 			{
-				var skip:Bool = false;
+				skip = false;
 				if (afterChild != null)
 				{
-					var startIndex:Int = extras.indexOf(afterChild) + 1;
+					startIndex = extras.indexOf(afterChild) + 1;
 					hasProcessedAfterChild = startIndex > 0;
 					skip = !hasProcessedAfterChild;
 				}
@@ -519,11 +534,11 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 				}
 				if (!skip)
 				{
-					var childCount:Int = extras.length;
+					childCount = extras.length;
 					for (i in startIndex...childCount)
 					{
-						var child:DisplayObject = extras[i];
-						var foundChild:IFocusDisplayObject = this.findNextChildFocus(child);
+						child = extras[i];
+						foundChild = this.findNextChildFocus(child);
 						if (this.isValidFocus(foundChild))
 						{
 							return foundChild;
@@ -608,7 +623,7 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 		if (Std.isOfType(child, IFocusDisplayObject))
 		{
 			var childWithFocus:IFocusDisplayObject = cast child;
-			if (this.isValidForFocus(childWithFocus))
+			if (this.isValidFocus(childWithFocus))
 			{
 				return childWithFocus;
 			}
@@ -791,13 +806,14 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 	 */
 	private function stage_keyDownHandler(event:KeyboardEvent):Void
 	{
-		if (event.keyLocation != KeyLocation.D_PAD && !DeviceCapabilities.simulateDPad)
-		{
-			//focus is controlled only with a d-pad and not the regular
-			//keyboard arrow keys
-			return;
-		}
-		if(event.keyCode != Keyboard.UP && event.keyCode != Keyboard.DOWN &&
+		// TODO : openfl.ui.KeyLocation has no D_PAD property
+		//if (event.keyLocation != KeyLocation.D_PAD && !DeviceCapabilities.simulateDPad)
+		//{
+			////focus is controlled only with a d-pad and not the regular
+			////keyboard arrow keys
+			//return;
+		//}
+		if (event.keyCode != Keyboard.UP && event.keyCode != Keyboard.DOWN &&
 			event.keyCode != Keyboard.LEFT && event.keyCode != Keyboard.RIGHT)
 		{
 			return;
@@ -862,45 +878,46 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 	/**
 	 * @private
 	 */
-	private function stage_gestureDirectionalTapHandler(event:TransformGestureEvent):Void
-	{
-		if (event.isDefaultPrevented())
-		{
-			//something else has already handled this event
-			return;
-		}
-		var position:String = null;
-		if (event.offsetY < 0)
-		{
-			position = RelativePosition.TOP;
-		}
-		else if (event.offsetY > 0)
-		{
-			position = RelativePosition.BOTTOM;
-		}
-		else if (event.offsetX > 0)
-		{
-			position = RelativePosition.RIGHT;
-		}
-		else if (event.offsetX < 0)
-		{
-			position = RelativePosition.LEFT;
-		}
-		if (position == null)
-		{
-			return;
-		}
-		var newFocus:IFocusDisplayObject = findFocusAtRelativePosition(this._root, position);
-		if (newFocus != this._focus)
-		{
-			event.preventDefault();
-			this.focus = newFocus;
-		}
-		if (this._focus)
-		{
-			this._focus.showFocus();
-		}
-	}
+	// TODO : openfl has no TransformGestureEvent
+	//private function stage_gestureDirectionalTapHandler(event:TransformGestureEvent):Void
+	//{
+		//if (event.isDefaultPrevented())
+		//{
+			////something else has already handled this event
+			//return;
+		//}
+		//var position:String = null;
+		//if (event.offsetY < 0)
+		//{
+			//position = RelativePosition.TOP;
+		//}
+		//else if (event.offsetY > 0)
+		//{
+			//position = RelativePosition.BOTTOM;
+		//}
+		//else if (event.offsetX > 0)
+		//{
+			//position = RelativePosition.RIGHT;
+		//}
+		//else if (event.offsetX < 0)
+		//{
+			//position = RelativePosition.LEFT;
+		//}
+		//if (position == null)
+		//{
+			//return;
+		//}
+		//var newFocus:IFocusDisplayObject = findFocusAtRelativePosition(this._root, position);
+		//if (newFocus != this._focus)
+		//{
+			//event.preventDefault();
+			//this.focus = newFocus;
+		//}
+		//if (this._focus)
+		//{
+			//this._focus.showFocus();
+		//}
+	//}
 	
 	/**
 	 * @private
@@ -915,7 +932,7 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 		
 		var newFocus:IFocusDisplayObject;
 		var currentFocus:IFocusDisplayObject = this._focus;
-		if (currentFocus && currentFocus.focusOwner != null)
+		if (currentFocus != null && currentFocus.focusOwner != null)
 		{
 			newFocus = currentFocus.focusOwner;
 		}

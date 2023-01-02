@@ -865,10 +865,12 @@ class SimpleScrollBar extends FeathersControl implements IDirectionalScrollBar
 	 */
 	private function refreshThumbStyles():Void
 	{
-		for(propertyName in this._thumbProperties)
+		var propertyValue:Dynamic;
+		for (propertyName in this._thumbProperties)
 		{
-			var propertyValue:Dynamic = this._thumbProperties[propertyName];
-			this.thumb[propertyName] = propertyValue;
+			propertyValue = this._thumbProperties[propertyName];
+			//this.thumb[propertyName] = propertyValue;
+			Reflect.setProperty(this.thumb, propertyName, propertyValue);
 		}
 	}
 	

@@ -23,9 +23,10 @@ class BitmapFontTextFormat
 	/**
 	   Constructor.
 	**/
-	public function new(font:Dynamic, size:Null<Float> = null, color:Int = 0xffffff, align:String = TextFormatAlign.LEFT, leading:Float = 0) 
+	public function new(font:Dynamic, size:Null<Float> = null, color:Int = 0xffffff, align:String = null, leading:Float = 0) 
 	{
 		if (size == null) size = Math.NaN;
+		if (align == null) align = TextFormatAlign.LEFT;
 		
 		if (Std.isOfType(font, String))
 		{

@@ -8,6 +8,7 @@ accordance with the terms of the accompanying license agreement.
 package feathers.utils.touch;
 import feathers.events.FeathersEventType;
 import haxe.Timer;
+import openfl.Lib.getTimer;
 import openfl.geom.Point;
 import starling.display.DisplayObject;
 import starling.display.DisplayObjectContainer;

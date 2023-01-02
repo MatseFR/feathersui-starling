@@ -14,6 +14,7 @@ import feathers.core.INativeFocusOwner;
 import feathers.core.ITextEditor;
 import feathers.events.FeathersEventType;
 import feathers.skins.IStyleProvider;
+import feathers.utils.geom.GeomUtils;
 import openfl.display.BitmapData;
 import openfl.display.Stage;
 import openfl.display3D.Context3DProfile;
@@ -1065,9 +1066,11 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 			this.textField.removeEventListener(FocusEvent.FOCUS_IN, textField_focusInHandler);
 			this.textField.removeEventListener(FocusEvent.FOCUS_OUT, textField_focusOutHandler);
 			this.textField.removeEventListener(KeyboardEvent.KEY_DOWN, textField_keyDownHandler);
+			#if flash
 			this.textField.removeEventListener(SoftKeyboardEvent.SOFT_KEYBOARD_ACTIVATING, textField_softKeyboardActivatingHandler);
 			this.textField.removeEventListener(SoftKeyboardEvent.SOFT_KEYBOARD_ACTIVATE, textField_softKeyboardActivateHandler);
 			this.textField.removeEventListener(SoftKeyboardEvent.SOFT_KEYBOARD_DEACTIVATE, textField_softKeyboardDeactivateHandler);
+			#end
 		}
 		//this isn't necessary, but if a memory leak keeps the text renderer
 		//from being garbage collected, freeing up the text field may help
@@ -1089,8 +1092,8 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		{
 			var matrix:Matrix = Pool.getMatrix();
 			this.getTransformationMatrix(this.stage, matrix);
-			if (matrixToScaleX(matrix) != this._lastGlobalScaleX ||
-				matrixToScaleY(matrix) != this._lastGlobalScaleY)
+			if (GeomUtils.matrixToScaleX(matrix) != this._lastGlobalScaleX ||
+				GeomUtils.matrixToScaleY(matrix) != this._lastGlobalScaleY)
 			{
 				//the snapshot needs to be updated because the scale has
 				//changed since the last snapshot was taken.
@@ -1412,9 +1415,11 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		this.textField.addEventListener(FocusEvent.FOCUS_OUT, textField_focusOutHandler);
 		this.textField.addEventListener(FocusEvent.MOUSE_FOCUS_CHANGE, textField_mouseFocusChangeHandler);
 		this.textField.addEventListener(KeyboardEvent.KEY_DOWN, textField_keyDownHandler);
+		#if flash
 		this.textField.addEventListener(SoftKeyboardEvent.SOFT_KEYBOARD_ACTIVATING, textField_softKeyboardActivatingHandler);
 		this.textField.addEventListener(SoftKeyboardEvent.SOFT_KEYBOARD_ACTIVATE, textField_softKeyboardActivateHandler);
 		this.textField.addEventListener(SoftKeyboardEvent.SOFT_KEYBOARD_DEACTIVATE, textField_softKeyboardDeactivateHandler);
+		#end
 		//when adding more events here, don't forget to remove them when the
 		//text editor is disposed
 		
@@ -1571,19 +1576,26 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		textField.borderColor = this._borderColor;
 		textField.gridFitType = this._gridFitType;
 		textField.sharpness = this._sharpness;
-		//textField.thickness = this._thickness;
+		#if flash
+		textField.thickness = this._thickness;
+		#end
 		textField.maxChars = this._maxChars;
 		textField.restrict = this._restrict;
-		//textField.alwaysShowSelection = this._alwaysShowSelection;
+		#if flash
+		textField.alwaysShowSelection = this._alwaysShowSelection;
+		#end
 		textField.displayAsPassword = this._displayAsPassword;
 		textField.wordWrap = this._wordWrap;
 		textField.multiline = this._multiline;
+		#if air
 		//The softKeyboard property is not available in Flash Player.
 		//It's only available in AIR.
-		if ("softKeyboard" in textField)
-		{
-			textField["softKeyboard"] = this._softKeyboard;
-		}
+		//if ("softKeyboard" in textField)
+		//{
+			//textField["softKeyboard"] = this._softKeyboard;
+		//}
+		textField.softKeyboard = this._softKeyboard;
+		#end
 		if (!this._embedFonts &&
 			this._currentTextFormat == this._fontStylesTextFormat)
 		{
@@ -1778,9 +1790,9 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 	 */
 	private function layout(sizeInvalid:Bool):Void
 	{
-		var stylesInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_STYLES);
-		var dataInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_DATA);
-		var stateInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_STATE);
+		var stylesInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_STYLES);
+		var dataInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_DATA);
+		var stateInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_STATE);
 		
 		if(sizeInvalid)
 		{
@@ -1838,11 +1850,12 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		var starling:Starling = this.stage != null ? this.stage.starling : Starling.current;
 		var scaleFactor:Float = starling.contentScaleFactor;
 		var clipWidth:Float = this.actualWidth * scaleFactor;
+		var matrix:Matrix;
 		if (this._updateSnapshotOnScaleChange)
 		{
-			var matrix:Matrix = Pool.getMatrix();
+			matrix = Pool.getMatrix();
 			this.getTransformationMatrix(this.stage, matrix);
-			clipWidth *= matrixToScaleX(matrix);
+			clipWidth *= GeomUtils.matrixToScaleX(matrix);
 		}
 		if (clipWidth < 0)
 		{
@@ -1851,7 +1864,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		var clipHeight:Float = this.actualHeight * scaleFactor;
 		if (this._updateSnapshotOnScaleChange)
 		{
-			clipHeight *= matrixToScaleY(matrix);
+			clipHeight *= GeomUtils.matrixToScaleY(matrix);
 			Pool.putMatrix(matrix);
 		}
 		if (clipHeight < 0)
@@ -1877,8 +1890,8 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		var matrix:Matrix = Pool.getMatrix();
 		var point:Point = Pool.getPoint();
 		this.getTransformationMatrix(this.stage, matrix);
-		var globalScaleX:Float = matrixToScaleX(matrix);
-		var globalScaleY:Float = matrixToScaleY(matrix);
+		var globalScaleX:Float = GeomUtils.matrixToScaleX(matrix);
+		var globalScaleY:Float = GeomUtils.matrixToScaleY(matrix);
 		var smallerGlobalScale:Float = globalScaleX;
 		if(globalScaleY < smallerGlobalScale)
 		{
@@ -1914,9 +1927,9 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		var starlingViewPort:Rectangle = starling.viewPort;
 		this.textField.x = Math.round(starlingViewPort.x + (point.x * scaleFactor));
 		this.textField.y = Math.round(starlingViewPort.y + (point.y * scaleFactor));
-		this.textField.rotation = matrixToRotation(matrix) * 180 / Math.PI;
-		this.textField.scaleX = matrixToScaleX(matrix) * scaleFactor;
-		this.textField.scaleY = matrixToScaleY(matrix) * scaleFactor;
+		this.textField.rotation = GeomUtils.matrixToRotation(matrix) * 180 / Math.PI;
+		this.textField.scaleX = GeomUtils.matrixToScaleX(matrix) * scaleFactor;
+		this.textField.scaleY = GeomUtils.matrixToScaleY(matrix) * scaleFactor;
 		
 		Pool.putPoint(point);
 		Pool.putMatrix(matrix);
@@ -1948,15 +1961,15 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		var canUseRectangleTexture:Bool = starling.profile != Context3DProfile.BASELINE_CONSTRAINED;
 		if (canUseRectangleTexture)
 		{
-			this._snapshotWidth = this._textFieldSnapshotClipRect.width;
-			this._snapshotHeight = this._textFieldSnapshotClipRect.height;
+			this._snapshotWidth = Std.int(this._textFieldSnapshotClipRect.width);
+			this._snapshotHeight = Std.int(this._textFieldSnapshotClipRect.height);
 		}
 		else
 		{
 			this._snapshotWidth = MathUtil.getNextPowerOfTwo(this._textFieldSnapshotClipRect.width);
 			this._snapshotHeight = MathUtil.getNextPowerOfTwo(this._textFieldSnapshotClipRect.height);
 		}
-		var textureRoot:ConcreteTexture = this.textSnapshot ? this.textSnapshot.texture.root : null;
+		var textureRoot:ConcreteTexture = this.textSnapshot != null ? this.textSnapshot.texture.root : null;
 		this._needsNewTexture = this._needsNewTexture || this.textSnapshot == null ||
 			(textureRoot != null && (textureRoot.scale != starling.contentScaleFactor ||
 			this._snapshotWidth != textureRoot.nativeWidth || this._snapshotHeight != textureRoot.nativeHeight));
@@ -2024,8 +2037,8 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		if (this._updateSnapshotOnScaleChange)
 		{
 			this.getTransformationMatrix(this.stage, matrix);
-			globalScaleX = matrixToScaleX(matrix);
-			globalScaleY = matrixToScaleY(matrix);
+			globalScaleX = GeomUtils.matrixToScaleX(matrix);
+			globalScaleY = GeomUtils.matrixToScaleY(matrix);
 		}
 		matrix.identity();
 		matrix.translate(this._textFieldOffsetX - gutterPositionOffset, this._textFieldOffsetY - gutterPositionOffset);
@@ -2247,6 +2260,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		}
 	}
 	
+	#if flash
 	/**
 	 * @private
 	 */
@@ -2254,7 +2268,9 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 	{
 		this.dispatchEventWith(FeathersEventType.SOFT_KEYBOARD_ACTIVATE, true);
 	}
+	#end
 	
+	#if flash
 	/**
 	 * @private
 	 */
@@ -2262,7 +2278,9 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 	{
 		this.dispatchEventWith(FeathersEventType.SOFT_KEYBOARD_ACTIVATING, true);
 	}
+	#end
 	
+	#if flash
 	/**
 	 * @private
 	 */
@@ -2270,6 +2288,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 	{
 		this.dispatchEventWith(FeathersEventType.SOFT_KEYBOARD_DEACTIVATE, true);
 	}
+	#end
 	
 	/**
 	 * @private

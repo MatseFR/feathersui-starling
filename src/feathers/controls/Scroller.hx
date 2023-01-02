@@ -17,8 +17,10 @@ import feathers.events.FeathersEventType;
 import feathers.layout.Direction;
 import feathers.layout.RelativePosition;
 import feathers.system.DeviceCapabilities;
+import feathers.utils.display.DisplayUtils;
 import feathers.utils.math.MathUtils;
 import feathers.utils.skins.SkinsUtils;
+import openfl.Lib.getTimer;
 import openfl.errors.ArgumentError;
 import openfl.errors.Error;
 import openfl.errors.IllegalOperationError;
@@ -1938,10 +1940,10 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	/**
 	 * @private
 	 */
-	public var throwEase(get, set):Float;
-	private var _throwEase:Float = defaultThrowEase;
-	private function get_throwEase():Float { return this._throwEase; }
-	private function set_throwEase(value:Float):Float
+	public var throwEase(get, set):Float->Float;
+	private var _throwEase:Float->Float = defaultThrowEase;
+	private function get_throwEase():Float->Float { return this._throwEase; }
+	private function set_throwEase(value:Float->Float):Float->Float
 	{
 		if (this.processStyleRestriction(this.set_throwEase))
 		{
@@ -2660,8 +2662,8 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		this._isScrollingStopped = true;
 		this._velocityX = 0;
 		this._velocityY = 0;
-		this._previousVelocityX.length = 0;
-		this._previousVelocityY.length = 0;
+		this._previousVelocityX.resize(0);
+		this._previousVelocityY.resize(0);
 		this.hideHorizontalScrollBar();
 		this.hideVerticalScrollBar();
 	}
@@ -2688,8 +2690,10 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	 * @see #verticalScrollPosition
 	 * @see #throwEase
 	 */
-	public function scrollToPosition(horizontalScrollPosition:Float, verticalScrollPosition:Float, animationDuration:Float = Math.NaN):Void
+	public function scrollToPosition(horizontalScrollPosition:Float, verticalScrollPosition:Float, animationDuration:Null<Float> = null):Void
 	{
+		if (animationDuration != null) animationDuration = Math.NaN;
+		
 		if (animationDuration != animationDuration) //isNaN
 		{
 			if (this._useFixedThrowDuration)
@@ -2742,8 +2746,10 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	 * @see #horizontalPageIndex
 	 * @see #verticalPageIndex
 	 */
-	public function scrollToPageIndex(horizontalPageIndex:Int, verticalPageIndex:Int, animationDuration:Float = Math.NaN):Void
+	public function scrollToPageIndex(horizontalPageIndex:Int, verticalPageIndex:Int, animationDuration:Null<Float> = null):Void
 	{
+		if (animationDuration == null) animationDuration = Math.NaN;
+		
 		if (animationDuration != animationDuration) //isNaN
 		{
 			animationDuration = this._pageThrowDuration;
@@ -3251,12 +3257,14 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	 */
 	private function refreshScrollBarStyles():Void
 	{
+		var propertyValue:Dynamic;
 		if (this.horizontalScrollBar != null)
 		{
 			for (propertyName in this._horizontalScrollBarProperties)
 			{
-				var propertyValue:Dynamic = this._horizontalScrollBarProperties[propertyName];
-				this.horizontalScrollBar[propertyName] = propertyValue;
+				propertyValue = this._horizontalScrollBarProperties[propertyName];
+				//this.horizontalScrollBar[propertyName] = propertyValue;
+				Reflect.setProperty(this.horizontalScrollBar, propertyName, propertyValue);
 			}
 			if (this._horizontalScrollBarHideTween != null)
 			{
@@ -3270,7 +3278,8 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			for (propertyName in this._verticalScrollBarProperties)
 			{
 				propertyValue = this._verticalScrollBarProperties[propertyName];
-				this.verticalScrollBar[propertyName] = propertyValue;
+				//this.verticalScrollBar[propertyName] = propertyValue;
+				Reflect.setProperty(this.verticalScrollBar, propertyName, propertyValue);
 			}
 			if (this._verticalScrollBarHideTween != null)
 			{
@@ -3824,11 +3833,11 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			}
 			else
 			{
-				this._verticalPageIndex = this._minVerticalScrollPosition;
+				this._verticalPageIndex = Std.int(this._minVerticalScrollPosition);
 			}
 			if (this._verticalPageIndex < this._minVerticalScrollPosition)
 			{
-				this._verticalPageIndex = this._minVerticalScrollPosition;
+				this._verticalPageIndex = Std.int(this._minVerticalScrollPosition);
 			}
 			if (this._verticalPageIndex > this._maxVerticalPageIndex)
 			{
@@ -4869,9 +4878,12 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	 *
 	 * @see #scrollToPosition()
 	 */
-	private function throwTo(targetHorizontalScrollPosition:Float = Math.NaN,
-		targetVerticalScrollPosition:Float = Math.NaN, duration:Float = 0.5):Void
+	private function throwTo(targetHorizontalScrollPosition:Null<Float> = null,
+		targetVerticalScrollPosition:Null<Float> = null, duration:Float = 0.5):Void
 	{
+		if (targetHorizontalScrollPosition == null) targetHorizontalScrollPosition = Math.NaN;
+		if (targetVerticalScrollPosition == null) targetVerticalScrollPosition = Math.NaN;
+		
 		var changedPosition:Bool = false;
 		if (targetHorizontalScrollPosition == targetHorizontalScrollPosition) //!isNaN
 		{
@@ -6960,9 +6972,10 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		super.focusInHandler(event);
 		//using priority here is a hack so that objects deeper in the
 		//display list have a chance to cancel the event first.
-		var priority:Int = -getDisplayObjectDepthFromStage(this);
+		var priority:Int = -DisplayUtils.getDisplayObjectDepthFromStage(this);
 		this.stage.starling.nativeStage.addEventListener(KeyboardEvent.KEY_DOWN, nativeStage_keyDownHandler, false, priority, true);
-		this.stage.starling.nativeStage.addEventListener("gestureDirectionalTap", stage_gestureDirectionalTapHandler, false, priority, true);
+		// TODO : openfl has no TransformGestureEvent
+		//this.stage.starling.nativeStage.addEventListener("gestureDirectionalTap", stage_gestureDirectionalTapHandler, false, priority, true);
 	}
 	
 	/**
@@ -6972,7 +6985,8 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	{
 		super.focusOutHandler(event);
 		this.stage.starling.nativeStage.removeEventListener(KeyboardEvent.KEY_DOWN, nativeStage_keyDownHandler);
-		this.stage.starling.nativeStage.removeEventListener("gestureDirectionalTap", stage_gestureDirectionalTapHandler);
+		// TODO : openfl has no TransformGestureEvent
+		//this.stage.starling.nativeStage.removeEventListener("gestureDirectionalTap", stage_gestureDirectionalTapHandler);
 	}
 	
 	/**
@@ -7035,42 +7049,43 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	/**
 	 * @private
 	 */
-	private function stage_gestureDirectionalTapHandler(event:TransformGestureEvent):Void
-	{
-		if (event.isDefaultPrevented())
-		{
-			return;
-		}
-		var newHorizontalScrollPosition:Float = this._horizontalScrollPosition;
-		var newVerticalScrollPosition:Float = this._verticalScrollPosition;
-		if (event.offsetY < 0)
-		{
-			newVerticalScrollPosition = Math.max(this._minVerticalScrollPosition, this._verticalScrollPosition - this.verticalScrollStep);
-		}
-		else if (event.offsetY > 0)
-		{
-			newVerticalScrollPosition = Math.min(this._maxVerticalScrollPosition, this._verticalScrollPosition + this.verticalScrollStep);
-		}
-		else if (event.offsetX < 0)
-		{
-			newHorizontalScrollPosition = Math.max(this._maxHorizontalScrollPosition, this._horizontalScrollPosition - this.horizontalScrollStep);
-		}
-		else if (event.offsetX > 0)
-		{
-			newHorizontalScrollPosition = Math.min(this._maxHorizontalScrollPosition, this._horizontalScrollPosition + this.horizontalScrollStep);
-		}
-		if (this._horizontalScrollPosition != newHorizontalScrollPosition)
-		{
-			event.stopImmediatePropagation();
-			//event.preventDefault();
-			this.horizontalScrollPosition = newHorizontalScrollPosition;
-		}
-		if (this._verticalScrollPosition != newVerticalScrollPosition)
-		{
-			event.stopImmediatePropagation();
-			//event.preventDefault();
-			this.verticalScrollPosition = newVerticalScrollPosition;
-		}
-	}
+	// TODO : openfl has no TransformGestureEvent
+	//private function stage_gestureDirectionalTapHandler(event:TransformGestureEvent):Void
+	//{
+		//if (event.isDefaultPrevented())
+		//{
+			//return;
+		//}
+		//var newHorizontalScrollPosition:Float = this._horizontalScrollPosition;
+		//var newVerticalScrollPosition:Float = this._verticalScrollPosition;
+		//if (event.offsetY < 0)
+		//{
+			//newVerticalScrollPosition = Math.max(this._minVerticalScrollPosition, this._verticalScrollPosition - this.verticalScrollStep);
+		//}
+		//else if (event.offsetY > 0)
+		//{
+			//newVerticalScrollPosition = Math.min(this._maxVerticalScrollPosition, this._verticalScrollPosition + this.verticalScrollStep);
+		//}
+		//else if (event.offsetX < 0)
+		//{
+			//newHorizontalScrollPosition = Math.max(this._maxHorizontalScrollPosition, this._horizontalScrollPosition - this.horizontalScrollStep);
+		//}
+		//else if (event.offsetX > 0)
+		//{
+			//newHorizontalScrollPosition = Math.min(this._maxHorizontalScrollPosition, this._horizontalScrollPosition + this.horizontalScrollStep);
+		//}
+		//if (this._horizontalScrollPosition != newHorizontalScrollPosition)
+		//{
+			//event.stopImmediatePropagation();
+			////event.preventDefault();
+			//this.horizontalScrollPosition = newHorizontalScrollPosition;
+		//}
+		//if (this._verticalScrollPosition != newVerticalScrollPosition)
+		//{
+			//event.stopImmediatePropagation();
+			////event.preventDefault();
+			//this.verticalScrollPosition = newVerticalScrollPosition;
+		//}
+	//}
 	
 }

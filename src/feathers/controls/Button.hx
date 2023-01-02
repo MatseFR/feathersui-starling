@@ -1785,10 +1785,12 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 		}
 		this.labelTextRenderer.fontStyles = this._fontStylesSet;
 		this.labelTextRenderer.wordWrap = this._wordWrap;
+		var propertyValue:Dynamic;
 		for (propertyName in this._defaultLabelProperties)
 		{
-			var propertyValue:Dynamic = this._defaultLabelProperties[propertyName];
-			this.labelTextRenderer[propertyName] = propertyValue;
+			propertyValue = this._defaultLabelProperties[propertyName];
+			//this.labelTextRenderer[propertyName] = propertyValue;
+			Reflect.setProperty(this.labelTextRenderer, propertyName, propertyValue);
 		}
 	}
 	

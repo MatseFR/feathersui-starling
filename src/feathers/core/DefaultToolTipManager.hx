@@ -8,6 +8,7 @@ accordance with the terms of the accompanying license agreement.
 package feathers.core;
 import feathers.controls.Label;
 import feathers.core.IFeathersControl;
+import openfl.Lib.getTimer;
 import starling.animation.DelayedCall;
 import starling.core.Starling;
 import starling.display.DisplayObject;
