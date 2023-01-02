@@ -12,6 +12,7 @@ import feathers.events.FeathersEventType;
 import feathers.layout.RelativePosition;
 import feathers.system.DeviceCapabilities;
 import feathers.utils.ReverseIterator;
+import feathers.utils.focus.FocusUtils;
 import openfl.display.InteractiveObject;
 import openfl.display.Sprite;
 import openfl.display.Stage;
@@ -132,7 +133,7 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 			//TransformGestureEvent.GESTURE_DIRECTIONAL_TAP requires
 			//AIR 24, but we want to support older versions too
 			this._starling.nativeStage.addEventListener("gestureDirectionalTap", stage_gestureDirectionalTapHandler, false, 0, true);
-			if (this._savedFocus && !this._savedFocus.stage)
+			if (this._savedFocus != null && this._savedFocus.stage == null)
 			{
 				this._savedFocus = null;
 			}
@@ -159,6 +160,7 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 			this.focus = null;
 			this._savedFocus = focusToSave;
 		}
+		return this._isEnabled;
 	}
 	
 	/**
@@ -192,9 +194,10 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 			this._focus = null;
 		}
 		var nativeStage:Stage = this._starling.nativeStage;
+		var nativeFocus:Dynamic;
 		if (Std.isOfType(oldFocus, INativeFocusOwner))
 		{
-			var nativeFocus:Dynamic = cast(oldFocus, INativeFocusOwner).nativeFocus;
+			nativeFocus = cast(oldFocus, INativeFocusOwner).nativeFocus;
 			if (nativeFocus == null && nativeStage != null)
 			{
 				nativeFocus = nativeStage.focus;
@@ -219,7 +222,7 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 		{
 			//this shouldn't happen, but if it does, let's not break the
 			//current state even more by referencing an old focused object.
-			return;
+			return value;
 		}
 		if (this._isEnabled)
 		{
@@ -276,6 +279,7 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 			this._savedFocus = value;
 		}
 		this.dispatchEventWith(Event.CHANGE);
+		return this._focus;
 	}
 	
 	/**
@@ -292,10 +296,11 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 			(Std.isOfType(target, IFocusContainer) && cast(target, IFocusContainer).isChildFocusEnabled))
 		{
 			var container:DisplayObjectContainer = cast target;
+			var child:DisplayObject;
 			var childCount:Int = container.numChildren;
 			for (i in 0...childCount)
 			{
-				var child:DisplayObject = container.getChildAt(i);
+				child = container.getChildAt(i);
 				this.setFocusManager(child);
 			}
 			if (Std.isOfType(container, IFocusExtras))
@@ -662,7 +667,7 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 			{
 				continue;
 			}
-			if (isBetterFocusForRelativePosition(focusableObject, result, focusedRect, position))
+			if (FocusUtils.isBetterFocusForRelativePosition(focusableObject, result, focusedRect, position))
 			{
 				result = focusableObject;
 			}
@@ -690,22 +695,27 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 				result[result.length] = focusableObject;
 			}
 		}
+		var count:Int;
+		var childOfChild:DisplayObject;
+		var extras:Array<DisplayObject>;
+		var focusExtras:IFocusExtras;
 		if (Std.isOfType(child, IFocusExtras))
 		{
-			var focusExtras:IFocusExtras = cast child;
-			var extras:Array<DisplayObject> = focusExtras.focusExtrasBefore;
-			var count:Int = extras.length;
+			focusExtras = cast child;
+			extras = focusExtras.focusExtrasBefore;
+			count = extras.length;
 			for (i in 0...count)
 			{
-				var childOfChild:DisplayObject = extras[i];
+				childOfChild = extras[i];
 				findAllFocusableObjects(childOfChild, result);
 			}
 		}
+		var otherContainer:DisplayObjectContainer;
 		if (Std.isOfType(child, IFocusDisplayObject))
 		{
 			if (Std.isOfType(child, IFocusContainer) && cast(child, IFocusContainer).isChildFocusEnabled)
 			{
-				var otherContainer:DisplayObjectContainer = cast child;
+				otherContainer = cast child;
 				count = otherContainer.numChildren;
 				for (i in 0...count)
 				{
@@ -765,7 +775,7 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 	 */
 	private function stage_mouseFocusChangeHandler(event:FocusEvent):Void
 	{
-		if (event.relatedObject)
+		if (event.relatedObject != null)
 		{
 			//we need to allow mouse focus to be passed to native display
 			//objects. for instance, hyperlinks in TextField won't work

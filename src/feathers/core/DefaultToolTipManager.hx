@@ -24,7 +24,7 @@ import starling.events.TouchPhase;
  *
  * @productversion Feathers 3.0.0
  */
-class DefaultToolTipManager 
+class DefaultToolTipManager implements IToolTipManager
 {
 	/**
 	 * The default factory that creates a tool tip. Creates a
@@ -186,9 +186,9 @@ class DefaultToolTipManager
 		this._root.removeEventListener(TouchEvent.TOUCH, root_touchHandler);
 		this._root = null;
 		
-		if (Starling.juggler.contains(this._delayedCall))
+		if (Starling.currentJuggler.contains(this._delayedCall))
 		{
-			Starling.juggler.remove(this._delayedCall);
+			Starling.currentJuggler.remove(this._delayedCall);
 			this._delayedCall = null;
 		}
 		
@@ -283,7 +283,7 @@ class DefaultToolTipManager
 			touch = event.getTouch(cast this._target, null, this._touchPointID);
 			if (touch == null || touch.phase != TouchPhase.HOVER)
 			{
-				Starling.juggler.remove(this._delayedCall);
+				Starling.currentJuggler.remove(this._delayedCall);
 				this._touchPointID = -1;
 				this._target = null;
 				return;
@@ -327,7 +327,7 @@ class DefaultToolTipManager
 			{
 				this._delayedCall = new DelayedCall(hoverDelayCallback, this._showDelay);
 			}
-			Starling.juggler.add(this._delayedCall);
+			Starling.currentJuggler.add(this._delayedCall);
 		}
 	}
 	

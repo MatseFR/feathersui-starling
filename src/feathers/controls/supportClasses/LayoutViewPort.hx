@@ -71,6 +71,7 @@ class LayoutViewPort extends LayoutGroup implements IViewPort
 				this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 			}
 		}
+		return value;
 	}
 	
 	
@@ -81,7 +82,7 @@ class LayoutViewPort extends LayoutGroup implements IViewPort
 	{
 		if (this._maxVisibleWidth == value)
 		{
-			return;
+			return value;
 		}
 		if (value != value) //isNaN
 		{
@@ -95,6 +96,7 @@ class LayoutViewPort extends LayoutGroup implements IViewPort
 			//only invalidate if this change might affect the visibleWidth
 			this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 		}
+		return this._maxVisibleWidth;
 	}
 	
 	private var _actualVisibleWidth:Float = 0;
@@ -144,13 +146,13 @@ class LayoutViewPort extends LayoutGroup implements IViewPort
 	{
 		if(this._explicitMinVisibleHeight == value)
 		{
-			return;
+			return value;
 		}
 		var valueIsNaN:Bool = value != value; //isNaN
 		if (valueIsNaN &&
 			this._explicitMinVisibleHeight != this._explicitMinVisibleHeight) //isNaN
 		{
-			return;
+			return value;
 		}
 		var oldValue:Float = this._explicitMinVisibleHeight;
 		this._explicitMinVisibleHeight = value;
@@ -223,6 +225,7 @@ class LayoutViewPort extends LayoutGroup implements IViewPort
 		{
 			this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 		}
+		return this._explicitVisibleHeight;
 	}
 	
 	public var contentX(get, never):Float;
@@ -248,7 +251,7 @@ class LayoutViewPort extends LayoutGroup implements IViewPort
 	{
 		if (this.actualWidth < this.actualHeight)
 		{
-			return this.acctualWidth / 10;
+			return this.actualWidth / 10;
 		}
 		return this.actualHeight / 10;
 	}

@@ -516,8 +516,8 @@ class BitmapFontTextRenderer extends BaseTextRenderer implements ITextRenderer
 	/**
 	 * @inheritDoc
 	 */
-	public var baseLine(get, never):Float;
-	private function get_baseLine():Float
+	public var baseline(get, never):Float;
+	private function get_baseline():Float
 	{
 		if (this._currentTextFormat == null)
 		{
@@ -1177,7 +1177,7 @@ class BitmapFontTextRenderer extends BaseTextRenderer implements ITextRenderer
 		{
 			//we can still check if the text renderer is disabled to see if
 			//we should use disabledTextFormat
-			if (!this._enabled && this._disabledTextFormat != null)
+			if (!this._isEnabled && this._disabledTextFormat != null)
 			{
 				textFormat = this._disabledTextFormat;
 			}

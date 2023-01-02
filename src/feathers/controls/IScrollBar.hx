@@ -15,7 +15,7 @@ package feathers.controls;
  *
  * @productversion Feathers 1.0.0
  */
-interface IScrollBar 
+interface IScrollBar extends IRange
 {
 	/**
 	 * The amount the scroll bar value must change to get from one "page" to

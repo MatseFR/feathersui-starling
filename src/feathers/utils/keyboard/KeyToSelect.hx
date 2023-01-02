@@ -258,7 +258,7 @@ class KeyToSelect
 		{
 			return;
 		}
-		var stage:Stage = Stage(event.currentTarget);
+		var stage:Stage = cast event.currentTarget;
 		stage.removeEventListener(KeyboardEvent.KEY_UP, stage_keyUpHandler);
 		if (this._stage != stage)
 		{

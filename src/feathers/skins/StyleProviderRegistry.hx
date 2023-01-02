@@ -110,7 +110,7 @@ class StyleProviderRegistry
 	{
 		if (result != null)
 		{
-			result.length = 0;
+			result.resize(0);
 		}
 		else
 		{
@@ -145,7 +145,8 @@ class StyleProviderRegistry
 			this._classToStyleProvider[forClass] = styleProvider;
 			if (this._registerGlobally)
 			{
-				forClass[GLOBAL_STYLE_PROVIDER_PROPERTY_NAME] = styleProvider;
+				//forClass[GLOBAL_STYLE_PROVIDER_PROPERTY_NAME] = styleProvider;
+				Reflect.setProperty(forClass, GLOBAL_STYLE_PROVIDER_PROPERTY_NAME, styleProvider);
 			}
 		}
 		return styleProvider;
@@ -192,7 +193,7 @@ class StyleProviderRegistry
 		{
 			return;
 		}
-		throw ArgumentError("Class " + Type.getClassName(type) + " must have a " + GLOBAL_STYLE_PROVIDER_PROPERTY_NAME + " static property to support themes.");
+		throw new ArgumentError("Class " + Type.getClassName(type) + " must have a " + GLOBAL_STYLE_PROVIDER_PROPERTY_NAME + " static property to support themes.");
 	}
 	
 }

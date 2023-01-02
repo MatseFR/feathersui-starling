@@ -6,6 +6,7 @@ This program is free software. You can redistribute and/or modify it in
 accordance with the terms of the accompanying license agreement.
 */
 package feathers.controls;
+import feathers.core.FeathersControl;
 import feathers.core.IFeathersControl;
 import feathers.core.IFocusExtras;
 import feathers.core.IMeasureDisplayObject;
@@ -13,6 +14,7 @@ import feathers.core.IValidating;
 import feathers.core.PropertyProxy;
 import feathers.events.FeathersEventType;
 import feathers.skins.IStyleProvider;
+import feathers.utils.skins.SkinsUtils;
 import starling.display.DisplayObject;
 import starling.events.Event;
 
@@ -225,7 +227,7 @@ class Panel extends ScrollContainer implements IFocusExtras
 			return value;
 		}
 		this._title = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._title;
 	}
 	
@@ -265,7 +267,7 @@ class Panel extends ScrollContainer implements IFocusExtras
 			return value;
 		}
 		this._headerTitleField = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._headerTitleField;
 	}
 	
@@ -312,7 +314,7 @@ class Panel extends ScrollContainer implements IFocusExtras
 		this.invalidate(INVALIDATION_FLAG_HEADER_FACTORY);
 		//hack because the super class doesn't know anything about the
 		//header factory
-		this.invalidate(INVALIDATION_FLAG_SIZE);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 		return this._headerFactory;
 	}
 	
@@ -336,7 +338,7 @@ class Panel extends ScrollContainer implements IFocusExtras
 		this.invalidate(INVALIDATION_FLAG_HEADER_FACTORY);
 		//hack because the super class doesn't know anything about the
 		//header factory
-		this.invalidate(INVALIDATION_FLAG_SIZE);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 		return this._customHeaderStyleName;
 	}
 	
@@ -419,7 +421,7 @@ class Panel extends ScrollContainer implements IFocusExtras
 		{
 			this._headerProperties.addOnChangeCallback(childProperties_onChange);
 		}
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._headerProperties;
 	}
 	
@@ -460,7 +462,7 @@ class Panel extends ScrollContainer implements IFocusExtras
 		this.invalidate(INVALIDATION_FLAG_FOOTER_FACTORY);
 		//hack because the super class doesn't know anything about the
 		//header factory
-		this.invalidate(INVALIDATION_FLAG_SIZE);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 		return this._footerFactory;
 	}
 	
@@ -484,7 +486,7 @@ class Panel extends ScrollContainer implements IFocusExtras
 		this.invalidate(INVALIDATION_FLAG_FOOTER_FACTORY);
 		//hack because the super class doesn't know anything about the
 		//header factory
-		this.invalidate(INVALIDATION_FLAG_SIZE);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 		return this._customFooterStyleName;
 	}
 	
@@ -557,7 +559,7 @@ class Panel extends ScrollContainer implements IFocusExtras
 		{
 			this._footerProperties.addOnChangeCallback(childProperties_onChange);
 		}
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._footerProperties;
 	}
 	
@@ -605,7 +607,7 @@ class Panel extends ScrollContainer implements IFocusExtras
 			return value;
 		}
 		this._outerPaddingTop = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._outerPaddingTop;
 	}
 	
@@ -626,7 +628,7 @@ class Panel extends ScrollContainer implements IFocusExtras
 			return value;
 		}
 		this._outerPaddingRight = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._outerPaddingRight;
 	}
 	
@@ -647,7 +649,7 @@ class Panel extends ScrollContainer implements IFocusExtras
 			return value;
 		}
 		this._outerPaddingBottom = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._outerPaddingBottom;
 	}
 	
@@ -668,7 +670,7 @@ class Panel extends ScrollContainer implements IFocusExtras
 			return value;
 		}
 		this._outerPaddingLeft = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._outerPaddingLeft;
 	}
 	
@@ -689,7 +691,7 @@ class Panel extends ScrollContainer implements IFocusExtras
 	{
 		var headerFactoryInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_HEADER_FACTORY);
 		var footerFactoryInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_FOOTER_FACTORY);
-		var stylesInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_STYLES);
+		var stylesInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_STYLES);
 		
 		if (headerFactoryInvalid)
 		{
@@ -734,7 +736,7 @@ class Panel extends ScrollContainer implements IFocusExtras
 			return false;
 		}
 		
-		resetFluidChildDimensionsForMeasurement(this.currentBackgroundSkin,
+		SkinsUtils.resetFluidChildDimensionsForMeasurement(this.currentBackgroundSkin,
 			this._explicitWidth, this._explicitHeight,
 			this._explicitMinWidth, this._explicitMinHeight,
 			this._explicitMaxWidth, this._explicitMaxHeight,
@@ -892,10 +894,11 @@ class Panel extends ScrollContainer implements IFocusExtras
 	 */
 	private function createHeader():Void
 	{
+		var displayHeader:DisplayObject;
 		if (this.header != null)
 		{
 			this.header.removeEventListener(FeathersEventType.RESIZE, header_resizeHandler);
-			var displayHeader:DisplayObject = cast this.header;
+			displayHeader = cast this.header;
 			this._focusExtrasBefore.splice(this._focusExtrasBefore.indexOf(displayHeader), 1);
 			this.removeRawChild(displayHeader, true);
 			this.header = null;
@@ -930,10 +933,11 @@ class Panel extends ScrollContainer implements IFocusExtras
 	 */
 	private function createFooter():Void
 	{
+		var displayFooter:DisplayObject;
 		if (this.footer != null)
 		{
 			this.footer.removeEventListener(FeathersEventType.RESIZE, footer_resizeHandler);
-			var displayFooter:DisplayObject = cast this.footer;
+			displayFooter = cast this.footer;
 			this._focusExtrasAfter.splice(this._focusExtrasAfter.indexOf(displayFooter), 1);
 			this.removeRawChild(displayFooter, true);
 			this.footer = null;
@@ -1084,7 +1088,7 @@ class Panel extends ScrollContainer implements IFocusExtras
 		{
 			return;
 		}
-		this.invalidate(INVALIDATION_FLAG_SIZE);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 	}
 
 	/**
@@ -1096,7 +1100,7 @@ class Panel extends ScrollContainer implements IFocusExtras
 		{
 			return;
 		}
-		this.invalidate(INVALIDATION_FLAG_SIZE);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 	}
 	
 }

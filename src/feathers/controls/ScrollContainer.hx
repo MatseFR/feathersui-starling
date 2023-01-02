@@ -7,6 +7,7 @@ accordance with the terms of the accompanying license agreement.
 */
 package feathers.controls;
 import feathers.controls.supportClasses.LayoutViewPort;
+import feathers.core.FeathersControl;
 import feathers.core.IFeathersControl;
 import feathers.core.IFocusContainer;
 import feathers.events.FeathersEventType;
@@ -133,7 +134,7 @@ class ScrollContainer extends Scroller implements IScrollContainer implements IF
 	private function get_layout():ILayout { return this._layout; }
 	private function set_layout(value:ILayout):ILayout
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_layout))
 		{
 			return value;
 		}
@@ -142,7 +143,7 @@ class ScrollContainer extends Scroller implements IScrollContainer implements IF
 			return value;
 		}
 		this._layout = value;
-		this.invalidate(INVALIDATION_FLAG_LAYOUT);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_LAYOUT);
 		return this._layout;
 	}
 	
@@ -185,7 +186,7 @@ class ScrollContainer extends Scroller implements IScrollContainer implements IF
 				this.stage.removeEventListener(Event.RESIZE, scrollContainer_stage_resizeHandler);
 			}
 		}
-		this.invalidate(INVALIDATION_FLAG_SIZE);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 		return this._autoSizeMode;
 	}
 	
@@ -310,7 +311,7 @@ class ScrollContainer extends Scroller implements IScrollContainer implements IF
 		{
 			return super.addChildAt(child, index);
 		}
-		var result:DisplayObject = DisplayObjectContainer(this.viewPort).addChildAt(child, index);
+		var result:DisplayObject = cast(this.viewPort, DisplayObjectContainer).addChildAt(child, index);
 		if (Std.isOfType(result, IFeathersControl))
 		{
 			result.addEventListener(Event.RESIZE, child_resizeHandler);
@@ -319,7 +320,7 @@ class ScrollContainer extends Scroller implements IScrollContainer implements IF
 		{
 			result.addEventListener(FeathersEventType.LAYOUT_DATA_CHANGE, child_layoutDataChangeHandler);
 		}
-		this.invalidate(INVALIDATION_FLAG_SIZE);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 		return result;
 	}
 	
@@ -360,7 +361,7 @@ class ScrollContainer extends Scroller implements IScrollContainer implements IF
 		{
 			return super.removeChildAt(index, dispose);
 		}
-		var result:DisplayObject = DisplayObjectContainer(this.viewPort).removeChildAt(index, dispose);
+		var result:DisplayObject = cast(this.viewPort, DisplayObjectContainer).removeChildAt(index, dispose);
 		if (Std.isOfType(result, IFeathersControl))
 		{
 			result.removeEventListener(Event.RESIZE, child_resizeHandler);
@@ -369,7 +370,7 @@ class ScrollContainer extends Scroller implements IScrollContainer implements IF
 		{
 			result.removeEventListener(FeathersEventType.LAYOUT_DATA_CHANGE, child_layoutDataChangeHandler);
 		}
-		this.invalidate(INVALIDATION_FLAG_SIZE);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 		return result;
 	}
 	
@@ -509,7 +510,7 @@ class ScrollContainer extends Scroller implements IScrollContainer implements IF
 	public function readjustLayout():Void
 	{
 		this.layoutViewPort.readjustLayout();
-		this.invalidate(INVALIDATION_FLAG_SIZE);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 	}
 	
 	/**
@@ -554,7 +555,7 @@ class ScrollContainer extends Scroller implements IScrollContainer implements IF
 		//until it calls super.draw().
 		this._ignoreChildChangesButSetFlags = false;
 		
-		var layoutInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_LAYOUT);
+		var layoutInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_LAYOUT);
 		
 		if (layoutInvalid)
 		{
@@ -604,7 +605,7 @@ class ScrollContainer extends Scroller implements IScrollContainer implements IF
 			//if we validated before being added to the stage, or if we've
 			//been removed from stage and added again, we need to be sure
 			//that the new stage dimensions are accounted for.
-			this.invalidate(INVALIDATION_FLAG_SIZE);
+			this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 			
 			this.stage.addEventListener(Event.RESIZE, scrollContainer_stage_resizeHandler);
 		}
@@ -629,10 +630,10 @@ class ScrollContainer extends Scroller implements IScrollContainer implements IF
 		}
 		if (this._ignoreChildChangesButSetFlags)
 		{
-			this.setInvalidationFlag(INVALIDATION_FLAG_SIZE);
+			this.setInvalidationFlag(FeathersControl.INVALIDATION_FLAG_SIZE);
 			return;
 		}
-		this.invalidate(INVALIDATION_FLAG_SIZE);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 	}
 	
 	/**
@@ -646,10 +647,10 @@ class ScrollContainer extends Scroller implements IScrollContainer implements IF
 		}
 		if (this._ignoreChildChangesButSetFlags)
 		{
-			this.setInvalidationFlag(INVALIDATION_FLAG_SIZE);
+			this.setInvalidationFlag(FeathersControl.INVALIDATION_FLAG_SIZE);
 			return;
 		}
-		this.invalidate(INVALIDATION_FLAG_SIZE);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 	}
 	
 	/**
@@ -657,7 +658,7 @@ class ScrollContainer extends Scroller implements IScrollContainer implements IF
 	 */
 	private function scrollContainer_stage_resizeHandler(event:Event):Void
 	{
-		this.invalidate(INVALIDATION_FLAG_SIZE);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 	}
 	
 }

@@ -61,16 +61,16 @@ class TapToEvent
 	private function get_target():DisplayObject { return this._target; }
 	private function set_target(value:DisplayObject):DisplayObject
 	{
-		if(this._target == value)
+		if (this._target == value)
 		{
 			return value;
 		}
-		if(this._target)
+		if (this._target != null)
 		{
 			this._target.removeEventListener(TouchEvent.TOUCH, target_touchHandler);
 		}
 		this._target = value;
-		if(this._target)
+		if (this._target != null)
 		{
 			//if we're changing targets, and a touch is active, we want to
 			//clear it.
@@ -160,10 +160,13 @@ class TapToEvent
 			return;
 		}
 		
-		if(this._touchPointID >= 0)
+		var touch:Touch;
+		var point:Point;
+		var isInBounds:Bool;
+		if (this._touchPointID >= 0)
 		{
 			//a touch has begun, so we'll ignore all other touches.
-			var touch:Touch = event.getTouch(this._target, null, this._touchPointID);
+			touch = event.getTouch(this._target, null, this._touchPointID);
 			if (touch == null)
 			{
 				//this should not happen.
@@ -175,11 +178,11 @@ class TapToEvent
 				var stage:Stage = this._target.stage;
 				if (stage != null)
 				{
-					var point:Point = Pool.getPoint();
+					point = Pool.getPoint();
 					touch.getLocation(stage, point);
 					if (Std.isOfType(this._target, DisplayObjectContainer))
 					{
-						var isInBounds:Bool = cast(this._target, DisplayObjectContainer).contains(stage.hitTest(point));
+						isInBounds = cast(this._target, DisplayObjectContainer).contains(stage.hitTest(point));
 					}
 					else
 					{

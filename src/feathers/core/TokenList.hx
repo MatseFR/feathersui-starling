@@ -53,12 +53,13 @@ class TokenList extends EventDispatcher
 	{
 		if (this.value == value)
 		{
-			return;
+			return value;
 		}
 		this._joinedNames = value;
 		this.names.resize(0);
 		this.names = value.split(" ");
 		this.dispatchEventWith(Event.CHANGE);
+		return value;
 	}
 	
 	/**

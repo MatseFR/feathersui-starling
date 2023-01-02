@@ -103,7 +103,7 @@ class KeyToState
 	{
 		if (this._callback == value)
 		{
-			return;
+			return value;
 		}
 		this._callback = value;
 		if (this._callback != null)
@@ -313,12 +313,12 @@ class KeyToState
 		{
 			return;
 		}
-		if(this._keyLocation != uint.MAX_VALUE &&
+		if(this._keyLocation != MathUtils.INT_MAX &&
 			!((event.keyLocation == this._keyLocation) || (this._keyLocation == 4 && DeviceCapabilities.simulateDPad)))
 		{
 			return;
 		}
-		var stage:Stage = Stage(event.currentTarget);
+		var stage:Stage = cast event.currentTarget;
 		stage.removeEventListener(KeyboardEvent.KEY_UP, stage_keyUpHandler);
 		if(this._stage != stage)
 		{

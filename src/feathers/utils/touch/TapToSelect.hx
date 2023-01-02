@@ -8,6 +8,7 @@ accordance with the terms of the accompanying license agreement.
 package feathers.utils.touch;
 import feathers.core.IToggle;
 import openfl.geom.Point;
+import starling.display.DisplayObject;
 import starling.display.DisplayObjectContainer;
 import starling.display.Stage;
 import starling.events.Touch;
@@ -151,10 +152,13 @@ class TapToSelect
 			return;
 		}
 		
+		var touch:Touch;
+		var point:Point;
+		var isInBounds:Bool;
 		if (this._touchPointID >= 0)
 		{
 			//a touch has begun, so we'll ignore all other touches.
-			var touch:Touch = event.getTouch(cast this._target, null, this._touchPointID);
+			touch = event.getTouch(cast this._target, null, this._touchPointID);
 			if (touch == null)
 			{
 				//this should not happen.
@@ -166,15 +170,15 @@ class TapToSelect
 				var stage:Stage = this._target.stage;
 				if (stage != null)
 				{
-					var point:Point = Pool.getPoint();
+					point = Pool.getPoint();
 					touch.getLocation(stage, point);
 					if (Std.is(this._target, DisplayObjectContainer))
 					{
-						var isInBounds:Bool = cast(this._target, DisplayObjectContainer).contains(stage.hitTest(point));
+						isInBounds = cast(this._target, DisplayObjectContainer).contains(stage.hitTest(point));
 					}
 					else
 					{
-						isInBounds = this._target == stage.hitTest(point);
+						isInBounds = cast(this._target, DisplayObject) == stage.hitTest(point);
 					}
 					Pool.putPoint(point);
 					if(isInBounds)
@@ -209,7 +213,7 @@ class TapToSelect
 			if (this._customHitTest != null)
 			{
 				point = Pool.getPoint();
-				touch.getLocation(DisplayObject(this._target), point);
+				touch.getLocation(cast this._target, point);
 				isInBounds = this._customHitTest(point);
 				Pool.putPoint(point);
 				if (!isInBounds)

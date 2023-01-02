@@ -394,7 +394,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 			return value;
 		}
 		this._direction = value;
-		this.invalidate(INVALIDATION_FLAG_DATA);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_DATA);
 		this.invalidate(INVALIDATION_FLAG_DECREMENT_BUTTON_FACTORY);
 		this.invalidate(INVALIDATION_FLAG_INCREMENT_BUTTON_FACTORY);
 		this.invalidate(INVALIDATION_FLAG_MINIMUM_TRACK_FACTORY);
@@ -420,7 +420,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 			return value;
 		}
 		this._fixedThumbSize = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._fixedThumbSize;
 	}
 	
@@ -446,7 +446,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 			return newValue;
 		}
 		this._value = newValue;
-		this.invalidate(INVALIDATION_FLAG_DATA);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_DATA);
 		if (this.liveDragging || !this.isDragging)
 		{
 			this.dispatchEventWith(Event.CHANGE);
@@ -472,7 +472,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 			return value;
 		}
 		this._minimum = value;
-		this.invalidate(INVALIDATION_FLAG_DATA);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_DATA);
 		return this._minimum;
 	}
 	
@@ -494,7 +494,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 			return value;
 		}
 		this._maximum = value;
-		this.invalidate(INVALIDATION_FLAG_DATA);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_DATA);
 		return this._maximum;
 	}
 	
@@ -532,7 +532,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 			return value;
 		}
 		this._page = value;
-		this.invalidate(INVALIDATION_FLAG_DATA);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_DATA);
 		return this._page;
 	}
 	
@@ -566,7 +566,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 			return value;
 		}
 		this._paddingTop = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._paddingTop;
 	}
 	
@@ -587,7 +587,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 			return value;
 		}
 		this._paddingRight = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._paddingRight;
 	}
 	
@@ -608,7 +608,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 			return value;
 		}
 		this._paddingBottom = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._paddingBottom;
 	}
 	
@@ -629,7 +629,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 			return value;
 		}
 		this._paddingLeft = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._paddingLeft;
 	}
 	
@@ -665,7 +665,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 			return value;
 		}
 		this._repeatDelay = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._repeatDelay;
 	}
 	
@@ -708,7 +708,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 			return value;
 		}
 		this._trackLayoutMode = value;
-		this.invalidate(INVALIDATION_FLAG_LAYOUT);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_LAYOUT);
 		return this._trackLayoutMode;
 	}
 	
@@ -814,7 +814,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 		return this._minimumTrackProperties;
 	}
 	
-	private function set_minimumTrakProperties(value:Dynamic):Dynamic
+	private function set_minimumTrackProperties(value:Dynamic):Dynamic
 	{
 		if (this._minimumTrackProperties == value)
 		{
@@ -844,7 +844,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 		{
 			this._minimumTrackProperties.addOnChangeCallback(minimumTrackProperties_onChange);
 		}
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._minimumTrackProperties;
 	}
 	
@@ -980,7 +980,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 		{
 			this._maximumTrackProperties.addOnChangeCallback(maximumTrackProperties_onChange);
 		}
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._maximumTrackProperties;
 	}
 	
@@ -1078,7 +1078,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	private var _thumbProperties:PropertyProxy;
 	private function get_thumbProperties():Dynamic
 	{
-		if (!this._thumbProperties)
+		if (this._thumbProperties == null)
 		{
 			this._thumbProperties = new PropertyProxy(thumbProperties_onChange);
 		}
@@ -1105,7 +1105,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 			//value = newValue;
 			value = PropertyProxy.fromObject(value);
 		}
-		if (this._thumbProperties)
+		if (this._thumbProperties != null)
 		{
 			this._thumbProperties.removeOnChangeCallback(thumbProperties_onChange);
 			this._thumbProperties.dispose();
@@ -1115,7 +1115,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 		{
 			this._thumbProperties.addOnChangeCallback(thumbProperties_onChange);
 		}
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._thumbProperties;
 	}
 	
@@ -1252,7 +1252,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 		{
 			this._decrementButtonProperties.addOnChangeCallback(decrementButtonProperties_onChange);
 		}
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._decrementButtonProperties;
 	}
 	
@@ -1385,11 +1385,11 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 			this._incrementButtonProperties.dispose();
 		}
 		this._incrementButtonProperties = cast value;
-		if (this._incrementButtonProperties)
+		if (this._incrementButtonProperties != null)
 		{
 			this._incrementButtonProperties.addOnChangeCallback(incrementButtonProperties_onChange);
 		}
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._incrementButtonProperties;
 	}
 	
@@ -1448,11 +1448,11 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	 */
 	override function draw():Void
 	{
-		var dataInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_DATA);
-		var stylesInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_STYLES);
-		var sizeInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_SIZE);
-		var stateInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_STATE);
-		var layoutInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_LAYOUT);
+		var dataInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_DATA);
+		var stylesInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_STYLES);
+		var sizeInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_SIZE);
+		var stateInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_STATE);
+		var layoutInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_LAYOUT);
 		var thumbFactoryInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_THUMB_FACTORY);
 		var minimumTrackFactoryInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_MINIMUM_TRACK_FACTORY);
 		var maximumTrackFactoryInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_MAXIMUM_TRACK_FACTORY);
@@ -1552,6 +1552,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 			return false;
 		}
 		var isSingle:Bool = this._trackLayoutMode == TrackLayoutMode.SINGLE;
+		var measureMinTrack:IMeasureDisplayObject;
 		if (needsWidth)
 		{
 			this.minimumTrack.width = this._minimumTrackSkinExplicitWidth;
@@ -1562,7 +1563,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 		}
 		if (Std.isOfType(this.minimumTrack, IMeasureDisplayObject))
 		{
-			var measureMinTrack:IMeasureDisplayObject = cast this.minimumTrack;
+			measureMinTrack = cast this.minimumTrack;
 			if (needsMinWidth)
 			{
 				measureMinTrack.minWidth = this._minimumTrackSkinExplicitMinWidth;
@@ -1577,6 +1578,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 				measureMinTrack.minWidth = minTrackMinWidth;
 			}
 		}
+		var measureMaxTrack:IMeasureDisplayObject;
 		if (!isSingle)
 		{
 			if (needsWidth)
@@ -1585,7 +1587,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 			}
 			if (Std.isOfType(this.maximumTrack, IMeasureDisplayObject))
 			{
-				var measureMaxTrack:IMeasureDisplayObject = cast this.maximumTrack;
+				measureMaxTrack = cast this.maximumTrack;
 				if (needsMinWidth)
 				{
 					measureMaxTrack.minWidth = this._maximumTrackSkinExplicitMinWidth;
@@ -1770,9 +1772,10 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 		{
 			this.minimumTrack.height = this._explicitHeight;
 		}
+		var measureMinTrack:IMeasureDisplayObject;
 		if (Std.isOfType(this.minimumTrack, IMeasureDisplayObject))
 		{
-			var measureMinTrack:IMeasureDisplayObject = cast this.minimumTrack;
+			measureMinTrack = cast this.minimumTrack;
 			if (needsMinHeight)
 			{
 				measureMinTrack.minHeight = this._minimumTrackSkinExplicitMinHeight;
@@ -1787,6 +1790,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 				measureMinTrack.minHeight = minTrackMinHeight;
 			}
 		}
+		var measureMaxTrack:IMeasureDisplayObject;
 		if (!isSingle)
 		{
 			if (needsHeight)
@@ -1795,7 +1799,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 			}
 			if (Std.isOfType(this.maximumTrack, IMeasureDisplayObject))
 			{
-				var measureMaxTrack:IMeasureDisplayObject = cast this.maximumTrack;
+				measureMaxTrack = cast this.maximumTrack;
 				if (needsMinHeight)
 				{
 					measureMaxTrack.minHeight = this._maximumTrackSkinExplicitMinHeight;
@@ -2572,9 +2576,10 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 		{
 			adjustedPage = range;
 		}
+		var newValue:Float;
 		if (this._touchValue < this._pageStartValue)
 		{
-			var newValue:Float = Math.max(this._touchValue, this._value - adjustedPage);
+			newValue = Math.max(this._touchValue, this._value - adjustedPage);
 			if (this._step != 0 && newValue != this._maximum && newValue != this._minimum)
 			{
 				newValue = MathUtils.roundDownToNearest(newValue, this._step);
@@ -2619,7 +2624,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	 */
 	private function thumbProperties_onChange(proxy:PropertyProxy, name:Dynamic):Void
 	{
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 	}
 
 	/**
@@ -2627,7 +2632,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	 */
 	private function minimumTrackProperties_onChange(proxy:PropertyProxy, name:Dynamic):Void
 	{
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 	}
 
 	/**
@@ -2635,7 +2640,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	 */
 	private function maximumTrackProperties_onChange(proxy:PropertyProxy, name:Dynamic):Void
 	{
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 	}
 
 	/**
@@ -2643,7 +2648,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	 */
 	private function decrementButtonProperties_onChange(proxy:PropertyProxy, name:Dynamic):Void
 	{
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 	}
 
 	/**
@@ -2651,7 +2656,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	 */
 	private function incrementButtonProperties_onChange(proxy:PropertyProxy, name:Dynamic):Void
 	{
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 	}
 	
 	/**
@@ -2678,16 +2683,18 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 		}
 		
 		var track:DisplayObject = cast event.currentTarget;
+		var touch:Touch;
+		var location:Point;
 		if (this._touchPointID >= 0)
 		{
-			var touch:Touch = event.getTouch(track, null, this._touchPointID);
+			touch = event.getTouch(track, null, this._touchPointID);
 			if (touch == null)
 			{
 				return;
 			}
 			if (touch.phase == TouchPhase.MOVED)
 			{
-				var location:Point = touch.getLocation(this, Pool.getPoint());
+				location = touch.getLocation(this, Pool.getPoint());
 				this._touchValue = this.locationToValue(location);
 				Pool.putPoint(location);
 			}
@@ -2731,16 +2738,19 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 			return;
 		}
 		
+		var touch:Touch;
+		var location:Point;
 		if (this._touchPointID >= 0)
 		{
-			var touch:Touch = event.getTouch(this.thumb, null, this._touchPointID);
+			touch = event.getTouch(this.thumb, null, this._touchPointID);
 			if (touch == null)
 			{
 				return;
 			}
+			
 			if (touch.phase == TouchPhase.MOVED)
 			{
-				var location:Point = touch.getLocation(this, Pool.getPoint());
+				location = touch.getLocation(this, Pool.getPoint());
 				var newValue:Float = this.locationToValue(location);
 				Pool.putPoint(location);
 				if (this._step != 0 && newValue != this._maximum && newValue != this._minimum)
@@ -2790,9 +2800,10 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 			return;
 		}
 		
+		var touch:Touch;
 		if (this._touchPointID >= 0)
 		{
-			var touch:Touch = event.getTouch(this.decrementButton, TouchPhase.ENDED, this._touchPointID);
+			touch = event.getTouch(this.decrementButton, TouchPhase.ENDED, this._touchPointID);
 			if (touch == null)
 			{
 				return;
@@ -2826,9 +2837,10 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 			return;
 		}
 		
+		var touch:Touch;
 		if (this._touchPointID >= 0)
 		{
-			var touch:Touch = event.getTouch(this.incrementButton, TouchPhase.ENDED, this._touchPointID);
+			touch = event.getTouch(this.incrementButton, TouchPhase.ENDED, this._touchPointID);
 			if (touch == null)
 			{
 				return;

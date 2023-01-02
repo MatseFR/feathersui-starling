@@ -202,7 +202,7 @@ class DefaultPopUpManager implements IPopUpManager
 		//removing pop-ups may call event listeners that add new pop-ups,
 		//and we don't want to remove the new ones or miss old ones, so
 		//create a copy of the _popUps Vector to be safe.
-		var popUps:Array<DisplayObject> = this._popUps.slice();
+		var popUps:Array<DisplayObject> = this._popUps.slice(0);
 		var popUpCount:Int = popUps.length;
 		for(i in 0...popUpCount)
 		{
@@ -222,7 +222,7 @@ class DefaultPopUpManager implements IPopUpManager
 	 */
 	public function isPopUp(popUp:DisplayObject):Bool
 	{
-		return this._popUps.indexOf(popUp) >= 0;
+		return this._popUps.indexOf(popUp) != -1;
 	}
 	
 	/**
@@ -231,16 +231,18 @@ class DefaultPopUpManager implements IPopUpManager
 	public function isTopLevelPopUp(popUp:DisplayObject):Bool
 	{
 		var lastIndex:Int = this._popUps.length - 1;
+		var otherPopUp:DisplayObject;
+		var overlay:DisplayObject;
 		//for(var i:int = lastIndex; i >= 0; i--)
 		for (i in new ReverseIterator(lastIndex, 0))
 		{
-			var otherPopUp:DisplayObject = this._popUps[i];
+			otherPopUp = this._popUps[i];
 			if (otherPopUp == popUp)
 			{
 				//we haven't encountered an overlay yet, so it is top-level
 				return true;
 			}
-			var overlay:DisplayObject = this._popUpToOverlay[otherPopUp];
+			overlay = this._popUpToOverlay[otherPopUp];
 			if (overlay != null)
 			{
 				//this is the first overlay, and we haven't found the pop-up

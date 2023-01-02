@@ -18,7 +18,7 @@ package feathers.core;
  *
  * @productversion Feathers 3.0.0
  */
-interface IAdvancedNativeFocusOwner 
+interface IAdvancedNativeFocusOwner extends INativeFocusOwner
 {
 	/**
 	 * Determines if <code>nativeFocus</code> currently has focus.

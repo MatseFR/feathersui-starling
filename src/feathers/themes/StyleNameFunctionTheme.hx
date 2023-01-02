@@ -87,7 +87,7 @@ class StyleNameFunctionTheme extends EventDispatcher
 		var conditional:ConditionalStyleProvider = cast this._conditionalRegistry.getStyleProvider(type);
 		if (conditional.trueStyleProvider == null)
 		{
-			var styleProvider:StyleNameFunctionStyleProvider = StyleNameFunctionStyleProvider(this._registry.getStyleProvider(type));
+			var styleProvider:StyleNameFunctionStyleProvider = cast this._registry.getStyleProvider(type);
 			conditional.trueStyleProvider = styleProvider;
 			conditional.falseStyleProvider = existingGlobalStyleProvider;
 		}

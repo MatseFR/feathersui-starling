@@ -17,6 +17,7 @@ import feathers.layout.IVirtualLayout;
 import feathers.layout.LayoutBoundsResult;
 import feathers.layout.ViewPortBounds;
 import feathers.skins.IStyleProvider;
+import feathers.utils.skins.SkinsUtils;
 import openfl.geom.Point;
 import feathers.core.IFeathersControl;
 import starling.display.DisplayObject;
@@ -133,10 +134,10 @@ class LayoutGroup extends FeathersControl
 	private function get_layout():ILayout { return this._layout; }
 	private function set_layout(value:ILayout):ILayout
 	{
-		//if(this.processStyleRestriction(arguments.callee))
-		//{
-			//return value;
-		//}
+		if (this.processStyleRestriction(this.set_layout))
+		{
+			return value;
+		}
 		if (this._layout == value)
 		{
 			return value;
@@ -157,6 +158,7 @@ class LayoutGroup extends FeathersControl
 			this.invalidate(FeathersControl.INVALIDATION_FLAG_LAYOUT);
 		}
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_LAYOUT);
+		return this._layout;
 	}
 	
 	/**
@@ -167,10 +169,10 @@ class LayoutGroup extends FeathersControl
 	private function get_clipContent():Bool { return this._clipContent; }
 	private function set_clipContent(value:Bool):Bool
 	{
-		//if(this.processStyleRestriction(arguments.callee))
-		//{
-			//return value;
-		//}
+		if (this.processStyleRestriction(this.set_clipContent))
+		{
+			return value;
+		}
 		if (this.clipContent == value)
 		{
 			return value;
@@ -542,7 +544,7 @@ class LayoutGroup extends FeathersControl
 		//for the start of validation, we're going to ignore when children
 		//resize or dispatch changes to layout data. this allows subclasses
 		//to modify children in draw() before the layout is applied.
-		var oldIgnoreChildChanges:Boolean = this._ignoreChildChangesButSetFlags;
+		var oldIgnoreChildChanges:Bool = this._ignoreChildChangesButSetFlags;
 		this._ignoreChildChangesButSetFlags = true;
 		super.validate();
 		//if super.validate() returns without calling draw(), the flag
@@ -578,19 +580,19 @@ class LayoutGroup extends FeathersControl
 		
 		var layoutInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_LAYOUT);
 		var sizeInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_SIZE);
-		var clippingInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_CLIPPING);
+		var clippingInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_CLIPPING);
 		//we don't have scrolling, but a subclass might
 		var scrollInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_SCROLL);
 		var skinInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_SKIN);
 		var stateInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_STATE);
 		
 		//scrolling only affects the layout is requiresLayoutOnScroll is true
-		if(!layoutInvalid && scrollInvalid && this._layout != null && this._layout.requiresLayoutOnScroll)
+		if (!layoutInvalid && scrollInvalid && this._layout != null && this._layout.requiresLayoutOnScroll)
 		{
 			layoutInvalid = true;
 		}
 		
-		if(skinInvalid || stateInvalid)
+		if (skinInvalid || stateInvalid)
 		{
 			this.refreshBackgroundSkin();
 		}
@@ -598,9 +600,9 @@ class LayoutGroup extends FeathersControl
 		if (sizeInvalid || layoutInvalid || skinInvalid || stateInvalid)
 		{
 			this.refreshViewPortBounds();
-			if(this._layout)
+			if (this._layout != null)
 			{
-				var oldIgnoreChildChanges:Boolean = this._ignoreChildChanges;
+				var oldIgnoreChildChanges:Bool = this._ignoreChildChanges;
 				this._ignoreChildChanges = true;
 				this._layout.layout(this.items, this.viewPortBounds, this._layoutResult);
 				this._ignoreChildChanges = oldIgnoreChildChanges;
@@ -733,7 +735,7 @@ class LayoutGroup extends FeathersControl
 		var needsMinWidth:Bool = this._explicitMinWidth != this._explicitMinWidth; //isNaN
 		var needsMinHeight:Bool = this._explicitMinHeight != this._explicitMinHeight; //isNaN
 		
-		resetFluidChildDimensionsForMeasurement(this.currentBackgroundSkin,
+		SkinsUtils.resetFluidChildDimensionsForMeasurement(this.currentBackgroundSkin,
 			this._explicitWidth, this._explicitHeight,
 			this._explicitMinWidth, this._explicitMinHeight,
 			this._explicitMaxWidth, this._explicitMaxHeight,
@@ -823,7 +825,7 @@ class LayoutGroup extends FeathersControl
 		{
 			maxY = 0;
 		}
-		var oldIgnoreChanges:Bool = this._ignoreChildChanges;
+		var oldIgnoreChildChanges:Bool = this._ignoreChildChanges;
 		this._ignoreChildChanges = true;
 		var itemCount:Int = this.items.length;
 		for (i in 0...itemCount)
@@ -954,7 +956,7 @@ class LayoutGroup extends FeathersControl
 			//if we validated before being added to the stage, or if we've
 			//been removed from stage and added again, we need to be sure
 			//that the new stage dimensions are accounted for.
-			this.invalidate(INVALIDATION_FLAG_SIZE);
+			this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 			
 			this.stage.addEventListener(Event.RESIZE, stage_resizeHandler);
 		}
@@ -973,7 +975,7 @@ class LayoutGroup extends FeathersControl
 	 */
 	private function layout_changeHandler(event:Event):Void
 	{
-		this.invalidate(INVALIDATION_FLAG_LAYOUT);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_LAYOUT);
 	}
 	
 	/**

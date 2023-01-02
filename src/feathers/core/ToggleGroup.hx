@@ -207,7 +207,7 @@ class ToggleGroup extends EventDispatcher
 		{
 			return;
 		}
-		this._items.removeAt(index);
+		this._items.splice(index, 1);
 		item.removeEventListener(Event.CHANGE, item_changeHandler);
 		if (Std.isOfType(item, IGroupedToggle))
 		{
@@ -257,10 +257,11 @@ class ToggleGroup extends EventDispatcher
 	 */
 	public function removeAllItems():Void
 	{
+		var item:IToggle;
 		var itemCount:Int = this._items.length;
-		for(i in 0...itemCount)
+		for (i in 0...itemCount)
 		{
-			var item:IToggle = this._items.shift();
+			item = this._items.shift();
 			item.removeEventListener(Event.CHANGE, item_changeHandler);
 			if (Std.isOfType(item, IGroupedToggle))
 			{

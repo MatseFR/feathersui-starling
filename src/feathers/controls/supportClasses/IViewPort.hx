@@ -6,6 +6,7 @@ This program is free software. You can redistribute and/or modify it in
 accordance with the terms of the accompanying license agreement.
 */
 package feathers.controls.supportClasses;
+import feathers.core.IFeathersControl;
 
 /**
  * Interface used for the view port of scrolling containers.
@@ -14,7 +15,7 @@ package feathers.controls.supportClasses;
  *
  * @productversion Feathers 1.0.0
  */
-interface IViewPort 
+interface IViewPort extends IFeathersControl
 {
 	public var visibleWidth(get, set):Float;
 	public var minVisibleWidth(get, set):Float;

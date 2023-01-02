@@ -21,7 +21,7 @@ class PopUpManager
 	/**
 	 * @private
 	 */
-	private static var _starlingToPopUpManager:Map<Starling, PopUpManager> = new Map<Starling, PopUpManager>();
+	private static var _starlingToPopUpManager:Map<Starling, IPopUpManager> = new Map<Starling, IPopUpManager>();
 	
 	/**
 	 * The default factory that creates a pop-up manager.

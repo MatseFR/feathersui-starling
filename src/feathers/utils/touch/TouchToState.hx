@@ -52,13 +52,13 @@ class TouchToState
 		{
 			return value;
 		}
-		if(this._target != null)
+		if (this._target != null)
 		{
 			this._target.removeEventListener(TouchEvent.TOUCH, target_touchHandler);
 			this._target.removeEventListener(Event.REMOVED_FROM_STAGE, target_removedFromStageHandler);
 		}
 		this._target = value;
-		if(this._target != null)
+		if (this._target != null)
 		{
 			//if we're changing targets, and a touch is active, we want to
 			//clear it.
@@ -68,6 +68,7 @@ class TouchToState
 			this._target.addEventListener(TouchEvent.TOUCH, target_touchHandler);
 			this._target.addEventListener(Event.REMOVED_FROM_STAGE, target_removedFromStageHandler);
 		}
+		return this._target;
 	}
 	
 	/**
@@ -81,12 +82,12 @@ class TouchToState
 	private function get_callback():String->Void { return this._callback; }
 	private function set_callback(value:String->Void):String->Void
 	{
-		if(this._callback == value)
+		if (this._callback == value)
 		{
-			return;
+			return value;
 		}
 		this._callback = value;
-		if(this._callback != null)
+		if (this._callback != null)
 		{
 			this._callback(this._currentState);
 		}
@@ -154,11 +155,11 @@ class TouchToState
 	private function get_isEnabled():Bool { return this._isEnabled; }
 	private function set_isEnabled(value:Bool):Bool
 	{
-		if(this._isEnabled == value)
+		if (this._isEnabled == value)
 		{
 			return value;
 		}
-		if(!value)
+		if (!value)
 		{
 			this._touchPointID = -1;
 		}
@@ -268,29 +269,31 @@ class TouchToState
 	 */
 	private function target_touchHandler(event:TouchEvent):Void
 	{
-		if(!this._isEnabled)
+		if (!this._isEnabled)
 		{
 			this._touchPointID = -1;
 			return;
 		}
 		
-		if(this._touchPointID >= 0)
+		var touch:Touch;
+		if (this._touchPointID >= 0)
 		{
 			//a touch has begun, so we'll ignore all other touches.
-			var touch:Touch = event.getTouch(this._target, null, this._touchPointID);
-			if(touch != null)
+			touch = event.getTouch(this._target, null, this._touchPointID);
+			if (touch != null)
 			{
 				return;
 			}
 			
 			var stage:Stage = this._target.stage;
-			if(stage != null)
+			if (stage != null)
 			{
 				var point:Point = Pool.getPoint();
 				touch.getLocation(stage, point);
-				if(Std.isOfType(this._target, DisplayObjectContainer))
+				var isInBounds:Bool;
+				if (Std.isOfType(this._target, DisplayObjectContainer))
 				{
-					var isInBounds:Bool = cast(this._target, DisplayObjectContainer).contains(stage.hitTest(point));
+					isInBounds = cast(this._target, DisplayObjectContainer).contains(stage.hitTest(point));
 				}
 				else
 				{
@@ -298,14 +301,14 @@ class TouchToState
 				}
 				isInBounds = isInBounds && this.handleCustomHitTest(touch);
 				Pool.putPoint(point);
-				if(touch.phase == TouchPhase.MOVED)
+				if (touch.phase == TouchPhase.MOVED)
 				{
-					if(this._keepDownStateOnRollOut)
+					if (this._keepDownStateOnRollOut)
 					{
 						//nothing to change!
 						return;
 					}
-					if(isInBounds)
+					if (isInBounds)
 					{
 						this.changeState(this._downState);
 						return;
@@ -316,9 +319,9 @@ class TouchToState
 						return;
 					}
 				}
-				else if(touch.phase == TouchPhase.ENDED)
+				else if (touch.phase == TouchPhase.ENDED)
 				{
-					if(isInBounds && this._hoverBeforeBegan)
+					if (isInBounds && this._hoverBeforeBegan)
 					{
 						//if the mouse is over the target on ended, return
 						//to the hover state, but only if there was a hover
@@ -340,20 +343,20 @@ class TouchToState
 		{
 			//we aren't tracking another touch, so let's look for a new one.
 			touch = event.getTouch(this._target, TouchPhase.BEGAN);
-			if(touch != null && this.handleCustomHitTest(touch))
+			if (touch != null && this.handleCustomHitTest(touch))
 			{
 				this.changeState(this._downState);
 				this._touchPointID = touch.id;
 				return;
 			}
 			touch = event.getTouch(this._target, TouchPhase.HOVER);
-			if(touch != null && this.handleCustomHitTest(touch))
+			if (touch != null && this.handleCustomHitTest(touch))
 			{
 				this._hoverBeforeBegan = true;
 				this.changeState(this._hoverState);
 				return;
 			}
-
+			
 			//end of hover
 			this.changeState(this._upState);
 		}

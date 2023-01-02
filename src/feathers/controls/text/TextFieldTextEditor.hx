@@ -26,6 +26,8 @@ import openfl.geom.Point;
 import openfl.geom.Rectangle;
 import openfl.geom.Vector3D;
 import openfl.text.AntiAliasType;
+import openfl.text.FontType;
+import openfl.text.GridFitType;
 import openfl.text.TextField;
 import openfl.text.TextFieldAutoSize;
 import openfl.text.TextFieldType;
@@ -46,6 +48,7 @@ import starling.utils.Align;
 import starling.utils.MathUtil;
 import starling.utils.MatrixUtil;
 import starling.utils.Pool;
+import starling.utils.SystemUtil;
 
 /**
  * Text that may be edited at runtime by the user with the
@@ -387,18 +390,18 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 	 *
 	 * @see http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/text/TextField.html#multiline Full description of flash.text.TextField.multiline in Adobe's Flash Platform API Reference
 	 */
-	public var multiLine(get, set):Bool;
-	private var _multiLine:Bool = false;
-	private function get_multiLine():Bool { return this._multiLine; }
-	private function set_multiLine(value:Bool):Bool
+	public var multiline(get, set):Bool;
+	private var _multiline:Bool = false;
+	private function get_multiline():Bool { return this._multiline; }
+	private function set_multiline(value:Bool):Bool
 	{
-		if (this._multiLine == value)
+		if (this._multiline == value)
 		{
 			return value;
 		}
-		this._multiLine = value;
+		this._multiline = value;
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
-		return this._multiLine;
+		return this._multiline;
 	}
 	
 	/**
@@ -429,6 +432,8 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 	}
 	
 	/**
+	 * TODO : openfl.text.TextField has no alwaysShowSelection property, remove ?
+	 * 
 	 * When set to <code>true</code> and the text field is not in focus,
 	 * Flash Player highlights the selection in the text field in gray. When
 	 * set to <code>false</code> and the text field is not in focus, Flash
@@ -500,6 +505,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		}
 		this._maxChars = value;
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
+		return this._maxChars;
 	}
 	
 	/**
@@ -521,6 +527,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		}
 		this._restrict = value;
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
+		return this._restrict;
 	}
 	
 	/**
@@ -530,7 +537,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 	 *
 	 * @see feathers.controls.TextInput#isEditable
 	 */
-	private var isEditable(get, set):Bool;
+	public var isEditable(get, set):Bool;
 	private var _isEditable:Bool = false;
 	private function get_isEditable():Bool { return this._isEditable; }
 	private function set_isEditable(value:Bool):Bool
@@ -660,6 +667,8 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 	}
 	
 	/**
+	 * TODO : openfl.text.TextField has no .thickness property, remove ?
+	 * 
 	 * The thickness of the glyph edges in this text field. This property
 	 * applies only if the <code>antiAliasType</code> property is set to
 	 * <code>flash.text.AntiAliasType.ADVANCED</code>. The range for
@@ -742,7 +751,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 	{
 		if (this._backgroundColor == value)
 		{
-			return;
+			return value;
 		}
 		this._backgroundColor = value;
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
@@ -776,7 +785,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 	{
 		if (this._border == value)
 		{
-			return;
+			return value;
 		}
 		this._border = value;
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
@@ -1029,7 +1038,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 	private function get_resetScrollOnFocusOut():Bool { return this._resetScrollOnFocusOut; }
 	private function set_resetScrollOnFocusOut(value:Bool):Bool
 	{
-		this._resetScrollOnFocusOut = value;
+		return this._resetScrollOnFocusOut = value;
 	}
 	
 	/**
@@ -1048,7 +1057,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		
 		if (this.textField != null)
 		{
-			if(this.textField.parent)
+			if (this.textField.parent != null)
 			{
 				this.textField.parent.removeChild(this.textField);
 			}
@@ -1172,7 +1181,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 				this._pendingSelectionBeginIndex = this.getSelectionIndexAtPoint(positionX, positionY);
 				if (this._pendingSelectionBeginIndex < 0)
 				{
-					if (this.multiLine)
+					if (this._multiline)
 					{
 						var lineIndex:Int = this.textField.getLineIndexAtPoint((this.textField.width / 2) / scaleX, positionY);
 						try
@@ -1208,10 +1217,10 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 					//reported that a null reference error happened
 					//here! I couldn't reproduce, but I might as well
 					//assume that the runtime has a bug. won't hurt.
-					if(bounds != null)
+					if (bounds != null)
 					{
 						var boundsX:Float = bounds.x;
-						if(bounds && (boundsX + bounds.width - positionX) < (positionX - boundsX))
+						if ((boundsX + bounds.width - positionX) < (positionX - boundsX))
 						{
 							this._pendingSelectionBeginIndex++;
 						}
@@ -1436,9 +1445,9 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 	 */
 	private function commit():Void
 	{
-		var stylesInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_STYLES);
-		var dataInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_DATA);
-		var stateInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_STATE);
+		var stylesInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_STYLES);
+		var dataInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_DATA);
+		var stateInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_STATE);
 		
 		if (dataInvalid || stylesInvalid || stateInvalid)
 		{
@@ -1503,7 +1512,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		
 		this.commitStylesAndData(this.measureTextField);
 		
-		var gutterDimensionsOffset:Number = 4;
+		var gutterDimensionsOffset:Float = 4;
 		if (this._useGutter || this._border)
 		{
 			gutterDimensionsOffset = 0;
@@ -1562,10 +1571,10 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		textField.borderColor = this._borderColor;
 		textField.gridFitType = this._gridFitType;
 		textField.sharpness = this._sharpness;
-		textField.thickness = this._thickness;
+		//textField.thickness = this._thickness;
 		textField.maxChars = this._maxChars;
 		textField.restrict = this._restrict;
-		textField.alwaysShowSelection = this._alwaysShowSelection;
+		//textField.alwaysShowSelection = this._alwaysShowSelection;
 		textField.displayAsPassword = this._displayAsPassword;
 		textField.wordWrap = this._wordWrap;
 		textField.multiline = this._multiline;
@@ -1653,7 +1662,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 	 */
 	private function refreshTextFormat():Void
 	{
-		var textFormat:flash.text.TextFormat;
+		var textFormat:openfl.text.TextFormat;
 		if (this._stateContext != null)
 		{
 			if (this._textFormatForState != null)
@@ -1661,7 +1670,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 				var currentState:String = this._stateContext.currentState;
 				if (this._textFormatForState.exists(currentState))
 				{
-					textFormat = flash.text.TextFormat(this._textFormatForState[currentState]);
+					textFormat = this._textFormatForState[currentState];
 				}
 			}
 			if (textFormat == null && this._disabledTextFormat != null &&
@@ -1697,8 +1706,8 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 	 */
 	private function getTextFormatFromFontStyles():flash.text.TextFormat
 	{
-		if (this.isInvalid(INVALIDATION_FLAG_STYLES) ||
-			this.isInvalid(INVALIDATION_FLAG_STATE))
+		if (this.isInvalid(FeathersControl.INVALIDATION_FLAG_STYLES) ||
+			this.isInvalid(FeathersControl.INVALIDATION_FLAG_STATE))
 		{
 			if (this._fontStyles != null)
 			{
@@ -1985,7 +1994,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		{
 			//if we've changed between scale factors, we need to recreate
 			//the texture to match the new scale factor.
-			this.invalidate(INVALIDATION_FLAG_SIZE);
+			this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 		}
 		else
 		{
@@ -2010,11 +2019,13 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		var starling:Starling = this.stage != null ? this.stage.starling : Starling.current;
 		var scaleFactor:Float = starling.contentScaleFactor;
 		var matrix:Matrix = Pool.getMatrix();
+		var globalScaleX:Float;
+		var globalScaleY:Float;
 		if (this._updateSnapshotOnScaleChange)
 		{
 			this.getTransformationMatrix(this.stage, matrix);
-			var globalScaleX:Float = matrixToScaleX(matrix);
-			var globalScaleY:Float = matrixToScaleY(matrix);
+			globalScaleX = matrixToScaleX(matrix);
+			globalScaleY = matrixToScaleY(matrix);
 		}
 		matrix.identity();
 		matrix.translate(this._textFieldOffsetX - gutterPositionOffset, this._textFieldOffsetY - gutterPositionOffset);
@@ -2027,7 +2038,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		bitmapData.draw(this.textField, matrix, null, null, this._textFieldSnapshotClipRect);
 		Pool.putMatrix(matrix);
 		var newTexture:Texture;
-		if (!this.textSnapshot || this._needsNewTexture)
+		if (this.textSnapshot == null || this._needsNewTexture)
 		{
 			//skip Texture.fromBitmapData() because we don't want
 			//it to create an onRestore function that will be
@@ -2078,11 +2089,24 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 	 */
 	private function textEditor_addedToStageHandler(event:Event):Void
 	{
-		if(this.textField.parent == null)
+		if (this.textField.parent == null)
 		{
 			var starling:Starling = this.stage != null ? this.stage.starling : Starling.current;
 			//the text field needs to be on the native stage to measure properly
 			starling.nativeStage.addChild(this.textField);
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function textEditor_removedFromStageHandler(event:Event):Void
+	{
+		if (this.textField.parent != null)
+		{
+			//remove this from the stage, if needed
+			//it will be added back next time we receive focus
+			this.textField.parent.removeChild(this.textField);
 		}
 	}
 	

@@ -70,17 +70,17 @@ class LongPress
 	private function get_target():DisplayObject { return this._target; }
 	private function set_target(value:DisplayObject):DisplayObject
 	{
-		if(this._target == value)
+		if (this._target == value)
 		{
-			return;
+			return value;
 		}
-		if(this._target)
+		if (this._target != null)
 		{
 			this._target.removeEventListener(TouchEvent.TOUCH, target_touchHandler);
 			this._target.removeEventListener(Event.ENTER_FRAME, target_enterFrameHandler);
 		}
 		this._target = value;
-		if(this._target)
+		if (this._target != null)
 		{
 			//if we're changing targets, and a touch is active, we want to
 			//clear it.
@@ -132,11 +132,11 @@ class LongPress
 	private function get_isEnabled():Bool { return this._isEnabled; }
 	private function set_isEnabled(value:Bool):Bool
 	{
-		if(this._isEnabled == value)
+		if (this._isEnabled == value)
 		{
-			return;
+			return value;
 		}
-		if(!value)
+		if (!value)
 		{
 			this._touchPointID = -1;
 		}
@@ -201,10 +201,11 @@ class LongPress
 			return;
 		}
 		
+		var touch:Touch;
 		if (this._touchPointID >= 0)
 		{
 			//a touch has begun, so we'll ignore all other touches.
-			var touch:Touch = event.getTouch(this._target, null, this._touchPointID);
+			touch = event.getTouch(this._target, null, this._touchPointID);
 			if (touch == null)
 			{
 				//this should not happen.
@@ -221,11 +222,11 @@ class LongPress
 				this._target.removeEventListener(Event.ENTER_FRAME, target_enterFrameHandler);
 				
 				//re-enable the other events
-				if(this._tapToTrigger)
+				if (this._tapToTrigger != null)
 				{
 					this._tapToTrigger.isEnabled = true;
 				}
-				if(this._tapToSelect)
+				if (this._tapToSelect != null)
 				{
 					this._tapToSelect.isEnabled = true;
 				}
@@ -239,7 +240,7 @@ class LongPress
 		else
 		{
 			//we aren't tracking another touch, so let's look for a new one.
-			touch = event.getTouch(DisplayObject(this._target), TouchPhase.BEGAN);
+			touch = event.getTouch(cast this._target, TouchPhase.BEGAN);
 			if (touch == null)
 			{
 				//we only care about the began phase. ignore all other
@@ -249,7 +250,7 @@ class LongPress
 			if (this._customHitTest != null)
 			{
 				var point:Point = Pool.getPoint();
-				touch.getLocation(DisplayObject(this._target), point);
+				touch.getLocation(cast this._target, point);
 				var isInBounds:Bool = this._customHitTest(point);
 				Pool.putPoint(point);
 				if (!isInBounds)
@@ -280,10 +281,11 @@ class LongPress
 		{
 			this._target.removeEventListener(Event.ENTER_FRAME, target_enterFrameHandler);
 			
+			var isInBounds:Bool;
 			var stage:Stage = this._target.stage;
 			if (Std.isOfType(this._target, DisplayObjectContainer))
 			{
-				var isInBounds:Bool = cast(this._target, DisplayObjectContainer).contains(stage.hitTest(this._touchLastGlobalPosition));
+				isInBounds = cast(this._target, DisplayObjectContainer).contains(stage.hitTest(this._touchLastGlobalPosition));
 			}
 			else
 			{
@@ -292,11 +294,11 @@ class LongPress
 			if (isInBounds)
 			{
 				//disable the other events
-				if(this._tapToTrigger)
+				if (this._tapToTrigger != null)
 				{
 					this._tapToTrigger.isEnabled = false;
 				}
-				if(this._tapToSelect)
+				if (this._tapToSelect != null)
 				{
 					this._tapToSelect.isEnabled = false;
 				}

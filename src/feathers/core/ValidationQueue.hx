@@ -62,7 +62,7 @@ class ValidationQueue implements IAnimatable
 	 */
 	public function dispose():Void
 	{
-		if (this._starling)
+		if (this._starling != null)
 		{
 			this._starling.juggler.remove(this);
 			this._starling = null;
@@ -140,7 +140,8 @@ class ValidationQueue implements IAnimatable
 		{
 			//only sort if there's more than one item in the queue because
 			//it will avoid allocating objects
-			this._queue = this._queue.sort(queueSortFunction);
+			//this._queue = this._queue.sort(queueSortFunction);
+			this._queue.sort(queueSortFunction);
 		}
 		//rechecking length every time because addControl() might have added
 		//a new item during the last validation.

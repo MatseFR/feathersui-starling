@@ -16,7 +16,7 @@ package feathers.core;
  *
  * @productversion Feathers 2.2.0
  */
-interface INativeFocusOwner 
+interface INativeFocusOwner extends IFocusDisplayObject
 {
 	/**
 	 * An object external to Starling that must be given focus when this

@@ -42,11 +42,13 @@ class ScreenDensityScaleCalculator
 	public function addScaleForDensity(density:Int, scale:Float):Void
 	{
 		var bucketCount:Int = this._buckets.length;
+		var index:Int = -1;
 		for (i in 0...bucketCount)
 		{
 			var bucket:ScreenDensityBucket = this._buckets[i];
 			if (bucket.density > density)
 			{
+				index = i;
 				break;
 			}
 			if (bucket.density == density)
@@ -54,7 +56,7 @@ class ScreenDensityScaleCalculator
 				throw new ArgumentError("Screen density cannot be added more than once: " + density);
 			}
 		}
-		this._buckets.insert(i, new ScreenDensityBucket(density, scale));
+		this._buckets.insert(index, new ScreenDensityBucket(density, scale));
 	}
 	
 	/**

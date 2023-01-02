@@ -18,6 +18,7 @@ import feathers.layout.Direction;
 import feathers.layout.RelativePosition;
 import feathers.system.DeviceCapabilities;
 import feathers.utils.math.MathUtils;
+import feathers.utils.skins.SkinsUtils;
 import openfl.errors.ArgumentError;
 import openfl.errors.Error;
 import openfl.errors.IllegalOperationError;
@@ -483,7 +484,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_snapToPages():Bool { return this._snapToPages; }
 	private function set_snapToPages(value:Bool):Bool
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_snapToPages))
 		{
 			return value;
 		}
@@ -548,7 +549,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_customHorizontalScrollBarStyleName():String { return this._customHorizontalScrollBarStyleName; }
 	private function set_customHorizontalScrollBarStyleName(value:String):String
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_customHorizontalScrollBarStyleName))
 		{
 			return value;
 		}
@@ -599,7 +600,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	{
 		if (this._horizontalScrollBarProperties == null)
 		{
-			this._horizontalScrollBarProperties = new PropertyProxy(childProperties_change);
+			this._horizontalScrollBarProperties = new PropertyProxy(childProperties_onChange);
 		}
 		return this._horizontalScrollBarProperties;
 	}
@@ -646,7 +647,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_verticalScrollBarPosition():String { return this._verticalScrollBarPosition; }
 	private function set_verticalScrollBarPosition(value:String):String
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_verticalScrollBarPosition))
 		{
 			return value;
 		}
@@ -667,7 +668,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_horizontalScrollBarPosition():String { return this._horizontalScrollBarPosition; }
 	private function set_horizontalScrollBarPosition(value:String):String
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_horizontalScrollBarPosition))
 		{
 			return value;
 		}
@@ -727,7 +728,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_customVerticalScrollBarStyleName():String { return this._customVerticalScrollBarStyleName; }
 	private function set_customVerticalScrollBarStyleName(value:String):String
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_customVerticalScrollBarStyleName))
 		{
 			return value;
 		}
@@ -848,7 +849,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			return value;
 		}
 		this.explicitHorizontalScrollStep = value;
-		this.invalidate(INVALIDATION_FLAG_SCROLL);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SCROLL);
 		return this.explicitHorizontalScrollStep;
 	}
 	
@@ -884,7 +885,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			throw new ArgumentError("horizontalScrollPosition cannot be NaN.");
 		}
 		this._horizontalScrollPosition = value;
-		this.invalidate(INVALIDATION_FLAG_SCROLL);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SCROLL);
 		return this._horizontalScrollPosition;
 	}
 	
@@ -969,7 +970,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			this.pendingHorizontalPageIndex = value;
 			this.pendingScrollDuration = 0;
 		}
-		this.invalidate(INVALIDATION_FLAG_SCROLL);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SCROLL);
 		return value;
 	}
 	
@@ -1046,7 +1047,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			return value;
 		}
 		this._horizontalScrollPolicy = value;
-		this.invalidate(INVALIDATION_FLAG_SCROLL);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SCROLL);
 		this.invalidate(INVALIDATION_FLAG_SCROLL_BAR_RENDERER);
 		return this._horizontalScrollPolicy;
 	}
@@ -1082,7 +1083,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			return value;
 		}
 		this.explicitVerticalScrollStep = value;
-		this.invalidate(INVALIDATION_FLAG_SCROLL);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SCROLL);
 		return this.explicitVerticalScrollStep;
 	}
 	
@@ -1109,7 +1110,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			return value;
 		}
 		this._verticalMouseWheelScrollStep = value;
-		this.invalidate(INVALIDATION_FLAG_SCROLL);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SCROLL);
 		return this._verticalMouseWheelScrollStep;
 	}
 	
@@ -1145,7 +1146,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			throw new ArgumentError("verticalScrollPosition cannot be NaN.");
 		}
 		this._verticalScrollPosition = value;
-		this.invalidate(INVALIDATION_FLAG_SCROLL);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SCROLL);
 		return this._verticalScrollPosition;
 	}
 	
@@ -1230,7 +1231,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			this.pendingVerticalPageIndex = value;
 			this.pendingScrollDuration = 0;
 		}
-		this.invalidate(INVALIDATION_FLAG_SCROLL);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SCROLL);
 		return value;
 	}
 	
@@ -1307,7 +1308,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			return value;
 		}
 		this._verticalScrollPolicy = value;
-		this.invalidate(INVALIDATION_FLAG_SCROLL);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SCROLL);
 		this.invalidate(INVALIDATION_FLAG_SCROLL_BAR_RENDERER);
 		return this._verticalScrollPolicy;
 	}
@@ -1320,7 +1321,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_clipContent():Bool { return this._clipContent; }
 	private function set_clipContent(value:Bool):Bool
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_clipContent))
 		{
 			return value;
 		}
@@ -1329,7 +1330,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			return value;
 		}
 		this._clipContent = value;
-		if (!value && this._viewPort)
+		if (!value && this._viewPort != null)
 		{
 			this._viewPort.mask = null;
 		}
@@ -1439,7 +1440,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_hasElasticEdges():Bool { return this._hasElasticEdges; }
 	private function set_hasElasticEdges(value:Bool):Bool
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_hasElasticEdges))
 		{
 			return value;
 		}
@@ -1454,7 +1455,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_elasticity():Float { return this._elasticity; }
 	private function set_elasticity(value:Float):Float
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_elasticity))
 		{
 			return value;
 		}
@@ -1469,7 +1470,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_throwElasticity():Float { return this._throwElasticity; }
 	private function set_throwElasticity(value:Float):Float
 	{
-		if( this.processStyleRestriction(arguments.callee))
+		if( this.processStyleRestriction(this.set_throwElasticity))
 		{
 			return value;
 		}
@@ -1484,7 +1485,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_scrollBarDisplayMode():String { return this._scrollBarDisplayMode; }
 	private function set_scrollBarDisplayMode(value:String):String
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_scrollBarDisplayMode))
 		{
 			return value;
 		}
@@ -1494,7 +1495,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		}
 		this._scrollBarDisplayMode = value;
 		this.invalidate(INVALIDATION_FLAG_SCROLL_BAR_RENDERER);
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._scrollBarDisplayMode;
 	}
 	
@@ -1506,7 +1507,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_interactionMode():String { return this._interactionMode; }
 	private function set_interactionMode(value:String):String
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_interactionMode))
 		{
 			return value;
 		}
@@ -1515,7 +1516,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			return value;
 		}
 		this._interactionMode = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._interactionMode;
 	}
 	
@@ -1562,7 +1563,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_backgroundSkin():DisplayObject { return this._backgroundSkin; }
 	private function set_backgroundSkin(value:DisplayObject):DisplayObject
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_backgroundSkin))
 		{
 			if (value != null)
 			{
@@ -1581,7 +1582,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			this.currentBackgroundSkin = null;
 		}
 		this._backgroundSkin = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._backgroundSkin;
 	}
 	
@@ -1593,7 +1594,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_backgroundDisabledSkin():DisplayObject { return this._backgroundDisabledSkin; }
 	private function set_backgroundDisabledSkin(value:DisplayObject):DisplayObject
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_backgroundDisabledSkin))
 		{
 			if (value != null)
 			{
@@ -1612,7 +1613,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			this.currentBackgroundSkin = null;
 		}
 		this._backgroundDisabledSkin = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._backgroundDisabledSkin;
 	}
 	
@@ -1624,7 +1625,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_autoHideBackground():Bool { return this._autoHideBackground; }
 	private function set_autoHideBackground(value:Bool):Bool
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_autoHideBackground))
 		{
 			return value;
 		}
@@ -1633,7 +1634,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			return value;
 		}
 		this._autoHideBackground = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._autoHideBackground;
 	}
 	
@@ -1697,7 +1698,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_paddingTop():Float { return this._paddingTop; }
 	private function set_paddingTop(value:Float):Float
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_paddingTop))
 		{
 			return value;
 		}
@@ -1706,7 +1707,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			return value;
 		}
 		this._paddingTop = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._paddingTop = value;
 	}
 	
@@ -1718,7 +1719,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_paddingRight():Float { return this._paddingRight; }
 	private function set_paddingRight(value:Float):Float
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_paddingRight))
 		{
 			return value;
 		}
@@ -1727,7 +1728,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			return value;
 		}
 		this._paddingRight = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._paddingRight;
 	}
 	
@@ -1739,7 +1740,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_paddingBottom():Float { return this._paddingBottom; }
 	private function set_paddingBottom(value:Float):Float
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_paddingBottom))
 		{
 			return value;
 		}
@@ -1748,7 +1749,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			return value;
 		}
 		this._paddingBottom = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._paddingBottom;
 	}
 	
@@ -1760,7 +1761,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_paddingLeft():Float { return this._paddingLeft; }
 	private function set_paddingLeft(value:Float):Float
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_paddingLeft))
 		{
 			return value;
 		}
@@ -1769,7 +1770,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			return value;
 		}
 		this._paddingLeft = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._paddingLeft;
 	}
 	
@@ -1791,7 +1792,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_hideScrollBarAnimationDuration():Float { return this._hideScrollBarAnimationDuration; }
 	private function set_hideScrollBarAnimationDuration(value:Float):Float
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_hideScrollBarAnimationDuration))
 		{
 			return value;
 		}
@@ -1806,7 +1807,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_hideScrollBarAnimationEase():String { return this._hideScrollBarAnimationEase; }
 	private function set_hideScrollBarAnimationEase(value:String):String
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_hideScrollBarAnimationEase))
 		{
 			return value;
 		}
@@ -1821,7 +1822,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_elasticSnapDuration():Float { return this._elasticSnapDuration; }
 	private function set_elasticSnapDuration(value:Float):Float
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_elasticSnapDuration))
 		{
 			return value;
 		}
@@ -1843,7 +1844,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_decelerationRate():Float { return this._decelerationRate; }
 	private function set_decelerationRate(value:Float):Float
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_decelerationRate))
 		{
 			return value;
 		}
@@ -1872,7 +1873,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_useFixedThrowDuration():Bool { return this._useFixedThrowDuration; }
 	private function set_useFixedThrowDuration(value:Bool):Bool
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_useFixedThrowDuration))
 		{
 			return value;
 		}
@@ -1887,7 +1888,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_pageThrowDuration():Float { return this._pageThrowDuration; }
 	private function set_pageThrowDuration(value:Float):Float
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_pageThrowDuration))
 		{
 			return value;
 		}
@@ -1902,7 +1903,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_mouseWheelScrollDuration():Float { return this._mouseWheelScrollDuration; }
 	private function set_mouseWheelScrollDuration(value:Float):Float
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_mouseWheelScrollDuration))
 		{
 			return value;
 		}
@@ -1942,7 +1943,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_throwEase():Float { return this._throwEase; }
 	private function set_throwEase(value:Float):Float
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_throwEase))
 		{
 			return value;
 		}
@@ -1961,7 +1962,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_snapScrollPositionsToPixels():Bool { return this._snapScrollPositionsToPixels; }
 	private function set_snapScrollPositionsToPixels(value:Bool):Bool
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_snapScrollPositionsToPixels))
 		{
 			return value;
 		}
@@ -1970,7 +1971,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			return value;
 		}
 		this._snapScrollPositionsToPixels = value;
-		this.invalidate(INVALIDATION_FLAG_SCROLL);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SCROLL);
 		return this._snapScrollPositionsToPixels;
 	}
 	
@@ -2060,12 +2061,12 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	/**
 	 * @private
 	 */
-	public var revealScrollBarDuration(get, set):Float;
-	private var _revealScrollBarDuration:Float = 1.0;
-	private function get_revealScrollBarDuration():Float { return this._revealScrollBarDuration; }
-	private function set_revealScrollBarDuration(value:Float):Float
+	public var revealScrollBarsDuration(get, set):Float;
+	private var _revealScrollBarsDuration:Float = 1.0;
+	private function get_revealScrollBarsDuration():Float { return this._revealScrollBarsDuration; }
+	private function set_revealScrollBarsDuration(value:Float):Float
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_revealScrollBarsDuration))
 		{
 			return value;
 		}
@@ -2103,6 +2104,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		this._isTopPullViewActive = value;
 		this._isTopPullViewPending = true;
 		this.invalidate(INVALIDATION_FLAG_PENDING_PULL_VIEW);
+		return this._isTopPullViewActive;
 	}
 	
 	/**
@@ -2179,7 +2181,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			return value;
 		}
 		this._topPullViewDisplayMode = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._topPullViewDisplayMode;
 	}
 	
@@ -2301,10 +2303,10 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	{
 		if (this._rightPullViewDisplayMode == value)
 		{
-			return;
+			return value;
 		}
 		this._rightPullViewDisplayMode = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._rightPullViewDisplayMode;
 	}
 	
@@ -2426,7 +2428,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	 * @see feathers.controls.PullViewDisplayMode#FIXED
 	 * @see #bottomPullView
 	 */
-	public var bottomPullviewDisplayMode(get, set):String;
+	public var bottomPullViewDisplayMode(get, set):String;
 	private var _bottomPullViewDisplayMode:String = PullViewDisplayMode.DRAG;
 	private function get_bottomPullViewDisplayMode():String { return this._bottomPullViewDisplayMode; }
 	private function set_bottomPullViewDisplayMode(value:String):String
@@ -2436,7 +2438,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			return value;
 		}
 		this._bottomPullViewDisplayMode = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._bottomPullViewDisplayMode;
 	}
 	
@@ -2588,7 +2590,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			return value;
 		}
 		this._leftPullViewDisplayMode = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._leftPullViewDisplayMode;
 	}
 	
@@ -2647,12 +2649,12 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	{
 		if (this._horizontalAutoScrollTween != null)
 		{
-			Starling.juggler.remove(this._horizontalAutoScrollTween);
+			Starling.currentJuggler.remove(this._horizontalAutoScrollTween);
 			this._horizontalAutoScrollTween = null;
 		}
 		if (this._verticalAutoScrollTween != null)
 		{
-			Starling.juggler.remove(this._verticalAutoScrollTween);
+			Starling.currentJuggler.remove(this._verticalAutoScrollTween);
 			this._verticalAutoScrollTween = null;
 		}
 		this._isScrollingStopped = true;
@@ -2810,17 +2812,17 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	 */
 	override function draw():Void
 	{
-		var sizeInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_SIZE);
+		var sizeInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_SIZE);
 		//we don't use this flag in this class, but subclasses will use it,
 		//and it's better to handle it here instead of having them
 		//invalidate unrelated flags
-		var dataInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_DATA);
+		var dataInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_DATA);
 		//similarly, this flag may be set in subclasses
-		var layoutInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_LAYOUT);
-		var scrollInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_SCROLL);
+		var layoutInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_LAYOUT);
+		var scrollInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_SCROLL);
 		var clippingInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_CLIPPING);
-		var stylesInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_STYLES);
-		var stateInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_STATE);
+		var stylesInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_STYLES);
+		var stateInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_STATE);
 		var scrollBarInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_SCROLL_BAR_RENDERER);
 		var pendingScrollInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_PENDING_SCROLL);
 		var pendingRevealScrollBarsInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_PENDING_REVEAL_SCROLL_BARS);
@@ -2847,11 +2849,11 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			this.refreshEnabled();
 		}
 		
-		if (this.horizontalScrollBar)
+		if (this.horizontalScrollBar != null)
 		{
 			this.horizontalScrollBar.validate();
 		}
-		if (this.verticalScrollBar)
+		if (this.verticalScrollBar != null)
 		{
 			this.verticalScrollBar.validate();
 		}
@@ -2993,7 +2995,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			return false;
 		}
 		
-		resetFluidChildDimensionsForMeasurement(this.currentBackgroundSkin,
+		SkinsUtils.resetFluidChildDimensionsForMeasurement(this.currentBackgroundSkin,
 			this._explicitWidth, this._explicitHeight,
 			this._explicitMinWidth, this._explicitMinHeight,
 			this._explicitMaxWidth, this._explicitMaxHeight,
@@ -3258,7 +3260,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			}
 			if (this._horizontalScrollBarHideTween != null)
 			{
-				Starling.juggler.remove(this._horizontalScrollBarHideTween);
+				Starling.currentJuggler.remove(this._horizontalScrollBarHideTween);
 				this._horizontalScrollBarHideTween = null;
 			}
 			this.horizontalScrollBar.alpha = this._scrollBarDisplayMode == ScrollBarDisplayMode.FLOAT ? 0 : 1;
@@ -3272,7 +3274,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			}
 			if (this._verticalScrollBarHideTween != null)
 			{
-				Starling.juggler.remove(this._verticalScrollBarHideTween);
+				Starling.currentJuggler.remove(this._verticalScrollBarHideTween);
 				this._verticalScrollBarHideTween = null;
 			}
 			this.verticalScrollBar.alpha = this._scrollBarDisplayMode == ScrollBarDisplayMode.FLOAT ? 0 : 1;
@@ -3284,7 +3286,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	 */
 	private function refreshEnabled():Void
 	{
-		if (this._viewPort)
+		if (this._viewPort != null)
 		{
 			this._viewPort.isEnabled = this._isEnabled;
 		}
@@ -3335,7 +3337,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		var horizontalWidthOffset:Float = this._leftViewPortOffset + this._rightViewPortOffset;
 		var verticalHeightOffset:Float = this._topViewPortOffset + this._bottomViewPortOffset;
 		
-		resetFluidChildDimensionsForMeasurement(this.currentBackgroundSkin,
+		SkinsUtils.resetFluidChildDimensionsForMeasurement(this.currentBackgroundSkin,
 			this._explicitWidth, this._explicitHeight,
 			this._explicitMinWidth, this._explicitMinHeight,
 			this._explicitMaxWidth, this._explicitMaxHeight,
@@ -3519,7 +3521,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		{
 			if (this._snapToPages)
 			{
-				this._verticalScrollPosition = roundToNearest(this._verticalScrollPosition, this.actualPageHeight);
+				this._verticalScrollPosition = MathUtils.roundToNearest(this._verticalScrollPosition, this.actualPageHeight);
 			}
 			var targetVerticalScrollPosition:Float = this._verticalScrollPosition;
 			if (targetVerticalScrollPosition < this._minVerticalScrollPosition)
@@ -3635,6 +3637,8 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	{
 		if (this._snapToPages)
 		{
+			var unroundedPageIndex:Float;
+			var nearestPageIndex:Int;
 			var horizontalScrollRange:Float = this._maxHorizontalScrollPosition - this._minHorizontalScrollPosition;
 			if (horizontalScrollRange == Math.POSITIVE_INFINITY)
 			{
@@ -3653,8 +3657,8 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			else
 			{
 				this._minHorizontalPageIndex = 0;
-				var unroundedPageIndex:Float = horizontalScrollRange / this.actualPageWidth;
-				var nearestPageIndex:Int = Math.round(unroundedPageIndex);
+				unroundedPageIndex = horizontalScrollRange / this.actualPageWidth;
+				nearestPageIndex = Math.round(unroundedPageIndex);
 				if (MathUtil.isEquivalent(unroundedPageIndex, nearestPageIndex, PAGE_INDEX_EPSILON))
 				{
 					//we almost always want to round up, but a
@@ -3717,6 +3721,8 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	 */
 	private function refreshPageIndices():Void
 	{
+		var unroundedPageIndex:Float;
+		var nearestPageIndex:Int;
 		if (this._horizontalAutoScrollTween == null && !this.hasPendingHorizontalPageIndex)
 		{
 			if (this._snapToPages)
@@ -3733,7 +3739,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 				{
 					if (this._minHorizontalScrollPosition == Math.NEGATIVE_INFINITY && this._horizontalScrollPosition < 0)
 					{
-						var unroundedPageIndex:Float = this._horizontalScrollPosition / this.actualPageWidth;
+						unroundedPageIndex = this._horizontalScrollPosition / this.actualPageWidth;
 					}
 					else if (this._maxHorizontalScrollPosition == Math.POSITIVE_INFINITY && this._horizontalScrollPosition >= 0)
 					{
@@ -3744,7 +3750,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 						var adjustedHorizontalScrollPosition:Float = this._horizontalScrollPosition - this._minHorizontalScrollPosition;
 						unroundedPageIndex = adjustedHorizontalScrollPosition / this.actualPageWidth;
 					}
-					var nearestPageIndex:Int = Math.round(unroundedPageIndex);
+					nearestPageIndex = Math.round(unroundedPageIndex);
 					if (unroundedPageIndex != nearestPageIndex &&
 						MathUtil.isEquivalent(unroundedPageIndex, nearestPageIndex, PAGE_INDEX_EPSILON))
 					{
@@ -4161,6 +4167,10 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function layoutPullViews():Void
 	{
 		var viewPortIndex:Int = this.getRawChildIndexInternal(cast this._viewPort);
+		var pullViewSize:Float;
+		var pullViewIndex:Int;
+		var finalRatio:Float;
+		var scrollRatio:Float;
 		if (this._topPullView != null)
 		{
 			if (Std.isOfType(this._topPullView, IValidating))
@@ -4173,11 +4183,11 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			//if the user starts dragging, the animation will be stopped.
 			if (this._topPullTween == null)
 			{
-				var pullViewSize:Float = this._topPullView.height;
-				var finalRatio:Float = this._topPullViewRatio;
+				pullViewSize = this._topPullView.height;
+				finalRatio = this._topPullViewRatio;
 				if (this._verticalScrollPosition < this._minVerticalScrollPosition)
 				{
-					var scrollRatio:Float = (this._minVerticalScrollPosition - this._verticalScrollPosition) / pullViewSize;
+					scrollRatio = (this._minVerticalScrollPosition - this._verticalScrollPosition) / pullViewSize;
 					if (scrollRatio > finalRatio)
 					{
 						finalRatio = scrollRatio;
@@ -4208,7 +4218,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 					this._topPullView.visible = false;
 				}
 			}
-			var pullViewIndex:Int = this.getRawChildIndexInternal(this._topPullView);
+			pullViewIndex = this.getRawChildIndexInternal(this._topPullView);
 			if (this._topPullViewDisplayMode == PullViewDisplayMode.FIXED &&
 				this._hasElasticEdges)
 			{
@@ -4562,7 +4572,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		mask.height = clipHeight;
 	}
 	
-	public var numRawChildren(get, never):Int;
+	public var numRawChildrenInternal(get, never):Int;
 	private function get_numRawChildrenInternal():Int
 	{
 		if (Std.isOfType(this, IScrollContainer))
@@ -4734,7 +4744,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			}
 			//ensure that the component invalidates, even if the
 			//horizontalScrollPosition does not change
-			this.invalidate(INVALIDATION_FLAG_SCROLL);
+			this.invalidate(FeathersControl.INVALIDATION_FLAG_SCROLL);
 		}
 		if (this._rightPullViewRatio > 0)
 		{
@@ -4744,7 +4754,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 				this._rightPullTween = null;
 			}
 			//see note above with previous call to invalidate()
-			this.invalidate(INVALIDATION_FLAG_SCROLL);
+			this.invalidate(FeathersControl.INVALIDATION_FLAG_SCROLL);
 		}
 		this.horizontalScrollPosition = position;
 	}
@@ -4836,7 +4846,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			}
 			//ensure that the component invalidates, even if the
 			//verticalScrollPosition does not change
-			this.invalidate(INVALIDATION_FLAG_SCROLL);
+			this.invalidate(FeathersControl.INVALIDATION_FLAG_SCROLL);
 		}
 		if (this._bottomPullViewRatio > 0)
 		{
@@ -4846,7 +4856,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 				this._bottomPullTween = null;
 			}
 			//see note above with previous call to invalidate()
-			this.invalidate(INVALIDATION_FLAG_SCROLL);
+			this.invalidate(FeathersControl.INVALIDATION_FLAG_SCROLL);
 		}
 		this.verticalScrollPosition = position;
 	}
@@ -4870,9 +4880,9 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			{
 				targetHorizontalScrollPosition = MathUtils.roundToNearest(targetHorizontalScrollPosition, this.actualPageWidth);
 			}
-			if (this._horizontalAutoScrollTween)
+			if (this._horizontalAutoScrollTween != null)
 			{
-				Starling.juggler.remove(this._horizontalAutoScrollTween);
+				Starling.currentJuggler.remove(this._horizontalAutoScrollTween);
 				this._horizontalAutoScrollTween = null;
 			}
 			if (this._horizontalScrollPosition != targetHorizontalScrollPosition)
@@ -4895,7 +4905,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 						this._horizontalAutoScrollTween.onUpdate = this.horizontalAutoScrollTween_onUpdate;
 					}
 					this._horizontalAutoScrollTween.onComplete = this.horizontalAutoScrollTween_onComplete;
-					Starling.juggler.add(this._horizontalAutoScrollTween);
+					Starling.currentJuggler.add(this._horizontalAutoScrollTween);
 					this.refreshHorizontalAutoScrollTweenEndRatio();
 				}
 			}
@@ -4910,11 +4920,11 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			if (this._snapToPages && targetVerticalScrollPosition > this._minVerticalScrollPosition &&
 				targetVerticalScrollPosition < this._maxVerticalScrollPosition)
 			{
-				targetVerticalScrollPosition = roundToNearest(targetVerticalScrollPosition, this.actualPageHeight);
+				targetVerticalScrollPosition = MathUtils.roundToNearest(targetVerticalScrollPosition, this.actualPageHeight);
 			}
-			if (this._verticalAutoScrollTween)
+			if (this._verticalAutoScrollTween != null)
 			{
-				Starling.juggler.remove(this._verticalAutoScrollTween);
+				Starling.currentJuggler.remove(this._verticalAutoScrollTween);
 				this._verticalAutoScrollTween = null;
 			}
 			if (this._verticalScrollPosition != targetVerticalScrollPosition)
@@ -4937,7 +4947,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 						this._verticalAutoScrollTween.onUpdate = this.verticalAutoScrollTween_onUpdate;
 					}
 					this._verticalAutoScrollTween.onComplete = this.verticalAutoScrollTween_onComplete;
-					Starling.juggler.add(this._verticalAutoScrollTween);
+					Starling.currentJuggler.add(this._verticalAutoScrollTween);
 					this.refreshVerticalAutoScrollTweenEndRatio();
 				}
 			}
@@ -5109,6 +5119,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	 */
 	private function restoreVerticalPullViews():Void
 	{
+		var yPosition:Float;
 		if (this._topPullView != null &&
 			this._topPullViewRatio > 0)
 		{
@@ -5119,7 +5130,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			}
 			if (this._topPullViewDisplayMode == PullViewDisplayMode.DRAG)
 			{
-				var yPosition:Float = this._topViewPortOffset + 
+				yPosition = this._topViewPortOffset + 
 					this._topPullView.pivotY * this._topPullView.scaleY;
 				if (!this._isTopPullViewActive)
 				{
@@ -5131,7 +5142,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 					this._topPullTween.animate("y", yPosition);
 					this._topPullTween.onUpdate = this.refreshTopPullViewMask;
 					this._topPullTween.onComplete = this.topPullTween_onComplete;
-					Starling.juggler.add(this._topPullTween);
+					Starling.currentJuggler.add(this._topPullTween);
 				}
 			}
 			else
@@ -5161,7 +5172,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 					this._bottomPullTween.animate("y", yPosition);
 					this._bottomPullTween.onUpdate = this.refreshBottomPullViewMask;
 					this._bottomPullTween.onComplete = this.bottomPullTween_onComplete;
-					Starling.juggler.add(this._bottomPullTween);
+					Starling.currentJuggler.add(this._bottomPullTween);
 				}
 			}
 			else
@@ -5176,6 +5187,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	 */
 	private function restoreHorizontalPullViews():Void
 	{
+		var xPosition:Float;
 		if (this._leftPullView != null &&
 			this._leftPullViewRatio > 0)
 		{
@@ -5186,7 +5198,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			}
 			if (this._leftPullViewDisplayMode == PullViewDisplayMode.DRAG)
 			{
-				var xPosition:Float = this._leftViewPortOffset +
+				xPosition = this._leftViewPortOffset +
 					this._leftPullView.pivotX * this._leftPullView.scaleX;
 				if (!this._isLeftPullViewActive)
 				{
@@ -5198,7 +5210,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 					this._leftPullTween.animate("x", xPosition);
 					this._leftPullTween.onUpdate = this.refreshLeftPullViewMask;
 					this._leftPullTween.onComplete = this.leftPullTween_onComplete;
-					Starling.juggler.add(this._leftPullTween);
+					Starling.currentJuggler.add(this._leftPullTween);
 				}
 			}
 			else
@@ -5228,7 +5240,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 					this._rightPullTween.animate("x", xPosition);
 					this._rightPullTween.onUpdate = this.refreshRightPullViewMask;
 					this._rightPullTween.onComplete = this.rightPullTween_onComplete;
-					Starling.juggler.add(this._rightPullTween);
+					Starling.currentJuggler.add(this._rightPullTween);
 				}
 			}
 			else
@@ -5247,9 +5259,11 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		{
 			var starling:Starling = this.stage != null ? this.stage.starling : Starling.current;
 			var inchesPerSecond:Float = 1000 * pixelsPerMS / (DeviceCapabilities.dpi / starling.contentScaleFactor);
+			var snappedPageHorizontalScrollPosition:Float;
+			var targetHorizontalPageIndex:Int;
 			if (inchesPerSecond > this._minimumPageThrowVelocity)
 			{
-				var snappedPageHorizontalScrollPosition:Float = MathUtils.roundDownToNearest(this._horizontalScrollPosition, this.actualPageWidth);
+				snappedPageHorizontalScrollPosition = MathUtils.roundDownToNearest(this._horizontalScrollPosition, this.actualPageWidth);
 			}
 			else if (inchesPerSecond < -this._minimumPageThrowVelocity)
 			{
@@ -5290,7 +5304,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			}
 			if (snappedPageHorizontalScrollPosition == this._maxHorizontalScrollPosition)
 			{
-				var targetHorizontalPageIndex:Int = this._maxHorizontalPageIndex;
+				targetHorizontalPageIndex = this._maxHorizontalPageIndex;
 			}
 			else
 			{
@@ -5334,9 +5348,10 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		{
 			var starling:Starling = this.stage != null ? this.stage.starling : Starling.current;
 			var inchesPerSecond:Float = 1000 * pixelsPerMS / (DeviceCapabilities.dpi / starling.contentScaleFactor);
+			var snappedPageVerticalScrollPosition:Float;
 			if (inchesPerSecond > this._minimumPageThrowVelocity)
 			{
-				var snappedPageVerticalScrollPosition:Float = MathUtils.roundDownToNearest(this._verticalScrollPosition, this.actualPageHeight);
+				snappedPageVerticalScrollPosition = MathUtils.roundDownToNearest(this._verticalScrollPosition, this.actualPageHeight);
 			}
 			else if (inchesPerSecond < -this._minimumPageThrowVelocity)
 			{
@@ -5375,9 +5390,10 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			{
 				snappedPageVerticalScrollPosition = this._maxVerticalScrollPosition;
 			}
+			var targetVerticalPageIndex:Int;
 			if (snappedPageVerticalScrollPosition == this._maxVerticalScrollPosition)
 			{
-				var targetVerticalPageIndex:Int = this._maxVerticalPageIndex;
+				targetVerticalPageIndex = this._maxVerticalPageIndex;
 			}
 			else
 			{
@@ -5397,19 +5413,19 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			return;
 		}
 		
-		var absPixelsPerMS:Number = Math.abs(pixelsPerMS);
+		var absPixelsPerMS:Float = Math.abs(pixelsPerMS);
 		if(!this._snapToPages && absPixelsPerMS <= MINIMUM_VELOCITY)
 		{
 			this.finishScrollingVertically();
 			return;
 		}
 		
-		var duration:Number = this._fixedThrowDuration;
+		var duration:Float = this._fixedThrowDuration;
 		if(!this._useFixedThrowDuration)
 		{
 			duration = this.calculateDynamicThrowDuration(pixelsPerMS);
 		}
-		this.throwTo(NaN, this._verticalScrollPosition + this.calculateThrowDistance(pixelsPerMS), duration);
+		this.throwTo(Math.NaN, this._verticalScrollPosition + this.calculateThrowDistance(pixelsPerMS), duration);
 	}
 	
 	/**
@@ -5435,7 +5451,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 					this._horizontalScrollPosition = this._maxHorizontalScrollPosition;
 				}
 			}
-			Starling.juggler.remove(this._horizontalAutoScrollTween);
+			Starling.currentJuggler.remove(this._horizontalAutoScrollTween);
 			this._horizontalAutoScrollTween = null;
 			this.finishScrollingHorizontally();
 			return;
@@ -5469,7 +5485,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 					this._verticalScrollPosition = this._maxVerticalScrollPosition;
 				}
 			}
-			Starling.juggler.remove(this._verticalAutoScrollTween);
+			Starling.currentJuggler.remove(this._verticalAutoScrollTween);
 			this._verticalAutoScrollTween = null;
 			this.finishScrollingVertically();
 			return;
@@ -5520,7 +5536,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		{
 			this._horizontalAutoScrollTweenEndRatio = 1;
 		}
-		if (this._horizontalAutoScrollTween)
+		if (this._horizontalAutoScrollTween != null)
 		{
 			if (this._horizontalAutoScrollTweenEndRatio < 1)
 			{
@@ -5573,7 +5589,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		{
 			this._verticalAutoScrollTweenEndRatio = 1;
 		}
-		if (this._verticalAutoScrollTween)
+		if (this._verticalAutoScrollTween != null)
 		{
 			if (this._verticalAutoScrollTweenEndRatio < 1)
 			{
@@ -5609,7 +5625,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			this._horizontalScrollBarHideTween.fadeTo(0);
 			this._horizontalScrollBarHideTween.delay = delay;
 			this._horizontalScrollBarHideTween.onComplete = horizontalScrollBarHideTween_onComplete;
-			Starling.juggler.add(this._horizontalScrollBarHideTween);
+			Starling.currentJuggler.add(this._horizontalScrollBarHideTween);
 		}
 	}
 	
@@ -5636,7 +5652,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			this._verticalScrollBarHideTween.fadeTo(0);
 			this._verticalScrollBarHideTween.delay = delay;
 			this._verticalScrollBarHideTween.onComplete = verticalScrollBarHideTween_onComplete;
-			Starling.juggler.add(this._verticalScrollBarHideTween);
+			Starling.currentJuggler.add(this._verticalScrollBarHideTween);
 		}
 	}
 	
@@ -5651,7 +5667,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		}
 		if (this._horizontalScrollBarHideTween != null)
 		{
-			Starling.juggler.remove(this._horizontalScrollBarHideTween);
+			Starling.currentJuggler.remove(this._horizontalScrollBarHideTween);
 			this._horizontalScrollBarHideTween = null;
 		}
 		this.horizontalScrollBar.alpha = 1;
@@ -5668,7 +5684,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		}
 		if (this._verticalScrollBarHideTween != null)
 		{
-			Starling.juggler.remove(this._verticalScrollBarHideTween);
+			Starling.currentJuggler.remove(this._verticalScrollBarHideTween);
 			this._verticalScrollBarHideTween = null;
 		}
 		this.verticalScrollBar.alpha = 1;
@@ -5765,6 +5781,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	 */
 	private function handlePendingPullView():Void
 	{
+		var targetY:Float;
 		if (this._isTopPullViewPending)
 		{
 			this._isTopPullViewPending = false;
@@ -5783,7 +5800,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 				this._topPullViewRatio = 1;
 				if (this._topPullViewDisplayMode == PullViewDisplayMode.DRAG)
 				{
-					var targetY:Float = this._topViewPortOffset +
+					targetY = this._topViewPortOffset +
 						this._topPullView.pivotY * this._topPullView.scaleY;
 					if (this.isCreated)
 					{
@@ -5792,7 +5809,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 						this._topPullTween.animate("y", targetY);
 						this._topPullTween.onUpdate = this.refreshTopPullViewMask;
 						this._topPullTween.onComplete = this.topPullTween_onComplete;
-						Starling.juggler.add(this._topPullTween);
+						Starling.currentJuggler.add(this._topPullTween);
 					}
 					else
 					{
@@ -5814,6 +5831,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 				}
 			}
 		}
+		var targetX:Float;
 		if (this._isRightPullViewPending)
 		{
 			this._isRightPullViewPending = false;
@@ -5832,7 +5850,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 				this._rightPullViewRatio = 1;
 				if (this._rightPullViewDisplayMode == PullViewDisplayMode.DRAG)
 				{
-					var targetX:Float = this.actualWidth - this._rightViewPortOffset +
+					targetX = this.actualWidth - this._rightViewPortOffset +
 						this._rightPullView.pivotX * this._rightPullView.scaleX -
 						this._rightPullView.width;
 					if (this.isCreated)
@@ -5842,7 +5860,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 						this._rightPullTween.animate("x", targetX);
 						this._rightPullTween.onUpdate = this.refreshRightPullViewMask;
 						this._rightPullTween.onComplete = this.rightPullTween_onComplete;
-						Starling.juggler.add(this._rightPullTween);
+						Starling.currentJuggler.add(this._rightPullTween);
 					}
 					else
 					{
@@ -5892,7 +5910,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 						this._bottomPullTween.animate("y", targetY);
 						this._bottomPullTween.onUpdate = this.refreshBottomPullViewMask;
 						this._bottomPullTween.onComplete = this.bottomPullTween_onComplete;
-						Starling.juggler.add(this._bottomPullTween);
+						Starling.currentJuggler.add(this._bottomPullTween);
 					}
 					else
 					{
@@ -5939,7 +5957,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 						this._leftPullTween.animate("x", targetX);
 						this._leftPullTween.onUpdate = this.refreshLeftPullViewMask;
 						this._leftPullTween.onComplete = this.leftPullTween_onComplete;
-						Starling.juggler.add(this._leftPullTween);
+						Starling.currentJuggler.add(this._leftPullTween);
 					}
 					else
 					{
@@ -5975,6 +5993,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		var starling:Starling = this.stage != null ? this.stage.starling : Starling.current;
 		var horizontalInchesMoved:Float = (this._currentTouchX - this._startTouchX) / (DeviceCapabilities.dpi / starling.contentScaleFactor);
 		var verticalInchesMoved:Float = (this._currentTouchY - this._startTouchY) / (DeviceCapabilities.dpi / starling.contentScaleFactor);
+		var exclusiveTouch:ExclusiveTouch;
 		if (!this._isDraggingHorizontally &&
 			(
 				this._horizontalScrollPolicy == ScrollPolicy.ON ||
@@ -5999,7 +6018,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			if (!this._isDraggingVertically)
 			{
 				this.dispatchEventWith(FeathersEventType.BEGIN_INTERACTION);
-				var exclusiveTouch:ExclusiveTouch = ExclusiveTouch.forStage(this.stage);
+				exclusiveTouch = ExclusiveTouch.forStage(this.stage);
 				exclusiveTouch.removeEventListener(Event.CHANGE, exclusiveTouch_changeHandler);
 				exclusiveTouch.claimTouch(this._touchPointID, this);
 				this.startScroll();
@@ -6033,11 +6052,11 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 				this.startScroll();
 			}
 		}
-		if(this._isDraggingHorizontally && !this._horizontalAutoScrollTween)
+		if(this._isDraggingHorizontally && this._horizontalAutoScrollTween == null)
 		{
 			this.updateHorizontalScrollFromTouchPosition(this._currentTouchX);
 		}
-		if(this._isDraggingVertically && !this._verticalAutoScrollTween)
+		if(this._isDraggingVertically && this._verticalAutoScrollTween == null)
 		{
 			this.updateVerticalScrollFromTouchPosition(this._currentTouchY);
 		}
@@ -6094,7 +6113,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		}
 		else
 		{
-			this.invalidate(INVALIDATION_FLAG_SIZE);
+			this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 		}
 	}
 	
@@ -6103,7 +6122,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	 */
 	private function childProperties_onChange(proxy:PropertyProxy, name:String):Void
 	{
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 	}
 
 	/**
@@ -6129,7 +6148,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	{
 		if (this._horizontalAutoScrollTween != null)
 		{
-			Starling.juggler.remove(this._horizontalAutoScrollTween);
+			Starling.currentJuggler.remove(this._horizontalAutoScrollTween);
 			this._horizontalAutoScrollTween = null;
 		}
 		this._isDraggingHorizontally = false;
@@ -6158,7 +6177,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	{
 		if (this._verticalAutoScrollTween != null)
 		{
-			Starling.juggler.remove(this._verticalAutoScrollTween);
+			Starling.currentJuggler.remove(this._verticalAutoScrollTween);
 			this._verticalAutoScrollTween = null;
 		}
 		this._isDraggingVertically = false;
@@ -6213,7 +6232,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		}
 		//the page index will not have updated during the animation, so we
 		//need to ensure that it is updated now.
-		this.invalidate(INVALIDATION_FLAG_SCROLL);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SCROLL);
 		this.finishScrollingHorizontally();
 	}
 	
@@ -6250,7 +6269,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		}
 		//the page index will not have updated during the animation, so we
 		//need to ensure that it is updated now.
-		this.invalidate(INVALIDATION_FLAG_SCROLL);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SCROLL);
 		this.finishScrollingVertically();
 	}
 	
@@ -6268,7 +6287,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		{
 			this._topPullViewRatio = 0;
 		}
-		this.invalidate(INVALIDATION_FLAG_SCROLL);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SCROLL);
 	}
 	
 	/**
@@ -6285,7 +6304,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		{
 			this._rightPullViewRatio = 0;
 		}
-		this.invalidate(INVALIDATION_FLAG_SCROLL);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SCROLL);
 	}
 	
 	/**
@@ -6302,7 +6321,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		{
 			this._bottomPullViewRatio = 0;
 		}
-		this.invalidate(INVALIDATION_FLAG_SCROLL);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SCROLL);
 	}
 	
 	/**
@@ -6319,7 +6338,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		{
 			this._leftPullViewRatio = 0;
 		}
-		this.invalidate(INVALIDATION_FLAG_SCROLL);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SCROLL);
 	}
 	
 	/**
@@ -6380,7 +6399,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		}
 		
 		var exclusiveTouch:ExclusiveTouch = ExclusiveTouch.forStage(this.stage);
-		if (exclusiveTouch.getClaim(touch.id))
+		if (exclusiveTouch.getClaim(touch.id) != null)
 		{
 			//already claimed
 			return;
@@ -6389,20 +6408,20 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		//if the scroll policy is off, we shouldn't stop this animation
 		if (this._horizontalAutoScrollTween != null && this._horizontalScrollPolicy != ScrollPolicy.OFF)
 		{
-			Starling.juggler.remove(this._horizontalAutoScrollTween);
+			Starling.currentJuggler.remove(this._horizontalAutoScrollTween);
 			this._horizontalAutoScrollTween = null;
 		}
 		if (this._verticalAutoScrollTween != null && this._verticalScrollPolicy != ScrollPolicy.OFF)
 		{
-			Starling.juggler.remove(this._verticalAutoScrollTween);
+			Starling.currentJuggler.remove(this._verticalAutoScrollTween);
 			this._verticalAutoScrollTween = null;
 		}
 		
 		this._touchPointID = touch.id;
 		this._velocityX = 0;
 		this._velocityY = 0;
-		this._previousVelocityX.length = 0;
-		this._previousVelocityY.length = 0;
+		this._previousVelocityX.resize(0);
+		this._previousVelocityY.resize(0);
 		this._previousTouchTime = getTimer();
 		this._previousTouchX = this._startTouchX = this._currentTouchX = touchX;
 		this._previousTouchY = this._startTouchY = this._currentTouchY = touchY;
@@ -6561,17 +6580,21 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 				return;
 			}
 			
+			var sum:Float;
+			var velocityCount:Int;
+			var totalWeight:Float;
+			var weight:Float;
 			if (!isFinishingHorizontally)
 			{
 				if (this._isDraggingHorizontally)
 				{
 					//take the average for more accuracy
-					var sum:Float = this._velocityX * CURRENT_VELOCITY_WEIGHT;
-					var velocityCount:Int = this._previousVelocityX.length;
-					var totalWeight:Float = CURRENT_VELOCITY_WEIGHT;
+					sum = this._velocityX * CURRENT_VELOCITY_WEIGHT;
+					velocityCount = this._previousVelocityX.length;
+					totalWeight = CURRENT_VELOCITY_WEIGHT;
 					for (i in 0...velocityCount)
 					{
-						var weight:Float = VELOCITY_WEIGHTS[i];
+						weight = VELOCITY_WEIGHTS[i];
 						sum += this._previousVelocityX.shift() * weight;
 						totalWeight += weight;
 					}
@@ -6738,9 +6761,10 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		}
 		
 		var displayHorizontalScrollBar:DisplayObject = cast event.currentTarget;
+		var touch:Touch;
 		if (this._horizontalScrollBarTouchPointID >= 0)
 		{
-			var touch:Touch = event.getTouch(displayHorizontalScrollBar, TouchPhase.ENDED, this._horizontalScrollBarTouchPointID);
+			touch = event.getTouch(displayHorizontalScrollBar, TouchPhase.ENDED, this._horizontalScrollBarTouchPointID);
 			if (touch == null)
 			{
 				return;
@@ -6768,7 +6792,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 				return;
 			}
 			touch = event.getTouch(displayHorizontalScrollBar, TouchPhase.HOVER);
-			if (touch)
+			if (touch != null)
 			{
 				this.revealHorizontalScrollBar();
 				return;
@@ -6791,9 +6815,10 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		}
 		
 		var displayVerticalScrollBar:DisplayObject = cast event.currentTarget;
+		var touch:Touch;
 		if (this._verticalScrollBarTouchPointID >= 0)
 		{
-			var touch:Touch = event.getTouch(displayVerticalScrollBar, TouchPhase.ENDED, this._verticalScrollBarTouchPointID);
+			touch = event.getTouch(displayVerticalScrollBar, TouchPhase.ENDED, this._verticalScrollBarTouchPointID);
 			if (touch == null)
 			{
 				return;
@@ -6862,20 +6887,20 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		this._isDraggingVertically = false;
 		this._velocityX = 0;
 		this._velocityY = 0;
-		this._previousVelocityX.length = 0;
-		this._previousVelocityY.length = 0;
+		this._previousVelocityX.resize(0);
+		this._previousVelocityY.resize(0);
 		this._horizontalScrollBarIsScrolling = false;
 		this._verticalScrollBarIsScrolling = false;
 		this.removeEventListener(Event.ENTER_FRAME, scroller_enterFrameHandler);
 		this.stage.removeEventListener(TouchEvent.TOUCH, stage_touchHandler);
 		if (this._verticalAutoScrollTween != null)
 		{
-			Starling.juggler.remove(this._verticalAutoScrollTween);
+			Starling.currentJuggler.remove(this._verticalAutoScrollTween);
 			this._verticalAutoScrollTween = null;
 		}
 		if (this._horizontalAutoScrollTween != null)
 		{
-			Starling.juggler.remove(this._horizontalAutoScrollTween);
+			Starling.currentJuggler.remove(this._horizontalAutoScrollTween);
 			this._horizontalAutoScrollTween = null;
 		}
 		if (this._topPullTween != null)

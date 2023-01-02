@@ -53,7 +53,7 @@ import starling.utils.Pool;
  *
  * @productversion Feathers 1.0.0
  */
-class SimpleScrollBar extends FeathersControl 
+class SimpleScrollBar extends FeathersControl implements IDirectionalScrollBar
 {
 	/**
 	 * @private
@@ -225,7 +225,7 @@ class SimpleScrollBar extends FeathersControl
 	{
 		if (this.clampToRange)
 		{
-			newValue = clamp(newValue, this._minimum, this._maximum);
+			newValue = MathUtils.clamp(newValue, this._minimum, this._maximum);
 		}
 		if (this._value == newValue)
 		{
@@ -277,7 +277,7 @@ class SimpleScrollBar extends FeathersControl
 	{
 		if (this._maximum == value)
 		{
-			return;
+			return value;
 		}
 		this._maximum = value;
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_DATA);
@@ -315,7 +315,7 @@ class SimpleScrollBar extends FeathersControl
 	{
 		if (this._page == value)
 		{
-			return;
+			return value;
 		}
 		this._page = value;
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_DATA);
@@ -343,7 +343,7 @@ class SimpleScrollBar extends FeathersControl
 	private function get_paddingTop():Float { return this._paddingTop; }
 	private function set_paddingTop(value:Float):Float
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_paddingTop))
 		{
 			return value;
 		}
@@ -364,7 +364,7 @@ class SimpleScrollBar extends FeathersControl
 	private function get_paddingRight():Float { return this._paddingRight; }
 	private function set_paddingRight(value:Float):Float
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_paddingRight))
 		{
 			return value;
 		}
@@ -385,7 +385,7 @@ class SimpleScrollBar extends FeathersControl
 	private function get_paddingBottom():Float { return this._paddingBottom; }
 	private function set_paddingBottom(value:Float):Float
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_paddingBottom))
 		{
 			return value;
 		}
@@ -406,7 +406,7 @@ class SimpleScrollBar extends FeathersControl
 	private function get_paddingLeft():Float { return this._paddingLeft; }
 	private function set_paddingLeft(value:Float):Float
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_paddingLeft))
 		{
 			return value;
 		}
@@ -422,7 +422,7 @@ class SimpleScrollBar extends FeathersControl
 	/**
 	 * @private
 	 */
-	private var currentRepeatAction:Function;
+	private var currentRepeatAction:Void->Void;
 	
 	/**
 	 * @private
@@ -523,7 +523,7 @@ class SimpleScrollBar extends FeathersControl
 	private function get_customThumbStyleName():String { return this._customThumbStyleName; }
 	private function set_customThumbStyleName(value:String):String
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction(this.set_customThumbStyleName))
 		{
 			return value;
 		}
@@ -533,6 +533,7 @@ class SimpleScrollBar extends FeathersControl
 		}
 		this._customThumbStyleName = value;
 		this.invalidate(INVALIDATION_FLAG_THUMB_FACTORY);
+		return this._customThumbStyleName;
 	}
 	
 	/**
@@ -594,12 +595,12 @@ class SimpleScrollBar extends FeathersControl
 			//}
 			value = newValue;
 		}
-		if(this._thumbProperties)
+		if (this._thumbProperties != null)
 		{
 			this._thumbProperties.removeOnChangeCallback(thumbProperties_onChange);
 		}
-		this._thumbProperties = PropertyProxy(value);
-		if(this._thumbProperties)
+		this._thumbProperties = cast value;
+		if (this._thumbProperties != null)
 		{
 			this._thumbProperties.addOnChangeCallback(thumbProperties_onChange);
 		}
@@ -1058,9 +1059,10 @@ class SimpleScrollBar extends FeathersControl
 		{
 			adjustedPage = range;
 		}
+		var newValue:Float;
 		if (this._touchValue < this._pageStartValue)
 		{
-			var newValue:Float = Math.max(this._touchValue, this._value - adjustedPage);
+			newValue = Math.max(this._touchValue, this._value - adjustedPage);
 			if (this._step != 0 && newValue != this._maximum && newValue != this._minimum)
 			{
 				newValue = MathUtils.roundDownToNearest(newValue, this._step);
@@ -1083,7 +1085,7 @@ class SimpleScrollBar extends FeathersControl
 	/**
 	 * @private
 	 */
-	private function startRepeatTimer(action:Function):Void
+	private function startRepeatTimer(action:Void->Void):Void
 	{
 		this.currentRepeatAction = action;
 		if (this._repeatDelay > 0)
@@ -1133,16 +1135,18 @@ class SimpleScrollBar extends FeathersControl
 			return;
 		}
 		
+		var touch:Touch;
+		var location:Point;
 		if (this._touchPointID >= 0)
 		{
-			var touch:Touch = event.getTouch(track, null, this._touchPointID);
+			touch = event.getTouch(track, null, this._touchPointID);
 			if (touch == null)
 			{
 				return;
 			}
 			if (touch.phase == TouchPhase.MOVED)
 			{
-				var location:Point = touch.getLocation(this, Pool.getPoint());
+				location = touch.getLocation(this, Pool.getPoint());
 				this._touchValue = this.locationToValue(location);
 				Pool.putPoint(location);
 			}
@@ -1183,16 +1187,18 @@ class SimpleScrollBar extends FeathersControl
 			return;
 		}
 		
+		var touch:Touch;
+		var location:Point;
 		if (this._touchPointID >= 0)
 		{
-			var touch:Touch = event.getTouch(this.thumb, null, this._touchPointID);
+			touch = event.getTouch(this.thumb, null, this._touchPointID);
 			if (touch == null)
 			{
 				return;
 			}
 			if (touch.phase == TouchPhase.MOVED)
 			{
-				var location:Point = touch.getLocation(this, Pool.getPoint());
+				location = touch.getLocation(this, Pool.getPoint());
 				var newValue:Float = this.locationToValue(location);
 				Pool.putPoint(location);
 				if (this._step != 0 && newValue != this._maximum && newValue != this._minimum)

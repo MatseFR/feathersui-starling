@@ -6,6 +6,7 @@ This program is free software. You can redistribute and/or modify it in
 accordance with the terms of the accompanying license agreement.
 */
 package feathers.controls;
+import feathers.core.FeathersControl;
 import feathers.core.IGroupedToggle;
 import feathers.core.ToggleGroup;
 import feathers.events.FeathersEventType;
@@ -119,7 +120,7 @@ class ToggleButton extends Button implements IGroupedToggle
 			return value;
 		}
 		this._isToggle = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._isToggle;
 	}
 	
@@ -158,8 +159,8 @@ class ToggleButton extends Button implements IGroupedToggle
 			return value;
 		}
 		this._isSelected = value;
-		this.invalidate(INVALIDATION_FLAG_SELECTED);
-		this.invalidate(INVALIDATION_FLAG_STATE);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SELECTED);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STATE);
 		this.dispatchEventWith(Event.CHANGE);
 		this.dispatchEventWith(FeathersEventType.STATE_CHANGE);
 		return this._isSelected;
@@ -218,7 +219,7 @@ class ToggleButton extends Button implements IGroupedToggle
 			this.currentSkin = null;
 		}
 		this._defaultSelectedSkin = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._defaultSelectedSkin;
 	}
 	
@@ -313,7 +314,7 @@ class ToggleButton extends Button implements IGroupedToggle
 		}
 		if (this._defaultSelectedIcon == value)
 		{
-			return;
+			return value;
 		}
 		if (this._defaultSelectedIcon != null &&
 			this.currentIcon == this._defaultSelectedIcon)
@@ -324,7 +325,7 @@ class ToggleButton extends Button implements IGroupedToggle
 			this.currentIcon = null;
 		}
 		this._defaultSelectedIcon = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._defaultSelectedIcon;
 	}
 	
@@ -396,11 +397,11 @@ class ToggleButton extends Button implements IGroupedToggle
 	 */
 	override public function dispose():Void
 	{
-		if (this._defaultSelectedSkin && this._defaultSelectedSkin.parent != this)
+		if (this._defaultSelectedSkin != null && this._defaultSelectedSkin.parent != this)
 		{
 			this._defaultSelectedSkin.dispose();
 		}
-		if (this._defaultSelectedIcon && this._defaultSelectedIcon.parent != this)
+		if (this._defaultSelectedIcon != null && this._defaultSelectedIcon.parent != this)
 		{
 			this._defaultSelectedIcon.dispose();
 		}
@@ -448,8 +449,8 @@ class ToggleButton extends Button implements IGroupedToggle
 	 */
 	override function draw():Void
 	{
-		var stylesInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_STYLES);
-		var stateInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_STATE);
+		var stylesInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_STYLES);
+		var stateInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_STATE);
 		
 		if (stylesInvalid || stateInvalid)
 		{

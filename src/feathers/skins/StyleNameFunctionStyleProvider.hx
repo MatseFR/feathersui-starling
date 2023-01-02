@@ -127,7 +127,7 @@ class StyleNameFunctionStyleProvider implements IStyleProvider
 			for (i in 0...styleNameCount)
 			{
 				var name:String = styleNameList.item(i);
-				var initializer:IFeathersControl->Void = this._styleNameMap[name];
+				var initializer:Function = this._styleNameMap[name];
 				if (initializer != null)
 				{
 					hasNameInitializers = true;

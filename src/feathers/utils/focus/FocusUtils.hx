@@ -49,6 +49,10 @@ class FocusUtils
 		var secondaryDistance1:Float = calculateSecondaryAxisDistanceForRelativePosition(focusedRect, rect, relativePosition);
 		var onSameAxis1:Bool = itemsAreOnSameAxis(focusedRect, rect, relativePosition);
 		
+		var minPrimaryDistance2:Float;
+		var maxPrimaryDistance2:Float;
+		var secondaryDistance2:Float;
+		var onSameAxis2:Bool;
 		if (object2 == null)
 		{
 			var minPrimaryDistance2:Float = Math.POSITIVE_INFINITY;
@@ -133,22 +137,20 @@ class FocusUtils
 	
 	static private function calculateMaxPrimaryAxisDistanceForRelativePosition(globalRect1:Rectangle, globalRect2:Rectangle, position:String):Float
 	{
+		var result:Float;
 		switch(position)
 		{
 			case RelativePosition.TOP:
-			{
 				if (globalRect1.bottom > globalRect2.bottom || globalRect1.y >= globalRect2.bottom)
 				{
-					var result:Float = globalRect1.bottom - globalRect2.y;
+					result = globalRect1.bottom - globalRect2.y;
 					if (result > 0)
 					{
 						return result;
 					}
 				}
-				break;
-			}
+			
 			case RelativePosition.RIGHT:
-			{
 				if (globalRect1.x < globalRect2.x || globalRect1.right <= globalRect2.x)
 				{
 					result = globalRect2.right - globalRect1.x;
@@ -157,10 +159,8 @@ class FocusUtils
 						return result;
 					}
 				}
-				break;
-			}
+			
 			case RelativePosition.BOTTOM:
-			{
 				if (globalRect1.y < globalRect2.y || globalRect1.bottom <= globalRect2.y)
 				{
 					result = globalRect2.bottom - globalRect1.y;
@@ -169,10 +169,8 @@ class FocusUtils
 						return result;
 					}
 				}
-				break;
-			}
+			
 			case RelativePosition.LEFT:
-			{
 				if (globalRect1.right > globalRect2.right || globalRect1.x >= globalRect2.right)
 				{
 					result = globalRect1.right - globalRect2.x;
@@ -181,30 +179,27 @@ class FocusUtils
 						return result;
 					}
 				}
-				break;
-			}
+			
 		}
 		return Math.POSITIVE_INFINITY;
 	}
 	
 	static private function calculateMinPrimaryAxisDistanceForRelativePosition(globalRect1:Rectangle, globalRect2:Rectangle, position:String):Float
 	{
+		var result:Float;
 		switch (position)
 		{
 			case RelativePosition.TOP:
-			{
 				if (globalRect1.bottom > globalRect2.bottom || globalRect1.y >= globalRect2.bottom)
 				{
-					var result:Float = globalRect1.bottom - globalRect2.bottom;
+					result = globalRect1.bottom - globalRect2.bottom;
 					if (result > 0)
 					{
 						return result;
 					}
 				}
-				break;
-			}
+			
 			case RelativePosition.RIGHT:
-			{
 				if (globalRect1.x < globalRect2.x || globalRect1.right <= globalRect2.x)
 				{
 					result = globalRect2.x - globalRect1.x;
@@ -213,10 +208,8 @@ class FocusUtils
 						return result;
 					}
 				}
-				break;
-			}
+			
 			case RelativePosition.BOTTOM:
-			{
 				if (globalRect1.y < globalRect2.y || globalRect1.bottom <= globalRect2.y)
 				{
 					result = globalRect2.y - globalRect1.y;
@@ -225,10 +218,8 @@ class FocusUtils
 						return result;
 					}
 				}
-				break;
-			}
+			
 			case RelativePosition.LEFT:
-			{
 				if (globalRect1.right > globalRect2.right || globalRect1.x >= globalRect2.right)
 				{
 					result = globalRect1.right - globalRect2.right;
@@ -237,13 +228,12 @@ class FocusUtils
 						return result;
 					}
 				}
-				break;
-			}
+			
 		}
 		return Math.POSITIVE_INFINITY;
 	}
 	
-	function itemsAreOnSameAxis(globalRect1:Rectangle, globalRect2:Rectangle, position:String):Bool
+	static private function itemsAreOnSameAxis(globalRect1:Rectangle, globalRect2:Rectangle, position:String):Bool
 	{
 		if (position == RelativePosition.TOP || position == RelativePosition.BOTTOM)
 		{

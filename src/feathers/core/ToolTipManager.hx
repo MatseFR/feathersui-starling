@@ -36,7 +36,7 @@ class ToolTipManager
 	 */
 	public static function getToolTipManagerForStage(stage:Stage):IToolTipManager
 	{
-		return IToolTipManager(STAGE_TO_MANAGER[stage]);
+		return STAGE_TO_MANAGER[stage];
 	}
 	
 	/**
