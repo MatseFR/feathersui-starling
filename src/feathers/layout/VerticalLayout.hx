@@ -756,21 +756,16 @@ class VerticalLayout extends BaseLinearLayout implements IVariableVirtualLayout 
 				switch (this._horizontalAlign)
 				{
 					case HorizontalAlign.RIGHT:
-					{
 						item.x = pivotX + boundsX + horizontalAlignWidth - this._paddingRight - item.width;
-						break;
-					}
+					
 					case HorizontalAlign.CENTER:
-					{
 						//round to the nearest pixel when dividing by 2 to
 						//align in the center
 						item.x = pivotX + boundsX + this._paddingLeft + Math.fround((horizontalAlignWidth - this._paddingLeft - this._paddingRight - item.width) / 2);
-						break;
-					}
+					
 					default: //left
-					{
 						item.x = pivotX + boundsX + this._paddingLeft;
-					}
+					
 				}
 			}
 		}

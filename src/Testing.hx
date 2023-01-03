@@ -1,6 +1,7 @@
 package;
 
 import feathers.controls.AutoSizeMode;
+import feathers.controls.Button;
 import feathers.controls.Label;
 import feathers.controls.LayoutGroup;
 import feathers.core.PropertyProxy;
@@ -62,6 +63,9 @@ class Testing extends Sprite
 		//label.validate();
 		group.addChild(label);
 		
+		var btn:Button = new Button();
+		btn.label = "yep";
+		group.addChild(btn);
 		
 		//var data:Dynamic = {test:123, plop:true, blop:"blip"};
 		//var prox:PropertyProxy = PropertyProxy.fromObject(data);

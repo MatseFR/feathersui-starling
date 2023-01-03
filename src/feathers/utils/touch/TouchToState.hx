@@ -280,7 +280,7 @@ class TouchToState
 		{
 			//a touch has begun, so we'll ignore all other touches.
 			touch = event.getTouch(this._target, null, this._touchPointID);
-			if (touch != null)
+			if (touch == null)
 			{
 				return;
 			}

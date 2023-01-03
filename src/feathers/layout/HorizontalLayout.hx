@@ -630,19 +630,14 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 				switch (this._verticalAlign)
 				{
 					case VerticalAlign.BOTTOM:
-					{
 						item.y = pivotY + boundsY + verticalAlignHeight - this._paddingBottom - item.height;
-						break;
-					}
+					
 					case VerticalAlign.MIDDLE:
-					{
 						item.y = pivotY + boundsY + this._paddingTop + Math.fround((verticalAlignHeight - this._paddingTop - this._paddingBottom - item.height) / 2);
-						break;
-					}
+					
 					default: //top
-					{
 						item.y = pivotY + boundsY + this._paddingTop;
-					}
+					
 				}
 			}
 		}
