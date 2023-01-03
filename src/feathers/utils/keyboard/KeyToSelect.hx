@@ -223,17 +223,17 @@ class KeyToSelect
 			//previous KeyboardEvent.KEY_DOWN listener
 			return;
 		}
-		if (event.keyCode == this._cancelKeyCode)
+		if (Std.int(event.keyCode) == this._cancelKeyCode)
 		{
 			this._stage.removeEventListener(KeyboardEvent.KEY_UP, stage_keyUpHandler);
 			return;
 		}
-		if (event.keyCode != this._keyCode)
+		if (Std.int(event.keyCode) != this._keyCode)
 		{
 			return;
 		}
 		if (this._keyLocation != MathUtils.INT_MAX &&
-			!((event.keyLocation == this._keyLocation) || (this._keyLocation == 4 && DeviceCapabilities.simulateDPad)))
+			!((Std.int(event.keyLocation) == this._keyLocation) || (this._keyLocation == 4 && DeviceCapabilities.simulateDPad)))
 		{
 			return;
 		}
@@ -249,12 +249,12 @@ class KeyToSelect
 		{
 			return;
 		}
-		if (event.keyCode != this._keyCode)
+		if (Std.int(event.keyCode) != this._keyCode)
 		{
 			return;
 		}
 		if (this._keyLocation != MathUtils.INT_MAX &&
-			!((event.keyLocation == this._keyLocation) || (this._keyLocation == 4 && DeviceCapabilities.simulateDPad)))
+			!((Std.int(event.keyLocation) == this._keyLocation) || (this._keyLocation == 4 && DeviceCapabilities.simulateDPad)))
 		{
 			return;
 		}

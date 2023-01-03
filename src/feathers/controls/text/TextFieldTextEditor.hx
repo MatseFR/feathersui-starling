@@ -15,6 +15,10 @@ import feathers.core.ITextEditor;
 import feathers.events.FeathersEventType;
 import feathers.skins.IStyleProvider;
 import feathers.utils.geom.GeomUtils;
+#if flash
+import flash.events.SoftKeyboardEvent;
+import flash.text.TextField;
+#end
 import openfl.display.BitmapData;
 import openfl.display.Stage;
 import openfl.display3D.Context3DProfile;
@@ -29,7 +33,9 @@ import openfl.geom.Vector3D;
 import openfl.text.AntiAliasType;
 import openfl.text.FontType;
 import openfl.text.GridFitType;
+#if !flash
 import openfl.text.TextField;
+#end
 import openfl.text.TextFieldAutoSize;
 import openfl.text.TextFieldType;
 import openfl.ui.Keyboard;
@@ -1577,7 +1583,8 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		textField.gridFitType = this._gridFitType;
 		textField.sharpness = this._sharpness;
 		#if flash
-		textField.thickness = this._thickness;
+		// TODO : flash extern TextField misses thickness property
+		//textField.thickness = this._thickness;
 		#end
 		textField.maxChars = this._maxChars;
 		textField.restrict = this._restrict;
@@ -1925,8 +1932,8 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 			MatrixUtil.transformCoords(matrix, -gutterPositionOffset, -gutterPositionOffset + verticalAlignOffsetY, point);
 		}
 		var starlingViewPort:Rectangle = starling.viewPort;
-		this.textField.x = Math.round(starlingViewPort.x + (point.x * scaleFactor));
-		this.textField.y = Math.round(starlingViewPort.y + (point.y * scaleFactor));
+		this.textField.x = Math.fround(starlingViewPort.x + (point.x * scaleFactor));
+		this.textField.y = Math.fround(starlingViewPort.y + (point.y * scaleFactor));
 		this.textField.rotation = GeomUtils.matrixToRotation(matrix) * 180 / Math.PI;
 		this.textField.scaleX = GeomUtils.matrixToScaleX(matrix) * scaleFactor;
 		this.textField.scaleY = GeomUtils.matrixToScaleY(matrix) * scaleFactor;
@@ -1946,8 +1953,8 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		}
 		var matrix:Matrix = Pool.getMatrix();
 		this.getTransformationMatrix(this.stage, matrix);
-		this.textSnapshot.x = Math.round(matrix.tx) - matrix.tx;
-		this.textSnapshot.y = Math.round(matrix.ty) - matrix.ty;
+		this.textSnapshot.x = Math.fround(matrix.tx) - matrix.tx;
+		this.textSnapshot.y = Math.fround(matrix.ty) - matrix.ty;
 		this.textSnapshot.y += this.getVerticalAlignmentOffsetY();
 		Pool.putMatrix(matrix);
 	}

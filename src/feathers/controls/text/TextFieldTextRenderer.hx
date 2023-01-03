@@ -13,6 +13,9 @@ import feathers.skins.IStyleProvider;
 import feathers.utils.geom.GeomUtils;
 import feathers.utils.math.MathUtils;
 import feathers.utils.texture.TextureUtils;
+#if flash
+import flash.text.TextField;
+#end
 import openfl.display.BitmapData;
 import openfl.display3D.Context3DProfile;
 import openfl.filters.BitmapFilter;
@@ -23,7 +26,9 @@ import openfl.text.AntiAliasType;
 import openfl.text.FontType;
 import openfl.text.GridFitType;
 import openfl.text.StyleSheet;
+#if !flash
 import openfl.text.TextField;
+#end
 import openfl.text.TextFieldAutoSize;
 import openfl.text.TextFormat;
 import feathers.core.IFeathersControl;
@@ -1321,7 +1326,8 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 			this.textField.gridFitType = this._gridFitType;
 			this.textField.sharpness = this._sharpness;
 			#if flash
-			this.textField.thickness = this._thickness;
+			// TODO : flash extern TextField misses thickness property
+			//this.textField.thickness = this._thickness;
 			#end
 			this.textField.filters = this._nativeFilters;
 		}
@@ -1389,6 +1395,7 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 		}
 		
 		var newWidth:Float = this._explicitWidth;
+		var newHeight:Float = this._explicitHeight;
 		if (needsWidth)
 		{
 			//yes, this value is never used. this is a workaround for a bug
@@ -1397,11 +1404,11 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 			//again, for some reason, it reports the correct width value.
 			var hackWorkaround:Float = this.textField.width;
 			newWidth = (this.textField.width / scaleFactor) - gutterDimensionsOffset;
-			if(newWidth < this._explicitMinWidth)
+			if (newWidth < this._explicitMinWidth)
 			{
 				newWidth = this._explicitMinWidth;
 			}
-			else if(newWidth > this._explicitMaxWidth)
+			else if (newWidth > this._explicitMaxWidth)
 			{
 				newWidth = this._explicitMaxWidth;
 			}
@@ -1416,7 +1423,7 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 			this.textField.width = newWidth + gutterDimensionsOffset;
 			this.textField.wordWrap = this._wordWrap;
 		}
-		var newHeight:Float = this._explicitHeight;
+		
 		if (needsHeight)
 		{
 			newHeight = (this.textField.height / scaleFactor) - gutterDimensionsOffset;
@@ -1426,9 +1433,9 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 			//whatever), some of the text may be cut off. as a workaround,
 			//round up to nearest twip.
 			newHeight = MathUtils.roundUpToNearest(newHeight, 0.05);
-			if (newHeight < this._explicitHeight)
+			if (newHeight < this._explicitMinHeight)
 			{
-				newHeight = this._explicitHeight;
+				newHeight = this._explicitMinHeight;
 			}
 			else if (newHeight > this._explicitMaxHeight)
 			{
@@ -1848,7 +1855,7 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 		var xPosition:Float = 0;
 		var yPosition:Float = 0;
 		var bitmapData:BitmapData = null;
-		var snapshotIndex:Int = -1;
+		var snapshotIndex:Int = 0;
 		var currentBitmapWidth:Float;
 		var currentBitmapHeight:Float;
 		var snapshot:Image;
@@ -1882,7 +1889,7 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 				snapshot = null;
 				if (snapshotIndex >= 0)
 				{
-					if (this.textSnapshot == null)
+					if (this.textSnapshots == null)
 					{
 						this.textSnapshots = new Array<Image>();
 					}

@@ -210,7 +210,7 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 		
 		var needsExplicitWidth:Bool = explicitWidth != explicitWidth; //isNaN
 		var needsExplicitHeight:Bool = explicitHeight != explicitHeight; //isNaN
-		var distributedWidth:Float = 0;
+		var distributedWidth:Float = Math.NaN;
 		if (!needsExplicitWidth && this._distributeWidths)
 		{
 			//we need to calculate this before validateItems() because it
@@ -532,7 +532,7 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 			}
 			else if (this._horizontalAlign == HorizontalAlign.CENTER)
 			{
-				horizontalAlignOffsetX = Math.round((availableWidth - totalWidth) / 2);
+				horizontalAlignOffsetX = Math.fround((availableWidth - totalWidth) / 2);
 			}
 			if (horizontalAlignOffsetX != 0)
 			{
@@ -636,7 +636,7 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 					}
 					case VerticalAlign.MIDDLE:
 					{
-						item.y = pivotY + boundsY + this._paddingTop + Math.round((verticalAlignHeight - this._paddingTop - this._paddingBottom - item.height) / 2);
+						item.y = pivotY + boundsY + this._paddingTop + Math.fround((verticalAlignHeight - this._paddingTop - this._paddingBottom - item.height) / 2);
 						break;
 					}
 					default: //top
@@ -1217,7 +1217,7 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 		}
 		if (this._scrollPositionHorizontalAlign == HorizontalAlign.CENTER)
 		{
-			maxScrollX -= Math.round((width - itemWidth) / 2);
+			maxScrollX -= Math.fround((width - itemWidth) / 2);
 		}
 		else if (this._scrollPositionHorizontalAlign == HorizontalAlign.RIGHT)
 		{

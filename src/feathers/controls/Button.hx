@@ -1964,7 +1964,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 		}
 		else //center
 		{
-			displayObject.x = this._paddingLeft + Math.round((this.actualWidth - this._paddingLeft - this._paddingRight - displayObject.width) / 2);
+			displayObject.x = this._paddingLeft + Math.fround((this.actualWidth - this._paddingLeft - this._paddingRight - displayObject.width) / 2);
 		}
 		if (this._verticalAlign == VerticalAlign.TOP)
 		{
@@ -2000,7 +2000,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 				}
 				else if (this._verticalAlign == VerticalAlign.MIDDLE)
 				{
-					this.labelTextRenderer.y += Math.round((this.currentIcon.height + this._gap) / 2);
+					this.labelTextRenderer.y += Math.fround((this.currentIcon.height + this._gap) / 2);
 				}
 				this.currentIcon.y = this.labelTextRenderer.y - this.currentIcon.height - this._gap;
 			}
@@ -2020,7 +2020,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 				}
 				else if (this._horizontalAlign == HorizontalAlign.CENTER)
 				{
-					this.labelTextRenderer.x -= Math.round((this.currentIcon.width + this._gap) / 2);
+					this.labelTextRenderer.x -= Math.fround((this.currentIcon.width + this._gap) / 2);
 				}
 				this.currentIcon.x = this.labelTextRenderer.x + this.labelTextRenderer.width + this._gap;
 			}
@@ -2040,7 +2040,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 				}
 				else if (this._verticalAlign == VerticalAlign.MIDDLE)
 				{
-					this.labelTextRenderer.y -= Math.round((this.currentIcon.height + this._gap) / 2);
+					this.labelTextRenderer.y -= Math.fround((this.currentIcon.height + this._gap) / 2);
 				}
 				this.currentIcon.y = this.labelTextRenderer.y + this.labelTextRenderer.height + this._gap;
 			}
@@ -2060,7 +2060,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 				}
 				else if (this._horizontalAlign == HorizontalAlign.CENTER)
 				{
-					this.labelTextRenderer.x += Math.round((this._gap + this.currentIcon.width) / 2);
+					this.labelTextRenderer.x += Math.fround((this._gap + this.currentIcon.width) / 2);
 				}
 				this.currentIcon.x = this.labelTextRenderer.x - this._gap - this.currentIcon.width;
 			}
@@ -2078,7 +2078,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 			}
 			else
 			{
-				this.currentIcon.y = this._paddingTop + Math.round((this.actualHeight - this._paddingTop - this._paddingBottom - this.currentIcon.height) / 2);
+				this.currentIcon.y = this._paddingTop + Math.fround((this.actualHeight - this._paddingTop - this._paddingBottom - this.currentIcon.height) / 2);
 			}
 		}
 		else if (this._iconPosition == RelativePosition.LEFT_BASELINE || this._iconPosition == RelativePosition.RIGHT_BASELINE)
@@ -2097,7 +2097,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 			}
 			else
 			{
-				this.currentIcon.x = this._paddingLeft + Math.round((this.actualWidth - this._paddingLeft - this._paddingRight - this.currentIcon.width) / 2);
+				this.currentIcon.x = this._paddingLeft + Math.fround((this.actualWidth - this._paddingLeft - this._paddingRight - this.currentIcon.width) / 2);
 			}
 		}
 	}

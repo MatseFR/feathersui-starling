@@ -6219,8 +6219,8 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	{
 		var starling:Starling = this.stage != null ? this.stage.starling : Starling.current;
 		var pixelSize:Float = 1 / starling.contentScaleFactor;
-		var viewPortX:Float = Math.round((this._leftViewPortOffset - this._horizontalScrollPosition) / pixelSize) * pixelSize;
-		var targetViewPortX:Float = Math.round((this._leftViewPortOffset - this._targetHorizontalScrollPosition) / pixelSize) * pixelSize;
+		var viewPortX:Float = Math.fround((this._leftViewPortOffset - this._horizontalScrollPosition) / pixelSize) * pixelSize;
+		var targetViewPortX:Float = Math.fround((this._leftViewPortOffset - this._targetHorizontalScrollPosition) / pixelSize) * pixelSize;
 		if (viewPortX == targetViewPortX)
 		{
 			//we've reached the snapped position, but the tween may not
@@ -6256,8 +6256,8 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	{
 		var starling:Starling = this.stage != null ? this.stage.starling : Starling.current;
 		var pixelSize:Float = 1 / starling.contentScaleFactor;
-		var viewPortY:Float = Math.round((this._topViewPortOffset - this._verticalScrollPosition) / pixelSize) * pixelSize;
-		var targetViewPortY:Float = Math.round((this._topViewPortOffset - this._targetVerticalScrollPosition) / pixelSize) * pixelSize;
+		var viewPortY:Float = Math.fround((this._topViewPortOffset - this._verticalScrollPosition) / pixelSize) * pixelSize;
+		var targetViewPortY:Float = Math.fround((this._topViewPortOffset - this._targetVerticalScrollPosition) / pixelSize) * pixelSize;
 		if (viewPortY == targetViewPortY)
 		{
 			//we've reached the snapped position, but the tween may not

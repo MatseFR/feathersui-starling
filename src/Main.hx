@@ -37,7 +37,7 @@ class Main extends Sprite
 	{
 		_starling = new Starling(Testing, stage, null, null, Context3DRenderMode.AUTO, "auto");
 		_starling.enableErrorChecking = Capabilities.isDebugger;
-		_starling.showStats = true;
+		_starling.showStats = false;
 		_starling.skipUnchangedFrames = true;
 		_starling.supportBrowserZoom = true;
 		_starling.supportHighResolutions = true;

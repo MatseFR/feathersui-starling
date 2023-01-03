@@ -1055,7 +1055,7 @@ class BitmapFontTextRenderer extends BaseTextRenderer implements ITextRenderer
 		var align:String = this._currentTextFormat.align;
 		if (align == TextFormatAlign.CENTER)
 		{
-			this.moveBufferedCharacters(Math.round((maxLineWidth - currentLineWidth) / 2), 0, skipCount);
+			this.moveBufferedCharacters(Math.fround((maxLineWidth - currentLineWidth) / 2), 0, skipCount);
 		}
 		else if (align == TextFormatAlign.RIGHT)
 		{

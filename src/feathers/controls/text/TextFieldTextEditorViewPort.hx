@@ -622,16 +622,16 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 		MatrixUtil.transformCoords(matrix, 0, 0, point);
 		var scaleX:Float = matrixToScaleX(matrix) * scaleFactor;
 		var scaleY:Float = matrixToScaleY(matrix) * scaleFactor;
-		var offsetX:Float = Math.round(this._paddingLeft * scaleX);
-		var offsetY:Float = Math.round((this._paddingTop + this._verticalScrollPosition) * scaleY);
+		var offsetX:Float = Math.fround(this._paddingLeft * scaleX);
+		var offsetY:Float = Math.fround((this._paddingTop + this._verticalScrollPosition) * scaleY);
 		var starlingViewPort:Rectangle = starling.viewPort;
 		var gutterPositionOffset:Float = 2;
 		if (this._useGutter)
 		{
 			gutterPositionOffset = 0;
 		}
-		this.textField.x = offsetX + Math.round(starlingViewPort.x + (point.x * scaleFactor) - gutterPositionOffset * scaleX);
-		this.textField.y = offsetY + Math.round(starlingViewPort.y + (point.y * scaleFactor) - gutterPositionOffset * scaleY);
+		this.textField.x = offsetX + Math.fround(starlingViewPort.x + (point.x * scaleFactor) - gutterPositionOffset * scaleX);
+		this.textField.y = offsetY + Math.fround(starlingViewPort.y + (point.y * scaleFactor) - gutterPositionOffset * scaleY);
 		this.textField.rotation = matrixToRotation(matrix) * 180 / Math.PI;
 		this.textField.scaleX = scaleX;
 		this.textField.scaleY = scaleY;
@@ -650,8 +650,8 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 		}
 		var matrix:Matrix = Pool.getMatrix();
 		this.getTransformationMatrix(this.stage, matrix);
-		this.textSnapshot.x = this._paddingLeft + Math.round(matrix.tx) - matrix.tx;
-		this.textSnapshot.y = this._paddingTop + this._verticalScrollPosition + Math.round(matrix.ty) - matrix.ty;
+		this.textSnapshot.x = this._paddingLeft + Math.fround(matrix.tx) - matrix.tx;
+		this.textSnapshot.y = this._paddingTop + this._verticalScrollPosition + Math.fround(matrix.ty) - matrix.ty;
 		Pool.putMatrix(matrix);
 	}
 	

@@ -281,18 +281,18 @@ class KeyToState
 			//previous KeyboardEvent.KEY_DOWN listener
 			return;
 		}
-		if (event.keyCode == this._cancelKeyCode)
+		if (Std.int(event.keyCode) == this._cancelKeyCode)
 		{
 			this._stage.removeEventListener(KeyboardEvent.KEY_UP, stage_keyUpHandler);
 			this.changeState(this._upState);
 			return;
 		}
-		if (event.keyCode != this._keyCode)
+		if (Std.int(event.keyCode) != this._keyCode)
 		{
 			return;
 		}
 		if (this._keyLocation != MathUtils.INT_MAX &&
-			!((event.keyLocation == this._keyLocation) || (this._keyLocation == 4 && DeviceCapabilities.simulateDPad)))
+			!((Std.int(event.keyLocation) == this._keyLocation) || (this._keyLocation == 4 && DeviceCapabilities.simulateDPad)))
 		{
 			return;
 		}
@@ -305,16 +305,16 @@ class KeyToState
 	 */
 	private function stage_keyUpHandler(event:KeyboardEvent):Void
 	{
-		if(!this._isEnabled)
+		if (!this._isEnabled)
 		{
 			return;
 		}
-		if(event.keyCode != this._keyCode)
+		if (Std.int(event.keyCode) != this._keyCode)
 		{
 			return;
 		}
-		if(this._keyLocation != MathUtils.INT_MAX &&
-			!((event.keyLocation == this._keyLocation) || (this._keyLocation == 4 && DeviceCapabilities.simulateDPad)))
+		if (this._keyLocation != MathUtils.INT_MAX &&
+			!((Std.int(event.keyLocation) == this._keyLocation) || (this._keyLocation == 4 && DeviceCapabilities.simulateDPad)))
 		{
 			return;
 		}

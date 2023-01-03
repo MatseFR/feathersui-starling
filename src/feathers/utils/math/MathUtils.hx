@@ -31,15 +31,15 @@ class MathUtils
 	 */
 	public static inline function clamp(value:Float, minimum:Float, maximum:Float):Float
 	{
-		if(minimum > maximum)
+		if (minimum > maximum)
 		{
 			throw new ArgumentError("minimum should be smaller than maximum.");
 		}
-		if(value < minimum)
+		if (value < minimum)
 		{
 			value = minimum;
 		}
-		else if(value > maximum)
+		else if (value > maximum)
 		{
 			value = maximum;
 		}
@@ -60,11 +60,11 @@ class MathUtils
 	 */
 	public static inline function roundDownToNearest(number:Float, nearest:Float = 1):Float
 	{
-		if(nearest == 0)
+		if (nearest == 0)
 		{
 			return number;
 		}
-		return Math.floor(roundToPrecision(number / nearest, 10)) * nearest;
+		return Math.ffloor(roundToPrecision(number / nearest, 10)) * nearest;
 	}
 	
 	/**
@@ -81,11 +81,11 @@ class MathUtils
 	 */
 	public static inline function roundToNearest(number:Float, nearest:Float = 1):Float
 	{
-		if(nearest == 0)
+		if (nearest == 0)
 		{
 			return number;
 		}
-		var roundedNumber:Float = Math.round(roundToPrecision(number / nearest, 10)) * nearest;
+		var roundedNumber:Float = Math.fround(roundToPrecision(number / nearest, 10)) * nearest;
 		return roundToPrecision(roundedNumber, 10);
 	}
 	
@@ -101,10 +101,10 @@ class MathUtils
 	 *
 	 * @productversion Feathers 1.0.0
 	 */
-	public static inline function roundToPrecision(number:Float, precision:Int = 0):Float
+	public static function roundToPrecision(number:Float, precision:Int = 0):Float
 	{
 		var decimalPlaces:Float = Math.pow(10, precision);
-		return Math.round(decimalPlaces * number) / decimalPlaces;
+		return Math.fround(decimalPlaces * number) / decimalPlaces;
 	}
 	
 	/**
@@ -119,12 +119,12 @@ class MathUtils
 	 *
 	 * @productversion Feathers 1.0.0
 	 */
-	public static inline function roundUpToNearest(number:Float, nearest:Float = 1):Float
+	public static function roundUpToNearest(number:Float, nearest:Float = 1):Float
 	{
-		if(nearest == 0)
+		if (nearest == 0)
 		{
 			return number;
 		}
-		return Math.ceil(roundToPrecision(number / nearest, 10)) * nearest;
+		return Math.fceil(roundToPrecision(number / nearest, 10)) * nearest;
 	}
 }
