@@ -273,8 +273,8 @@ class VerticalLayout extends BaseLinearLayout implements IVariableVirtualLayout 
 		var explicitWidth:Float = viewPortBounds != null ? viewPortBounds.explicitWidth : Math.NaN;
 		var explicitHeight:Float = viewPortBounds != null ? viewPortBounds.explicitHeight : Math.NaN;
 		
-		var calculatedTypicalItemWidth:Float;
-		var calculatedTypicalItemHeight:Float;
+		var calculatedTypicalItemWidth:Float = 0;
+		var calculatedTypicalItemHeight:Float = 0;
 		if(this._useVirtualLayout)
 		{
 			//if the layout is virtualized, we'll need the dimensions of the
@@ -286,7 +286,7 @@ class VerticalLayout extends BaseLinearLayout implements IVariableVirtualLayout 
 		
 		var needsExplicitWidth:Bool = explicitWidth != explicitWidth; //isNaN
 		var needsExplicitHeight:Bool = explicitHeight != explicitHeight; //isNaN
-		var distributedHeight:Float;
+		var distributedHeight:Float = 0;
 		if (!needsExplicitHeight && this._distributeHeights)
 		{
 			//we need to calculate this before validateItems() because it
@@ -377,7 +377,7 @@ class VerticalLayout extends BaseLinearLayout implements IVariableVirtualLayout 
 		
 		var item:DisplayObject;
 		var iNormalized:Int;
-		var cachedHeight:Float;
+		var cachedHeight:Float = Math.NaN;
 		var layoutItem:ILayoutDisplayObject;
 		var pivotY:Float;
 		var itemWidth:Float;
@@ -830,7 +830,7 @@ class VerticalLayout extends BaseLinearLayout implements IVariableVirtualLayout 
 		var hasFirstGap:Bool = this._firstGap == this._firstGap; //!isNaN
 		var hasLastGap:Bool = this._lastGap == this._lastGap; //!isNaN
 		var positionY:Float;
-		var maxItemWidth:Float;
+		var maxItemWidth:Float = 0;
 		if (this._distributeHeights)
 		{
 			positionY = (calculatedTypicalItemHeight + this._gap) * itemCount;
@@ -1241,7 +1241,7 @@ class VerticalLayout extends BaseLinearLayout implements IVariableVirtualLayout 
 	{
 		var itemArrayCount:Int = items.length;
 		var itemCount:Int = itemArrayCount + this._beforeVirtualizedItemCount + this._afterVirtualizedItemCount;
-		var calculatedTypicalItemHeight:Float;
+		var calculatedTypicalItemHeight:Float = 0;
 		if (this._useVirtualLayout)
 		{
 			//if the layout is virtualized, we'll need the dimensions of the
@@ -1255,7 +1255,7 @@ class VerticalLayout extends BaseLinearLayout implements IVariableVirtualLayout 
 		var indexOffset:Int;
 		var yPosition:Float;
 		var iNormalized:Int;
-		var cachedHeight:Float;
+		var cachedHeight:Float = Math.NaN;
 		var item:DisplayObject;
 		if (keyCode == Keyboard.HOME)
 		{
@@ -1527,8 +1527,8 @@ class VerticalLayout extends BaseLinearLayout implements IVariableVirtualLayout 
 	public function getDropIndex(x:Float, y:Float, items:Array<DisplayObject>,
 		boundsX:Float, boundsY:Float, width:Float, height:Float):Int
 	{
-		var calculatedTypicalItemWidth:Float;
-		var calculatedTypicalItemHeight:Float;
+		var calculatedTypicalItemWidth:Float = 0;
+		var calculatedTypicalItemHeight:Float = 0;
 		if (this._useVirtualLayout)
 		{
 			this.prepareTypicalItem(width - this._paddingLeft - this._paddingRight);
@@ -1551,7 +1551,7 @@ class VerticalLayout extends BaseLinearLayout implements IVariableVirtualLayout 
 		var secondToLastIndex:Int = totalItemCount - 2;
 		var item:DisplayObject;
 		var indexMinusOffset:Int;
-		var cachedHeight:Float;
+		var cachedHeight:Float = Math.NaN;
 		var itemHeight:Float;
 		for (i in 0...totalItemCount)
 		{
@@ -2023,8 +2023,8 @@ class VerticalLayout extends BaseLinearLayout implements IVariableVirtualLayout 
 	 */
 	private function calculateScrollRangeOfIndex(index:Int, items:Array<DisplayObject>, x:Float, y:Float, width:Float, height:Float, result:Point):Void
 	{
-		var calculatedTypicalItemWidth:Float;
-		var calculatedTypicalItemHeight:Float;
+		var calculatedTypicalItemWidth:Float = 0;
+		var calculatedTypicalItemHeight:Float = 0;
 		if (this._useVirtualLayout)
 		{
 			this.prepareTypicalItem(width - this._paddingLeft - this._paddingRight);
@@ -2079,7 +2079,7 @@ class VerticalLayout extends BaseLinearLayout implements IVariableVirtualLayout 
 		var secondToLastIndex:Int = totalItemCount - 2;
 		var item:DisplayObject;
 		var iNormalized:Int;
-		var cachedHeight:Float;
+		var cachedHeight:Float = Math.NaN;
 		var itemHeight:Float;
 		for (i in 0...index+1)
 		{

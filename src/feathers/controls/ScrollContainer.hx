@@ -134,7 +134,7 @@ class ScrollContainer extends Scroller implements IScrollContainer implements IF
 	private function get_layout():ILayout { return this._layout; }
 	private function set_layout(value:ILayout):ILayout
 	{
-		if (this.processStyleRestriction(this.set_layout))
+		if (this.processStyleRestriction("layout"))
 		{
 			return value;
 		}

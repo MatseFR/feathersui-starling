@@ -502,7 +502,7 @@ class Header extends FeathersControl
 	private function get_paddingTop():Float { return this._paddingTop; }
 	private function set_paddingTop(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_paddingTop))
+		if (this.processStyleRestriction("paddingTop"))
 		{
 			return value;
 		}
@@ -523,7 +523,7 @@ class Header extends FeathersControl
 	private function get_paddingRight():Float { return this._paddingRight; }
 	private function set_paddingRight(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_paddingRight))
+		if (this.processStyleRestriction("paddingRight"))
 		{
 			return value;
 		}
@@ -544,7 +544,7 @@ class Header extends FeathersControl
 	private function get_paddingBottom():Float { return this._paddingBottom; }
 	private function set_paddingBottom(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_paddingBottom))
+		if (this.processStyleRestriction("paddingBottom"))
 		{
 			return value;
 		}
@@ -565,7 +565,7 @@ class Header extends FeathersControl
 	private function get_paddingLeft():Float { return this._paddingLeft; }
 	private function set_paddingLeft(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_paddingLeft))
+		if (this.processStyleRestriction("paddingLeft"))
 		{
 			return value;
 		}
@@ -586,7 +586,7 @@ class Header extends FeathersControl
 	private function get_gap():Float { return this._gap; }
 	private function set_gap(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_gap))
+		if (this.processStyleRestriction("gap"))
 		{
 			return value;
 		}
@@ -607,7 +607,7 @@ class Header extends FeathersControl
 	private function get_titleGap():Float { return this._titleGap; }
 	private function set_titleGap(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_titleGap))
+		if (this.processStyleRestriction("titleGap"))
 		{
 			return value;
 		}
@@ -628,7 +628,7 @@ class Header extends FeathersControl
 	private function get_useExtraPaddingForOSStatusBar():Bool { return this._useExtraPaddingForOSStatusBar; }
 	private function set_useExtraPaddingForOSStatusBar(value:Bool):Bool
 	{
-		if (this.processStyleRestriction(this.set_useExtraPaddingForOSStatusBar))
+		if (this.processStyleRestriction("useExtraPaddingForOSStatusBar"))
 		{
 			return value;
 		}
@@ -649,7 +649,7 @@ class Header extends FeathersControl
 	private function get_verticalAlign():String { return this._verticalAlign; }
 	private function set_verticalAlign(value:String):String
 	{
-		if (this.processStyleRestriction(this.set_verticalAlign))
+		if (this.processStyleRestriction("verticalAlign"))
 		{
 			return value;
 		}
@@ -705,7 +705,7 @@ class Header extends FeathersControl
 	private function get_backgroundSkin():DisplayObject { return this._backgroundSkin; }
 	private function set_backgroundSkin(value:DisplayObject):DisplayObject
 	{
-		if (this.processStyleRestriction(this.set_backgroundSkin))
+		if (this.processStyleRestriction("backgroundSkin"))
 		{
 			if (value != null)
 			{
@@ -736,7 +736,7 @@ class Header extends FeathersControl
 	private function get_backgroundDisabledSkin():DisplayObject { return this._backgroundDisabledSkin; }
 	private function set_backgroundDisabledSkin(value:DisplayObject):DisplayObject
 	{
-		if (this.processStyleRestriction(this.set_backgroundDisabledSkin))
+		if (this.processStyleRestriction("backgroundDisabledSkin"))
 		{
 			if (value != null)
 			{
@@ -771,14 +771,14 @@ class Header extends FeathersControl
 	private function get_fontStyles():TextFormat { return this._fontStylesSet.format; }
 	private function set_fontStyles(value:TextFormat):TextFormat
 	{
-		if (this.processStyleRestriction(this.set_fontStyles))
+		if (this.processStyleRestriction("fontStyles"))
 		{
 			return value;
 		}
 		//var savedCallee:Function = this.set_fontStyles;
 		function changeHandler(event:Event):Void
 		{
-			processStyleRestriction(this.set_fontStyles);
+			processStyleRestriction("fontStyles");
 		}
 		if (value != null)
 		{
@@ -799,14 +799,14 @@ class Header extends FeathersControl
 	private function get_disabledFontStyles():TextFormat { return this._fontStylesSet.disabledFormat; }
 	private function set_disabledFontStyles(value:TextFormat):TextFormat
 	{
-		if (this.processStyleRestriction(this.set_disabledFontStyles))
+		if (this.processStyleRestriction("disabledFontStyles"))
 		{
 			return value;
 		}
 		//var savedCallee:Function = this.set_disabledFontStyles;
 		function changeHandler(event:Event):Void
 		{
-			processStyleRestriction(this.set_disabledFontStyles);
+			processStyleRestriction("disabledFontStyles");
 		}
 		if (value != null)
 		{
@@ -828,7 +828,7 @@ class Header extends FeathersControl
 	private function get_wordWrap():Bool { return this._wordWrap; }
 	private function set_wordWrap(value:Bool):Bool
 	{
-		if (this.processStyleRestriction(this.set_wordWrap))
+		if (this.processStyleRestriction("wordWrap"))
 		{
 			return value;
 		}
@@ -849,7 +849,7 @@ class Header extends FeathersControl
 	private function get_customTitleStyleName():String { return this._customTitleStyleName; }
 	private function set_customTitleStyleName(value:String):String
 	{
-		if (this.processStyleRestriction(this.set_customTitleStyleName))
+		if (this.processStyleRestriction("customTitleStyleName"))
 		{
 			return value;
 		}
@@ -911,7 +911,7 @@ class Header extends FeathersControl
 		{
 			return value;
 		}
-		if (value != null && !Std.isOfType(value, PropertyProxy))
+		if (value != null && !Std.isOfType(value, PropertyProxyReal))
 		{
 			value = PropertyProxy.fromObject(value);
 		}
@@ -945,7 +945,7 @@ class Header extends FeathersControl
 		{
 			value = HorizontalAlign.RIGHT;
 		}
-		if (this.processStyleRestriction(this.set_titleAlign))
+		if (this.processStyleRestriction("titleAlign"))
 		{
 			return value;
 		}

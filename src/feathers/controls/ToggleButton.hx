@@ -198,7 +198,7 @@ class ToggleButton extends Button implements IGroupedToggle
 	private function get_defaultSelectedSkin():DisplayObject { return this._defaultSelectedSkin; }
 	private function set_defaultSelectedSkin(value:DisplayObject):DisplayObject
 	{
-		if (this.processStyleRestriction(this.set_defaultSelectedSkin))
+		if (this.processStyleRestriction("defaultSelectedSkin"))
 		{
 			if (value != null)
 			{
@@ -274,7 +274,7 @@ class ToggleButton extends Button implements IGroupedToggle
 	private function get_selectedFontStyles():TextFormat { return this._fontStylesSet.selectedFormat; }
 	private function set_selectedFontStyles(value:TextFormat):TextFormat
 	{
-		if (this.processStyleRestriction(this.set_selectedFontStyles))
+		if (this.processStyleRestriction("selectedFontStyles"))
 		{
 			return value;
 		}
@@ -282,7 +282,7 @@ class ToggleButton extends Button implements IGroupedToggle
 		function changeHandler(event:Event):Void
 		{
 			//processStyleRestriction(savedCallee);
-			processStyleRestriction(this.set_selectedFontStyles);
+			processStyleRestriction("selectedFontStyles");
 		}
 		if( value != null)
 		{
@@ -304,7 +304,7 @@ class ToggleButton extends Button implements IGroupedToggle
 	private function get_defaultSelectedIcon():DisplayObject { return this._defaultSelectedIcon; }
 	private function set_defaultSelectedIcon(value:DisplayObject):DisplayObject
 	{
-		if (this.processStyleRestriction(this.set_defaultSelectedIcon))
+		if (this.processStyleRestriction("defaultSelectedIcon"))
 		{
 			if (value != null)
 			{
@@ -381,7 +381,7 @@ class ToggleButton extends Button implements IGroupedToggle
 	private function get_scaleWhenSelected():Float { return this._scaleWhenSelected; }
 	private function set_scaleWhenSelected(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_scaleWhenSelected))
+		if (this.processStyleRestriction("scaleWhenSelected"))
 		{
 			return value;
 		}

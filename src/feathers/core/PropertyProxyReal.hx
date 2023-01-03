@@ -56,10 +56,10 @@ class PropertyProxyReal
 	/**
 	 * 
 	 */
-	//public function iterator():ArrayIterator<String>
-	//{
-		//return this._names.iterator();
-	//}
+	public function iterator():ArrayIterator<String>
+	{
+		return this._names.iterator();
+	}
 	
 	public function namesIterator():ArrayIterator<String>
 	{

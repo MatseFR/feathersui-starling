@@ -196,8 +196,8 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 		var explicitWidth:Float = viewPortBounds != null ? viewPortBounds.explicitWidth : Math.NaN;
 		var explicitHeight:Float = viewPortBounds != null ? viewPortBounds.explicitHeight : Math.NaN;
 		
-		var calculatedTypicalItemWidth:Float;
-		var calculatedTypicalItemHeight:Float;
+		var calculatedTypicalItemWidth:Float = 0;
+		var calculatedTypicalItemHeight:Float = 0;
 		
 		if (this._useVirtualLayout)
 		{
@@ -210,7 +210,7 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 		
 		var needsExplicitWidth:Bool = explicitWidth != explicitWidth; //isNaN
 		var needsExplicitHeight:Bool = explicitHeight != explicitHeight; //isNaN
-		var distributedWidth:Float;
+		var distributedWidth:Float = 0;
 		if (!needsExplicitWidth && this._distributeWidths)
 		{
 			//we need to calculate this before validateItems() because it
@@ -282,7 +282,7 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 		//any gap when calculating the total width, so default to 0.
 		var gap:Float = 0;
 		
-		var cachedWidth:Float;
+		var cachedWidth:Float = Math.NaN;
 		var item:DisplayObject;
 		var iNormalized:Int;
 		var layoutItem:ILayoutDisplayObject;
@@ -702,7 +702,7 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 		var hasFirstGap:Bool = this._firstGap == this._firstGap; //!isNaN
 		var hasLastGap:Bool = this._lastGap == this._lastGap; //!isNaN
 		var positionX:Float;
-		var maxItemHeight:Float;
+		var maxItemHeight:Float = 0;
 		var cachedWidth:Float;
 		if (this._distributeWidths)
 		{
@@ -1034,7 +1034,7 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 	 */
 	public function calculateNavigationDestination(items:Array<DisplayObject>, index:Int, keyCode:Int, bounds:LayoutBoundsResult):Int
 	{
-		var calculatedTypicalItemWidth:Float;
+		var calculatedTypicalItemWidth:Float = 0;
 		var itemArrayCount:Int = items.length;
 		var itemCount:Int = itemArrayCount + this._beforeVirtualizedItemCount + this._afterVirtualizedItemCount;
 		if (this._useVirtualLayout)
@@ -1048,7 +1048,7 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 		var result:Int = index;
 		var xPosition:Float;
 		var indexOffset:Int;
-		var cachedWidth:Float;
+		var cachedWidth:Float = Math.NaN;
 		var iNormalized:Int;
 		var item:DisplayObject;
 		if( keyCode == Keyboard.HOME)
@@ -1283,7 +1283,7 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 	public function getDropIndex(x:Float, y:Float, items:Array<DisplayObject>,
 		boundsX:Float, boundsY:Float, width:Float, height:Float):Int
 	{
-		var calculatedTypicalItemWidth:Float;
+		var calculatedTypicalItemWidth:Float = 0;
 		var calculatedTypicalItemHeight:Float;
 		if (this._useVirtualLayout)
 		{
@@ -1306,7 +1306,7 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 		}
 		var secondToLastIndex:Int = totalItemCount - 2;
 		var item:DisplayObject;
-		var cachedWidth:Float;
+		var cachedWidth:Float = Math.NaN;
 		var itemWidth:Float;
 		var indexMinusOffset:Int;
 		for (i in 0...totalItemCount+1)
@@ -1775,8 +1775,8 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 	 */
 	private function calculateMaxScrollXOfIndex(index:Int, items:Array<DisplayObject>, x:Float, y:Float, width:Float, height:Float):Float
 	{
-		var calculatedTypicalItemWidth:Float;
-		var calculatedTypicalItemHeight:Float;
+		var calculatedTypicalItemWidth:Float = 0;
+		var calculatedTypicalItemHeight:Float = 0;
 		if (this._useVirtualLayout)
 		{
 			this.prepareTypicalItem(height - this._paddingTop - this._paddingBottom);
@@ -1819,7 +1819,7 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 		var secondToLastIndex:Int = totalItemCount - 2;
 		var item:DisplayObject;
 		var iNormalized:Int;
-		var cachedWidth:Float;
+		var cachedWidth:Float = Math.NaN;
 		var itemWidth:Float;
 		for (i in 0...index+1)
 		{

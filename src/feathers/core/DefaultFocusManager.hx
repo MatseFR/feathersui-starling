@@ -401,7 +401,7 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 		var child:DisplayObject;
 		var foundChild:IFocusDisplayObject;
 		var extras:Array<DisplayObject>;
-		var focusWithExtras:IFocusExtras;
+		var focusWithExtras:IFocusExtras = null;
 		var skip:Bool = false;
 		if (Std.isOfType(container, IFocusExtras))
 		{
@@ -512,7 +512,7 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 		var childCount:Int;
 		var child:DisplayObject;
 		var foundChild:IFocusDisplayObject;
-		var focusWithExtras:IFocusExtras;
+		var focusWithExtras:IFocusExtras = null;
 		var extras:Array<DisplayObject>;
 		var skip:Bool;
 		if (Std.isOfType(container, IFocusExtras))
@@ -713,7 +713,7 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 		var count:Int;
 		var childOfChild:DisplayObject;
 		var extras:Array<DisplayObject>;
-		var focusExtras:IFocusExtras;
+		var focusExtras:IFocusExtras = null;
 		if (Std.isOfType(child, IFocusExtras))
 		{
 			focusExtras = cast child;
@@ -823,7 +823,7 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 			//something else has already handled this keyboard event
 			return;
 		}
-		var newFocus:IFocusDisplayObject;
+		var newFocus:IFocusDisplayObject = null;
 		var currentFocus:IFocusDisplayObject = this._focus;
 		if (currentFocus != null && currentFocus.focusOwner != null)
 		{
@@ -930,7 +930,7 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 			return;
 		}
 		
-		var newFocus:IFocusDisplayObject;
+		var newFocus:IFocusDisplayObject = null;
 		var currentFocus:IFocusDisplayObject = this._focus;
 		if (currentFocus != null && currentFocus.focusOwner != null)
 		{

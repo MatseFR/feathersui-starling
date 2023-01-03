@@ -8,8 +8,11 @@ accordance with the terms of the accompanying license agreement.
 package feathers.controls.text;
 import feathers.core.FeathersControl;
 import feathers.core.ITextRenderer;
+import feathers.core.IToggle;
 import feathers.skins.IStyleProvider;
+import feathers.utils.geom.GeomUtils;
 import feathers.utils.math.MathUtils;
+import feathers.utils.texture.TextureUtils;
 import openfl.display.BitmapData;
 import openfl.display3D.Context3DProfile;
 import openfl.filters.BitmapFilter;
@@ -200,7 +203,7 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 	/**
 	   @private
 	**/
-	private var _snapShotVisibleHeight:Int = 0;
+	private var _snapshotVisibleHeight:Int = 0;
 	
 	/**
 	   @private
@@ -343,7 +346,7 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 	public var textFormat(get, set):openfl.text.TextFormat;
 	private var _textFormat:openfl.text.TextFormat;
 	private function get_textFormat():openfl.text.TextFormat { return this._textFormat; }
-	private function set_textFormat(value:openfl.text.TextFormat):openfl.text.TextFormat;
+	private function set_textFormat(value:openfl.text.TextFormat):openfl.text.TextFormat
 	{
 		if (this._textFormat == value)
 		{
@@ -517,8 +520,8 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 	/**
 	 * @inheritDoc
 	 */
-	public var baseLine(get, never):Float;
-	private function get_baseLine():Float
+	public var baseline(get, never):Float;
+	private function get_baseline():Float
 	{
 		if (this.textField == null)
 		{
@@ -641,7 +644,7 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 	{
 		if (this._backgroundColor == value)
 		{
-			return;
+			return value;
 		}
 		this._backgroundColor = value;
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
@@ -675,7 +678,7 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 	{
 		if (this._border == value)
 		{
-			return;
+			return value;
 		}
 		this._border = value;
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
@@ -1076,8 +1079,8 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 		if (this._updateSnapshotOnScaleChange)
 		{
 			this.getTransformationMatrix(this.stage, HELPER_MATRIX);
-			var globalScaleX:Float = matrixToScaleX(HELPER_MATRIX);
-			var globalScaleY:Float = matrixToScaleY(HELPER_MATRIX);
+			var globalScaleX:Float = GeomUtils.matrixToScaleX(HELPER_MATRIX);
+			var globalScaleY:Float = GeomUtils.matrixToScaleY(HELPER_MATRIX);
 			if (globalScaleX != this._lastGlobalScaleX ||
 				globalScaleY != this._lastGlobalScaleY ||
 				starling.contentScaleFactor != this._lastContentScaleFactor)
@@ -1108,10 +1111,12 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 		if (this.textSnapshot != null)
 		{
 			var scaleFactor:Float = starling.contentScaleFactor;
+			var offsetX:Float;
+			var offsetY:Float;
 			if (this._nativeFilters == null || this._nativeFilters.length == 0)
 			{
-				var offsetX:Float = 0;
-				var offsetY:Float = 0;
+				offsetX = 0;
+				offsetY = 0;
 			}
 			else
 			{
@@ -1121,6 +1126,7 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 			offsetY += this._verticalAlignOffsetY * scaleFactor;
 			
 			var snapshotIndex:Int = -1;
+			var snapshot:Image;
 			var totalBitmapWidth:Float = this._snapshotWidth;
 			var totalBitmapHeight:Float = this._snapshotHeight;
 			var xPosition:Float = offsetX;
@@ -1142,7 +1148,7 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 					}
 					if (snapshotIndex < 0)
 					{
-						var snapshot:Image = this.textSnapshot;
+						snapshot = this.textSnapshot;
 						snapshot.visible = this._text.length > 0 && this._snapshotWidth > 0 && this._snapshotHeight > 0;
 					}
 					else
@@ -1185,7 +1191,7 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 		//if a parent component validates before we're added to the stage,
 		//measureText() may be called before initialization, so we need to
 		//force it.
-		if(!this._isInitialized)
+		if (!this._isInitialized)
 		{
 			this.initializeNow();
 		}
@@ -1207,7 +1213,7 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 	 *
 	 * @see #setTextFormatForState()
 	 */
-	public function getTextFormatForState(state:String):openfl.text.TextFormat;
+	public function getTextFormatForState(state:String):openfl.text.TextFormat
 	{
 		if (this._textFormatForState == null)
 		{
@@ -1314,7 +1320,9 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 			this.textField.displayAsPassword = this._displayAsPassword;
 			this.textField.gridFitType = this._gridFitType;
 			this.textField.sharpness = this._sharpness;
+			#if flash
 			this.textField.thickness = this._thickness;
+			#end
 			this.textField.filters = this._nativeFilters;
 		}
 		
@@ -1603,7 +1611,7 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 	**/
 	private function refreshTextFormat():Void
 	{
-		var textFormat:openfl.text.TextFormat;
+		var textFormat:openfl.text.TextFormat = null;
 		if (this._stateContext != null)
 		{
 			if (this._textFormatForState != null)
@@ -1620,7 +1628,7 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 				textFormat = this._disabledTextFormat;
 			}
 			if (textFormat == null && this._selectedTextFormat != null &&
-				Std.isOfType(this._stateContext, IFeathersControl) && !cast(this._stateContext, IFeathersControl).isSelected)
+				Std.isOfType(this._stateContext, IToggle) && !cast(this._stateContext, IToggle).isSelected)
 			{
 				textFormat = this._selectedTextFormat;
 			}
@@ -1657,10 +1665,10 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 	**/
 	private function getTextFormatFromFontStyles():openfl.text.TextFormat
 	{
-		if (this.isInvalid(INVALIDATION_FLAG_STYLES) ||
-			this.isInvalid(INVALIDATION_FLAG_STATE))
+		if (this.isInvalid(FeathersControl.INVALIDATION_FLAG_STYLES) ||
+			this.isInvalid(FeathersControl.INVALIDATION_FLAG_STATE))
 		{
-			var fontStylesFormat:starling.text.TextFormat;
+			var fontStylesFormat:starling.text.TextFormat = null;
 			if (this._fontStyles != null)
 			{
 				fontStylesFormat = this._fontStyles.getTextFormatForTarget(this);
@@ -1708,7 +1716,7 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 	{
 		var self:TextFieldTextRenderer = this;
 		var texture:Texture = snapshot.texture;
-		texture.root.onRestore = function():Void
+		texture.root.onRestore = function(tex:ConcreteTexture):Void
 		{
 			var starling:Starling = self.stage != null ? self.stage.starling : Starling.current;
 			var scaleFactor:Float = starling.contentScaleFactor;
@@ -1731,14 +1739,14 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 		var starling:Starling = this.stage != null ? this.stage.starling : Starling.current;
 		var scaleFactor:Float = starling.contentScaleFactor;
 		var clipWidth:Float = this._snapshotVisibleWidth - textFieldX;
-		var clipHeight:Float = this._snapShotVisibleHeight - textFieldY;
+		var clipHeight:Float = this._snapshotVisibleHeight - textFieldY;
 		if (bitmapData == null || bitmapData.width != bitmapWidth || bitmapData.height != bitmapHeight)
 		{
 			if (bitmapData != null)
 			{
 				bitmapData.dispose();
 			}
-			bitmapData = new BitmapData(bitmapWidth, bitmapHeight, true, 0x00ff00ff);
+			bitmapData = new BitmapData(Std.int(bitmapWidth), Std.int(bitmapHeight), true, 0x00ff00ff);
 		}
 		else
 		{
@@ -1772,8 +1780,8 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 		if (this._updateSnapshotOnScaleChange)
 		{
 			this.getTransformationMatrix(this.stage, HELPER_MATRIX);
-			this._lastGlobalScaleX = matrixToScaleX(HELPER_MATRIX);
-			this._lastGlobalScaleY = matrixToScaleY(HELPER_MATRIX);
+			this._lastGlobalScaleX = GeomUtils.matrixToScaleX(HELPER_MATRIX);
+			this._lastGlobalScaleY = GeomUtils.matrixToScaleY(HELPER_MATRIX);
 			rectangleSnapshotWidth *= this._lastGlobalScaleX;
 			rectangleSnapshotHeight *= this._lastGlobalScaleY;
 		}
@@ -1782,7 +1790,7 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 		{
 			HELPER_MATRIX.identity();
 			HELPER_MATRIX.scale(scaleFactor, scaleFactor);
-			var bitmapData:BitmapData = new BitmapData(rectangleSnapshotWidth, rectangleSnapshotHeight, true, 0x00ff00ff);
+			var bitmapData:BitmapData = new BitmapData(Std.int(rectangleSnapshotWidth), Std.int(rectangleSnapshotHeight), true, 0x00ff00ff);
 			bitmapData.draw(this.textField, HELPER_MATRIX, null, null, HELPER_RECTANGLE);
 			this.measureNativeFilters(bitmapData, HELPER_RECTANGLE);
 			bitmapData.dispose();
@@ -1793,18 +1801,18 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 			rectangleSnapshotHeight = HELPER_RECTANGLE.height;
 		}
 		var point:Point = Pool.getPoint();
-		calculateSnapshotTextureDimensions(rectangleSnapshotWidth,
+		TextureUtils.calculateSnapshotTextureDimensions(rectangleSnapshotWidth,
 			rectangleSnapshotHeight, this._maxTextureDimensions,
 			starling.profile != Context3DProfile.BASELINE_CONSTRAINED, point);
 		//the full dimensions of the texture
-		this._snapshotWidth = point.x;
-		this._snapshotHeight = point.y;
+		this._snapshotWidth = Std.int(point.x);
+		this._snapshotHeight = Std.int(point.y);
 		//the clipping dimensions of the texture, if it is next power-of-two
-		this._snapshotVisibleWidth = rectangleSnapshotWidth;
-		this._snapshotVisibleHeight = rectangleSnapshotHeight;
+		this._snapshotVisibleWidth = Std.int(rectangleSnapshotWidth);
+		this._snapshotVisibleHeight = Std.int(rectangleSnapshotHeight);
 		Pool.putPoint(point);
 		
-		var textureRoot:ConcreteTexture = this.textSnapshot ? this.textSnapshot.texture.root : null;
+		var textureRoot:ConcreteTexture = this.textSnapshot != null ? this.textSnapshot.texture.root : null;
 		this._needsNewTexture = this._needsNewTexture || this.textSnapshot == null ||
 			(textureRoot != null && (textureRoot.scale != scaleFactor ||
 			this._snapshotWidth != textureRoot.nativeWidth || this._snapshotHeight != textureRoot.nativeHeight));
@@ -1821,11 +1829,13 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 		}
 		var starling:Starling = this.stage != null ? this.stage.starling : Starling.current;
 		var scaleFactor:Float = starling.contentScaleFactor;
+		var globalScaleX:Float = 0;
+		var globalScaleY:Float = 0;
 		if (this._updateSnapshotOnScaleChange)
 		{
 			this.getTransformationMatrix(this.stage, HELPER_MATRIX);
-			var globalScaleX:Float = matrixToScaleX(HELPER_MATRIX);
-			var globalScaleY:Float = matrixToScaleY(HELPER_MATRIX);
+			globalScaleX = GeomUtils.matrixToScaleX(HELPER_MATRIX);
+			globalScaleY = GeomUtils.matrixToScaleY(HELPER_MATRIX);
 		}
 		HELPER_MATRIX.identity();
 		HELPER_MATRIX.scale(scaleFactor, scaleFactor);
@@ -1837,25 +1847,29 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 		var totalBitmapHeight:Float = this._snapshotHeight;
 		var xPosition:Float = 0;
 		var yPosition:Float = 0;
-		var bitmapData:BitmapData;
+		var bitmapData:BitmapData = null;
 		var snapshotIndex:Int = -1;
+		var currentBitmapWidth:Float;
+		var currentBitmapHeight:Float;
+		var snapshot:Image;
+		var newTexture:Texture = null;
 		do
 		{
-			var currentBitmapWidth:Float = totalBitmapWidth;
+			currentBitmapWidth = totalBitmapWidth;
 			if (currentBitmapWidth > this._maxTextureDimensions)
 			{
 				currentBitmapWidth = this._maxTextureDimensions;
 			}
 			do
 			{
-				var currentBitmapHeight:Float = totalBitmapHeight;
+				currentBitmapHeight = totalBitmapHeight;
 				if (currentBitmapHeight > this._maxTextureDimensions)
 				{
 					currentBitmapHeight = this._maxTextureDimensions;
 				}
 				bitmapData = this.drawTextFieldRegionToBitmapData(xPosition, yPosition,
 					currentBitmapWidth, currentBitmapHeight, bitmapData);
-				var newTexture:Texture;
+				
 				if (this.textSnapshot == null || this._needsNewTexture)
 				{
 					//skip Texture.fromBitmapData() because we don't want
@@ -1865,7 +1879,7 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 						true, false, false, scaleFactor);
 					newTexture.root.uploadBitmapData(bitmapData);
 				}
-				var snapshot:Image = null;
+				snapshot = null;
 				if (snapshotIndex >= 0)
 				{
 					if (this.textSnapshot == null)

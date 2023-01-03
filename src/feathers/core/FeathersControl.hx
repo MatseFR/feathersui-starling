@@ -9,6 +9,7 @@ package feathers.core;
 
 import feathers.controls.text.BitmapFontTextRenderer;
 import feathers.controls.text.TextFieldTextEditor;
+import feathers.controls.text.TextFieldTextRenderer;
 import feathers.events.FeathersEventType;
 import feathers.layout.ILayoutData;
 import feathers.layout.ILayoutDisplayObject;
@@ -133,7 +134,8 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 	 */
 	public static var defaultTextRendererFactory:Void->ITextRenderer = function():ITextRenderer
 	{
-		return new BitmapFontTextRenderer();
+		//return new BitmapFontTextRenderer();
+		return new TextFieldTextRenderer();
 	};
 	
 	/**
@@ -663,7 +665,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 	/**
 	   @private
 	**/
-	private var _restrictedStyles:Map<Dynamic, Bool> = new Map<Dynamic, Bool>();
+	private var _restrictedStyles:Map<String, Bool> = new Map<String, Bool>();
 	
 	/**
 	 * @private
@@ -1879,7 +1881,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 	private function get_focusPaddingTop():Float { return this._focusPaddingTop; }
 	private function set_focusPaddingTop(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_focusPaddingTop))
+		if (this.processStyleRestriction("focusPaddingTop"))
 		{
 			return value;
 		}
@@ -1900,7 +1902,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 	private function get_focusPaddingRight():Float { return this._focusPaddingRight; }
 	private function set_focusPaddingRight(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_focusPaddingRight))
+		if (this.processStyleRestriction("focusPaddingRight"))
 		{
 			return value;
 		}
@@ -1921,7 +1923,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 	private function get_focusPaddingBottom():Float { return this._focusPaddingBottom; }
 	private function set_focusPaddingBottom(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_focusPaddingBottom))
+		if (this.processStyleRestriction("focusPaddingBottom"))
 		{
 			return value;
 		}
@@ -1943,7 +1945,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 	private function set_focusPaddingLeft(value:Float):Float
 	{
 		// TODO: translate this code to haxe
-		if (this.processStyleRestriction(this.set_focusPaddingLeft))
+		if (this.processStyleRestriction("focusPaddingLeft"))
 		{
 			return value;
 		}
@@ -2830,7 +2832,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 	 *
 	 * @see #ignoreNextStyleRestriction()
 	 */
-	private function processStyleRestriction(key:Dynamic):Bool
+	private function processStyleRestriction(key:String):Bool
 	{
 		var ignore:Bool = this._ignoreNextStyleRestriction;
 		this._ignoreNextStyleRestriction = false;
@@ -2846,7 +2848,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 		if (this._restrictedStyles == null)
 		{
 			//only create the object if it is needed
-			this._restrictedStyles = new Map<Dynamic, Bool>();
+			this._restrictedStyles = new Map<String, Bool>();
 		}
 		this._restrictedStyles[key] = true;
 		return false;

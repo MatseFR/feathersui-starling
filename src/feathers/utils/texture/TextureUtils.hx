@@ -25,7 +25,7 @@ class TextureUtils
 	 *
 	 * @productversion Feathers 3.1.0
 	 */
-	public function calculateSnapshotTextureDimensions(width:Float, height:Float, maximum:Float, supportsRectangleTexture:Bool, result:Point = null):Point
+	public static function calculateSnapshotTextureDimensions(width:Float, height:Float, maximum:Float, supportsRectangleTexture:Bool, result:Point = null):Point
 	{
 		var snapshotWidth:Float = width;
 		var snapshotHeight:Float = height;

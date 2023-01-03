@@ -120,7 +120,7 @@ class BasicButton extends FeathersControl implements IStateContext
 	private function get_keepDownStateOnRollOut():Bool { return this._keepDownStateOnRollOut; }
 	private function set_keepDownStateOnRollOut(value:Bool):Bool
 	{
-		if (this.processStyleRestriction(this.set_keepDownStateOnRollOut))
+		if (this.processStyleRestriction("keepDownStateOnRollOut"))
 		{
 			return value;
 		}
@@ -137,7 +137,7 @@ class BasicButton extends FeathersControl implements IStateContext
 	private function get_defaultSkin():DisplayObject { return this._defaultSkin; }
 	private function set_defaultSkin(value:DisplayObject):DisplayObject
 	{
-		if (this.processStyleRestriction(this.set_defaultSkin))
+		if (this.processStyleRestriction("defaultSkin"))
 		{
 			if (value != null)
 			{

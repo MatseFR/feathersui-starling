@@ -19,12 +19,13 @@ import haxe.iterators.ArrayIterator;
  *
  * @productversion Feathers 1.0.0
  */
-abstract PropertyProxy(PropertyProxyReal)
+@:forward(iterator)
+abstract PropertyProxy(PropertyProxyReal) from PropertyProxyReal to PropertyProxyReal
 {
 	/**
 	 * Creates a <code>PropertyProxy</code> from a regular old <code>Object</code>.
 	 */
-	public static function fromObject(source:Dynamic, onChangeCallback:PropertyProxyReal->String->Void = null):PropertyProxy
+	inline public static function fromObject(source:Dynamic, onChangeCallback:PropertyProxyReal->String->Void = null):PropertyProxy
 	{
 		var fields:Array<String>;
 		if (Std.isOfType(source, Dynamic))
@@ -48,7 +49,7 @@ abstract PropertyProxy(PropertyProxyReal)
 	/**
 	 * Construtor.
 	 */
-	public inline function new(onChangeCallback:PropertyProxyReal->String->Void = null) 
+	inline public function new(onChangeCallback:PropertyProxyReal->String->Void = null) 
 	{
 		this = new PropertyProxyReal(onChangeCallback);
 	}
@@ -56,21 +57,21 @@ abstract PropertyProxy(PropertyProxyReal)
 	/**
 	 * 
 	 */
-	public function iterator():ArrayIterator<String>
-	{
-		return this.namesIterator();
-	}
+	//inline public function iterator():ArrayIterator<String>
+	//{
+		//return this.namesIterator();
+	//}
 	
 	@:op([])
 	@:op(a.b)
-	public function getProp(name:String):Dynamic
+	inline public function getProp(name:String):Dynamic
 	{
 		return this.getProperty(name);
 	}
 	
 	@:op([])
 	@:op(a.b)
-	public function setProp(name:String, value:Dynamic):Void
+	inline public function setProp(name:String, value:Dynamic):Void
 	{
 		this.setProperty(name, value);
 	}

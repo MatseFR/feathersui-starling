@@ -386,7 +386,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	private function get_direction():String { return this._direction; }
 	private function set_direction(value:String):String
 	{
-		if (this.processStyleRestriction(this.set_direction))
+		if (this.processStyleRestriction("direction"))
 		{
 			return value;
 		}
@@ -412,7 +412,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	private function get_fixedThumbSize():Bool { return this._fixedThumbSize; }
 	private function set_fixedThumbSize(value:Bool):Bool
 	{
-		if (this.processStyleRestriction(this.set_fixedThumbSize))
+		if (this.processStyleRestriction("fixedThumbSize"))
 		{
 			return value;
 		}
@@ -558,7 +558,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	private function get_paddingTop():Float { return this._paddingTop; }
 	private function set_paddingTop(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_paddingTop))
+		if (this.processStyleRestriction("paddingTop"))
 		{
 			return value;
 		}
@@ -579,7 +579,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	private function get_paddingRight():Float { return this._paddingRight; }
 	private function set_paddingRight(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_paddingRight))
+		if (this.processStyleRestriction("paddingRight"))
 		{
 			return value;
 		}
@@ -600,7 +600,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	private function get_paddingBottom():Float { return this._paddingBottom; }
 	private function set_paddingBottom(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_paddingBottom))
+		if (this.processStyleRestriction("paddingBottom"))
 		{
 			return value;
 		}
@@ -621,7 +621,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	private function get_paddingLeft():Float { return this._paddingLeft; }
 	private function set_paddingLeft(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_paddingLeft))
+		if (this.processStyleRestriction("paddingLeft"))
 		{
 			return value;
 		}
@@ -700,7 +700,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 		{
 			value = TrackLayoutMode.SPLIT;
 		}
-		if (this.processStyleRestriction(this.set_trackLayoutMode))
+		if (this.processStyleRestriction("trackLayoutMode"))
 		{
 			return value;
 		}
@@ -763,7 +763,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	private function get_customMinimumTrackStyleName():String { return this._customMinimumTrackStyleName; }
 	private function set_customMinimumTrackStyleName(value:String):String
 	{
-		if (this.processStyleRestriction(this.set_customMinimumTrackStyleName))
+		if (this.processStyleRestriction("customMinimumTrackStyleName"))
 		{
 			return value;
 		}
@@ -825,7 +825,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 		{
 			value = new PropertyProxy();
 		}
-		if (!Std.isOfType(value, PropertyProxy))
+		if (!Std.isOfType(value, PropertyProxyReal))
 		{
 			//var newValue:PropertyProxy = new PropertyProxy();
 			//for(var propertyName:String in value)
@@ -899,7 +899,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	private function get_customMaximumTrackStyleName():String { return this._customMaximumTrackStyleName; }
 	private function set_customMaximumTrackStyleName(value:String):String
 	{
-		if (this.processStyleRestriction(this.set_customMaximumTrackStyleName))
+		if (this.processStyleRestriction("customMaximumTrackStyleName"))
 		{
 			return value;
 		}
@@ -961,7 +961,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 		{
 			value = new PropertyProxy();
 		}
-		if(!Std.isOfType(value, PropertyProxy))
+		if (!Std.isOfType(value, PropertyProxyReal))
 		{
 			//var newValue:PropertyProxy = new PropertyProxy();
 			//for(var propertyName:String in value)
@@ -1034,7 +1034,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	private function get_customThumbStyleName():String { return this._customThumbStyleName; }
 	private function set_customThumbStyleName(value:String):String
 	{
-		if (this.processStyleRestriction(this.set_customThumbStyleName))
+		if (this.processStyleRestriction("customThumbStyleName"))
 		{
 			return value;
 		}
@@ -1096,7 +1096,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 		{
 			value = new PropertyProxy();
 		}
-		if (!Std.isOfType(value, PropertyProxy))
+		if (!Std.isOfType(value, PropertyProxyReal))
 		{
 			//var newValue:PropertyProxy = new PropertyProxy();
 			//for(var propertyName:String in value)
@@ -1170,7 +1170,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	private function get_customDecrementButtonStyleName():String { return this._customDecrementButtonStyleName; }
 	private function set_customDecrementButtonStyleName(value:String):String
 	{
-		if (this.processStyleRestriction(this.set_customDecrementButtonStyleName))
+		if (this.processStyleRestriction("customDecrementButtonStyleName"))
 		{
 			return value;
 		}
@@ -1233,7 +1233,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 		{
 			value = new PropertyProxy();
 		}
-		if(!Std.isOfType(value, PropertyProxy))
+		if (!Std.isOfType(value, PropertyProxyReal))
 		{
 			//var newValue:PropertyProxy = new PropertyProxy();
 			//for(var propertyName:String in value)
@@ -1307,7 +1307,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	private function get_customIncrementButtonStyleName():String { return this._customIncrementButtonStyleName; }
 	private function set_customIncrementButtonStyleName(value:String):String
 	{
-		if (this.processStyleRestriction(this.set_customIncrementButtonStyleName))
+		if (this.processStyleRestriction("customIncrementButtonStyleName"))
 		{
 			return value;
 		}
@@ -1370,7 +1370,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 		{
 			value = new PropertyProxy();
 		}
-		if (!Std.isOfType(value, PropertyProxy))
+		if (!Std.isOfType(value, PropertyProxyReal))
 		{
 			//var newValue:PropertyProxy = new PropertyProxy();
 			//for(var propertyName:String in value)
@@ -1584,7 +1584,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 			return false;
 		}
 		var isSingle:Bool = this._trackLayoutMode == TrackLayoutMode.SINGLE;
-		var measureMinTrack:IMeasureDisplayObject;
+		var measureMinTrack:IMeasureDisplayObject = null;
 		if (needsWidth)
 		{
 			this.minimumTrack.width = this._minimumTrackSkinExplicitWidth;
@@ -1610,7 +1610,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 				measureMinTrack.minWidth = minTrackMinWidth;
 			}
 		}
-		var measureMaxTrack:IMeasureDisplayObject;
+		var measureMaxTrack:IMeasureDisplayObject = null;
 		if (!isSingle)
 		{
 			if (needsWidth)
@@ -1804,7 +1804,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 		{
 			this.minimumTrack.height = this._explicitHeight;
 		}
-		var measureMinTrack:IMeasureDisplayObject;
+		var measureMinTrack:IMeasureDisplayObject = null;
 		if (Std.isOfType(this.minimumTrack, IMeasureDisplayObject))
 		{
 			measureMinTrack = cast this.minimumTrack;
@@ -1822,7 +1822,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 				measureMinTrack.minHeight = minTrackMinHeight;
 			}
 		}
-		var measureMaxTrack:IMeasureDisplayObject;
+		var measureMaxTrack:IMeasureDisplayObject = null;
 		if (!isSingle)
 		{
 			if (needsHeight)

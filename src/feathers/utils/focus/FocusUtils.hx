@@ -55,10 +55,10 @@ class FocusUtils
 		var onSameAxis2:Bool;
 		if (object2 == null)
 		{
-			var minPrimaryDistance2:Float = Math.POSITIVE_INFINITY;
-			var maxPrimaryDistance2:Float = Math.POSITIVE_INFINITY;
-			var secondaryDistance2:Float = Math.POSITIVE_INFINITY;
-			var onSameAxis2:Bool = false;
+			minPrimaryDistance2 = Math.POSITIVE_INFINITY;
+			maxPrimaryDistance2 = Math.POSITIVE_INFINITY;
+			secondaryDistance2 = Math.POSITIVE_INFINITY;
+			onSameAxis2 = false;
 		}
 		else
 		{

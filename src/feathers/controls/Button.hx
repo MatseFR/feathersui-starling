@@ -337,7 +337,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_hasLabelTextRenderer():Bool { return this._hasLabelTextRenderer; }
 	private function set_hasLabelTextRenderer(value:Bool):Bool
 	{
-		if (this.processStyleRestriction(this.set_hasLabelTextRenderer))
+		if (this.processStyleRestriction("hasLabelTextRenderer"))
 		{
 			return value;
 		}
@@ -358,7 +358,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_iconPosition():String { return this._iconPosition; }
 	private function set_iconPosition(value:String):String
 	{
-		if (this.processStyleRestriction(this.set_iconPosition))
+		if (this.processStyleRestriction("iconPosition"))
 		{
 			return value;
 		}
@@ -379,7 +379,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_gap():Float { return this._gap; }
 	private function set_gap(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_gap))
+		if (this.processStyleRestriction("gap"))
 		{
 			return value;
 		}
@@ -400,7 +400,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_minGap():Float { return this._minGap; }
 	private function set_minGap(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_minGap))
+		if (this.processStyleRestriction("minGap"))
 		{
 			return value;
 		}
@@ -421,7 +421,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_horizontalAlign():String { return this._horizontalAlign; }
 	private function set_horizontalAlign(value:String):String
 	{
-		if (this.processStyleRestriction(this.set_horizontalAlign))
+		if (this.processStyleRestriction("horizontalAlign"))
 		{
 			return value;
 		}
@@ -442,7 +442,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_verticalAlign():String { return this._verticalAlign; }
 	private function set_verticalAlign(value:String):String
 	{
-		if (this.processStyleRestriction(this.set_verticalAlign))
+		if (this.processStyleRestriction("verticalAlign"))
 		{
 			return value;
 		}
@@ -476,7 +476,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_paddingTop():Float { return this._paddingTop; }
 	private function set_paddingTop(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_paddingTop))
+		if (this.processStyleRestriction("paddingTop"))
 		{
 			return value;
 		}
@@ -497,7 +497,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_paddingRight():Float { return this._paddingRight; }
 	private function set_paddingRight(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_paddingRight))
+		if (this.processStyleRestriction("paddingRight"))
 		{
 			return value;
 		}
@@ -518,7 +518,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_paddingBottom():Float { return this._paddingBottom; }
 	private function set_paddingBottom(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_paddingBottom))
+		if (this.processStyleRestriction("paddingBottom"))
 		{
 			return value;
 		}
@@ -539,7 +539,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_paddingLeft():Float { return this._paddingLeft; }
 	private function set_paddingLeft(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_paddingLeft))
+		if (this.processStyleRestriction("paddingLeft"))
 		{
 			return value;
 		}
@@ -560,7 +560,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_labelOffsetX():Float { return this._labelOffsetX; }
 	private function set_labelOffsetX(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_labelOffsetX))
+		if (this.processStyleRestriction("labelOffsetX"))
 		{
 			return value;
 		}
@@ -581,7 +581,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_labelOffsetY():Float { return this._labelOffsetY; }
 	private function set_labelOffsetY(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_labelOffsetY))
+		if (this.processStyleRestriction("labelOffsetY"))
 		{
 			return value;
 		}
@@ -602,7 +602,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_iconOffsetX():Float { return this._iconOffsetX; }
 	private function set_iconOffsetX(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_iconOffsetX))
+		if (this.processStyleRestriction("iconOffsetX"))
 		{
 			return value;
 		}
@@ -623,7 +623,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_iconOffsetY():Float { return this._iconOffsetY; }
 	private function set_iconOffsetY(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_iconOffsetY))
+		if (this.processStyleRestriction("iconOffsetY"))
 		{
 			return value;
 		}
@@ -648,14 +648,14 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_fontStyles():TextFormat { return this._fontStylesSet.format; }
 	private function set_fontStyles(value:TextFormat):TextFormat
 	{
-		if (this.processStyleRestriction(this.set_fontStyles))
+		if (this.processStyleRestriction("fontStyles"))
 		{
 			return value;
 		}
 		//var savedCallee:Function = arguments.callee;
 		function changeHandler(event:Event):Void
 		{
-			processStyleRestriction(this.set_fontStyles);
+			processStyleRestriction("fontStyles");
 		}
 		if (value != null)
 		{
@@ -676,14 +676,14 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_disabledFontStyles():TextFormat { return this._fontStylesSet.disabledFormat; }
 	private function set_disabledFontStyles(value:TextFormat):TextFormat
 	{
-		if (this.processStyleRestriction(this.set_disabledFontStyles))
+		if (this.processStyleRestriction("disabledFontStyles"))
 		{
 			return value;
 		}
 		//var savedCallee:Function = arguments.callee;
 		function changeHandler(event:Event):Void
 		{
-			processStyleRestriction(this.set_disabledFontStyles);
+			processStyleRestriction("disabledFontStyles");
 		}
 		if (value != null)
 		{
@@ -705,7 +705,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_wordWrap():Bool { return this._wordWrap; }
 	private function set_wordWrap(value:Bool):Bool
 	{
-		if (this.processStyleRestriction(this.set_wordWrap))
+		if (this.processStyleRestriction("wordWrap"))
 		{
 			return value;
 		}
@@ -763,7 +763,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_customLabelStyleName():String { return this._customLabelStyleName; }
 	private function set_customLabelStyleName(value:String):String
 	{
-		if (this.processStyleRestriction(this.set_customLabelStyleName))
+		if (this.processStyleRestriction("customLabelStyleName"))
 		{
 			return value;
 		}
@@ -813,7 +813,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	
 	private function set_defaultLabelProperties(value:Dynamic):Dynamic
 	{
-		if (!Std.isOfType(value, PropertyProxy))
+		if (!Std.isOfType(value, PropertyProxyReal))
 		{
 			value = PropertyProxy.fromObject(value);
 		}
@@ -839,7 +839,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function get_defaultIcon():DisplayObject { return this._defaultIcon; }
 	private function set_defaultIcon(value:DisplayObject):DisplayObject
 	{
-		if (this.processStyleRestriction(this.set_defaultIcon))
+		if (this.processStyleRestriction("defaultIcon"))
 		{
 			if(value != null)
 			{

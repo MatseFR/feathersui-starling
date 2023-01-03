@@ -134,7 +134,7 @@ class LayoutGroup extends FeathersControl
 	private function get_layout():ILayout { return this._layout; }
 	private function set_layout(value:ILayout):ILayout
 	{
-		if (this.processStyleRestriction(this.set_layout))
+		if (this.processStyleRestriction("layout"))
 		{
 			return value;
 		}
@@ -169,7 +169,7 @@ class LayoutGroup extends FeathersControl
 	private function get_clipContent():Bool { return this._clipContent; }
 	private function set_clipContent(value:Bool):Bool
 	{
-		if (this.processStyleRestriction(this.set_clipContent))
+		if (this.processStyleRestriction("clipContent"))
 		{
 			return value;
 		}
@@ -229,7 +229,7 @@ class LayoutGroup extends FeathersControl
 	private function get_backgroundSkin():DisplayObject { return _backgroundSkin; }
 	private function set_backgroundSkin(value:DisplayObject):DisplayObject
 	{
-		if (this.processStyleRestriction(this.set_backgroundSkin))
+		if (this.processStyleRestriction("backgroundSkin"))
 		{
 			if (value != null)
 			{
@@ -260,7 +260,7 @@ class LayoutGroup extends FeathersControl
 	private function get_backgroundDisabledSkin():DisplayObject { return this._backgroundDisabledSkin; }
 	private function set_backgroundDisabledSkin(value:DisplayObject):DisplayObject
 	{
-		if (this.processStyleRestriction(this.set_backgroundDisabledSkin))
+		if (this.processStyleRestriction("backgroundDisabledSkin"))
 		{
 			if (value != null)
 			{

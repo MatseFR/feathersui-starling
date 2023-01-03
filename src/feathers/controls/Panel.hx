@@ -12,6 +12,7 @@ import feathers.core.IFocusExtras;
 import feathers.core.IMeasureDisplayObject;
 import feathers.core.IValidating;
 import feathers.core.PropertyProxy;
+import feathers.core.PropertyProxyReal;
 import feathers.events.FeathersEventType;
 import feathers.skins.IStyleProvider;
 import feathers.utils.skins.SkinsUtils;
@@ -326,7 +327,7 @@ class Panel extends ScrollContainer implements IFocusExtras
 	private function get_customHeaderStyleName():String { return this._customHeaderStyleName; }
 	private function set_customHeaderStyleName(value:String):String
 	{
-		if (this.processStyleRestriction(this.set_customHeaderStyleName))
+		if (this.processStyleRestriction("customHeaderStyleName"))
 		{
 			return value;
 		}
@@ -401,7 +402,7 @@ class Panel extends ScrollContainer implements IFocusExtras
 		{
 			value = new PropertyProxy();
 		}
-		if (!Std.isOfType(value, PropertyProxy))
+		if (!Std.isOfType(value, PropertyProxyReal))
 		{
 			//var newValue:PropertyProxy = new PropertyProxy();
 			//for(var propertyName:String in value)
@@ -474,7 +475,7 @@ class Panel extends ScrollContainer implements IFocusExtras
 	private function get_customFooterStyleName():String { return this._customFooterStyleName; }
 	private function set_customFooterStyleName(value:String):String
 	{
-		if (this.processStyleRestriction(this.set_customFooterStyleName))
+		if (this.processStyleRestriction("customFooterStyleName"))
 		{
 			return value;
 		}
@@ -539,7 +540,7 @@ class Panel extends ScrollContainer implements IFocusExtras
 		{
 			value = new PropertyProxy();
 		}
-		if (!Std.isOfType(value, PropertyProxy))
+		if (!Std.isOfType(value, PropertyProxyReal))
 		{
 			//var newValue:PropertyProxy = new PropertyProxy();
 			//for(var propertyName:String in value)
@@ -598,7 +599,7 @@ class Panel extends ScrollContainer implements IFocusExtras
 	private function get_outerPaddingTop():Float { return this._outerPaddingTop; }
 	private function set_outerPaddingTop(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_outerPaddingTop))
+		if (this.processStyleRestriction("outerPaddingTop"))
 		{
 			return value;
 		}
@@ -619,7 +620,7 @@ class Panel extends ScrollContainer implements IFocusExtras
 	private function get_outerPaddingRight():Float { return this._outerPaddingRight; }
 	private function set_outerPaddingRight(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_outerPaddingRight))
+		if (this.processStyleRestriction("outerPaddingRight"))
 		{
 			return value;
 		}
@@ -640,7 +641,7 @@ class Panel extends ScrollContainer implements IFocusExtras
 	private function get_outerPaddingBottom():Float { return this._outerPaddingBottom; }
 	private function set_outerPaddingBottom(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_outerPaddingBottom))
+		if (this.processStyleRestriction("outerPaddingBottom"))
 		{
 			return value;
 		}
@@ -661,7 +662,7 @@ class Panel extends ScrollContainer implements IFocusExtras
 	private function get_outerPaddingLeft():Float { return this._outerPaddingLeft; }
 	private function set_outerPaddingLeft(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_outerPaddingLeft))
+		if (this.processStyleRestriction("outerPaddingLeft"))
 		{
 			return value;
 		}

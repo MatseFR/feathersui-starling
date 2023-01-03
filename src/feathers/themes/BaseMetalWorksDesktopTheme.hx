@@ -1233,7 +1233,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		button.hoverSkin = otherSkin;
 		button.downSkin = otherSkin;
 		
-		var toggleButton:ToggleButton;
+		var toggleButton:ToggleButton = null;
 		if (Std.isOfType(button, ToggleButton))
 		{
 			//for convenience, this function can style both a regular button
@@ -1675,6 +1675,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	
 	private function setLabelStyles(label:Label):Void
 	{
+		trace("setLabelStyles");
 		label.fontStyles = this.lightFontStyles.clone();
 		label.disabledFontStyles = this.lightDisabledFontStyles.clone();
 	}

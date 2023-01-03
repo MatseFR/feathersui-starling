@@ -487,7 +487,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_snapToPages():Bool { return this._snapToPages; }
 	private function set_snapToPages(value:Bool):Bool
 	{
-		if (this.processStyleRestriction(this.set_snapToPages))
+		if (this.processStyleRestriction("snapToPages"))
 		{
 			return value;
 		}
@@ -552,7 +552,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_customHorizontalScrollBarStyleName():String { return this._customHorizontalScrollBarStyleName; }
 	private function set_customHorizontalScrollBarStyleName(value:String):String
 	{
-		if (this.processStyleRestriction(this.set_customHorizontalScrollBarStyleName))
+		if (this.processStyleRestriction("customHorizontalScrollBarStyleName"))
 		{
 			return value;
 		}
@@ -618,7 +618,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		{
 			value = new PropertyProxy();
 		}
-		if (!Std.isOfType(value, PropertyProxy))
+		if (!Std.isOfType(value, PropertyProxyReal))
 		{
 			var newValue:PropertyProxy = PropertyProxy.fromObject(value);
 			//var newValue:PropertyProxy = new PropertyProxy();
@@ -650,7 +650,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_verticalScrollBarPosition():String { return this._verticalScrollBarPosition; }
 	private function set_verticalScrollBarPosition(value:String):String
 	{
-		if (this.processStyleRestriction(this.set_verticalScrollBarPosition))
+		if (this.processStyleRestriction("verticalScrollBarPosition"))
 		{
 			return value;
 		}
@@ -671,7 +671,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_horizontalScrollBarPosition():String { return this._horizontalScrollBarPosition; }
 	private function set_horizontalScrollBarPosition(value:String):String
 	{
-		if (this.processStyleRestriction(this.set_horizontalScrollBarPosition))
+		if (this.processStyleRestriction("horizontalScrollBarPosition"))
 		{
 			return value;
 		}
@@ -731,7 +731,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_customVerticalScrollBarStyleName():String { return this._customVerticalScrollBarStyleName; }
 	private function set_customVerticalScrollBarStyleName(value:String):String
 	{
-		if (this.processStyleRestriction(this.set_customVerticalScrollBarStyleName))
+		if (this.processStyleRestriction("customVerticalScrollBarStyleName"))
 		{
 			return value;
 		}
@@ -797,7 +797,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		{
 			value = new PropertyProxy();
 		}
-		if (!Std.isOfType(value, PropertyProxy))
+		if (!Std.isOfType(value, PropertyProxyReal))
 		{
 			var newValue:PropertyProxy = PropertyProxy.fromObject(value);
 			//var newValue:PropertyProxy = new PropertyProxy();
@@ -1324,7 +1324,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_clipContent():Bool { return this._clipContent; }
 	private function set_clipContent(value:Bool):Bool
 	{
-		if (this.processStyleRestriction(this.set_clipContent))
+		if (this.processStyleRestriction("clipContent"))
 		{
 			return value;
 		}
@@ -1443,7 +1443,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_hasElasticEdges():Bool { return this._hasElasticEdges; }
 	private function set_hasElasticEdges(value:Bool):Bool
 	{
-		if (this.processStyleRestriction(this.set_hasElasticEdges))
+		if (this.processStyleRestriction("hasElasticEdges"))
 		{
 			return value;
 		}
@@ -1458,7 +1458,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_elasticity():Float { return this._elasticity; }
 	private function set_elasticity(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_elasticity))
+		if (this.processStyleRestriction("elasticity"))
 		{
 			return value;
 		}
@@ -1473,7 +1473,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_throwElasticity():Float { return this._throwElasticity; }
 	private function set_throwElasticity(value:Float):Float
 	{
-		if( this.processStyleRestriction(this.set_throwElasticity))
+		if( this.processStyleRestriction("throwElasticity"))
 		{
 			return value;
 		}
@@ -1488,7 +1488,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_scrollBarDisplayMode():String { return this._scrollBarDisplayMode; }
 	private function set_scrollBarDisplayMode(value:String):String
 	{
-		if (this.processStyleRestriction(this.set_scrollBarDisplayMode))
+		if (this.processStyleRestriction("scrollBarDisplayMode"))
 		{
 			return value;
 		}
@@ -1510,7 +1510,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_interactionMode():String { return this._interactionMode; }
 	private function set_interactionMode(value:String):String
 	{
-		if (this.processStyleRestriction(this.set_interactionMode))
+		if (this.processStyleRestriction("interactionMode"))
 		{
 			return value;
 		}
@@ -1566,7 +1566,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_backgroundSkin():DisplayObject { return this._backgroundSkin; }
 	private function set_backgroundSkin(value:DisplayObject):DisplayObject
 	{
-		if (this.processStyleRestriction(this.set_backgroundSkin))
+		if (this.processStyleRestriction("backgroundSkin"))
 		{
 			if (value != null)
 			{
@@ -1597,7 +1597,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_backgroundDisabledSkin():DisplayObject { return this._backgroundDisabledSkin; }
 	private function set_backgroundDisabledSkin(value:DisplayObject):DisplayObject
 	{
-		if (this.processStyleRestriction(this.set_backgroundDisabledSkin))
+		if (this.processStyleRestriction("backgroundDisabledSkin"))
 		{
 			if (value != null)
 			{
@@ -1628,7 +1628,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_autoHideBackground():Bool { return this._autoHideBackground; }
 	private function set_autoHideBackground(value:Bool):Bool
 	{
-		if (this.processStyleRestriction(this.set_autoHideBackground))
+		if (this.processStyleRestriction("autoHideBackground"))
 		{
 			return value;
 		}
@@ -1701,7 +1701,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_paddingTop():Float { return this._paddingTop; }
 	private function set_paddingTop(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_paddingTop))
+		if (this.processStyleRestriction("paddingTop"))
 		{
 			return value;
 		}
@@ -1722,7 +1722,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_paddingRight():Float { return this._paddingRight; }
 	private function set_paddingRight(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_paddingRight))
+		if (this.processStyleRestriction("paddingRight"))
 		{
 			return value;
 		}
@@ -1743,7 +1743,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_paddingBottom():Float { return this._paddingBottom; }
 	private function set_paddingBottom(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_paddingBottom))
+		if (this.processStyleRestriction("paddingBottom"))
 		{
 			return value;
 		}
@@ -1764,7 +1764,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_paddingLeft():Float { return this._paddingLeft; }
 	private function set_paddingLeft(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_paddingLeft))
+		if (this.processStyleRestriction("paddingLeft"))
 		{
 			return value;
 		}
@@ -1795,7 +1795,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_hideScrollBarAnimationDuration():Float { return this._hideScrollBarAnimationDuration; }
 	private function set_hideScrollBarAnimationDuration(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_hideScrollBarAnimationDuration))
+		if (this.processStyleRestriction("hideScrollBarAnimationDuration"))
 		{
 			return value;
 		}
@@ -1810,7 +1810,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_hideScrollBarAnimationEase():String { return this._hideScrollBarAnimationEase; }
 	private function set_hideScrollBarAnimationEase(value:String):String
 	{
-		if (this.processStyleRestriction(this.set_hideScrollBarAnimationEase))
+		if (this.processStyleRestriction("hideScrollBarAnimationEase"))
 		{
 			return value;
 		}
@@ -1825,7 +1825,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_elasticSnapDuration():Float { return this._elasticSnapDuration; }
 	private function set_elasticSnapDuration(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_elasticSnapDuration))
+		if (this.processStyleRestriction("elasticSnapDuration"))
 		{
 			return value;
 		}
@@ -1847,7 +1847,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_decelerationRate():Float { return this._decelerationRate; }
 	private function set_decelerationRate(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_decelerationRate))
+		if (this.processStyleRestriction("decelerationRate"))
 		{
 			return value;
 		}
@@ -1876,7 +1876,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_useFixedThrowDuration():Bool { return this._useFixedThrowDuration; }
 	private function set_useFixedThrowDuration(value:Bool):Bool
 	{
-		if (this.processStyleRestriction(this.set_useFixedThrowDuration))
+		if (this.processStyleRestriction("useFixedThrowDuration"))
 		{
 			return value;
 		}
@@ -1891,7 +1891,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_pageThrowDuration():Float { return this._pageThrowDuration; }
 	private function set_pageThrowDuration(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_pageThrowDuration))
+		if (this.processStyleRestriction("pageThrowDuration"))
 		{
 			return value;
 		}
@@ -1906,7 +1906,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_mouseWheelScrollDuration():Float { return this._mouseWheelScrollDuration; }
 	private function set_mouseWheelScrollDuration(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_mouseWheelScrollDuration))
+		if (this.processStyleRestriction("mouseWheelScrollDuration"))
 		{
 			return value;
 		}
@@ -1946,7 +1946,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_throwEase():Float->Float { return this._throwEase; }
 	private function set_throwEase(value:Float->Float):Float->Float
 	{
-		if (this.processStyleRestriction(this.set_throwEase))
+		if (this.processStyleRestriction("throwEase"))
 		{
 			return value;
 		}
@@ -1965,7 +1965,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_snapScrollPositionsToPixels():Bool { return this._snapScrollPositionsToPixels; }
 	private function set_snapScrollPositionsToPixels(value:Bool):Bool
 	{
-		if (this.processStyleRestriction(this.set_snapScrollPositionsToPixels))
+		if (this.processStyleRestriction("snapScrollPositionsToPixels"))
 		{
 			return value;
 		}
@@ -2069,7 +2069,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_revealScrollBarsDuration():Float { return this._revealScrollBarsDuration; }
 	private function set_revealScrollBarsDuration(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_revealScrollBarsDuration))
+		if (this.processStyleRestriction("revealScrollBarsDuration"))
 		{
 			return value;
 		}

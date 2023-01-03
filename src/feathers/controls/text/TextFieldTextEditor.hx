@@ -1674,7 +1674,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 	 */
 	private function refreshTextFormat():Void
 	{
-		var textFormat:openfl.text.TextFormat;
+		var textFormat:openfl.text.TextFormat = null;
 		if (this._stateContext != null)
 		{
 			if (this._textFormatForState != null)
@@ -1850,7 +1850,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		var starling:Starling = this.stage != null ? this.stage.starling : Starling.current;
 		var scaleFactor:Float = starling.contentScaleFactor;
 		var clipWidth:Float = this.actualWidth * scaleFactor;
-		var matrix:Matrix;
+		var matrix:Matrix = null;
 		if (this._updateSnapshotOnScaleChange)
 		{
 			matrix = Pool.getMatrix();
@@ -2032,8 +2032,8 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		var starling:Starling = this.stage != null ? this.stage.starling : Starling.current;
 		var scaleFactor:Float = starling.contentScaleFactor;
 		var matrix:Matrix = Pool.getMatrix();
-		var globalScaleX:Float;
-		var globalScaleY:Float;
+		var globalScaleX:Float = 0;
+		var globalScaleY:Float = 0;
 		if (this._updateSnapshotOnScaleChange)
 		{
 			this.getTransformationMatrix(this.stage, matrix);
@@ -2050,7 +2050,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		var bitmapData:BitmapData = new BitmapData(this._snapshotWidth, this._snapshotHeight, true, 0x00ff00ff);
 		bitmapData.draw(this.textField, matrix, null, null, this._textFieldSnapshotClipRect);
 		Pool.putMatrix(matrix);
-		var newTexture:Texture;
+		var newTexture:Texture = null;
 		if (this.textSnapshot == null || this._needsNewTexture)
 		{
 			//skip Texture.fromBitmapData() because we don't want

@@ -188,7 +188,7 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 	private function get_wordWrap():Bool { return this._wordWrap; }
 	private function set_wordWrap(value:Bool):Bool
 	{
-		if (this.processStyleRestriction(this.set_wordWrap))
+		if (this.processStyleRestriction("wordWrap"))
 		{
 			return value;
 		}
@@ -280,7 +280,7 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 	private function get_customTextRendererStyleName():String { return this._customTextRendererStyleName; }
 	private function set_customTextRendererStyleName(value:String):String
 	{
-		if (this.processStyleRestriction(this.set_customTextRendererStyleName))
+		if (this.processStyleRestriction("customTextRendererStyleName"))
 		{
 			return value;
 		}
@@ -305,14 +305,14 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 	private function get_fontStyles():TextFormat { return this._fontStylesSet.format; }
 	private function set_fontStyles(value:TextFormat):TextFormat
 	{
-		if (this.processStyleRestriction(this.set_fontStyles))
+		if (this.processStyleRestriction("fontStyles"))
 		{
 			return value;
 		}
 		//var savedCallee:Function = arguments.callee;
 		function changeHandler(event:Event):Void
 		{
-			processStyleRestriction(this.set_fontStyles);
+			processStyleRestriction("fontStyles");
 		}
 		if (value != null)
 		{
@@ -333,14 +333,14 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 	private function get_disabledFontStyles():TextFormat { return this._fontStylesSet.disabledFormat; }
 	private function set_disabledFontStyles(value:TextFormat):TextFormat
 	{
-		if (this.processStyleRestriction(this.set_disabledFontStyles))
+		if (this.processStyleRestriction("disabledFontStyles"))
 		{
 			return value;
 		}
 		//var savedCallee:Function = arguments.callee;
 		function changeHandler(event:Event):Void
 		{
-			processStyleRestriction(this.set_disabledFontStyles);
+			processStyleRestriction("disabledFontStyles");
 		}
 		if (value != null)
 		{
@@ -402,7 +402,7 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 		{
 			return value;
 		}
-		if (value != null && !Std.isOfType(value, PropertyProxy))
+		if (value != null && !Std.isOfType(value, PropertyProxyReal))
 		{
 			value = PropertyProxy.fromObject(value);
 		}
@@ -493,7 +493,7 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 	private function get_backgroundSkin():DisplayObject { return this._backgroundSkin; }
 	private function set_backgroundSkin(value:DisplayObject):DisplayObject
 	{
-		if (this.processStyleRestriction(this.set_backgroundSkin))
+		if (this.processStyleRestriction("backgroundSkin"))
 		{
 			if (value != null)
 			{
@@ -524,7 +524,7 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 	private function get_backgroundDisabledSkin():DisplayObject { return this._backgroundDisabledSkin; }
 	private function set_backgroundDisabledSkin(value:DisplayObject):DisplayObject
 	{
-		if (this.processStyleRestriction(this.set_backgroundDisabledSkin))
+		if (this.processStyleRestriction("backgroundDisabledSkin"))
 		{
 			if(value != null)
 			{
@@ -564,7 +564,7 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 	private function get_paddingTop():Float { return this._paddingTop; }
 	private function set_paddingTop(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_paddingTop))
+		if (this.processStyleRestriction("paddingTop"))
 		{
 			return value;
 		}
@@ -585,7 +585,7 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 	private function get_paddingRight():Float { return this._paddingRight; }
 	private function set_paddingRight(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_paddingRight))
+		if (this.processStyleRestriction("paddingRight"))
 		{
 			return value;
 		}
@@ -606,7 +606,7 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 	private function get_paddingBottom():Float { return this._paddingBottom; }
 	private function set_paddingBottom(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_paddingBottom))
+		if (this.processStyleRestriction("paddingBottom"))
 		{
 			return value;
 		}
@@ -627,7 +627,7 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 	private function get_paddingLeft():Float { return this._paddingLeft; }
 	private function set_paddingLeft(value:Float):Float
 	{
-		if (this.processStyleRestriction(this.set_paddingLeft))
+		if (this.processStyleRestriction("paddingLeft"))
 		{
 			return value;
 		}
@@ -1015,12 +1015,15 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 		this.textRenderer.fontStyles = this._fontStylesSet;
 		this.textRenderer.wordWrap = this._wordWrap;
 		//for(var propertyName:String in this._textRendererProperties)
-		for (propertyName in this._textRendererProperties)
+		if (this._textRendererProperties != null)
 		{
-			var propertyValue:Dynamic = this._textRendererProperties[propertyName];
-			//var propertyValue:Object = this._textRendererProperties[propertyName];
-			//this.textRenderer[propertyName] = propertyValue;
-			Reflect.setProperty(this.textRenderer, propertyName, propertyValue);
+			for (propertyName in this._textRendererProperties)
+			{
+				var propertyValue:Dynamic = this._textRendererProperties[propertyName];
+				//var propertyValue:Object = this._textRendererProperties[propertyName];
+				//this.textRenderer[propertyName] = propertyValue;
+				Reflect.setProperty(this.textRenderer, propertyName, propertyValue);
+			}
 		}
 	}
 	

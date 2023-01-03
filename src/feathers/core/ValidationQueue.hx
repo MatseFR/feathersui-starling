@@ -94,7 +94,7 @@ class ValidationQueue implements IAnimatable
 			//significantly more likely that we're going to push than that
 			//we're going to splice, so there's no point to iterating over
 			//the whole queue
-			var idx:Int;
+			var idx:Int = 0;
 			for (i in new ReverseIterator(queueLength -1, 0))
 			{
 				idx = i;

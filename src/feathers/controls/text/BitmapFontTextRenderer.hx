@@ -1025,7 +1025,7 @@ class BitmapFontTextRenderer extends BaseTextRenderer implements ITextRenderer
 	{
 		var countToRemove:Int = 0;
 		var charCount:Int = CHARACTER_BUFFER.length - skipCount;
-		var index:Int;
+		var index:Int = -1;
 		for (i in new ReverseIterator(charCount - 1, 0))
 		{
 			var charLocation:CharLocation = CHARACTER_BUFFER[i];
@@ -1154,7 +1154,7 @@ class BitmapFontTextRenderer extends BaseTextRenderer implements ITextRenderer
 	**/
 	private function refreshTextFormat():Void
 	{
-		var textFormat:BitmapFontTextFormat;
+		var textFormat:BitmapFontTextFormat = null;
 		if (this._stateContext != null)
 		{
 			if (this._textFormatForState != null)
@@ -1216,7 +1216,7 @@ class BitmapFontTextRenderer extends BaseTextRenderer implements ITextRenderer
 		if (this.isInvalid(FeathersControl.INVALIDATION_FLAG_STYLES) ||
 			this.isInvalid(FeathersControl.INVALIDATION_FLAG_STATE))
 		{
-			var textFormat:TextFormat;
+			var textFormat:TextFormat = null;
 			if (this._fontStyles != null)
 			{
 				textFormat = this._fontStyles.getTextFormatForTarget(this);
@@ -1484,7 +1484,7 @@ class BitmapFontTextRenderer extends BaseTextRenderer implements ITextRenderer
 		}
 		var currentX:Float = 0;
 		var charID:Int;
-		var charData:BitmapChar;
+		var charData:BitmapChar = null;
 		var previousCharID:Int = -1;
 		var currentKerning:Float;
 		var charCount:Int = this._text.length;
