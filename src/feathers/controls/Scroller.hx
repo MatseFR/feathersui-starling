@@ -279,12 +279,12 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	/**
 	 * @private
 	 */
-	private var _startHorizontalScrollPosition:Float;
+	private var _startHorizontalScrollPosition:Float = 0;
 	
 	/**
 	 * @private
 	 */
-	private var _startVerticalScrollPosition:Float;
+	private var _startVerticalScrollPosition:Float = 0;
 	
 	/**
 	 * @private
@@ -859,7 +859,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	/**
 	 * @private
 	 */
-	private var _targetHorizontalScrollPosition:Float;
+	private var _targetHorizontalScrollPosition:Float = 0;
 	
 	/**
 	 * The number of pixels the container has been scrolled horizontally (on
@@ -1120,7 +1120,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	/**
 	 * @private
 	 */
-	private var _targetVerticalScrollPosition:Float;
+	private var _targetVerticalScrollPosition:Float = 0;
 	
 	/**
 	 * The number of pixels the container has been scrolled vertically (on
@@ -5585,22 +5585,6 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		}
 		
 		var distance:Float = Math.abs(this._targetVerticalScrollPosition - this._startVerticalScrollPosition);
-		//var startScrollPosition:Float = this._startVerticalScrollPosition;
-		//if (Math.isNaN(startScrollPosition))
-		//{
-			//startScrollPosition = 0;
-		//}
-		//var targetScrollPosition:Float = this._targetVerticalScrollPosition;
-		//if (Math.isNaN(targetScrollPosition))
-		//{
-			//targetScrollPosition = 0;
-		//}
-		//var distance:Float = Math.abs(targetScrollPosition - startScrollPosition);
-		//trace(startScrollPosition);
-		//trace(targetScrollPosition);
-		//var distance:Float = targetScrollPosition - startScrollPosition;
-		//var distance:Float = Math.abs(Math.isNaN(this._targetVerticalScrollPosition) ? 0 : this._targetVerticalScrollPosition 
-			//- (Math.isNaN(this._startVerticalScrollPosition) ? 0 : this._startVerticalScrollPosition));
 		var ratioOutOfBounds:Float = 0;
 		if (this._targetVerticalScrollPosition > adjustedMaxScrollPosition)
 		{

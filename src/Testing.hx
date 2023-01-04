@@ -63,6 +63,7 @@ class Testing extends Sprite
 		vLayout.gap = 24;
 		container.layout = vLayout;
 		container.height = 100;
+		container.width = 80;
 		group.addChild(container);
 		
 		var label:Label = new Label();
