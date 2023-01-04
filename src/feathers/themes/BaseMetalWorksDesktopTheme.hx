@@ -39,6 +39,7 @@ import feathers.controls.ScrollInteractionMode;
 import feathers.controls.ScrollPolicy;
 import feathers.controls.Scroller;
 import feathers.controls.SimpleScrollBar;
+import feathers.controls.Slider;
 import feathers.controls.ToggleButton;
 import feathers.controls.TrackLayoutMode;
 import feathers.core.FeathersControl;
@@ -962,12 +963,12 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		this.getStyleProviderForClass(Button).setFunctionForStyleName(THEME_STYLE_NAME_VERTICAL_SIMPLE_SCROLL_BAR_THUMB, this.setVerticalSimpleScrollBarThumbStyles);
 		
 		//slider
-		//this.getStyleProviderForClass(Slider).defaultStyleFunction = this.setSliderStyles;
-		//this.getStyleProviderForClass(Button).setFunctionForStyleName(Slider.DEFAULT_CHILD_STYLE_NAME_THUMB, this.setSliderThumbStyles);
-		//this.getStyleProviderForClass(Button).setFunctionForStyleName(THEME_STYLE_NAME_HORIZONTAL_SLIDER_MINIMUM_TRACK, this.setHorizontalSliderMinimumTrackStyles);
-		//this.getStyleProviderForClass(Button).setFunctionForStyleName(THEME_STYLE_NAME_HORIZONTAL_SLIDER_MAXIMUM_TRACK, this.setHorizontalSliderMaximumTrackStyles);
-		//this.getStyleProviderForClass(Button).setFunctionForStyleName(THEME_STYLE_NAME_VERTICAL_SLIDER_MINIMUM_TRACK, this.setVerticalSliderMinimumTrackStyles);
-		//this.getStyleProviderForClass(Button).setFunctionForStyleName(THEME_STYLE_NAME_VERTICAL_SLIDER_MAXIMUM_TRACK, this.setVerticalSliderMaximumTrackStyles);
+		this.getStyleProviderForClass(Slider).defaultStyleFunction = this.setSliderStyles;
+		this.getStyleProviderForClass(Button).setFunctionForStyleName(Slider.DEFAULT_CHILD_STYLE_NAME_THUMB, this.setSliderThumbStyles);
+		this.getStyleProviderForClass(Button).setFunctionForStyleName(THEME_STYLE_NAME_HORIZONTAL_SLIDER_MINIMUM_TRACK, this.setHorizontalSliderMinimumTrackStyles);
+		this.getStyleProviderForClass(Button).setFunctionForStyleName(THEME_STYLE_NAME_HORIZONTAL_SLIDER_MAXIMUM_TRACK, this.setHorizontalSliderMaximumTrackStyles);
+		this.getStyleProviderForClass(Button).setFunctionForStyleName(THEME_STYLE_NAME_VERTICAL_SLIDER_MINIMUM_TRACK, this.setVerticalSliderMinimumTrackStyles);
+		this.getStyleProviderForClass(Button).setFunctionForStyleName(THEME_STYLE_NAME_VERTICAL_SLIDER_MAXIMUM_TRACK, this.setVerticalSliderMaximumTrackStyles);
 		
 		//spinner list
 		//this.getStyleProviderForClass(SpinnerList).defaultStyleFunction = this.setSpinnerListStyles;
@@ -2405,25 +2406,25 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	// Slider
 	//-------------------------
 	
-	//private function setSliderStyles(slider:Slider):Void
-	//{
-		//slider.trackLayoutMode = TrackLayoutMode.SPLIT;
-		//if(slider.direction == Direction.VERTICAL)
-		//{
-			//slider.customMinimumTrackStyleName = THEME_STYLE_NAME_VERTICAL_SLIDER_MINIMUM_TRACK;
-			//slider.customMaximumTrackStyleName = THEME_STYLE_NAME_VERTICAL_SLIDER_MAXIMUM_TRACK;
-		//}
-		//else //horizontal
-		//{
-			//slider.customMinimumTrackStyleName = THEME_STYLE_NAME_HORIZONTAL_SLIDER_MINIMUM_TRACK;
-			//slider.customMaximumTrackStyleName = THEME_STYLE_NAME_HORIZONTAL_SLIDER_MAXIMUM_TRACK;
-		//}
-		//
-		//var focusIndicatorSkin:Image = new Image(this.focusIndicatorSkinTexture);
-		//focusIndicatorSkin.scale9Grid = FOCUS_INDICATOR_SCALE_9_GRID;
-		//slider.focusIndicatorSkin = focusIndicatorSkin;
-		//slider.focusPadding = this.focusPaddingSize;
-	//}
+	private function setSliderStyles(slider:Slider):Void
+	{
+		slider.trackLayoutMode = TrackLayoutMode.SPLIT;
+		if (slider.direction == Direction.VERTICAL)
+		{
+			slider.customMinimumTrackStyleName = THEME_STYLE_NAME_VERTICAL_SLIDER_MINIMUM_TRACK;
+			slider.customMaximumTrackStyleName = THEME_STYLE_NAME_VERTICAL_SLIDER_MAXIMUM_TRACK;
+		}
+		else //horizontal
+		{
+			slider.customMinimumTrackStyleName = THEME_STYLE_NAME_HORIZONTAL_SLIDER_MINIMUM_TRACK;
+			slider.customMaximumTrackStyleName = THEME_STYLE_NAME_HORIZONTAL_SLIDER_MAXIMUM_TRACK;
+		}
+		
+		var focusIndicatorSkin:Image = new Image(this.focusIndicatorSkinTexture);
+		focusIndicatorSkin.scale9Grid = FOCUS_INDICATOR_SCALE_9_GRID;
+		slider.focusIndicatorSkin = focusIndicatorSkin;
+		slider.focusPadding = this.focusPaddingSize;
+	}
 
 	private function setSliderThumbStyles(thumb:Button):Void
 	{

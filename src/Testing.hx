@@ -7,6 +7,7 @@ import feathers.controls.Label;
 import feathers.controls.LayoutGroup;
 import feathers.controls.Radio;
 import feathers.controls.ScrollContainer;
+import feathers.controls.Slider;
 import feathers.controls.ToggleButton;
 import feathers.core.PropertyProxy;
 import feathers.core.PropertyProxyReal;
@@ -70,7 +71,7 @@ class Testing extends Sprite
 		hLayout.gap = 8;
 		container.layout = hLayout;
 		container.height = 100;
-		container.width = 80;
+		container.width = 180;
 		group.addChild(container);
 		
 		var label:Label = new Label();
@@ -104,6 +105,12 @@ class Testing extends Sprite
 		radio = new Radio();
 		radio.label = "nice!";
 		container.addChild(radio);
+		
+		var slider:Slider = new Slider();
+		slider.minimum = 0;
+		slider.maximum = 10;
+		//slider.step = 1;
+		container.addChild(slider);
 		
 		//var data:Dynamic = {test:123, plop:true, blop:"blip"};
 		//var prox:PropertyProxy = PropertyProxy.fromObject(data);
