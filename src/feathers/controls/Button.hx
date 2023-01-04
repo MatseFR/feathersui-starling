@@ -25,6 +25,7 @@ import feathers.utils.keyboard.KeyToState;
 import feathers.utils.keyboard.KeyToTrigger;
 import feathers.utils.skins.SkinsUtils;
 import feathers.utils.touch.LongPress;
+import feathers.utils.type.SafeCast;
 import openfl.geom.Matrix;
 import openfl.geom.Point;
 import openfl.ui.Keyboard;
@@ -1380,7 +1381,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 			this._explicitSkinWidth, this._explicitSkinHeight,
 			this._explicitSkinMinWidth, this._explicitSkinMinHeight,
 			this._explicitSkinMaxWidth, this._explicitSkinMaxHeight);
-		var measureSkin:IMeasureDisplayObject = cast this.currentSkin;
+		var measureSkin:IMeasureDisplayObject = SafeCast.safe_cast(this.currentSkin, IMeasureDisplayObject);
 		
 		if (Std.isOfType(this.currentIcon, IValidating))
 		{

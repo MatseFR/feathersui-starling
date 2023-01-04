@@ -3261,11 +3261,14 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		var propertyValue:Dynamic;
 		if (this.horizontalScrollBar != null)
 		{
-			for (propertyName in this._horizontalScrollBarProperties)
+			if (this._horizontalScrollBarProperties != null)
 			{
-				propertyValue = this._horizontalScrollBarProperties[propertyName];
-				//this.horizontalScrollBar[propertyName] = propertyValue;
-				Reflect.setProperty(this.horizontalScrollBar, propertyName, propertyValue);
+				for (propertyName in this._horizontalScrollBarProperties)
+				{
+					propertyValue = this._horizontalScrollBarProperties[propertyName];
+					//this.horizontalScrollBar[propertyName] = propertyValue;
+					Reflect.setProperty(this.horizontalScrollBar, propertyName, propertyValue);
+				}
 			}
 			if (this._horizontalScrollBarHideTween != null)
 			{
@@ -3276,11 +3279,14 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		}
 		if (this.verticalScrollBar != null)
 		{
-			for (propertyName in this._verticalScrollBarProperties)
+			if (this._verticalScrollBarProperties != null)
 			{
-				propertyValue = this._verticalScrollBarProperties[propertyName];
-				//this.verticalScrollBar[propertyName] = propertyValue;
-				Reflect.setProperty(this.verticalScrollBar, propertyName, propertyValue);
+				for (propertyName in this._verticalScrollBarProperties)
+				{
+					propertyValue = this._verticalScrollBarProperties[propertyName];
+					//this.verticalScrollBar[propertyName] = propertyValue;
+					Reflect.setProperty(this.verticalScrollBar, propertyName, propertyValue);
+				}
 			}
 			if (this._verticalScrollBarHideTween != null)
 			{
@@ -5577,7 +5583,24 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		{
 			adjustedMaxScrollPosition += this._bottomPullView.height;
 		}
+		
 		var distance:Float = Math.abs(this._targetVerticalScrollPosition - this._startVerticalScrollPosition);
+		//var startScrollPosition:Float = this._startVerticalScrollPosition;
+		//if (Math.isNaN(startScrollPosition))
+		//{
+			//startScrollPosition = 0;
+		//}
+		//var targetScrollPosition:Float = this._targetVerticalScrollPosition;
+		//if (Math.isNaN(targetScrollPosition))
+		//{
+			//targetScrollPosition = 0;
+		//}
+		//var distance:Float = Math.abs(targetScrollPosition - startScrollPosition);
+		//trace(startScrollPosition);
+		//trace(targetScrollPosition);
+		//var distance:Float = targetScrollPosition - startScrollPosition;
+		//var distance:Float = Math.abs(Math.isNaN(this._targetVerticalScrollPosition) ? 0 : this._targetVerticalScrollPosition 
+			//- (Math.isNaN(this._startVerticalScrollPosition) ? 0 : this._startVerticalScrollPosition));
 		var ratioOutOfBounds:Float = 0;
 		if (this._targetVerticalScrollPosition > adjustedMaxScrollPosition)
 		{

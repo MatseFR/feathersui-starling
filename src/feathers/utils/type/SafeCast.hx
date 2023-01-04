@@ -15,7 +15,7 @@ class SafeCast
 			
 			default:
 				//trace('!$value');
-				return macro $b { [(macro var e = $value), (macro Std.is(e, $type) ? cast e : null)] };
+				return macro $b { [(macro var e = $value), (macro Std.isOfType(e, $type) ? cast e : null)] };
 		}
 	}
 	

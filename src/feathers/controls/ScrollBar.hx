@@ -2210,11 +2210,15 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	 */
 	private function refreshThumbStyles():Void
 	{
-		for (propertyName in this._thumbProperties)
+		if (this._thumbProperties != null)
 		{
-			var propertyValue:Dynamic = this._thumbProperties[propertyName];
-			//this.thumb[propertyName] = propertyValue;
-			Reflect.setProperty(this.thumb, propertyName, propertyValue);
+			var propertyValue:Dynamic;
+			for (propertyName in this._thumbProperties)
+			{
+				propertyValue = this._thumbProperties[propertyName];
+				//this.thumb[propertyName] = propertyValue;
+				Reflect.setProperty(this.thumb, propertyName, propertyValue);
+			}
 		}
 	}
 	
@@ -2223,11 +2227,15 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	 */
 	private function refreshMinimumTrackStyles():Void
 	{
-		for (propertyName in this._minimumTrackProperties)
+		if (this._minimumTrackProperties != null)
 		{
-			var propertyValue:Dynamic = this._minimumTrackProperties[propertyName];
-			//this.minimumTrack[propertyName] = propertyValue;
-			Reflect.setProperty(this.minimumTrack, propertyName, propertyValue);
+			var propertyValue:Dynamic;
+			for (propertyName in this._minimumTrackProperties)
+			{
+				propertyValue = this._minimumTrackProperties[propertyName];
+				//this.minimumTrack[propertyName] = propertyValue;
+				Reflect.setProperty(this.minimumTrack, propertyName, propertyValue);
+			}
 		}
 	}
 	
@@ -2240,11 +2248,15 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 		{
 			return;
 		}
-		for (propertyName in this._maximumTrackProperties)
+		if (this._maximumTrackProperties != null)
 		{
-			var propertyValue:Dynamic = this._maximumTrackProperties[propertyName];
-			//this.maximumTrack[propertyName] = propertyValue;
-			Reflect.setProperty(this.maximumTrack, propertyName, propertyValue);
+			var propertyValue:Dynamic;
+			for (propertyName in this._maximumTrackProperties)
+			{
+				propertyValue = this._maximumTrackProperties[propertyName];
+				//this.maximumTrack[propertyName] = propertyValue;
+				Reflect.setProperty(this.maximumTrack, propertyName, propertyValue);
+			}
 		}
 	}
 	
@@ -2253,11 +2265,15 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	 */
 	private function refreshDecrementButtonStyles():Void
 	{
-		for (propertyName in this._decrementButtonProperties)
+		if (this._decrementButtonProperties != null)
 		{
-			var propertyValue:Dynamic = this._decrementButtonProperties[propertyName];
-			//this.decrementButton[propertyName] = propertyValue;
-			Reflect.setProperty(this.decrementButton, propertyName, propertyValue);
+			var propertyValue:Dynamic;
+			for (propertyName in this._decrementButtonProperties)
+			{
+				propertyValue = this._decrementButtonProperties[propertyName];
+				//this.decrementButton[propertyName] = propertyValue;
+				Reflect.setProperty(this.decrementButton, propertyName, propertyValue);
+			}
 		}
 	}
 	
@@ -2266,11 +2282,14 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	 */
 	private function refreshIncrementButtonStyles():Void
 	{
-		for (propertyName in this._incrementButtonProperties)
+		if (this._incrementButtonProperties != null)
 		{
-			var propertyValue:Dynamic = this._incrementButtonProperties[propertyName];
-			//this.incrementButton[propertyName] = propertyValue;
-			Reflect.setProperty(this.incrementButton, propertyName, propertyValue);
+			for (propertyName in this._incrementButtonProperties)
+			{
+				var propertyValue:Dynamic = this._incrementButtonProperties[propertyName];
+				//this.incrementButton[propertyName] = propertyValue;
+				Reflect.setProperty(this.incrementButton, propertyName, propertyValue);
+			}
 		}
 	}
 	

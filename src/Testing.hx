@@ -4,6 +4,8 @@ import feathers.controls.AutoSizeMode;
 import feathers.controls.Button;
 import feathers.controls.Label;
 import feathers.controls.LayoutGroup;
+import feathers.controls.ScrollContainer;
+import feathers.controls.ToggleButton;
 import feathers.core.PropertyProxy;
 import feathers.core.PropertyProxyReal;
 import feathers.layout.HorizontalAlign;
@@ -51,7 +53,17 @@ class Testing extends Sprite
 		var vLayout:VerticalLayout = new VerticalLayout();
 		vLayout.horizontalAlign = HorizontalAlign.CENTER;
 		vLayout.verticalAlign = VerticalAlign.MIDDLE;
+		vLayout.gap = 8;
 		group.layout = vLayout;
+		
+		var container:ScrollContainer = new ScrollContainer();
+		vLayout.horizontalAlign = HorizontalAlign.CENTER;
+		vLayout.verticalAlign = VerticalAlign.MIDDLE;
+		vLayout.paddingLeft = vLayout.paddingRight = 8;
+		vLayout.gap = 24;
+		container.layout = vLayout;
+		container.height = 100;
+		group.addChild(container);
 		
 		var label:Label = new Label();
 		label.text = "Hello World !";
@@ -61,11 +73,15 @@ class Testing extends Sprite
 		//label.y = 200;
 		//addChild(label);
 		//label.validate();
-		group.addChild(label);
+		container.addChild(label);
 		
 		var btn:Button = new Button();
 		btn.label = "yep";
-		group.addChild(btn);
+		container.addChild(btn);
+		
+		var toggle:ToggleButton = new ToggleButton();
+		toggle.label = "toggle";
+		container.addChild(toggle);
 		
 		//var data:Dynamic = {test:123, plop:true, blop:"blip"};
 		//var prox:PropertyProxy = PropertyProxy.fromObject(data);
