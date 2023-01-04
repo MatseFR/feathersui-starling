@@ -1,3 +1,5 @@
+setters : right now I return the assigned value at the end, but in some cases that value is different from the value passed to the setter : should I return the passed value instead ?
+
 no StageText in OpenFL => what should be used as the default text editor factory ?
 
 FeathersControl constructor :
