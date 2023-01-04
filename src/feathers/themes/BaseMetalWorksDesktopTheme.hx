@@ -26,10 +26,12 @@ package feathers.themes;
 import feathers.controls.AutoSizeMode;
 import feathers.controls.Button;
 import feathers.controls.ButtonState;
+import feathers.controls.Check;
 import feathers.controls.Header;
 import feathers.controls.Label;
 import feathers.controls.LayoutGroup;
 import feathers.controls.Panel;
+import feathers.controls.Radio;
 import feathers.controls.ScrollBar;
 import feathers.controls.ScrollBarDisplayMode;
 import feathers.controls.ScrollContainer;
@@ -855,7 +857,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		//this.getStyleProviderForClass(Callout).defaultStyleFunction = this.setCalloutStyles;
 		
 		//check
-		//this.getStyleProviderForClass(Check).defaultStyleFunction = this.setCheckStyles;
+		this.getStyleProviderForClass(Check).defaultStyleFunction = this.setCheckStyles;
 		
 		//data grid (see also: item renderers)
 		//this.getStyleProviderForClass(DataGrid).defaultStyleFunction = this.setDataGridStyles;
@@ -928,7 +930,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		//this.getStyleProviderForClass(ProgressBar).defaultStyleFunction = this.setProgressBarStyles;
 		
 		//radio
-		//this.getStyleProviderForClass(Radio).defaultStyleFunction = this.setRadioStyles;
+		this.getStyleProviderForClass(Radio).defaultStyleFunction = this.setRadioStyles;
 		
 		//scroll bar
 		this.getStyleProviderForClass(ScrollBar).setFunctionForStyleName(Scroller.DEFAULT_CHILD_STYLE_NAME_HORIZONTAL_SCROLL_BAR, this.setHorizontalScrollBarStyles);
@@ -1430,32 +1432,32 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	// Check
 	//-------------------------
 	
-	//private function setCheckStyles(check:Check):Void
-	//{
-		//var skin:Quad = new Quad(this.controlSize, this.controlSize);
-		//skin.alpha = 0;
-		//check.defaultSkin = skin;
-		//
-		//var icon:ImageSkin = new ImageSkin(this.checkUpIconTexture);
-		//icon.selectedTexture = this.checkSelectedUpIconTexture;
-		//icon.setTextureForState(ButtonState.DOWN, this.checkDownIconTexture);
-		//icon.setTextureForState(ButtonState.DISABLED, this.checkDisabledIconTexture);
-		//icon.setTextureForState(ButtonState.DOWN_AND_SELECTED, this.checkSelectedDownIconTexture);
-		//icon.setTextureForState(ButtonState.DISABLED_AND_SELECTED, this.checkSelectedDisabledIconTexture);
-		//check.defaultIcon = icon;
-		//
-		//var focusIndicatorSkin:Image = new Image(this.focusIndicatorSkinTexture);
-		//focusIndicatorSkin.scale9Grid = FOCUS_INDICATOR_SCALE_9_GRID;
-		//check.focusIndicatorSkin = focusIndicatorSkin;
-		//check.focusPaddingLeft = this.focusPaddingSize;
-		//check.focusPaddingRight = this.focusPaddingSize;
-		//
-		//check.fontStyles = this.lightUIFontStyles.clone();
-		//check.disabledFontStyles = this.lightDisabledUIFontStyles.clone();
-		//
-		//check.horizontalAlign = HorizontalAlign.LEFT;
-		//check.gap = this.smallGutterSize;
-	//}
+	private function setCheckStyles(check:Check):Void
+	{
+		var skin:Quad = new Quad(this.controlSize, this.controlSize);
+		skin.alpha = 0;
+		check.defaultSkin = skin;
+		
+		var icon:ImageSkin = new ImageSkin(this.checkUpIconTexture);
+		icon.selectedTexture = this.checkSelectedUpIconTexture;
+		icon.setTextureForState(ButtonState.DOWN, this.checkDownIconTexture);
+		icon.setTextureForState(ButtonState.DISABLED, this.checkDisabledIconTexture);
+		icon.setTextureForState(ButtonState.DOWN_AND_SELECTED, this.checkSelectedDownIconTexture);
+		icon.setTextureForState(ButtonState.DISABLED_AND_SELECTED, this.checkSelectedDisabledIconTexture);
+		check.defaultIcon = icon;
+		
+		var focusIndicatorSkin:Image = new Image(this.focusIndicatorSkinTexture);
+		focusIndicatorSkin.scale9Grid = FOCUS_INDICATOR_SCALE_9_GRID;
+		check.focusIndicatorSkin = focusIndicatorSkin;
+		check.focusPaddingLeft = this.focusPaddingSize;
+		check.focusPaddingRight = this.focusPaddingSize;
+		
+		check.fontStyles = this.lightUIFontStyles.clone();
+		check.disabledFontStyles = this.lightDisabledUIFontStyles.clone();
+		
+		check.horizontalAlign = HorizontalAlign.LEFT;
+		check.gap = this.smallGutterSize;
+	}
 	
 	//-------------------------
 	// DataGrid
@@ -2111,32 +2113,32 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	// Radio
 	//-------------------------
 	
-	//private function setRadioStyles(radio:Radio):Void
-	//{
-		//var skin:Quad = new Quad(this.controlSize, this.controlSize);
-		//skin.alpha = 0;
-		//radio.defaultSkin = skin;
-		//
-		//var icon:ImageSkin = new ImageSkin(this.radioUpIconTexture);
-		//icon.selectedTexture = this.radioSelectedUpIconTexture;
-		//icon.setTextureForState(ButtonState.DOWN, this.radioDownIconTexture);
-		//icon.setTextureForState(ButtonState.DISABLED, this.radioDisabledIconTexture);
-		//icon.setTextureForState(ButtonState.DOWN_AND_SELECTED, this.radioSelectedDownIconTexture);
-		//icon.setTextureForState(ButtonState.DISABLED_AND_SELECTED, this.radioSelectedDisabledIconTexture);
-		//radio.defaultIcon = icon;
-		//
-		//var focusIndicatorSkin:Image = new Image(this.focusIndicatorSkinTexture);
-		//focusIndicatorSkin.scale9Grid = FOCUS_INDICATOR_SCALE_9_GRID;
-		//radio.focusIndicatorSkin = focusIndicatorSkin;
-		//radio.focusPaddingLeft = this.focusPaddingSize;
-		//radio.focusPaddingRight = this.focusPaddingSize;
-		//
-		//radio.fontStyles = this.lightUIFontStyles.clone();
-		//radio.disabledFontStyles = this.lightDisabledUIFontStyles.clone();
-		//
-		//radio.horizontalAlign = HorizontalAlign.LEFT;
-		//radio.gap = this.smallGutterSize;
-	//}
+	private function setRadioStyles(radio:Radio):Void
+	{
+		var skin:Quad = new Quad(this.controlSize, this.controlSize);
+		skin.alpha = 0;
+		radio.defaultSkin = skin;
+		
+		var icon:ImageSkin = new ImageSkin(this.radioUpIconTexture);
+		icon.selectedTexture = this.radioSelectedUpIconTexture;
+		icon.setTextureForState(ButtonState.DOWN, this.radioDownIconTexture);
+		icon.setTextureForState(ButtonState.DISABLED, this.radioDisabledIconTexture);
+		icon.setTextureForState(ButtonState.DOWN_AND_SELECTED, this.radioSelectedDownIconTexture);
+		icon.setTextureForState(ButtonState.DISABLED_AND_SELECTED, this.radioSelectedDisabledIconTexture);
+		radio.defaultIcon = icon;
+		
+		var focusIndicatorSkin:Image = new Image(this.focusIndicatorSkinTexture);
+		focusIndicatorSkin.scale9Grid = FOCUS_INDICATOR_SCALE_9_GRID;
+		radio.focusIndicatorSkin = focusIndicatorSkin;
+		radio.focusPaddingLeft = this.focusPaddingSize;
+		radio.focusPaddingRight = this.focusPaddingSize;
+		
+		radio.fontStyles = this.lightUIFontStyles.clone();
+		radio.disabledFontStyles = this.lightDisabledUIFontStyles.clone();
+		
+		radio.horizontalAlign = HorizontalAlign.LEFT;
+		radio.gap = this.smallGutterSize;
+	}
 	
 	//-------------------------
 	// ScrollBar

@@ -2,8 +2,10 @@ package;
 
 import feathers.controls.AutoSizeMode;
 import feathers.controls.Button;
+import feathers.controls.Check;
 import feathers.controls.Label;
 import feathers.controls.LayoutGroup;
+import feathers.controls.Radio;
 import feathers.controls.ScrollContainer;
 import feathers.controls.ToggleButton;
 import feathers.core.PropertyProxy;
@@ -57,11 +59,16 @@ class Testing extends Sprite
 		group.layout = vLayout;
 		
 		var container:ScrollContainer = new ScrollContainer();
-		vLayout.horizontalAlign = HorizontalAlign.CENTER;
-		vLayout.verticalAlign = VerticalAlign.MIDDLE;
-		vLayout.paddingLeft = vLayout.paddingRight = 8;
-		vLayout.gap = 24;
-		container.layout = vLayout;
+		//vLayout.horizontalAlign = HorizontalAlign.CENTER;
+		//vLayout.verticalAlign = VerticalAlign.MIDDLE;
+		//vLayout.paddingLeft = vLayout.paddingRight = 8;
+		//vLayout.gap = 24;
+		//container.layout = vLayout;
+		var hLayout:HorizontalLayout = new HorizontalLayout();
+		hLayout.horizontalAlign = HorizontalAlign.CENTER;
+		hLayout.verticalAlign = VerticalAlign.MIDDLE;
+		hLayout.gap = 8;
+		container.layout = hLayout;
 		container.height = 100;
 		container.width = 80;
 		group.addChild(container);
@@ -77,6 +84,8 @@ class Testing extends Sprite
 		container.addChild(label);
 		
 		var btn:Button = new Button();
+		var test = btn.defaultLabelProperties;
+		trace(test);
 		btn.label = "yep";
 		container.addChild(btn);
 		
@@ -84,8 +93,21 @@ class Testing extends Sprite
 		toggle.label = "toggle";
 		container.addChild(toggle);
 		
+		var check:Check = new Check();
+		check.label = "check";
+		container.addChild(check);
+		
+		var radio:Radio = new Radio();
+		radio.label = "cool!";
+		container.addChild(radio);
+		
+		radio = new Radio();
+		radio.label = "nice!";
+		container.addChild(radio);
+		
 		//var data:Dynamic = {test:123, plop:true, blop:"blip"};
 		//var prox:PropertyProxy = PropertyProxy.fromObject(data);
+		//prox.sub.pouet = "whatever";
 		//trace(prox.test);
 		//trace(prox.plop);
 		//trace(prox.blop);
