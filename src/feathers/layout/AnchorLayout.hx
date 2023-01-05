@@ -227,7 +227,7 @@ class AnchorLayout extends EventDispatcher implements ILayout
 				}
 				layoutData = cast layoutItem.layoutData;
 			}
-			var isReadyForLayout:Bool = layoutData != null || this.isReadyForLayout(layoutData, i, items, unpositionedItems);
+			var isReadyForLayout:Bool = layoutData == null || this.isReadyForLayout(layoutData, i, items, unpositionedItems);
 			if (!isReadyForLayout)
 			{
 				unpositionedItems[pushIndex] = item;

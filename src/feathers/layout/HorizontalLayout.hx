@@ -9,6 +9,7 @@ package feathers.layout;
 import feathers.core.IMeasureDisplayObject;
 import feathers.core.IValidating;
 import feathers.utils.ReverseIterator;
+import feathers.utils.type.SafeCast;
 import openfl.errors.IllegalOperationError;
 import openfl.errors.RangeError;
 import openfl.geom.Point;
@@ -353,7 +354,7 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 			{
 				//we get here if the item isn't null. it is never null if
 				//the layout isn't virtualized.
-				layoutItem = cast item;
+				layoutItem = SafeCast.safe_cast(item, ILayoutDisplayObject);
 				if (layoutItem != null && !layoutItem.includeInLayout)
 				{
 					continue;
@@ -552,7 +553,7 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 		for (i in 0...discoveredItemCount)
 		{
 			item = discoveredItems[i];
-			layoutItem = cast item;
+			layoutItem = SafeCast.safe_cast(item, ILayoutDisplayObject);
 			if (layoutItem != null && !layoutItem.includeInLayout)
 			{
 				continue;
