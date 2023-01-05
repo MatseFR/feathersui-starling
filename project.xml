@@ -16,10 +16,12 @@
 	<source path="src" />
 	<haxelib name="openfl" />
 	<haxelib name="starling" />
+	<haxelib name="msignal" />
 	
 	<!-- assets -->
 	<icon path="assets/openfl.svg" />
 	<assets path="assets/img" embed="true" />
+	<assets path="assets/fonts" embed="true" />
 	
 	<!-- optimize output
 	<haxeflag name="-dce full" /> -->
