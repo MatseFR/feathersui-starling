@@ -16,7 +16,6 @@
 	<source path="src" />
 	<haxelib name="openfl" />
 	<haxelib name="starling" />
-	<haxelib name="msignal" />
 	
 	<!-- assets -->
 	<icon path="assets/openfl.svg" />
