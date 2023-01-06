@@ -1602,7 +1602,8 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		//{
 			//textField["softKeyboard"] = this._softKeyboard;
 		//}
-		textField.softKeyboard = this._softKeyboard;
+		// TODO : missing softKeyboard property in flash externs
+		//textField.softKeyboard = this._softKeyboard;
 		#end
 		if (!this._embedFonts &&
 			this._currentTextFormat == this._fontStylesTextFormat)

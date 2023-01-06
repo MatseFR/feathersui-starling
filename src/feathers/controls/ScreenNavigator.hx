@@ -255,7 +255,7 @@ class ScreenNavigator extends BaseScreenNavigator
 		//var fields:Array<String> = Reflect.fields(events);
 		var signal:Dynamic;
 		var eventAction:Dynamic;
-		var eventListener:Dynamic;
+		var eventListener:Dynamic->Void;
 		for (eventName in events.keys())
 		{
 			//signal = null;
@@ -303,6 +303,7 @@ class ScreenNavigator extends BaseScreenNavigator
 		}
 		//this._screenEvents[this._activeScreenID] = null;
 		//Reflect.setField(this._screenEvents, this._activeScreenID, null);
+		savedScreenEvents.clear();
 		this._screenEvents.remove(this._activeScreenID);
 	}
 	

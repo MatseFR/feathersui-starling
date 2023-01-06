@@ -529,7 +529,7 @@ abstract class BaseScreenNavigator extends FeathersControl
 	/**
 	 * @private
 	 */
-	private function showScreenInternal(id:String, transition:DisplayObject->DisplayObject->(?Bool->Void)->Void, properties:Dynamic = null):DisplayObject
+	private function showScreenInternal(id:String, transition:DisplayObject->DisplayObject->(?Bool->Void)->Void, properties:Map<String, Dynamic> = null):DisplayObject
 	{
 		if (!this.hasScreen(id))
 		{
@@ -565,11 +565,18 @@ abstract class BaseScreenNavigator extends FeathersControl
 		{
 			this._waitingForDelayedTransition = false;
 		}
-		var fields:Array<String> = Reflect.fields(properties);
-		for (propertyName in fields)
+		if (properties != null)
 		{
-			//this._activeScreen[propertyName] = properties[propertyName];
-			Reflect.setProperty(this._activeScreen, propertyName, Reflect.field(properties, propertyName));
+			//var fields:Array<String> = Reflect.fields(properties);
+			//for (propertyName in fields)
+			//{
+				////this._activeScreen[propertyName] = properties[propertyName];
+				//Reflect.setProperty(this._activeScreen, propertyName, Reflect.field(properties, propertyName));
+			//}
+			for (propertyName in properties.keys())
+			{
+				Reflect.setProperty(this._activeScreen, propertyName, properties[propertyName]);
+			}
 		}
 		if (Std.isOfType(this._activeScreen, IScreen))
 		{

@@ -6,8 +6,10 @@ import feathers.controls.Check;
 import feathers.controls.Label;
 import feathers.controls.LayoutGroup;
 import feathers.controls.Radio;
+import feathers.controls.ScreenNavigator;
 import feathers.controls.ScrollContainer;
 import feathers.controls.Slider;
+import feathers.controls.StackScreenNavigator;
 import feathers.controls.ToggleButton;
 import feathers.core.PropertyProxy;
 import feathers.core.PropertyProxyReal;
@@ -17,6 +19,10 @@ import feathers.layout.VerticalAlign;
 import feathers.layout.VerticalLayout;
 import feathers.themes.MetalWorksDesktopTheme;
 import feathers.utils.math.MathUtils;
+import openfl.utils.Assets;
+import starling.assets.AssetManager;
+import starling.display.Image;
+import starling.display.Quad;
 import starling.display.Sprite;
 import starling.events.Event;
 
@@ -41,7 +47,19 @@ class Testing extends Sprite
 	{
 		this.removeEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 		
+		feathersTest();
+		//loadTest();
+	}
+	
+	/**
+	 * 
+	 */
+	private function feathersTest():Void
+	{
 		var theme:MetalWorksDesktopTheme = new MetalWorksDesktopTheme();
+		
+		var navigator:ScreenNavigator = new ScreenNavigator();
+		var stackNavigator:StackScreenNavigator = new StackScreenNavigator();
 		
 		var group:LayoutGroup = new LayoutGroup();
 		group.autoSizeMode = AutoSizeMode.STAGE;
@@ -60,16 +78,17 @@ class Testing extends Sprite
 		group.layout = vLayout;
 		
 		var container:ScrollContainer = new ScrollContainer();
-		//vLayout.horizontalAlign = HorizontalAlign.CENTER;
-		//vLayout.verticalAlign = VerticalAlign.MIDDLE;
-		//vLayout.paddingLeft = vLayout.paddingRight = 8;
-		//vLayout.gap = 24;
-		//container.layout = vLayout;
-		var hLayout:HorizontalLayout = new HorizontalLayout();
-		hLayout.horizontalAlign = HorizontalAlign.CENTER;
-		hLayout.verticalAlign = VerticalAlign.MIDDLE;
-		hLayout.gap = 8;
-		container.layout = hLayout;
+		vLayout = new VerticalLayout();
+		vLayout.horizontalAlign = HorizontalAlign.CENTER;
+		vLayout.verticalAlign = VerticalAlign.MIDDLE;
+		vLayout.paddingLeft = vLayout.paddingRight = 8;
+		vLayout.gap = 24;
+		container.layout = vLayout;
+		//var hLayout:HorizontalLayout = new HorizontalLayout();
+		//hLayout.horizontalAlign = HorizontalAlign.CENTER;
+		//hLayout.verticalAlign = VerticalAlign.MIDDLE;
+		//hLayout.gap = 8;
+		//container.layout = hLayout;
 		container.height = 100;
 		container.width = 180;
 		group.addChild(container);
@@ -83,6 +102,9 @@ class Testing extends Sprite
 		//addChild(label);
 		//label.validate();
 		container.addChild(label);
+		
+		var quad:Quad = new Quad(50, 50);
+		container.addChild(quad);
 		
 		var btn:Button = new Button();
 		var test = btn.defaultLabelProperties;
@@ -111,20 +133,46 @@ class Testing extends Sprite
 		slider.maximum = 10;
 		//slider.step = 1;
 		container.addChild(slider);
-		
-		//var data:Dynamic = {test:123, plop:true, blop:"blip"};
-		//var prox:PropertyProxy = PropertyProxy.fromObject(data);
-		//prox.sub.pouet = "whatever";
-		//trace(prox.test);
-		//trace(prox.plop);
-		//trace(prox.blop);
-		//trace(Std.isOfType(prox, PropertyProxyReal));
-		
-		//for (n in prox)
-		//{
-			//trace(n);
-		//}
-		
+	}
+	
+	private var assetManager:AssetManager;
+	/**
+	 * 
+	 */
+	private function loadTest():Void
+	{
+		assetManager = new AssetManager();
+		//_assetMediator = new AssetMediator(assetManager);
+		assetManager.enqueue([
+			Assets.getPath("assets/img/metalworks_desktop.png"),
+			Assets.getPath("assets/img/metalworks_desktop.xml")
+		]);
+		//assetManager.loadQueue(function(ratio:Float):Void {
+			//if (ratio == 1) {
+				//trace("Assets Loaded");
+				//_sprite = new Sprite();
+				//_sprite.addChild(new Image(assetManager.getTexture("header_text")));
+				//addChild(_sprite);
+				////onResize(null);
+			//}
+		//});
+		assetManager.loadQueue(onComplete, onError, onProgress);
+	}
+
+	private function onComplete():Void
+	{
+		trace("complete");
+		addChild(new Image(assetManager.getTexture("back-button-disabled-skin0000")));
+	}
+
+	private function onError(msg:String):Void
+	{
+		trace(msg);
+	}
+
+	private function onProgress(ratio:Float):Void
+	{
+		trace(ratio);
 	}
 	
 }

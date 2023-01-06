@@ -202,7 +202,7 @@ class DefaultPopUpManager implements IPopUpManager
 		//removing pop-ups may call event listeners that add new pop-ups,
 		//and we don't want to remove the new ones or miss old ones, so
 		//create a copy of the _popUps Vector to be safe.
-		var popUps:Array<DisplayObject> = this._popUps.slice(0);
+		var popUps:Array<DisplayObject> = this._popUps.copy();
 		var popUpCount:Int = popUps.length;
 		for(i in 0...popUpCount)
 		{
