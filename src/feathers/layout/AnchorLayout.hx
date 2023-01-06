@@ -9,6 +9,7 @@ package feathers.layout;
 
 import feathers.core.IMeasureDisplayObject;
 import feathers.core.IValidating;
+import feathers.utils.type.SafeCast;
 import openfl.errors.IllegalOperationError;
 import openfl.geom.Point;
 import feathers.core.IFeathersControl;
@@ -1033,7 +1034,7 @@ class AnchorLayout extends EventDispatcher implements ILayout
 		var itemCount:Int = items.length;
 		for (i in 0...itemCount)
 		{
-			var otherItem:ILayoutDisplayObject = cast items[i];
+			var otherItem:ILayoutDisplayObject = SafeCast.safe_cast(items[i], ILayoutDisplayObject);
 			if (otherItem == null || otherItem == item)
 			{
 				continue;
