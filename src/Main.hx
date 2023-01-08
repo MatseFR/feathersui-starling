@@ -44,7 +44,6 @@ class Main extends Sprite
 		_starling.simulateMultitouch = true;
 		_starling.addEventListener(Event.ROOT_CREATED, function():Void
 		{
-			//loadAssets(startGame);
 			trace("root created");
 		});
 		

@@ -23,8 +23,10 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
 package feathers.themes;
+import feathers.controls.Alert;
 import feathers.controls.AutoSizeMode;
 import feathers.controls.Button;
+import feathers.controls.ButtonGroup;
 import feathers.controls.ButtonState;
 import feathers.controls.Check;
 import feathers.controls.Header;
@@ -833,10 +835,10 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	{
 		// TODO : restore when ready
 		//alert
-		//this.getStyleProviderForClass(Alert).defaultStyleFunction = this.setAlertStyles;
-		//this.getStyleProviderForClass(Header).setFunctionForStyleName(Alert.DEFAULT_CHILD_STYLE_NAME_HEADER, this.setPopupHeaderStyles);
-		//this.getStyleProviderForClass(ButtonGroup).setFunctionForStyleName(Alert.DEFAULT_CHILD_STYLE_NAME_BUTTON_GROUP, this.setAlertButtonGroupStyles);
-		//this.getStyleProviderForClass(Button).setFunctionForStyleName(THEME_STYLE_NAME_ALERT_BUTTON_GROUP_BUTTON, this.setAlertButtonGroupButtonStyles);
+		this.getStyleProviderForClass(Alert).defaultStyleFunction = this.setAlertStyles;
+		this.getStyleProviderForClass(Header).setFunctionForStyleName(Alert.DEFAULT_CHILD_STYLE_NAME_HEADER, this.setPopupHeaderStyles);
+		this.getStyleProviderForClass(ButtonGroup).setFunctionForStyleName(Alert.DEFAULT_CHILD_STYLE_NAME_BUTTON_GROUP, this.setAlertButtonGroupStyles);
+		this.getStyleProviderForClass(Button).setFunctionForStyleName(THEME_STYLE_NAME_ALERT_BUTTON_GROUP_BUTTON, this.setAlertButtonGroupButtonStyles);
 		
 		//autocomplete
 		//this.getStyleProviderForClass(AutoComplete).defaultStyleFunction = this.setTextInputStyles;
@@ -851,8 +853,8 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		this.getStyleProviderForClass(Button).setFunctionForStyleName(Button.ALTERNATE_STYLE_NAME_FORWARD_BUTTON, this.setForwardButtonStyles);
 		
 		//button group
-		//this.getStyleProviderForClass(ButtonGroup).defaultStyleFunction = this.setButtonGroupStyles;
-		//this.getStyleProviderForClass(Button).setFunctionForStyleName(ButtonGroup.DEFAULT_CHILD_STYLE_NAME_BUTTON, this.setButtonGroupButtonStyles);
+		this.getStyleProviderForClass(ButtonGroup).defaultStyleFunction = this.setButtonGroupStyles;
+		this.getStyleProviderForClass(Button).setFunctionForStyleName(ButtonGroup.DEFAULT_CHILD_STYLE_NAME_BUTTON, this.setButtonGroupButtonStyles);
 		
 		//callout
 		//this.getStyleProviderForClass(Callout).defaultStyleFunction = this.setCalloutStyles;
@@ -1119,39 +1121,39 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	// Alert
 	//-------------------------
 	
-	//private function setAlertStyles(alert:Alert):Void
-	//{
-		//this.setScrollerStyles(alert);
-		//
-		//var backgroundSkin:Image = new Image(this.backgroundPopUpSkinTexture);
-		//backgroundSkin.scale9Grid = SIMPLE_SCALE9_GRID;
-		//alert.backgroundSkin = backgroundSkin;
-		//
-		//alert.fontStyles = this.lightFontStyles.clone();
-		//alert.disabledFontStyles = this.lightDisabledFontStyles.clone();
-		//
-		//alert.paddingTop = this.gutterSize;
-		//alert.paddingRight = this.gutterSize;
-		//alert.paddingBottom = this.smallGutterSize;
-		//alert.paddingLeft = this.gutterSize;
-		//alert.outerPadding = this.borderSize;
-		//alert.gap = this.smallGutterSize;
-		//alert.maxWidth = this.popUpSize;
-		//alert.maxHeight = this.popUpSize;
-	//}
+	private function setAlertStyles(alert:Alert):Void
+	{
+		this.setScrollerStyles(alert);
+		
+		var backgroundSkin:Image = new Image(this.backgroundPopUpSkinTexture);
+		backgroundSkin.scale9Grid = SIMPLE_SCALE9_GRID;
+		alert.backgroundSkin = backgroundSkin;
+		
+		alert.fontStyles = this.lightFontStyles.clone();
+		alert.disabledFontStyles = this.lightDisabledFontStyles.clone();
+		
+		alert.paddingTop = this.gutterSize;
+		alert.paddingRight = this.gutterSize;
+		alert.paddingBottom = this.smallGutterSize;
+		alert.paddingLeft = this.gutterSize;
+		alert.outerPadding = this.borderSize;
+		alert.gap = this.smallGutterSize;
+		alert.maxWidth = this.popUpSize;
+		alert.maxHeight = this.popUpSize;
+	}
 	
 	//see Panel section for Header styles
 	
-	//private function setAlertButtonGroupStyles(group:ButtonGroup):Void
-	//{
-		//group.customButtonStyleName = THEME_STYLE_NAME_ALERT_BUTTON_GROUP_BUTTON;
-		//group.direction = Direction.HORIZONTAL;
-		//group.horizontalAlign = HorizontalAlign.CENTER;
-		//group.verticalAlign = VerticalAlign.JUSTIFY;
-		//group.distributeButtonSizes = false;
-		//group.gap = this.smallGutterSize;
-		//group.padding = this.smallGutterSize;
-	//}
+	private function setAlertButtonGroupStyles(group:ButtonGroup):Void
+	{
+		group.customButtonStyleName = THEME_STYLE_NAME_ALERT_BUTTON_GROUP_BUTTON;
+		group.direction = Direction.HORIZONTAL;
+		group.horizontalAlign = HorizontalAlign.CENTER;
+		group.verticalAlign = VerticalAlign.JUSTIFY;
+		group.distributeButtonSizes = false;
+		group.gap = this.smallGutterSize;
+		group.padding = this.smallGutterSize;
+	}
 	
 	private function setAlertButtonGroupButtonStyles(button:Button):Void
 	{
@@ -1337,10 +1339,10 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	//-------------------------
 	// ButtonGroup
 	//-------------------------
-	//private function setButtonGroupStyles(group:ButtonGroup):Void
-	//{
-		//group.gap = this.smallGutterSize;
-	//}
+	private function setButtonGroupStyles(group:ButtonGroup):Void
+	{
+		group.gap = this.smallGutterSize;
+	}
 
 	private function setButtonGroupButtonStyles(button:Button):Void
 	{
