@@ -16,6 +16,7 @@ import feathers.core.PropertyProxyReal;
 import feathers.events.FeathersEventType;
 import feathers.skins.IStyleProvider;
 import feathers.utils.skins.SkinsUtils;
+import haxe.Constraints.Function;
 import starling.display.DisplayObject;
 import starling.events.Event;
 
@@ -450,10 +451,10 @@ class Panel extends ScrollContainer implements IFocusExtras
 	 *
 	 * @see feathers.core.FeathersControl
 	 */
-	public var footerFactory(get, set):Void->IFeathersControl;
-	private var _footerFactory:Void->IFeathersControl;
-	private function get_footerFactory():Void->IFeathersControl { return this._footerFactory; }
-	private function set_footerFactory(value:Void->IFeathersControl):Void->IFeathersControl
+	public var footerFactory(get, set):Function;
+	private var _footerFactory:Function;
+	private function get_footerFactory():Function { return this._footerFactory; }
+	private function set_footerFactory(value:Function):Function
 	{
 		if (this._footerFactory == value)
 		{
