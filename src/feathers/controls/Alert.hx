@@ -1144,7 +1144,7 @@ class Alert extends Panel
 			return;
 		}
 		if (this._cancelButtonIndex != -1 &&
-			(#if flash keyCode == Keyboard.BACK #else keyCode == Keyboard.BACKSPACE #end || keyCode == Keyboard.ESCAPE))
+			(#if flash keyCode == Keyboard.BACK || #end keyCode == Keyboard.ESCAPE))
 		{
 			//don't let the OS handle the event
 			event.preventDefault();
