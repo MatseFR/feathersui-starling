@@ -209,7 +209,8 @@ class StyleProviderRegistry
 		//trace(Reflect.getProperty(type, "no_property"));
 		#if html5
 		// TODO : find a better way of checking that a property exists in JS
-		if (!this._registerGlobally || Type.getClassFields(type).contains(GLOBAL_STYLE_PROVIDER_PROPERTY_NAME))
+		//if (!this._registerGlobally || Type.getClassFields(type).contains(GLOBAL_STYLE_PROVIDER_PROPERTY_NAME))
+		if (untyped '"globalStyleProvider" in type')
 		#else
 		if (!this._registerGlobally || Reflect.hasField(type, GLOBAL_STYLE_PROVIDER_PROPERTY_NAME))
 		#end
