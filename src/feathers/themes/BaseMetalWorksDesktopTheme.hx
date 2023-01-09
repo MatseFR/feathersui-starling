@@ -30,6 +30,7 @@ import feathers.controls.ButtonGroup;
 import feathers.controls.ButtonState;
 import feathers.controls.Check;
 import feathers.controls.Header;
+import feathers.controls.ImageLoader;
 import feathers.controls.Label;
 import feathers.controls.LayoutGroup;
 import feathers.controls.Panel;
@@ -1042,19 +1043,19 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		//this.getStyleProviderForClass(Button).setFunctionForStyleName(VolumeSlider.DEFAULT_CHILD_STYLE_NAME_MAXIMUM_TRACK, this.setVolumeSliderMaximumTrackStyles);
 	}
 	
-	//private function pageIndicatorNormalSymbolFactory():DisplayObject
-	//{
-		//var symbol:ImageLoader = new ImageLoader();
-		//symbol.source = this.pageIndicatorNormalSkinTexture;
-		//return symbol;
-	//}
+	private function pageIndicatorNormalSymbolFactory():DisplayObject
+	{
+		var symbol:ImageLoader = new ImageLoader();
+		symbol.source = this.pageIndicatorNormalSkinTexture;
+		return symbol;
+	}
 	
-	//private function pageIndicatorSelectedSymbolFactory():DisplayObject
-	//{
-		//var symbol:ImageLoader = new ImageLoader();
-		//symbol.source = this.pageIndicatorSelectedSkinTexture;
-		//return symbol;
-	//}
+	private function pageIndicatorSelectedSymbolFactory():DisplayObject
+	{
+		var symbol:ImageLoader = new ImageLoader();
+		symbol.source = this.pageIndicatorSelectedSkinTexture;
+		return symbol;
+	}
 	
 	private function dataGridHeaderDividerFactory():DisplayObject
 	{
@@ -2860,34 +2861,34 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		//slider.showThumb = false;
 	//}
 	
-	//private function setVolumeSliderThumbStyles(thumb:Button):Void
-	//{
-		//var thumbSize:Number = 6;
-		//var defaultSkin:Quad = new Quad(thumbSize, thumbSize);
-		//defaultSkin.width = 0;
-		//defaultSkin.height = 0;
-		//thumb.defaultSkin = defaultSkin;
-		//thumb.hasLabelTextRenderer = false;
-	//}
+	private function setVolumeSliderThumbStyles(thumb:Button):Void
+	{
+		var thumbSize:Float = 6;
+		var defaultSkin:Quad = new Quad(thumbSize, thumbSize);
+		defaultSkin.width = 0;
+		defaultSkin.height = 0;
+		thumb.defaultSkin = defaultSkin;
+		thumb.hasLabelTextRenderer = false;
+	}
 	
-	//private function setVolumeSliderMinimumTrackStyles(track:Button):Void
-	//{
-		//var defaultSkin:ImageLoader = new ImageLoader();
-		//defaultSkin.scaleContent = false;
-		//defaultSkin.source = this.volumeSliderMinimumTrackSkinTexture;
-		//track.defaultSkin = defaultSkin;
-		//track.hasLabelTextRenderer = false;
-	//}
+	private function setVolumeSliderMinimumTrackStyles(track:Button):Void
+	{
+		var defaultSkin:ImageLoader = new ImageLoader();
+		defaultSkin.scaleContent = false;
+		defaultSkin.source = this.volumeSliderMinimumTrackSkinTexture;
+		track.defaultSkin = defaultSkin;
+		track.hasLabelTextRenderer = false;
+	}
 	
-	//private function setVolumeSliderMaximumTrackStyles(track:Button):Void
-	//{
-		//var defaultSkin:ImageLoader = new ImageLoader();
-		//defaultSkin.scaleContent = false;
-		//defaultSkin.horizontalAlign = HorizontalAlign.RIGHT;
-		//defaultSkin.source = this.volumeSliderMaximumTrackSkinTexture;
-		//track.defaultSkin = defaultSkin;
-		//track.hasLabelTextRenderer = false;
-	//}
+	private function setVolumeSliderMaximumTrackStyles(track:Button):Void
+	{
+		var defaultSkin:ImageLoader = new ImageLoader();
+		defaultSkin.scaleContent = false;
+		defaultSkin.horizontalAlign = HorizontalAlign.RIGHT;
+		defaultSkin.source = this.volumeSliderMaximumTrackSkinTexture;
+		track.defaultSkin = defaultSkin;
+		track.hasLabelTextRenderer = false;
+	}
 	
 	//-------------------------
 	// MuteToggleButton

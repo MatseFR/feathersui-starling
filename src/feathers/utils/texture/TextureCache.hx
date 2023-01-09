@@ -210,7 +210,7 @@ class TextureCache
 	 */
 	public function getRetainCount(key:String):Int
 	{
-		if (this._retainCounts != null && this._retainCounts.exists(key)
+		if (this._retainCounts != null && this._retainCounts.exists(key))
 		{
 			return this._retainCounts[key];
 		}

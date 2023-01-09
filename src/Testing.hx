@@ -4,6 +4,7 @@ import feathers.controls.AutoSizeMode;
 import feathers.controls.Button;
 import feathers.controls.ButtonGroup;
 import feathers.controls.Check;
+import feathers.controls.ImageLoader;
 import feathers.controls.Label;
 import feathers.controls.LayoutGroup;
 import feathers.controls.Radio;
@@ -62,6 +63,7 @@ class Testing extends Sprite
 		var navigator:ScreenNavigator = new ScreenNavigator();
 		var stackNavigator:StackScreenNavigator = new StackScreenNavigator();
 		var grp:ButtonGroup = new ButtonGroup();
+		var imgLoader:ImageLoader;
 		
 		var group:LayoutGroup = new LayoutGroup();
 		group.autoSizeMode = AutoSizeMode.STAGE;
