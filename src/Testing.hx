@@ -7,6 +7,7 @@ import feathers.controls.Check;
 import feathers.controls.ImageLoader;
 import feathers.controls.Label;
 import feathers.controls.LayoutGroup;
+import feathers.controls.ProgressBar;
 import feathers.controls.Radio;
 import feathers.controls.ScreenNavigator;
 import feathers.controls.ScrollContainer;
@@ -21,6 +22,7 @@ import feathers.layout.VerticalAlign;
 import feathers.layout.VerticalLayout;
 import feathers.themes.MetalWorksDesktopTheme;
 import feathers.utils.math.MathUtils;
+import feathers.utils.type.ArgumentsCount;
 import openfl.utils.Assets;
 import starling.assets.AssetManager;
 import starling.display.Image;
@@ -39,6 +41,8 @@ class Testing extends Sprite
 	{
 		super();
 		this.addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
+		
+		//trace(ArgumentsCount.count_args(addedToStageHandler));
 	}
 	
 	/**
@@ -137,6 +141,10 @@ class Testing extends Sprite
 		slider.maximum = 10;
 		//slider.step = 1;
 		container.addChild(slider);
+		
+		var progress:ProgressBar = new ProgressBar();
+		progress.value = 0.5;
+		container.addChild(progress);
 	}
 	
 	private var assetManager:AssetManager;

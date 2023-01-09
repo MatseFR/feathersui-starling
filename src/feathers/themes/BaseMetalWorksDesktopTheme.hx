@@ -28,12 +28,14 @@ import feathers.controls.AutoSizeMode;
 import feathers.controls.Button;
 import feathers.controls.ButtonGroup;
 import feathers.controls.ButtonState;
+import feathers.controls.Callout;
 import feathers.controls.Check;
 import feathers.controls.Header;
 import feathers.controls.ImageLoader;
 import feathers.controls.Label;
 import feathers.controls.LayoutGroup;
 import feathers.controls.Panel;
+import feathers.controls.ProgressBar;
 import feathers.controls.Radio;
 import feathers.controls.ScrollBar;
 import feathers.controls.ScrollBarDisplayMode;
@@ -858,7 +860,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		this.getStyleProviderForClass(Button).setFunctionForStyleName(ButtonGroup.DEFAULT_CHILD_STYLE_NAME_BUTTON, this.setButtonGroupButtonStyles);
 		
 		//callout
-		//this.getStyleProviderForClass(Callout).defaultStyleFunction = this.setCalloutStyles;
+		this.getStyleProviderForClass(Callout).defaultStyleFunction = this.setCalloutStyles;
 		
 		//check
 		this.getStyleProviderForClass(Check).defaultStyleFunction = this.setCheckStyles;
@@ -931,7 +933,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		//this.getStyleProviderForClass(List).setFunctionForStyleName(PickerList.DEFAULT_CHILD_STYLE_NAME_LIST, this.setDropDownListStyles);
 		
 		//progress bar
-		//this.getStyleProviderForClass(ProgressBar).defaultStyleFunction = this.setProgressBarStyles;
+		this.getStyleProviderForClass(ProgressBar).defaultStyleFunction = this.setProgressBarStyles;
 		
 		//radio
 		this.getStyleProviderForClass(Radio).defaultStyleFunction = this.setRadioStyles;
@@ -1378,59 +1380,59 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	// Callout
 	//-------------------------
 	
-	//private function setCalloutStyles(callout:Callout):Void
-	//{
-		//var backgroundSkin:Image = new Image(this.backgroundPopUpSkinTexture);
-		//backgroundSkin.scale9Grid = SIMPLE_SCALE9_GRID;
-		//backgroundSkin.width = this.calloutBackgroundMinSize;
-		//backgroundSkin.height = this.calloutBackgroundMinSize;
-		//callout.backgroundSkin = backgroundSkin;
-		//
-		//var topArrowSkin:Image = new Image(this.calloutTopArrowSkinTexture);
-		//callout.topArrowSkin = topArrowSkin;
-		//callout.topArrowGap = this.calloutArrowOverlapGap;
-		//
-		//var rightArrowSkin:Image = new Image(this.calloutRightArrowSkinTexture);
-		//callout.rightArrowSkin = rightArrowSkin;
-		//callout.rightArrowGap = this.calloutArrowOverlapGap;
-		//
-		//var bottomArrowSkin:Image = new Image(this.calloutBottomArrowSkinTexture);
-		//callout.bottomArrowSkin = bottomArrowSkin;
-		//callout.bottomArrowGap = this.calloutArrowOverlapGap;
-		//
-		//var leftArrowSkin:Image = new Image(this.calloutLeftArrowSkinTexture);
-		//callout.leftArrowSkin = leftArrowSkin;
-		//callout.leftArrowGap = this.calloutArrowOverlapGap;
-		//
-		//callout.padding = this.gutterSize;
-	//}
+	private function setCalloutStyles(callout:Callout):Void
+	{
+		var backgroundSkin:Image = new Image(this.backgroundPopUpSkinTexture);
+		backgroundSkin.scale9Grid = SIMPLE_SCALE9_GRID;
+		backgroundSkin.width = this.calloutBackgroundMinSize;
+		backgroundSkin.height = this.calloutBackgroundMinSize;
+		callout.backgroundSkin = backgroundSkin;
+		
+		var topArrowSkin:Image = new Image(this.calloutTopArrowSkinTexture);
+		callout.topArrowSkin = topArrowSkin;
+		callout.topArrowGap = this.calloutArrowOverlapGap;
+		
+		var rightArrowSkin:Image = new Image(this.calloutRightArrowSkinTexture);
+		callout.rightArrowSkin = rightArrowSkin;
+		callout.rightArrowGap = this.calloutArrowOverlapGap;
+		
+		var bottomArrowSkin:Image = new Image(this.calloutBottomArrowSkinTexture);
+		callout.bottomArrowSkin = bottomArrowSkin;
+		callout.bottomArrowGap = this.calloutArrowOverlapGap;
+		
+		var leftArrowSkin:Image = new Image(this.calloutLeftArrowSkinTexture);
+		callout.leftArrowSkin = leftArrowSkin;
+		callout.leftArrowGap = this.calloutArrowOverlapGap;
+		
+		callout.padding = this.gutterSize;
+	}
 
-	//private function setDangerCalloutStyles(callout:Callout):Void
-	//{
-		//var backgroundSkin:Image = new Image(this.backgroundDangerPopUpSkinTexture);
-		//backgroundSkin.scale9Grid = SIMPLE_SCALE9_GRID;
-		//backgroundSkin.width = this.calloutBackgroundMinSize;
-		//backgroundSkin.height = this.calloutBackgroundMinSize;
-		//callout.backgroundSkin = backgroundSkin;
-		//
-		//var topArrowSkin:Image = new Image(this.dangerCalloutTopArrowSkinTexture);
-		//callout.topArrowSkin = topArrowSkin;
-		//callout.topArrowGap = this.calloutArrowOverlapGap;
-		//
-		//var rightArrowSkin:Image = new Image(this.dangerCalloutRightArrowSkinTexture);
-		//callout.rightArrowSkin = rightArrowSkin;
-		//callout.rightArrowGap = this.calloutArrowOverlapGap;
-		//
-		//var bottomArrowSkin:Image = new Image(this.dangerCalloutBottomArrowSkinTexture);
-		//callout.bottomArrowSkin = bottomArrowSkin;
-		//callout.bottomArrowGap = this.calloutArrowOverlapGap;
-		//
-		//var leftArrowSkin:Image = new Image(this.dangerCalloutLeftArrowSkinTexture);
-		//callout.leftArrowSkin = leftArrowSkin;
-		//callout.leftArrowGap = this.calloutArrowOverlapGap;
-		//
-		//callout.padding = this.gutterSize;
-	//}
+	private function setDangerCalloutStyles(callout:Callout):Void
+	{
+		var backgroundSkin:Image = new Image(this.backgroundDangerPopUpSkinTexture);
+		backgroundSkin.scale9Grid = SIMPLE_SCALE9_GRID;
+		backgroundSkin.width = this.calloutBackgroundMinSize;
+		backgroundSkin.height = this.calloutBackgroundMinSize;
+		callout.backgroundSkin = backgroundSkin;
+		
+		var topArrowSkin:Image = new Image(this.dangerCalloutTopArrowSkinTexture);
+		callout.topArrowSkin = topArrowSkin;
+		callout.topArrowGap = this.calloutArrowOverlapGap;
+		
+		var rightArrowSkin:Image = new Image(this.dangerCalloutRightArrowSkinTexture);
+		callout.rightArrowSkin = rightArrowSkin;
+		callout.rightArrowGap = this.calloutArrowOverlapGap;
+		
+		var bottomArrowSkin:Image = new Image(this.dangerCalloutBottomArrowSkinTexture);
+		callout.bottomArrowSkin = bottomArrowSkin;
+		callout.bottomArrowGap = this.calloutArrowOverlapGap;
+		
+		var leftArrowSkin:Image = new Image(this.dangerCalloutLeftArrowSkinTexture);
+		callout.leftArrowSkin = leftArrowSkin;
+		callout.leftArrowGap = this.calloutArrowOverlapGap;
+		
+		callout.padding = this.gutterSize;
+	}
 	
 	//-------------------------
 	// Check
@@ -2054,64 +2056,64 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	// ProgressBar
 	//-------------------------
 
-	//private function setProgressBarStyles(progress:ProgressBar):Void
-	//{
-		//var backgroundSkin:Image = new Image(this.backgroundSkinTexture);
-		//backgroundSkin.scale9Grid = DEFAULT_SCALE9_GRID;
-		//if (progress.direction == Direction.VERTICAL)
-		//{
-			//backgroundSkin.width = this.smallControlSize;
-			//backgroundSkin.height = this.wideControlSize;
-		//}
-		//else
-		//{
-			//backgroundSkin.width = this.wideControlSize;
-			//backgroundSkin.height = this.smallControlSize;
-		//}
-		//progress.backgroundSkin = backgroundSkin;
-		//
-		//var backgroundDisabledSkin:Image = new Image(this.backgroundDisabledSkinTexture);
-		//backgroundDisabledSkin.scale9Grid = DEFAULT_SCALE9_GRID;
-		//if (progress.direction == Direction.VERTICAL)
-		//{
-			//backgroundDisabledSkin.width = this.smallControlSize;
-			//backgroundDisabledSkin.height = this.wideControlSize;
-		//}
-		//else
-		//{
-			//backgroundDisabledSkin.width = this.wideControlSize;
-			//backgroundDisabledSkin.height = this.smallControlSize;
-		//}
-		//progress.backgroundDisabledSkin = backgroundDisabledSkin;
-		//
-		//var fillSkin:Image = new Image(this.buttonUpSkinTexture);
-		//fillSkin.scale9Grid = BUTTON_SCALE9_GRID;
-		//if (progress.direction == Direction.VERTICAL)
-		//{
-			//fillSkin.width = this.smallControlSize;
-			//fillSkin.height = this.progressBarFillMinSize;
-		//}
-		//else
-		//{
-			//fillSkin.width = this.progressBarFillMinSize;
-			//fillSkin.height = this.smallControlSize;
-		//}
-		//progress.fillSkin = fillSkin;
-		//
-		//var fillDisabledSkin:Image = new Image(this.buttonDisabledSkinTexture);
-		//fillDisabledSkin.scale9Grid = BUTTON_SCALE9_GRID;
-		//if(progress.direction == Direction.VERTICAL)
-		//{
-			//fillDisabledSkin.width = this.smallControlSize;
-			//fillDisabledSkin.height = this.progressBarFillMinSize;
-		//}
-		//else
-		//{
-			//fillDisabledSkin.width = this.progressBarFillMinSize;
-			//fillDisabledSkin.height = this.smallControlSize;
-		//}
-		//progress.fillDisabledSkin = fillDisabledSkin;
-	//}
+	private function setProgressBarStyles(progress:ProgressBar):Void
+	{
+		var backgroundSkin:Image = new Image(this.backgroundSkinTexture);
+		backgroundSkin.scale9Grid = DEFAULT_SCALE9_GRID;
+		if (progress.direction == Direction.VERTICAL)
+		{
+			backgroundSkin.width = this.smallControlSize;
+			backgroundSkin.height = this.wideControlSize;
+		}
+		else
+		{
+			backgroundSkin.width = this.wideControlSize;
+			backgroundSkin.height = this.smallControlSize;
+		}
+		progress.backgroundSkin = backgroundSkin;
+		
+		var backgroundDisabledSkin:Image = new Image(this.backgroundDisabledSkinTexture);
+		backgroundDisabledSkin.scale9Grid = DEFAULT_SCALE9_GRID;
+		if (progress.direction == Direction.VERTICAL)
+		{
+			backgroundDisabledSkin.width = this.smallControlSize;
+			backgroundDisabledSkin.height = this.wideControlSize;
+		}
+		else
+		{
+			backgroundDisabledSkin.width = this.wideControlSize;
+			backgroundDisabledSkin.height = this.smallControlSize;
+		}
+		progress.backgroundDisabledSkin = backgroundDisabledSkin;
+		
+		var fillSkin:Image = new Image(this.buttonUpSkinTexture);
+		fillSkin.scale9Grid = BUTTON_SCALE9_GRID;
+		if (progress.direction == Direction.VERTICAL)
+		{
+			fillSkin.width = this.smallControlSize;
+			fillSkin.height = this.progressBarFillMinSize;
+		}
+		else
+		{
+			fillSkin.width = this.progressBarFillMinSize;
+			fillSkin.height = this.smallControlSize;
+		}
+		progress.fillSkin = fillSkin;
+		
+		var fillDisabledSkin:Image = new Image(this.buttonDisabledSkinTexture);
+		fillDisabledSkin.scale9Grid = BUTTON_SCALE9_GRID;
+		if(progress.direction == Direction.VERTICAL)
+		{
+			fillDisabledSkin.width = this.smallControlSize;
+			fillDisabledSkin.height = this.progressBarFillMinSize;
+		}
+		else
+		{
+			fillDisabledSkin.width = this.progressBarFillMinSize;
+			fillDisabledSkin.height = this.smallControlSize;
+		}
+		progress.fillDisabledSkin = fillDisabledSkin;
+	}
 	
 	//-------------------------
 	// Radio

@@ -1634,7 +1634,8 @@ class ImageLoader extends FeathersControl
 			{
 				this.cleanupTexture();
 				this.invalidate(FeathersControl.INVALIDATION_FLAG_DATA);
-				this.dispatchEventWith(starling.events.Event.IO_ERROR, false, new IOErrorEvent(IOErrorEvent.IO_ERROR, false, false, error.toString()));
+				//this.dispatchEventWith(starling.events.Event.IO_ERROR, false, new IOErrorEvent(IOErrorEvent.IO_ERROR, false, false, error.toString()));
+				this.dispatchEventWith(starling.events.Event.IO_ERROR, false, new IOErrorEvent(IOErrorEvent.IO_ERROR, false, false, error.message));
 				return;
 			}
 			this._texture.root.onRestore = this.createTextureOnRestore(this._texture,
@@ -1740,7 +1741,8 @@ class ImageLoader extends FeathersControl
 			{
 				this.cleanupTexture();
 				this.invalidate(FeathersControl.INVALIDATION_FLAG_DATA);
-				this.dispatchEventWith(starling.events.Event.IO_ERROR, false, new IOErrorEvent(IOErrorEvent.IO_ERROR, false, false, error.toString()));
+				//this.dispatchEventWith(starling.events.Event.IO_ERROR, false, new IOErrorEvent(IOErrorEvent.IO_ERROR, false, false, error.toString()));
+				this.dispatchEventWith(starling.events.Event.IO_ERROR, false, new IOErrorEvent(IOErrorEvent.IO_ERROR, false, false, error.message));
 				return;
 			}
 			this._texture.root.onRestore = this.createTextureOnRestore(this._texture,

@@ -1,5 +1,7 @@
 package feathers.utils.type;
 import haxe.Constraints.Function;
+//import haxe.macro.Context;
+//import haxe.macro.Expr;
 import openfl.errors.Error;
 
 /**
@@ -26,16 +28,24 @@ class ArgumentsCount
 
 	//macro public static function count_args(func:Expr)
 	//{
-		//#if flash
-		//return macro untyped $func.length;
-		//#elseif neko
-		//return macro untyped ($nargs)($func);
-		//#elseif cpp
-		//return macro untyped $func.__ArgCount();
-		//#elseif html5
-		//return macro untyped $func.length;
-		//#end
-		////return macro untyped $func.length;
+		//if (Context.defined("flash"))
+		//{
+			//return macro untyped $func.length;
+		//}
+		//else if (Context.defined("neko"))
+		//{
+			////return macro untyped ($nargs)($func);
+			//var f = "untyped ($nargs)";
+			//return macro $i{f}($func);
+		//}
+		//else if (Context.defined("cpp"))
+		//{
+			//return macro untyped $func.__ArgCount();
+		//}
+		//else if (Context.defined("html5"))
+		//{
+			//return macro untyped $func.length;
+		//}
 		//return macro 123;
 	//}
 	
