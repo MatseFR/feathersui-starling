@@ -45,6 +45,7 @@ import feathers.controls.ScrollPolicy;
 import feathers.controls.Scroller;
 import feathers.controls.SimpleScrollBar;
 import feathers.controls.Slider;
+import feathers.controls.TextCallout;
 import feathers.controls.ToggleButton;
 import feathers.controls.TrackLayoutMode;
 import feathers.core.FeathersControl;
@@ -993,7 +994,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		//this.getStyleProviderForClass(TextCallout).setFunctionForStyleName(TextArea.DEFAULT_CHILD_STYLE_NAME_ERROR_CALLOUT, this.setTextAreaErrorCalloutStyles);
 		
 		//text callout
-		//this.getStyleProviderForClass(TextCallout).defaultStyleFunction = this.setTextCalloutStyles;
+		this.getStyleProviderForClass(TextCallout).defaultStyleFunction = this.setTextCalloutStyles;
 		
 		//toast
 		//this.getStyleProviderForClass(Toast).defaultStyleFunction = this.setToastStyles;
@@ -2585,13 +2586,13 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	// TextCallout
 	//-------------------------
 	
-	//private function setTextCalloutStyles(callout:TextCallout):Void
-	//{
-		//this.setCalloutStyles(callout);
-		//
-		//callout.fontStyles = this.lightFontStyles.clone();
-		//callout.disabledFontStyles = this.lightDisabledFontStyles.clone();
-	//}
+	private function setTextCalloutStyles(callout:TextCallout):Void
+	{
+		this.setCalloutStyles(callout);
+		
+		callout.fontStyles = this.lightFontStyles.clone();
+		callout.disabledFontStyles = this.lightDisabledFontStyles.clone();
+	}
 	
 	//-------------------------
 	// TextInput
