@@ -13,6 +13,7 @@ import feathers.controls.ScreenNavigator;
 import feathers.controls.ScrollContainer;
 import feathers.controls.Slider;
 import feathers.controls.StackScreenNavigator;
+import feathers.controls.TextInput;
 import feathers.controls.ToggleButton;
 import feathers.core.PropertyProxy;
 import feathers.core.PropertyProxyReal;
@@ -145,6 +146,9 @@ class Testing extends Sprite
 		var progress:ProgressBar = new ProgressBar();
 		progress.value = 0.5;
 		container.addChild(progress);
+		
+		var input:TextInput = new TextInput();
+		container.addChild(input);
 	}
 	
 	private var assetManager:AssetManager;

@@ -46,6 +46,8 @@ import feathers.controls.Scroller;
 import feathers.controls.SimpleScrollBar;
 import feathers.controls.Slider;
 import feathers.controls.TextCallout;
+import feathers.controls.TextInput;
+import feathers.controls.TextInputState;
 import feathers.controls.ToggleButton;
 import feathers.controls.TrackLayoutMode;
 import feathers.core.FeathersControl;
@@ -984,10 +986,10 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		//this.getStyleProviderForClass(ToggleButton).setFunctionForStyleName(TabBar.DEFAULT_CHILD_STYLE_NAME_TAB, this.setTabStyles);
 		
 		//text input
-		//this.getStyleProviderForClass(TextInput).defaultStyleFunction = this.setTextInputStyles;
-		//this.getStyleProviderForClass(TextInput).setFunctionForStyleName(TextInput.ALTERNATE_STYLE_NAME_SEARCH_TEXT_INPUT, this.setSearchTextInputStyles);
+		this.getStyleProviderForClass(TextInput).defaultStyleFunction = this.setTextInputStyles;
+		this.getStyleProviderForClass(TextInput).setFunctionForStyleName(TextInput.ALTERNATE_STYLE_NAME_SEARCH_TEXT_INPUT, this.setSearchTextInputStyles);
 		//this.getStyleProviderForClass(TextBlockTextEditor).setFunctionForStyleName(TextInput.DEFAULT_CHILD_STYLE_NAME_TEXT_EDITOR, this.setTextInputTextEditorStyles);
-		//this.getStyleProviderForClass(TextCallout).setFunctionForStyleName(TextInput.DEFAULT_CHILD_STYLE_NAME_ERROR_CALLOUT, this.setTextInputErrorCalloutStyles);
+		this.getStyleProviderForClass(TextCallout).setFunctionForStyleName(TextInput.DEFAULT_CHILD_STYLE_NAME_ERROR_CALLOUT, this.setTextInputErrorCalloutStyles);
 		
 		//text area
 		//this.getStyleProviderForClass(TextArea).defaultStyleFunction = this.setTextAreaStyles;
@@ -2598,36 +2600,36 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	// TextInput
 	//-------------------------
 	
-	//private function setBaseTextInputStyles(input:TextInput):Void
-	//{
-		//var skin:ImageSkin = new ImageSkin(this.backgroundSkinTexture);
-		//skin.setTextureForState(TextInputState.DISABLED, this.backgroundDisabledSkinTexture);
-		//skin.setTextureForState(TextInputState.FOCUSED, this.backgroundFocusedSkinTexture);
-		//skin.setTextureForState(TextInputState.ERROR, this.backgroundDangerSkinTexture);
-		//skin.scale9Grid = DEFAULT_SCALE9_GRID;
-		//skin.width = this.wideControlSize;
-		//skin.height = this.controlSize;
-		//skin.minWidth = this.controlSize;
-		//skin.minHeight = this.controlSize;
-		//input.backgroundSkin = skin;
-		//
-		//input.fontStyles = this.lightFontStyles.clone();
-		//input.disabledFontStyles = this.lightDisabledFontStyles.clone();
-		//
-		//input.promptFontStyles = this.lightFontStyles.clone();
-		//input.promptDisabledFontStyles = this.lightDisabledFontStyles.clone();
-		//
-		//input.gap = this.smallGutterSize;
-		//input.paddingTop = this.smallGutterSize;
-		//input.paddingBottom = this.smallGutterSize;
-		//input.paddingLeft = this.gutterSize;
-		//input.paddingRight = this.gutterSize;
-	//}
+	private function setBaseTextInputStyles(input:TextInput):Void
+	{
+		var skin:ImageSkin = new ImageSkin(this.backgroundSkinTexture);
+		skin.setTextureForState(TextInputState.DISABLED, this.backgroundDisabledSkinTexture);
+		skin.setTextureForState(TextInputState.FOCUSED, this.backgroundFocusedSkinTexture);
+		skin.setTextureForState(TextInputState.ERROR, this.backgroundDangerSkinTexture);
+		skin.scale9Grid = DEFAULT_SCALE9_GRID;
+		skin.width = this.wideControlSize;
+		skin.height = this.controlSize;
+		skin.minWidth = this.controlSize;
+		skin.minHeight = this.controlSize;
+		input.backgroundSkin = skin;
+		
+		input.fontStyles = this.lightFontStyles.clone();
+		input.disabledFontStyles = this.lightDisabledFontStyles.clone();
+		
+		input.promptFontStyles = this.lightFontStyles.clone();
+		input.promptDisabledFontStyles = this.lightDisabledFontStyles.clone();
+		
+		input.gap = this.smallGutterSize;
+		input.paddingTop = this.smallGutterSize;
+		input.paddingBottom = this.smallGutterSize;
+		input.paddingLeft = this.gutterSize;
+		input.paddingRight = this.gutterSize;
+	}
 	
-	//private function setTextInputStyles(input:TextInput):Void
-	//{
-		//this.setBaseTextInputStyles(input);
-	//}
+	private function setTextInputStyles(input:TextInput):Void
+	{
+		this.setBaseTextInputStyles(input);
+	}
 	
 	//private function setTextInputTextEditorStyles(textEditor:TextBlockTextEditor):Void
 	//{
@@ -2635,25 +2637,25 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		//textEditor.selectionSkin = new Quad(1, 1, TEXT_SELECTION_BACKGROUND_COLOR);
 	//}
 
-	//private function setTextInputErrorCalloutStyles(callout:TextCallout):Void
-	//{
-		//this.setDangerCalloutStyles(callout);
-		//
-		//callout.fontStyles = this.lightFontStyles.clone();
-		//callout.disabledFontStyles = this.lightDisabledFontStyles.clone();
-		//
-		//callout.horizontalAlign = HorizontalAlign.LEFT;
-		//callout.verticalAlign = VerticalAlign.TOP;
-	//}
+	private function setTextInputErrorCalloutStyles(callout:TextCallout):Void
+	{
+		this.setDangerCalloutStyles(callout);
+		
+		callout.fontStyles = this.lightFontStyles.clone();
+		callout.disabledFontStyles = this.lightDisabledFontStyles.clone();
+		
+		callout.horizontalAlign = HorizontalAlign.LEFT;
+		callout.verticalAlign = VerticalAlign.TOP;
+	}
 
-	//private function setSearchTextInputStyles(input:TextInput):Void
-	//{
-		//this.setBaseTextInputStyles(input);
-		//
-		//var icon:ImageSkin = new ImageSkin(this.searchIconTexture);
-		//icon.disabledTexture = this.searchIconDisabledTexture;
-		//input.defaultIcon = icon;
-	//}
+	private function setSearchTextInputStyles(input:TextInput):Void
+	{
+		this.setBaseTextInputStyles(input);
+		
+		var icon:ImageSkin = new ImageSkin(this.searchIconTexture);
+		icon.disabledTexture = this.searchIconDisabledTexture;
+		input.defaultIcon = icon;
+	}
 	
 	//-------------------------
 	// Toast

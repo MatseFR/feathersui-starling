@@ -18,11 +18,11 @@ package feathers.core;
  *
  * @productversion Feathers 2.0.0
  */
-interface IMultiLineTextEditor extends ITextEditor
+interface IMultilineTextEditor extends ITextEditor
 {
 	/**
 	 * Indicates whether the text editor can display more than one line of
 	 * text.
 	 */
-	public var multiLine(get, set):Bool;
+	public var multiline(get, set):Bool;
 }
