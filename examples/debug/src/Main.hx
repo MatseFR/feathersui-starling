@@ -28,7 +28,7 @@ class Main extends Sprite
 	{
 		removeEventListener(openfl.events.Event.ADDED_TO_STAGE, onAddedToStage);
 		
-		stage.scaleMode = StageScaleMode.NO_BORDER;
+		stage.scaleMode = StageScaleMode.NO_SCALE;
 		
 		start();
 	}
@@ -40,7 +40,7 @@ class Main extends Sprite
 		_starling.showStats = false;
 		_starling.skipUnchangedFrames = true;
 		_starling.supportBrowserZoom = true;
-		_starling.supportHighResolutions = true;
+		_starling.supportHighResolutions = false;
 		_starling.simulateMultitouch = true;
 		_starling.addEventListener(Event.ROOT_CREATED, function():Void
 		{
