@@ -1,0 +1,26 @@
+{
+	"name": "feathersui-starling",
+	"url": "https://github.com/MatseFR/feathersui-starling",
+	"license": "BSD-2",
+	"tags": [ 
+			"openfl",
+			"starling",
+			"ui",
+			"gui",
+			"user-interface",
+			"frontend",
+			"components",
+			"controls",
+			"widgets",
+			"layout"
+			],
+	"description": "haxe version of the as3 lib",
+	"version": "0.0.1",
+	"releasenote": "initial release",
+	"contributors": [ "matse" ],
+	"dependencies": {
+		"openfl":"",
+		"starling":"2.7"
+	},
+	"classPath": "src"
+}
