@@ -133,7 +133,7 @@ abstract class BaseScreenNavigator extends FeathersControl
 	/**
 	 * @private
 	 */
-	private var _nextScreenTransition:DisplayObject->DisplayObject->(?Bool->Void)->Void = null;
+	private var _nextScreenTransition:Function = null;
 
 	/**
 	 * @private
@@ -143,7 +143,7 @@ abstract class BaseScreenNavigator extends FeathersControl
 	/**
 	 * @private
 	 */
-	private var _delayedTransition:DisplayObject->DisplayObject->(?Bool->Void)->Void = null;
+	private var _delayedTransition:Function = null;
 
 	/**
 	 * @private
@@ -222,7 +222,7 @@ abstract class BaseScreenNavigator extends FeathersControl
 	/**
 	 * @private
 	 */
-	private var _waitingTransition:DisplayObject->DisplayObject->(?Bool->Void)->Void;
+	private var _waitingTransition:Function;
 
 	/**
 	 * @private
@@ -529,7 +529,7 @@ abstract class BaseScreenNavigator extends FeathersControl
 	/**
 	 * @private
 	 */
-	private function showScreenInternal(id:String, transition:DisplayObject->DisplayObject->(?Bool->Void)->Void, properties:Map<String, Dynamic> = null):DisplayObject
+	private function showScreenInternal(id:String, transition:Function, properties:Map<String, Dynamic> = null):DisplayObject
 	{
 		if (!this.hasScreen(id))
 		{
@@ -659,7 +659,7 @@ abstract class BaseScreenNavigator extends FeathersControl
 	/**
 	 * @private
 	 */
-	private function clearScreenInternal(transition:DisplayObject->DisplayObject->(?Bool->Void)->Void = null):Void
+	private function clearScreenInternal(transition:Function = null):Void
 	{
 		if (this._activeScreen == null)
 		{
@@ -741,7 +741,7 @@ abstract class BaseScreenNavigator extends FeathersControl
 	/**
 	 * @private
 	 */
-	private function startTransition(transition:DisplayObject->DisplayObject->(?Bool->Void)->Void):Void
+	private function startTransition(transition:Function):Void
 	{
 		this.dispatchEventWith(FeathersEventType.TRANSITION_START);
 		this._activeScreen.dispatchEventWith(FeathersEventType.TRANSITION_IN_START);
@@ -779,7 +779,7 @@ abstract class BaseScreenNavigator extends FeathersControl
 			this._activeScreen.visible = true;
 		}
 		
-		var transition:DisplayObject->DisplayObject->(?Bool->Void)->Void = this._waitingTransition;
+		var transition:Function = this._waitingTransition;
 		this._waitingTransition = null;
 		transition(this._previousScreenInTransition, this._activeScreen, transitionComplete);
 	}
@@ -859,7 +859,7 @@ abstract class BaseScreenNavigator extends FeathersControl
 		}
 		
 		this._isTransitionActive = false;
-		var nextTransition:DisplayObject->DisplayObject->(?Bool->Void)->Void = this._nextScreenTransition;
+		var nextTransition:Function = this._nextScreenTransition;
 		this._nextScreenTransition = null;
 		if (this._clearAfterTransition)
 		{
@@ -929,7 +929,7 @@ abstract class BaseScreenNavigator extends FeathersControl
 		{
 			return;
 		}
-		var transition:DisplayObject->DisplayObject->(?Bool->Void)->Void = this._delayedTransition;
+		var transition:Function = this._delayedTransition;
 		this._delayedTransition = null;
 		this.startTransition(transition);
 	}

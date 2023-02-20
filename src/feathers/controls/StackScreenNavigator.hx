@@ -142,10 +142,10 @@ class StackScreenNavigator extends BaseScreenNavigator
 	/**
 	 * @private
 	 */
-	public var pushTransition(get, set):DisplayObject->DisplayObject->(Dynamic->Void)->Void;
-	private var _pushTransition:DisplayObject->DisplayObject->(Dynamic->Void)->Void;
-	private function get_pushTransition():DisplayObject->DisplayObject->(Dynamic->Void)->Void { return this._pushTransition; }
-	private function set_pushTransition(value:DisplayObject->DisplayObject->(Dynamic->Void)->Void):DisplayObject->DisplayObject->(Dynamic->Void)->Void
+	public var pushTransition(get, set):Function;
+	private var _pushTransition:Function;
+	private function get_pushTransition():Function { return this._pushTransition; }
+	private function set_pushTransition(value:Function):Function
 	{
 		if (this.processStyleRestriction("pushTransition"))
 		{
@@ -157,10 +157,10 @@ class StackScreenNavigator extends BaseScreenNavigator
 	/**
 	 * @private
 	 */
-	public var popTransition(get, set):DisplayObject->DisplayObject->(Dynamic->Void)->Void;
-	private var _popTransition:DisplayObject->DisplayObject->(Dynamic->Void)->Void;
-	private function get_popTransition():DisplayObject->DisplayObject->(Dynamic->Void)->Void { return this._popTransition; }
-	private function set_popTransition(value:DisplayObject->DisplayObject->(Dynamic->Void)->Void):DisplayObject->DisplayObject->(Dynamic->Void)->Void
+	public var popTransition(get, set):Function;
+	private var _popTransition:Function;
+	private function get_popTransition():Function { return this._popTransition; }
+	private function set_popTransition(value:Function):Function
 	{
 		if (this.processStyleRestriction("popTransition"))
 		{
@@ -172,10 +172,10 @@ class StackScreenNavigator extends BaseScreenNavigator
 	/**
 	 * @private
 	 */
-	public var popToRootTransition(get, set):DisplayObject->DisplayObject->(Dynamic->Void)->Void;
-	private var _popToRootTransition:DisplayObject->DisplayObject->(Dynamic->Void)->Void;
-	private function get_popToRootTransition():DisplayObject->DisplayObject->(Dynamic->Void)->Void { return this._popToRootTransition; }
-	private function set_popToRootTransition(value:DisplayObject->DisplayObject->(Dynamic->Void)->Void):DisplayObject->DisplayObject->(Dynamic->Void)->Void
+	public var popToRootTransition(get, set):Function;
+	private var _popToRootTransition:Function;
+	private function get_popToRootTransition():Function { return this._popToRootTransition; }
+	private function set_popToRootTransition(value:Function):Function
 	{
 		if (this.processStyleRestriction("popToRootTransition"))
 		{
@@ -474,7 +474,7 @@ class StackScreenNavigator extends BaseScreenNavigator
 	 *
 	 * @see #pushTransition
 	 */
-	public function pushScreen(id:String, savedPreviousScreenProperties:Dynamic = null, transition:DisplayObject->DisplayObject->(Dynamic->Void)->Void = null):DisplayObject
+	public function pushScreen(id:String, savedPreviousScreenProperties:Dynamic = null, transition:Function = null):DisplayObject
 	{
 		if (transition == null)
 		{
@@ -512,7 +512,7 @@ class StackScreenNavigator extends BaseScreenNavigator
 	 *
 	 * @see #popTransition
 	 */
-	public function popScreen(transition:DisplayObject->DisplayObject->(Dynamic->Void)->Void = null):DisplayObject
+	public function popScreen(transition:Function = null):DisplayObject
 	{
 		if (this._stack.length == 0)
 		{
@@ -548,7 +548,7 @@ class StackScreenNavigator extends BaseScreenNavigator
 	 * @see #popToRootTransition
 	 * @see #popTransition
 	 */
-	public function popToRootScreen(transition:DisplayObject->DisplayObject->(Dynamic->Void)->Void = null):DisplayObject
+	public function popToRootScreen(transition:Function = null):DisplayObject
 	{
 		if (this._stack.length == 0)
 		{
@@ -586,7 +586,7 @@ class StackScreenNavigator extends BaseScreenNavigator
 	 *
 	 * @see #popTransition
 	 */
-	public function popAll(transition:DisplayObject->DisplayObject->(Dynamic->Void)->Void = null):Void
+	public function popAll(transition:Function = null):Void
 	{
 		if (this._activeScreen == null)
 		{
@@ -619,7 +619,7 @@ class StackScreenNavigator extends BaseScreenNavigator
 	 * @see #popToRootTransition
 	 * @see #popTransition
 	 */
-	public function popToRootScreenAndReplace(id:String, transition:DisplayObject->DisplayObject->(Dynamic->Void)->Void = null):DisplayObject
+	public function popToRootScreenAndReplace(id:String, transition:Function = null):DisplayObject
 	{
 		if (transition == null)
 		{
@@ -652,7 +652,7 @@ class StackScreenNavigator extends BaseScreenNavigator
 	 *
 	 * @see #pushTransition
 	 */
-	public function replaceScreen(id:String, transition:DisplayObject->DisplayObject->(Dynamic->Void)->Void = null):DisplayObject
+	public function replaceScreen(id:String, transition:Function = null):DisplayObject
 	{
 		if (transition == null)
 		{
