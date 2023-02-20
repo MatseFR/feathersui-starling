@@ -30,11 +30,13 @@ import feathers.controls.ButtonGroup;
 import feathers.controls.ButtonState;
 import feathers.controls.Callout;
 import feathers.controls.Check;
+import feathers.controls.Drawers;
 import feathers.controls.Header;
 import feathers.controls.ImageLoader;
 import feathers.controls.Label;
 import feathers.controls.LayoutGroup;
 import feathers.controls.Panel;
+import feathers.controls.PanelScreen;
 import feathers.controls.ProgressBar;
 import feathers.controls.Radio;
 import feathers.controls.ScrollBar;
@@ -876,7 +878,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		//this.getStyleProviderForClass(DefaultListItemRenderer).setFunctionForStyleName(THEME_STYLE_NAME_DATE_TIME_SPINNER_LIST_ITEM_RENDERER, this.setDateTimeSpinnerListItemRendererStyles);
 		
 		//drawers
-		//this.getStyleProviderForClass(Drawers).defaultStyleFunction = this.setDrawersStyles;
+		this.getStyleProviderForClass(Drawers).defaultStyleFunction = this.setDrawersStyles;
 		
 		//grouped list (see also: item renderers)
 		//this.getStyleProviderForClass(GroupedList).defaultStyleFunction = this.setGroupedListStyles;
@@ -926,8 +928,8 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		this.getStyleProviderForClass(Header).setFunctionForStyleName(Panel.DEFAULT_CHILD_STYLE_NAME_HEADER, this.setPopupHeaderStyles);
 		
 		//panel screen
-		//this.getStyleProviderForClass(PanelScreen).defaultStyleFunction = this.setPanelScreenStyles;
-		//this.getStyleProviderForClass(Header).setFunctionForStyleName(PanelScreen.DEFAULT_CHILD_STYLE_NAME_HEADER, this.setPanelScreenHeaderStyles);
+		this.getStyleProviderForClass(PanelScreen).defaultStyleFunction = this.setPanelScreenStyles;
+		this.getStyleProviderForClass(Header).setFunctionForStyleName(PanelScreen.DEFAULT_CHILD_STYLE_NAME_HEADER, this.setPanelScreenHeaderStyles);
 		
 		//picker list (see also: list and item renderers)
 		//this.getStyleProviderForClass(PickerList).defaultStyleFunction = this.setPickerListStyles;
@@ -1595,12 +1597,12 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	// Drawers
 	//-------------------------
 	
-	//private function setDrawersStyles(drawers:Drawers):Void
-	//{
-		//var overlaySkin:Quad = new Quad(1, 1, DRAWER_OVERLAY_COLOR);
-		//overlaySkin.alpha = DRAWER_OVERLAY_ALPHA;
-		//drawers.overlaySkin = overlaySkin;
-	//}
+	private function setDrawersStyles(drawers:Drawers):Void
+	{
+		var overlaySkin:Quad = new Quad(1, 1, DRAWER_OVERLAY_COLOR);
+		overlaySkin.alpha = DRAWER_OVERLAY_ALPHA;
+		drawers.overlaySkin = overlaySkin;
+	}
 	
 	//-------------------------
 	// GroupedList
@@ -1998,10 +2000,10 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	// PanelScreen
 	//-------------------------
 	
-	//private function setPanelScreenStyles(screen:PanelScreen):Void
-	//{
-		//this.setScrollerStyles(screen);
-	//}
+	private function setPanelScreenStyles(screen:PanelScreen):Void
+	{
+		this.setScrollerStyles(screen);
+	}
 	
 	private function setPanelScreenHeaderStyles(header:Header):Void
 	{
