@@ -877,12 +877,15 @@ class SimpleScrollBar extends FeathersControl implements IDirectionalScrollBar
 	 */
 	private function refreshThumbStyles():Void
 	{
-		var propertyValue:Dynamic;
-		for (propertyName in this._thumbProperties)
+		if (this._thumbProperties != null)
 		{
-			propertyValue = this._thumbProperties[propertyName];
-			//this.thumb[propertyName] = propertyValue;
-			Reflect.setProperty(this.thumb, propertyName, propertyValue);
+			var propertyValue:Dynamic;
+			for (propertyName in this._thumbProperties)
+			{
+				propertyValue = this._thumbProperties[propertyName];
+				//this.thumb[propertyName] = propertyValue;
+				Reflect.setProperty(this.thumb, propertyName, propertyValue);
+			}
 		}
 	}
 	
@@ -1034,7 +1037,7 @@ class SimpleScrollBar extends FeathersControl implements IDirectionalScrollBar
 	private function locationToValue(location:Point):Float
 	{
 		var percentage:Float = 0;
-		if(this._direction == Direction.VERTICAL)
+		if (this._direction == Direction.VERTICAL)
 		{
 			var trackScrollableHeight:Float = this.actualHeight - this.thumb.height - this._paddingTop - this._paddingBottom;
 			if (trackScrollableHeight > 0)
@@ -1256,7 +1259,7 @@ class SimpleScrollBar extends FeathersControl implements IDirectionalScrollBar
 	 */
 	private function repeatTimer_timerHandler(event:TimerEvent):Void
 	{
-		if(this._repeatTimer.currentCount < 5)
+		if (this._repeatTimer.currentCount < 5)
 		{
 			return;
 		}

@@ -71,7 +71,7 @@ class StyleNameFunctionTheme extends EventDispatcher
 			this._registry.dispose();
 			this._registry = null;
 		}
-		if(this._conditionalRegistry != null)
+		if (this._conditionalRegistry != null)
 		{
 			this.disposeConditionalRegistry();
 		}
@@ -148,7 +148,7 @@ class StyleNameFunctionTheme extends EventDispatcher
 				var nextStyleProvider:IStyleProvider = currentStyleProvider.falseStyleProvider;
 				if (currentStyleProvider == styleProviderInRegistry)
 				{
-					if(previousStyleProvider != null)
+					if (previousStyleProvider != null)
 					{
 						previousStyleProvider.falseStyleProvider = nextStyleProvider;
 					}

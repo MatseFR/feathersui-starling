@@ -551,7 +551,7 @@ class Slider extends FeathersControl implements IDirectionalScrollBar implements
 		{
 			return value;
 		}
-		if(this._minimumPadding == value)
+		if (this._minimumPadding == value)
 		{
 			return value;
 		}
@@ -572,7 +572,7 @@ class Slider extends FeathersControl implements IDirectionalScrollBar implements
 		{
 			return value;
 		}
-		if(this._maximumPadding == value)
+		if (this._maximumPadding == value)
 		{
 			return value;
 		}
@@ -1829,7 +1829,7 @@ class Slider extends FeathersControl implements IDirectionalScrollBar implements
 				percentage = 1;
 			}
 		}
-		if(this._direction == Direction.VERTICAL)
+		if (this._direction == Direction.VERTICAL)
 		{
 			var trackScrollableHeight:Float = this.actualHeight - this.thumb.height - this._minimumPadding - this._maximumPadding;
 			this.thumb.x = Math.fround((this.actualWidth - this.thumb.width) / 2) + this._thumbOffset;

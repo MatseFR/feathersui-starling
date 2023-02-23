@@ -1480,7 +1480,7 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 		{
 			this.textField.autoSize = TextFieldAutoSize.LEFT;
 			this.textField.wordWrap = false;
-			if(((this.textField.width / scaleFactor) - gutterDimensionsOffset) > this.actualWidth)
+			if (((this.textField.width / scaleFactor) - gutterDimensionsOffset) > this.actualWidth)
 			{
 				this.textField.wordWrap = true;
 			}
@@ -1497,7 +1497,7 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 		//instead of checking sizeInvalid, which will often be triggered by
 		//changing maxWidth or something for measurement, we check against
 		//the previous actualWidth/Height used for the snapshot.
-		if(stylesInvalid || dataInvalid || stateInvalid || this._needsNewTexture ||
+		if (stylesInvalid || dataInvalid || stateInvalid || this._needsNewTexture ||
 			this.actualWidth != this._previousActualWidth ||
 			this.actualHeight != this._previousActualHeight)
 		{
@@ -1533,7 +1533,7 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 		var needsHeight:Bool = this._explicitHeight != this._explicitHeight; //isNaN
 		var needsMinWidth:Bool = this._explicitMinWidth != this._explicitMinWidth; //isNaN
 		var needsMinHeight:Bool = this._explicitMinHeight != this._explicitMinHeight; //isNaN
-		if(!needsWidth && !needsHeight && !needsMinWidth && !needsMinHeight)
+		if (!needsWidth && !needsHeight && !needsMinWidth && !needsMinHeight)
 		{
 			return false;
 		}
@@ -1584,27 +1584,33 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 		var resultWidth:Float = 0;
 		var resultHeight:Float = 0;
 		var filterCount:Int = this._nativeFilters.length;
+		var filter:BitmapFilter;
+		var filterRect:Rectangle;
+		var filterX:Float;
+		var filterY:Float;
+		var filterWidth:Float;
+		var filterHeight:Float;
 		for (i in 0...filterCount)
 		{
-			var filter:BitmapFilter = this._nativeFilters[i];
-			var filterRect:Rectangle = bitmapData.generateFilterRect(bitmapData.rect, filter);
-			var filterX:Float = filterRect.x;
-			var filterY:Float = filterRect.y;
-			var filterWidth:Float = filterRect.width;
-			var filterHeight:Float = filterRect.height;
-			if(resultX > filterX)
+			filter = this._nativeFilters[i];
+			filterRect = bitmapData.generateFilterRect(bitmapData.rect, filter);
+			filterX = filterRect.x;
+			filterY = filterRect.y;
+			filterWidth = filterRect.width;
+			filterHeight = filterRect.height;
+			if (resultX > filterX)
 			{
 				resultX = filterX;
 			}
-			if(resultY > filterY)
+			if (resultY > filterY)
 			{
 				resultY = filterY;
 			}
-			if(resultWidth < filterWidth)
+			if (resultWidth < filterWidth)
 			{
 				resultWidth = filterWidth;
 			}
-			if(resultHeight < filterHeight)
+			if (resultHeight < filterHeight)
 			{
 				resultHeight = filterHeight;
 			}

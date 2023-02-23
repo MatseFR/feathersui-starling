@@ -100,7 +100,7 @@ class BasicButton extends FeathersControl implements IStateContext
 		{
 			//might be in another state for some reason
 			//let's only change to up if needed
-			if(this._currentState == ButtonState.DISABLED)
+			if (this._currentState == ButtonState.DISABLED)
 			{
 				this.changeState(ButtonState.UP);
 			}
@@ -521,7 +521,7 @@ class BasicButton extends FeathersControl implements IStateContext
 	private function getCurrentSkin():DisplayObject
 	{
 		var result:DisplayObject = this._stateToSkin[this._currentState];
-		if(result != null)
+		if (result != null)
 		{
 			return result;
 		}

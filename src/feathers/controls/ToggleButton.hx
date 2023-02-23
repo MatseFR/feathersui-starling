@@ -284,7 +284,7 @@ class ToggleButton extends Button implements IGroupedToggle
 			//processStyleRestriction(savedCallee);
 			processStyleRestriction("selectedFontStyles");
 		}
-		if( value != null)
+		if ( value != null)
 		{
 			value.removeEventListener(Event.CHANGE, changeHandler);
 		}

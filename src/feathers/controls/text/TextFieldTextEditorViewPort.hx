@@ -81,14 +81,14 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 			return value;
 		}
 		var valueIsNaN:Bool = value != value; //isNaN
-		if(valueIsNaN &&
+		if (valueIsNaN &&
 			this._explicitMinVisibleWidth != this._explicitMinVisibleWidth) //isNaN
 		{
 			return;
 		}
 		var oldValue:Float = this._explicitMinVisibleWidth;
 		this._explicitMinVisibleWidth = value;
-		if(valueIsNaN)
+		if (valueIsNaN)
 		{
 			this._actualMinVisibleWidth = 0;
 			this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
@@ -96,13 +96,14 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 		else
 		{
 			this._actualMinVisibleWidth = value;
-			if(this._explicitVisibleWidth != this._explicitVisibleWidth && //isNaN
+			if (this._explicitVisibleWidth != this._explicitVisibleWidth && //isNaN
 				(this._actualVisibleWidth < value || this._actualVisibleWidth == oldValue))
 			{
 				//only invalidate if this change might affect the visibleWidth
 				this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 			}
 		}
+		return value;
 	}
 	
 	public var maxVisibleWidth(get, set):Float;
@@ -110,22 +111,23 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 	private function get_maxVisibleWidth():Float { return this._maxVisibleWidth; }
 	private function set_maxVisibleWidth(value:Float):Float
 	{
-		if(this._maxVisibleWidth == value)
+		if (this._maxVisibleWidth == value)
 		{
 			return;
 		}
-		if(value != value) //isNaN
+		if (value != value) //isNaN
 		{
 			throw new ArgumentError("maxVisibleWidth cannot be NaN");
 		}
 		var oldValue:Float = this._maxVisibleWidth;
 		this._maxVisibleWidth = value;
-		if(this._explicitVisibleWidth != this._explicitVisibleWidth && //isNaN
+		if (this._explicitVisibleWidth != this._explicitVisibleWidth && //isNaN
 			(this._actualVisibleWidth > value || this._actualVisibleWidth == oldValue))
 		{
 			//only invalidate if this change might affect the visibleWidth
 			this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 		}
+		return value;
 	}
 	
 	private var _actualVisibleWidth:Float = 0;
@@ -135,7 +137,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 	public var visibleWidth(get, set):Float;
 	private function get_visibleWidth():Float
 	{
-		if(this._explicitVisibleWidth != this._explicitVisibleWidth) //isNaN
+		if (this._explicitVisibleWidth != this._explicitVisibleWidth) //isNaN
 		{
 			return this._actualVisibleWidth;
 		}
@@ -144,17 +146,18 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 	
 	private function set_visibleWidth(value:Float):Float
 	{
-		if(this._explicitVisibleWidth == value ||
+		if (this._explicitVisibleWidth == value ||
 			(value != value && this._explicitVisibleWidth != this._explicitVisibleWidth)) //isNaN
 		{
 			return;
 		}
 		this._explicitVisibleWidth = value;
-		if(this._actualVisibleWidth != value)
+		if (this._actualVisibleWidth != value)
 		{
 			this._actualVisibleWidth = value;
 			this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 		}
+		return this._explicitVisibleWidth;
 	}
 	
 	private var _actualMinVisibleHeight:Float = 0;
@@ -200,6 +203,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 				this.invalidate(INVALIDATION_FLAG_SIZE);
 			}
 		}
+		return this._explicitMinVisibleHeight;
 	}
 	
 	public var maxVisibleHeight(get, set):Float;
@@ -223,6 +227,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 			//only invalidate if this change might affect the visibleHeight
 			this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 		}
+		return this._maxVisibleHeight;
 	}
 	
 	private var _actualVisibleHeight:Float = 0;
@@ -247,11 +252,12 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 			return;
 		}
 		this._explicitVisibleHeight = value;
-		if(this._actualVisibleHeight != value)
+		if (this._actualVisibleHeight != value)
 		{
 			this._actualVisibleHeight = value;
 			this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 		}
+		return this._explicitVisibleHeight;
 	}
 	
 	public var contentX(get, never):Float;
@@ -276,9 +282,9 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 	private function get_verticalScrollPosition():Float { return this._verticalScrollPosition; }
 	private function set_verticalScrollPosition(value:Float):Float
 	{
-		if(this._verticalScrollPosition == value)
+		if (this._verticalScrollPosition == value)
 		{
-			return;
+			return value;
 		}
 		this._verticalScrollPosition = value;
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_SCROLL);
@@ -329,7 +335,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 	private function get_paddingTop():Float { return this._paddingTop; }
 	private function set_paddingTop(value:Float):Float
 	{
-		if(this._paddingTop == value)
+		if (this._paddingTop == value)
 		{
 			return;
 		}
@@ -349,7 +355,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 	private function get_paddingRight():Float { return this._paddingRight; }
 	private function set_paddingRight(value:Float):Float
 	{
-		if(this._paddingRight == value)
+		if (this._paddingRight == value)
 		{
 			return;
 		}
@@ -369,7 +375,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 	private function get_paddingBottom():Float { return this._paddingBottom; }
 	private function set_paddingBottom(value:Float):Float
 	{
-		if(this._paddingBottom == value)
+		if (this._paddingBottom == value)
 		{
 			return;
 		}
@@ -389,12 +395,13 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 	private function get_paddingLeft():Float { return this._paddingLeft; }
 	private function set_paddingLeft(value:Float):Float
 	{
-		if(this._paddingLeft == value)
+		if (this._paddingLeft == value)
 		{
 			return;
 		}
 		this._paddingLeft = value;
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
+		return this._paddingLeft;
 	}
 	
 	/**
@@ -420,23 +427,23 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 		var needsHeight:Bool = this._explicitVisibleHeight != this._explicitVisibleHeight; //isNaN
 		var needsMinWidth:Bool = this._explicitMinVisibleWidth != this._explicitMinVisibleWidth; //isNaN
 		var needsMinHeight:Bool = this._explicitMinVisibleHeight != this._explicitMinVisibleHeight; //isNaN
-		if(!needsWidth && !needsHeight && !needsMinWidth && !needsMinHeight)
+		if (!needsWidth && !needsHeight && !needsMinWidth && !needsMinHeight)
 		{
 			return result;
 		}
-		if(needsWidth)
+		if (needsWidth)
 		{
 			this._actualVisibleWidth = this.actualWidth;
 		}
-		if(needsHeight)
+		if (needsHeight)
 		{
 			this._actualVisibleHeight = this.actualHeight;
 		}
-		if(needsMinWidth)
+		if (needsMinWidth)
 		{
 			this._actualMinVisibleWidth = this.actualMinWidth;
 		}
-		if(needsMinHeight)
+		if (needsMinHeight)
 		{
 			this._actualMinVisibleHeight = this.actualMinHeight;
 		}
@@ -469,12 +476,12 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 		{
 			//this.measureTextField.wordWrap = false;
 			newWidth = this.measureTextField.width + this._paddingLeft + this._paddingRight - gutterDimensionsOffset;
-			if(this._explicitMinVisibleWidth == this._explicitMinVisibleWidth && //!isNaN
+			if (this._explicitMinVisibleWidth == this._explicitMinVisibleWidth && //!isNaN
 				newWidth < this._explicitMinVisibleWidth)
 			{
 				newWidth = this._explicitMinVisibleWidth;
 			}
-			else if(newWidth > this._maxVisibleWidth)
+			else if (newWidth > this._maxVisibleWidth)
 			{
 				newWidth = this._maxVisibleWidth;
 			}
@@ -482,20 +489,20 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 		//this.measureTextField.width = newWidth - this._paddingLeft - this._paddingRight + gutterDimensionsOffset;
 		//this.measureTextField.wordWrap = true;
 		var newHeight:Float = this.measureTextField.height + this._paddingTop + this._paddingBottom - gutterDimensionsOffset;
-		if(this._useGutter)
+		if (this._useGutter)
 		{
 			newHeight += 4;
 		}
-		if(this._explicitVisibleHeight == this._explicitVisibleHeight) //!isNaN
+		if (this._explicitVisibleHeight == this._explicitVisibleHeight) //!isNaN
 		{
-			if(newHeight < this._explicitVisibleHeight)
+			if (newHeight < this._explicitVisibleHeight)
 			{
 				newHeight = this._explicitVisibleHeight;
 			}
 		}
-		else if(this._explicitMinVisibleHeight == this._explicitMinVisibleHeight) //!isNaN
+		else if (this._explicitMinVisibleHeight == this._explicitMinVisibleHeight) //!isNaN
 		{
-			if(newHeight < this._explicitMinVisibleHeight)
+			if (newHeight < this._explicitMinVisibleHeight)
 			{
 				newHeight = this._explicitMinVisibleHeight;
 			}
@@ -515,7 +522,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 		var textFieldWidth:Float = this._actualVisibleWidth - this._paddingLeft - this._paddingRight;
 		if (textFieldWidth != textFieldWidth) //isNaN
 		{
-			if(this._maxVisibleWidth < Math.POSITIVE_INFINITY)
+			if (this._maxVisibleWidth < Math.POSITIVE_INFINITY)
 			{
 				textFieldWidth = this._maxVisibleWidth - this._paddingLeft - this._paddingRight;
 			}
@@ -527,7 +534,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 		var textFieldHeight:Float = this._actualVisibleHeight - this._paddingTop - this._paddingBottom;
 		if (textFieldHeight != textFieldHeight) //isNaN
 		{
-			if(this._maxVisibleHeight < Math.POSITIVE_INFINITY)
+			if (this._maxVisibleHeight < Math.POSITIVE_INFINITY)
 			{
 				textFieldHeight = this._maxVisibleHeight - this._paddingTop - this._paddingBottom;
 			}

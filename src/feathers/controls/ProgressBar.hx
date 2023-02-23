@@ -257,7 +257,7 @@ class ProgressBar extends FeathersControl
 		{
 			return value;
 		}
-		if(this._backgroundDisabledSkin != null &&
+		if (this._backgroundDisabledSkin != null &&
 			this.currentBackground == this._backgroundDisabledSkin)
 		{
 			this.removeCurrentBackground(this._backgroundDisabledSkin);
@@ -521,7 +521,7 @@ class ProgressBar extends FeathersControl
 		var needsHeight:Bool = this._explicitHeight != this._explicitHeight; //isNaN
 		var needsMinWidth:Bool = this._explicitMinWidth != this._explicitMinWidth; //isNaN
 		var needsMinHeight:Bool = this._explicitMinHeight != this._explicitMinHeight; //isNaN
-		if(!needsWidth && !needsHeight && !needsMinWidth && !needsMinHeight)
+		if (!needsWidth && !needsHeight && !needsMinWidth && !needsMinHeight)
 		{
 			return false;
 		}

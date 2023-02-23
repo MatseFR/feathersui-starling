@@ -2637,10 +2637,10 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 			}
 			this.value = newValue;
 		}
-		else if(this._touchValue > this._pageStartValue)
+		else if (this._touchValue > this._pageStartValue)
 		{
 			newValue = Math.min(this._touchValue, this._value + adjustedPage);
-			if(this._step != 0 && newValue != this._maximum && newValue != this._minimum)
+			if (this._step != 0 && newValue != this._maximum && newValue != this._minimum)
 			{
 				newValue = MathUtils.roundUpToNearest(newValue, this._step);
 			}
@@ -2824,7 +2824,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 		else
 		{
 			touch = event.getTouch(this.thumb, TouchPhase.BEGAN);
-			if(touch == null)
+			if (touch == null)
 			{
 				return;
 			}

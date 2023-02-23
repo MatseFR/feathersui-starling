@@ -47,7 +47,7 @@ class StyleProviderRegistry
 	public function new(registerGlobally:Bool = true, styleProviderFactory:Void->IStyleProvider = null) 
 	{
 		this._registerGlobally = registerGlobally;
-		if(styleProviderFactory == null)
+		if (styleProviderFactory == null)
 		{
 			this._styleProviderFactory = defaultStyleProviderFactory;
 		}

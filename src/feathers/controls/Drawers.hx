@@ -3164,7 +3164,7 @@ class Drawers extends FeathersControl
 						}
 					}
 				}
-				if(!isNearAnyEdge)
+				if (!isNearAnyEdge)
 				{
 					return;
 				}
@@ -3312,7 +3312,7 @@ class Drawers extends FeathersControl
 			{
 				this._isBottomDrawerOpen = true;
 			}
-			else if( this._isBottomDrawerOpen && inchesPerSecondY > this._minimumDrawerThrowVelocity)
+			else if (this._isBottomDrawerOpen && inchesPerSecondY > this._minimumDrawerThrowVelocity)
 			{
 				this._isBottomDrawerOpen = false;
 			}

@@ -31,10 +31,12 @@ import feathers.controls.ButtonState;
 import feathers.controls.Callout;
 import feathers.controls.Check;
 import feathers.controls.Drawers;
+import feathers.controls.GroupedList;
 import feathers.controls.Header;
 import feathers.controls.ImageLoader;
 import feathers.controls.Label;
 import feathers.controls.LayoutGroup;
+import feathers.controls.List;
 import feathers.controls.Panel;
 import feathers.controls.PanelScreen;
 import feathers.controls.ProgressBar;
@@ -47,11 +49,16 @@ import feathers.controls.ScrollPolicy;
 import feathers.controls.Scroller;
 import feathers.controls.SimpleScrollBar;
 import feathers.controls.Slider;
+import feathers.controls.SpinnerList;
 import feathers.controls.TextCallout;
 import feathers.controls.TextInput;
 import feathers.controls.TextInputState;
 import feathers.controls.ToggleButton;
 import feathers.controls.TrackLayoutMode;
+import feathers.controls.renderers.BaseDefaultItemRenderer;
+import feathers.controls.renderers.DefaultGroupedListHeaderOrFooterRenderer;
+import feathers.controls.renderers.DefaultGroupedListItemRenderer;
+import feathers.controls.renderers.DefaultListItemRenderer;
 import feathers.core.FeathersControl;
 import feathers.core.FocusManager;
 import feathers.core.PopUpManager;
@@ -875,31 +882,31 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		
 		//date time spinner
 		//this.getStyleProviderForClass(DateTimeSpinner).defaultStyleFunction = this.setDateTimeSpinnerStyles;
-		//this.getStyleProviderForClass(DefaultListItemRenderer).setFunctionForStyleName(THEME_STYLE_NAME_DATE_TIME_SPINNER_LIST_ITEM_RENDERER, this.setDateTimeSpinnerListItemRendererStyles);
+		this.getStyleProviderForClass(DefaultListItemRenderer).setFunctionForStyleName(THEME_STYLE_NAME_DATE_TIME_SPINNER_LIST_ITEM_RENDERER, this.setDateTimeSpinnerListItemRendererStyles);
 		
 		//drawers
 		this.getStyleProviderForClass(Drawers).defaultStyleFunction = this.setDrawersStyles;
 		
 		//grouped list (see also: item renderers)
-		//this.getStyleProviderForClass(GroupedList).defaultStyleFunction = this.setGroupedListStyles;
+		this.getStyleProviderForClass(GroupedList).defaultStyleFunction = this.setGroupedListStyles;
 		
 		//header
 		this.getStyleProviderForClass(Header).defaultStyleFunction = this.setHeaderStyles;
 		
 		//header and footer renderers for grouped list
-		//this.getStyleProviderForClass(DefaultGroupedListHeaderOrFooterRenderer).defaultStyleFunction = this.setGroupedListHeaderRendererStyles;
-		//this.getStyleProviderForClass(DefaultGroupedListHeaderOrFooterRenderer).setFunctionForStyleName(GroupedList.DEFAULT_CHILD_STYLE_NAME_FOOTER_RENDERER, this.setGroupedListFooterRendererStyles);
+		this.getStyleProviderForClass(DefaultGroupedListHeaderOrFooterRenderer).defaultStyleFunction = this.setGroupedListHeaderRendererStyles;
+		this.getStyleProviderForClass(DefaultGroupedListHeaderOrFooterRenderer).setFunctionForStyleName(GroupedList.DEFAULT_CHILD_STYLE_NAME_FOOTER_RENDERER, this.setGroupedListFooterRendererStyles);
 		
 		//header renderers for data grid
 		//this.getStyleProviderForClass(DefaultDataGridHeaderRenderer).defaultStyleFunction = this.setDataGridHeaderRendererStyles;
 		
 		//item renderers for lists
-		//this.getStyleProviderForClass(DefaultGroupedListItemRenderer).defaultStyleFunction = this.setItemRendererStyles;
-		//this.getStyleProviderForClass(DefaultGroupedListItemRenderer).setFunctionForStyleName(DefaultGroupedListItemRenderer.ALTERNATE_STYLE_NAME_DRILL_DOWN, this.setDrillDownItemRendererStyles);
-		//this.getStyleProviderForClass(DefaultGroupedListItemRenderer).setFunctionForStyleName(DefaultGroupedListItemRenderer.ALTERNATE_STYLE_NAME_CHECK, this.setCheckItemRendererStyles);
-		//this.getStyleProviderForClass(DefaultListItemRenderer).defaultStyleFunction = this.setItemRendererStyles;
-		//this.getStyleProviderForClass(DefaultListItemRenderer).setFunctionForStyleName(DefaultListItemRenderer.ALTERNATE_STYLE_NAME_DRILL_DOWN, this.setDrillDownItemRendererStyles);
-		//this.getStyleProviderForClass(DefaultListItemRenderer).setFunctionForStyleName(DefaultListItemRenderer.ALTERNATE_STYLE_NAME_CHECK, this.setCheckItemRendererStyles);
+		this.getStyleProviderForClass(DefaultGroupedListItemRenderer).defaultStyleFunction = this.setItemRendererStyles;
+		this.getStyleProviderForClass(DefaultGroupedListItemRenderer).setFunctionForStyleName(DefaultGroupedListItemRenderer.ALTERNATE_STYLE_NAME_DRILL_DOWN, this.setDrillDownItemRendererStyles);
+		this.getStyleProviderForClass(DefaultGroupedListItemRenderer).setFunctionForStyleName(DefaultGroupedListItemRenderer.ALTERNATE_STYLE_NAME_CHECK, this.setCheckItemRendererStyles);
+		this.getStyleProviderForClass(DefaultListItemRenderer).defaultStyleFunction = this.setItemRendererStyles;
+		this.getStyleProviderForClass(DefaultListItemRenderer).setFunctionForStyleName(DefaultListItemRenderer.ALTERNATE_STYLE_NAME_DRILL_DOWN, this.setDrillDownItemRendererStyles);
+		this.getStyleProviderForClass(DefaultListItemRenderer).setFunctionForStyleName(DefaultListItemRenderer.ALTERNATE_STYLE_NAME_CHECK, this.setCheckItemRendererStyles);
 		//this.getStyleProviderForClass(DefaultDataGridCellRenderer).defaultStyleFunction = this.setDataGridCellRendererStyles;
 		
 		//labels
@@ -912,7 +919,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		this.getStyleProviderForClass(LayoutGroup).setFunctionForStyleName(LayoutGroup.ALTERNATE_STYLE_NAME_TOOLBAR, this.setToolbarLayoutGroupStyles);
 		
 		//list (see also: item renderers)
-		//this.getStyleProviderForClass(List).defaultStyleFunction = this.setListStyles;
+		this.getStyleProviderForClass(List).defaultStyleFunction = this.setListStyles;
 		
 		//numeric stepper
 		//this.getStyleProviderForClass(NumericStepper).defaultStyleFunction = this.setNumericStepperStyles;
@@ -981,7 +988,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		this.getStyleProviderForClass(Button).setFunctionForStyleName(THEME_STYLE_NAME_VERTICAL_SLIDER_MAXIMUM_TRACK, this.setVerticalSliderMaximumTrackStyles);
 		
 		//spinner list
-		//this.getStyleProviderForClass(SpinnerList).defaultStyleFunction = this.setSpinnerListStyles;
+		this.getStyleProviderForClass(SpinnerList).defaultStyleFunction = this.setSpinnerListStyles;
 		
 		//tab bar
 		//this.getStyleProviderForClass(TabBar).defaultStyleFunction = this.setTabBarStyles;
@@ -1585,13 +1592,13 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		//spinner.customItemRendererStyleName = THEME_STYLE_NAME_DATE_TIME_SPINNER_LIST_ITEM_RENDERER;
 	//}
 
-	//private function setDateTimeSpinnerListItemRendererStyles(itemRenderer:DefaultListItemRenderer):Void
-	//{
-		//this.setItemRendererStyles(itemRenderer);
-		//
-		//itemRenderer.accessoryPosition = RelativePosition.LEFT;
-		//itemRenderer.accessoryGap = this.smallGutterSize;
-	//}
+	private function setDateTimeSpinnerListItemRendererStyles(itemRenderer:DefaultListItemRenderer):Void
+	{
+		this.setItemRendererStyles(itemRenderer);
+		
+		itemRenderer.accessoryPosition = RelativePosition.LEFT;
+		itemRenderer.accessoryGap = this.smallGutterSize;
+	}
 	
 	//-------------------------
 	// Drawers
@@ -1608,54 +1615,54 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	// GroupedList
 	//-------------------------
 
-	//private function setGroupedListStyles(list:GroupedList):Void
-	//{
-		//this.setScrollerStyles(list);
-		//
-		//list.padding = this.borderSize;
-		//
-		//var backgroundSkin:Image = new Image(this.listBackgroundSkinTexture);
-		//backgroundSkin.scale9Grid = DEFAULT_SCALE9_GRID;
-		//list.backgroundSkin = backgroundSkin;
-		//
-		//var backgroundDisabledSkin:Image = new Image(this.backgroundDisabledSkinTexture);
-		//backgroundDisabledSkin.scale9Grid = DEFAULT_SCALE9_GRID;
-		//list.backgroundDisabledSkin = backgroundDisabledSkin;
-		//
-		//list.verticalScrollPolicy = ScrollPolicy.AUTO;
-	//}
+	private function setGroupedListStyles(list:GroupedList):Void
+	{
+		this.setScrollerStyles(list);
+		
+		list.padding = this.borderSize;
+		
+		var backgroundSkin:Image = new Image(this.listBackgroundSkinTexture);
+		backgroundSkin.scale9Grid = DEFAULT_SCALE9_GRID;
+		list.backgroundSkin = backgroundSkin;
+		
+		var backgroundDisabledSkin:Image = new Image(this.backgroundDisabledSkinTexture);
+		backgroundDisabledSkin.scale9Grid = DEFAULT_SCALE9_GRID;
+		list.backgroundDisabledSkin = backgroundDisabledSkin;
+		
+		list.verticalScrollPolicy = ScrollPolicy.AUTO;
+	}
 	
 	//see List section for item renderer styles
 	
-	//private function setGroupedListHeaderRendererStyles(headerRenderer:DefaultGroupedListHeaderOrFooterRenderer):Void
-	//{
-		//headerRenderer.backgroundSkin = new Quad(this.controlSize, this.controlSize, GROUPED_LIST_HEADER_BACKGROUND_COLOR);
-		//
-		//headerRenderer.fontStyles = this.lightUIFontStyles.clone();
-		//headerRenderer.disabledFontStyles = this.lightDisabledUIFontStyles.clone();
-		//
-		//headerRenderer.horizontalAlign = HorizontalAlign.LEFT;
-		//
-		//headerRenderer.paddingTop = this.smallGutterSize;
-		//headerRenderer.paddingBottom = this.smallGutterSize;
-		//headerRenderer.paddingLeft = this.gutterSize;
-		//headerRenderer.paddingRight = this.gutterSize;
-	//}
+	private function setGroupedListHeaderRendererStyles(headerRenderer:DefaultGroupedListHeaderOrFooterRenderer):Void
+	{
+		headerRenderer.backgroundSkin = new Quad(this.controlSize, this.controlSize, GROUPED_LIST_HEADER_BACKGROUND_COLOR);
+		
+		headerRenderer.fontStyles = this.lightUIFontStyles.clone();
+		headerRenderer.disabledFontStyles = this.lightDisabledUIFontStyles.clone();
+		
+		headerRenderer.horizontalAlign = HorizontalAlign.LEFT;
+		
+		headerRenderer.paddingTop = this.smallGutterSize;
+		headerRenderer.paddingBottom = this.smallGutterSize;
+		headerRenderer.paddingLeft = this.gutterSize;
+		headerRenderer.paddingRight = this.gutterSize;
+	}
 	
-	//private function setGroupedListFooterRendererStyles(footerRenderer:DefaultGroupedListHeaderOrFooterRenderer):Void
-	//{
-		//footerRenderer.backgroundSkin = new Quad(this.controlSize, this.controlSize, GROUPED_LIST_FOOTER_BACKGROUND_COLOR);
-		//
-		//footerRenderer.fontStyles = this.lightFontStyles.clone();
-		//footerRenderer.disabledFontStyles = this.lightDisabledFontStyles.clone();
-		//
-		//footerRenderer.horizontalAlign = HorizontalAlign.CENTER;
-		//
-		//footerRenderer.paddingTop = this.smallGutterSize;
-		//footerRenderer.paddingBottom = this.smallGutterSize;
-		//footerRenderer.paddingLeft = this.gutterSize;
-		//footerRenderer.paddingRight = this.gutterSize;
-	//}
+	private function setGroupedListFooterRendererStyles(footerRenderer:DefaultGroupedListHeaderOrFooterRenderer):Void
+	{
+		footerRenderer.backgroundSkin = new Quad(this.controlSize, this.controlSize, GROUPED_LIST_FOOTER_BACKGROUND_COLOR);
+		
+		footerRenderer.fontStyles = this.lightFontStyles.clone();
+		footerRenderer.disabledFontStyles = this.lightDisabledFontStyles.clone();
+		
+		footerRenderer.horizontalAlign = HorizontalAlign.CENTER;
+		
+		footerRenderer.paddingTop = this.smallGutterSize;
+		footerRenderer.paddingBottom = this.smallGutterSize;
+		footerRenderer.paddingLeft = this.gutterSize;
+		footerRenderer.paddingRight = this.gutterSize;
+	}
 	
 	//-------------------------
 	// Header
@@ -1745,126 +1752,126 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	// List
 	//-------------------------
 	
-	//private function setListStyles(list:List):Void
-	//{
-		//this.setScrollerStyles(list);
-		//
-		//list.padding = this.borderSize;
-		//
-		//var backgroundSkin:Image = new Image(this.listBackgroundSkinTexture);
-		//backgroundSkin.scale9Grid = DEFAULT_SCALE9_GRID;
-		//backgroundSkin.width = this.controlSize;
-		//backgroundSkin.height = this.controlSize;
-		//list.backgroundSkin = backgroundSkin;
-		//
-		//var backgroundDisabledSkin:Image = new Image(this.backgroundDisabledSkinTexture);
-		//backgroundDisabledSkin.scale9Grid = DEFAULT_SCALE9_GRID;
-		//backgroundDisabledSkin.width = this.controlSize;
-		//backgroundDisabledSkin.height = this.controlSize;
-		//list.backgroundDisabledSkin = backgroundDisabledSkin;
-		//
-		//var dropIndicatorSkin:Quad = new Quad(this.borderSize, this.borderSize, LIGHT_TEXT_COLOR);
-		//list.dropIndicatorSkin = dropIndicatorSkin;
-		//
-		//list.verticalScrollPolicy = ScrollPolicy.AUTO;
-	//}
+	private function setListStyles(list:List):Void
+	{
+		this.setScrollerStyles(list);
+		
+		list.padding = this.borderSize;
+		
+		var backgroundSkin:Image = new Image(this.listBackgroundSkinTexture);
+		backgroundSkin.scale9Grid = DEFAULT_SCALE9_GRID;
+		backgroundSkin.width = this.controlSize;
+		backgroundSkin.height = this.controlSize;
+		list.backgroundSkin = backgroundSkin;
+		
+		var backgroundDisabledSkin:Image = new Image(this.backgroundDisabledSkinTexture);
+		backgroundDisabledSkin.scale9Grid = DEFAULT_SCALE9_GRID;
+		backgroundDisabledSkin.width = this.controlSize;
+		backgroundDisabledSkin.height = this.controlSize;
+		list.backgroundDisabledSkin = backgroundDisabledSkin;
+		
+		var dropIndicatorSkin:Quad = new Quad(this.borderSize, this.borderSize, LIGHT_TEXT_COLOR);
+		list.dropIndicatorSkin = dropIndicatorSkin;
+		
+		list.verticalScrollPolicy = ScrollPolicy.AUTO;
+	}
 	
-	//private function setItemRendererStyles(itemRenderer:BaseDefaultItemRenderer):Void
-	//{
-		//var skin:ImageSkin = new ImageSkin(this.itemRendererUpSkinTexture);
-		//skin.selectedTexture = this.itemRendererSelectedUpSkinTexture;
-		//skin.setTextureForState(ButtonState.HOVER, this.itemRendererHoverSkinTexture);
-		//skin.setTextureForState(ButtonState.DOWN, this.itemRendererSelectedUpSkinTexture);
-		//skin.width = this.controlSize;
-		//skin.height = this.controlSize;
-		//skin.minWidth = this.controlSize;
-		//skin.minHeight = this.controlSize;
-		//itemRenderer.defaultSkin = skin;
-		//
-		//itemRenderer.fontStyles = this.lightFontStyles.clone();
-		//itemRenderer.disabledFontStyles = this.lightDisabledFontStyles.clone();
-		//itemRenderer.selectedFontStyles = this.darkFontStyles.clone();
-		//itemRenderer.setFontStylesForState(ButtonState.DOWN, this.darkFontStyles.clone());
-		//itemRenderer.setFontStylesForState(ButtonState.HOVER, this.darkFontStyles.clone());
-		//
-		//itemRenderer.iconLabelFontStyles = this.lightFontStyles.clone();
-		//itemRenderer.iconLabelDisabledFontStyles = this.lightDisabledFontStyles.clone();
-		//itemRenderer.iconLabelSelectedFontStyles = this.darkFontStyles.clone();
-		//itemRenderer.setIconLabelFontStylesForState(ButtonState.DOWN, this.darkFontStyles.clone());
-		//itemRenderer.setIconLabelFontStylesForState(ButtonState.HOVER, this.darkFontStyles.clone());
-		//
-		//itemRenderer.accessoryLabelFontStyles = this.lightFontStyles.clone();
-		//itemRenderer.accessoryLabelDisabledFontStyles = this.lightDisabledFontStyles.clone();
-		//itemRenderer.accessoryLabelSelectedFontStyles = this.darkFontStyles.clone();
-		//itemRenderer.setAccessoryLabelFontStylesForState(ButtonState.DOWN, this.darkFontStyles.clone());
-		//itemRenderer.setAccessoryLabelFontStylesForState(ButtonState.HOVER, this.darkFontStyles.clone());
-		//
-		//itemRenderer.horizontalAlign = HorizontalAlign.LEFT;
-		//itemRenderer.paddingTop = this.smallGutterSize;
-		//itemRenderer.paddingBottom = this.smallGutterSize;
-		//itemRenderer.paddingLeft = this.gutterSize;
-		//itemRenderer.paddingRight = this.gutterSize;
-		//itemRenderer.gap = this.smallGutterSize;
-		//itemRenderer.minGap = this.smallGutterSize;
-		//itemRenderer.iconPosition = RelativePosition.LEFT;
-		//itemRenderer.accessoryGap = Math.POSITIVE_INFINITY;
-		//itemRenderer.minAccessoryGap = this.smallGutterSize;
-		//itemRenderer.accessoryPosition = RelativePosition.RIGHT;
-		//
-		//itemRenderer.useStateDelayTimer = false;
-	//}
+	private function setItemRendererStyles(itemRenderer:BaseDefaultItemRenderer):Void
+	{
+		var skin:ImageSkin = new ImageSkin(this.itemRendererUpSkinTexture);
+		skin.selectedTexture = this.itemRendererSelectedUpSkinTexture;
+		skin.setTextureForState(ButtonState.HOVER, this.itemRendererHoverSkinTexture);
+		skin.setTextureForState(ButtonState.DOWN, this.itemRendererSelectedUpSkinTexture);
+		skin.width = this.controlSize;
+		skin.height = this.controlSize;
+		skin.minWidth = this.controlSize;
+		skin.minHeight = this.controlSize;
+		itemRenderer.defaultSkin = skin;
+		
+		itemRenderer.fontStyles = this.lightFontStyles.clone();
+		itemRenderer.disabledFontStyles = this.lightDisabledFontStyles.clone();
+		itemRenderer.selectedFontStyles = this.darkFontStyles.clone();
+		itemRenderer.setFontStylesForState(ButtonState.DOWN, this.darkFontStyles.clone());
+		itemRenderer.setFontStylesForState(ButtonState.HOVER, this.darkFontStyles.clone());
+		
+		itemRenderer.iconLabelFontStyles = this.lightFontStyles.clone();
+		itemRenderer.iconLabelDisabledFontStyles = this.lightDisabledFontStyles.clone();
+		itemRenderer.iconLabelSelectedFontStyles = this.darkFontStyles.clone();
+		itemRenderer.setIconLabelFontStylesForState(ButtonState.DOWN, this.darkFontStyles.clone());
+		itemRenderer.setIconLabelFontStylesForState(ButtonState.HOVER, this.darkFontStyles.clone());
+		
+		itemRenderer.accessoryLabelFontStyles = this.lightFontStyles.clone();
+		itemRenderer.accessoryLabelDisabledFontStyles = this.lightDisabledFontStyles.clone();
+		itemRenderer.accessoryLabelSelectedFontStyles = this.darkFontStyles.clone();
+		itemRenderer.setAccessoryLabelFontStylesForState(ButtonState.DOWN, this.darkFontStyles.clone());
+		itemRenderer.setAccessoryLabelFontStylesForState(ButtonState.HOVER, this.darkFontStyles.clone());
+		
+		itemRenderer.horizontalAlign = HorizontalAlign.LEFT;
+		itemRenderer.paddingTop = this.smallGutterSize;
+		itemRenderer.paddingBottom = this.smallGutterSize;
+		itemRenderer.paddingLeft = this.gutterSize;
+		itemRenderer.paddingRight = this.gutterSize;
+		itemRenderer.gap = this.smallGutterSize;
+		itemRenderer.minGap = this.smallGutterSize;
+		itemRenderer.iconPosition = RelativePosition.LEFT;
+		itemRenderer.accessoryGap = Math.POSITIVE_INFINITY;
+		itemRenderer.minAccessoryGap = this.smallGutterSize;
+		itemRenderer.accessoryPosition = RelativePosition.RIGHT;
+		
+		itemRenderer.useStateDelayTimer = false;
+	}
 
-	//private function setDrillDownItemRendererStyles(itemRenderer:BaseDefaultItemRenderer):Void
-	//{
-		//this.setItemRendererStyles(itemRenderer);
-		//
-		//itemRenderer.itemHasAccessory = false;
-		//
-		//var defaultAccessory:ImageSkin = new ImageSkin(this.listDrillDownAccessoryTexture);
-		//defaultAccessory.selectedTexture = this.listDrillDownAccessorySelectedTexture;
-		//defaultAccessory.setTextureForState(ButtonState.HOVER, this.listDrillDownAccessorySelectedTexture);
-		//defaultAccessory.setTextureForState(ButtonState.DOWN, this.listDrillDownAccessorySelectedTexture);
-		//itemRenderer.defaultAccessory = defaultAccessory;
-	//}
+	private function setDrillDownItemRendererStyles(itemRenderer:BaseDefaultItemRenderer):Void
+	{
+		this.setItemRendererStyles(itemRenderer);
+		
+		itemRenderer.itemHasAccessory = false;
+		
+		var defaultAccessory:ImageSkin = new ImageSkin(this.listDrillDownAccessoryTexture);
+		defaultAccessory.selectedTexture = this.listDrillDownAccessorySelectedTexture;
+		defaultAccessory.setTextureForState(ButtonState.HOVER, this.listDrillDownAccessorySelectedTexture);
+		defaultAccessory.setTextureForState(ButtonState.DOWN, this.listDrillDownAccessorySelectedTexture);
+		itemRenderer.defaultAccessory = defaultAccessory;
+	}
 
-	//private function setCheckItemRendererStyles(itemRenderer:BaseDefaultItemRenderer):Void
-	//{
-		//var skin:ImageSkin = new ImageSkin(this.itemRendererUpSkinTexture);
-		//skin.width = this.controlSize;
-		//skin.width = this.controlSize;
-		//skin.minWidth = this.controlSize;
-		//skin.minHeight = this.controlSize;
-		//itemRenderer.defaultSkin = skin;
-		//
-		//itemRenderer.itemHasIcon = false;
-		//
-		//var icon:ImageSkin = new ImageSkin(this.checkUpIconTexture);
-		//icon.selectedTexture = this.checkSelectedUpIconTexture;
-		//icon.setTextureForState(ButtonState.DOWN, this.checkDownIconTexture);
-		//icon.setTextureForState(ButtonState.DOWN_AND_SELECTED, this.checkSelectedDownIconTexture);
-		//itemRenderer.defaultIcon = icon;
-		//
-		//itemRenderer.fontStyles = this.lightFontStyles.clone();
-		//itemRenderer.disabledFontStyles = this.lightDisabledFontStyles.clone();
-		//itemRenderer.iconLabelFontStyles = this.lightFontStyles.clone();
-		//itemRenderer.iconLabelDisabledFontStyles = this.lightDisabledFontStyles.clone();
-		//itemRenderer.accessoryLabelFontStyles = this.lightFontStyles.clone();
-		//itemRenderer.accessoryLabelDisabledFontStyles = this.lightDisabledFontStyles.clone();
-		//
-		//itemRenderer.horizontalAlign = HorizontalAlign.LEFT;
-		//itemRenderer.paddingTop = this.smallGutterSize;
-		//itemRenderer.paddingBottom = this.smallGutterSize;
-		//itemRenderer.paddingLeft = this.gutterSize;
-		//itemRenderer.paddingRight = this.gutterSize;
-		//itemRenderer.gap = this.smallGutterSize;
-		//itemRenderer.minGap = this.smallGutterSize;
-		//itemRenderer.iconPosition = RelativePosition.LEFT;
-		//itemRenderer.accessoryGap = Math.POSITIVE_INFINITY;
-		//itemRenderer.minAccessoryGap = this.smallGutterSize;
-		//itemRenderer.accessoryPosition = RelativePosition.RIGHT;
-		//
-		//itemRenderer.useStateDelayTimer = false;
-	//}
+	private function setCheckItemRendererStyles(itemRenderer:BaseDefaultItemRenderer):Void
+	{
+		var skin:ImageSkin = new ImageSkin(this.itemRendererUpSkinTexture);
+		skin.width = this.controlSize;
+		skin.width = this.controlSize;
+		skin.minWidth = this.controlSize;
+		skin.minHeight = this.controlSize;
+		itemRenderer.defaultSkin = skin;
+		
+		itemRenderer.itemHasIcon = false;
+		
+		var icon:ImageSkin = new ImageSkin(this.checkUpIconTexture);
+		icon.selectedTexture = this.checkSelectedUpIconTexture;
+		icon.setTextureForState(ButtonState.DOWN, this.checkDownIconTexture);
+		icon.setTextureForState(ButtonState.DOWN_AND_SELECTED, this.checkSelectedDownIconTexture);
+		itemRenderer.defaultIcon = icon;
+		
+		itemRenderer.fontStyles = this.lightFontStyles.clone();
+		itemRenderer.disabledFontStyles = this.lightDisabledFontStyles.clone();
+		itemRenderer.iconLabelFontStyles = this.lightFontStyles.clone();
+		itemRenderer.iconLabelDisabledFontStyles = this.lightDisabledFontStyles.clone();
+		itemRenderer.accessoryLabelFontStyles = this.lightFontStyles.clone();
+		itemRenderer.accessoryLabelDisabledFontStyles = this.lightDisabledFontStyles.clone();
+		
+		itemRenderer.horizontalAlign = HorizontalAlign.LEFT;
+		itemRenderer.paddingTop = this.smallGutterSize;
+		itemRenderer.paddingBottom = this.smallGutterSize;
+		itemRenderer.paddingLeft = this.gutterSize;
+		itemRenderer.paddingRight = this.gutterSize;
+		itemRenderer.gap = this.smallGutterSize;
+		itemRenderer.minGap = this.smallGutterSize;
+		itemRenderer.iconPosition = RelativePosition.LEFT;
+		itemRenderer.accessoryGap = Math.POSITIVE_INFINITY;
+		itemRenderer.minAccessoryGap = this.smallGutterSize;
+		itemRenderer.accessoryPosition = RelativePosition.RIGHT;
+		
+		itemRenderer.useStateDelayTimer = false;
+	}
 	
 	//-------------------------
 	// NumericStepper
@@ -2107,7 +2114,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		
 		var fillDisabledSkin:Image = new Image(this.buttonDisabledSkinTexture);
 		fillDisabledSkin.scale9Grid = BUTTON_SCALE9_GRID;
-		if(progress.direction == Direction.VERTICAL)
+		if (progress.direction == Direction.VERTICAL)
 		{
 			fillDisabledSkin.width = this.smallControlSize;
 			fillDisabledSkin.height = this.progressBarFillMinSize;
@@ -2511,10 +2518,10 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	// SpinnerList
 	//-------------------------
 	
-	//private function setSpinnerListStyles(list:SpinnerList):Void
-	//{
-		//this.setListStyles(list);
-	//}
+	private function setSpinnerListStyles(list:SpinnerList):Void
+	{
+		this.setListStyles(list);
+	}
 	
 	private function setTabStyles(tab:ToggleButton):Void
 	{

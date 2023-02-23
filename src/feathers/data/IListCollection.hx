@@ -121,6 +121,15 @@ interface IListCollection extends IFeathersEventDispatcher
 	function getItemAt(index:Int):Dynamic;
 	
 	/**
+	 * Determines which index the item appears at within the collection. If
+	 * the item isn't in the collection, returns <code>-1</code>.
+	 *
+	 * <p>If the collection is filtered, <code>getItemIndex()</code> will
+	 * return <code>-1</code> for items that are excluded by the filter.</p>
+	 */
+	function getItemIndex(item:Dynamic):Int;
+	
+	/**
 	 * Adds an item to the collection, at the specified index.
 	 *
 	 * <p>If the collection is filtered, the index is the position in the

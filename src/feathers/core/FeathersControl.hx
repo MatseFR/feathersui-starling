@@ -2199,7 +2199,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 		{
 			//if we've already incremented this counter this time, we can
 			//return. we're already in queue.
-			if(isAlreadyDelayedInvalid)
+			if (isAlreadyDelayedInvalid)
 			{
 				return;
 			}
@@ -2247,7 +2247,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 		}
 		//if we're not actually invalid, there's nothing to do here, so
 		//simply return.
-		if(!this.isInvalid())
+		if (!this.isInvalid())
 		{
 			return;
 		}

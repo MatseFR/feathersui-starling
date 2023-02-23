@@ -381,7 +381,7 @@ class ImageSkin extends Image implements IMeasureDisplayObject implements IState
 			return value;
 		}
 		this._explicitWidth = value;
-		if(value == value) //!isNaN
+		if (value == value) //!isNaN
 		{
 			super.width = value;
 		}

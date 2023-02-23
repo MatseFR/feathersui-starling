@@ -220,14 +220,14 @@ class PanelScreen extends Panel implements IScreen
 			this.backButtonHandler();
 		}
 		
-		if(this.menuButtonHandler != null &&
+		if (this.menuButtonHandler != null &&
 			event.keyCode == Keyboard.MENU)
 		{
 			event.preventDefault();
 			this.menuButtonHandler();
 		}
 		
-		if(this.searchButtonHandler != null &&
+		if (this.searchButtonHandler != null &&
 			event.keyCode == Keyboard.SEARCH)
 		{
 			event.preventDefault();

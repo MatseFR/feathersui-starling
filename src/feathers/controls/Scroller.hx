@@ -21,6 +21,7 @@ import feathers.system.DeviceCapabilities;
 import feathers.utils.display.DisplayUtils;
 import feathers.utils.math.MathUtils;
 import feathers.utils.skins.SkinsUtils;
+import feathers.utils.type.SafeCast;
 import openfl.Lib.getTimer;
 import openfl.errors.ArgumentError;
 import openfl.errors.Error;
@@ -1017,7 +1018,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	public var horizontalPageCount(get, never):Int;
 	private function get_horizontalPageCount():Int
 	{
-		if(this._maxHorizontalPageIndex == MathUtils.INT_MAX ||
+		if (this._maxHorizontalPageIndex == MathUtils.INT_MAX ||
 			this._minHorizontalPageIndex == MathUtils.INT_MIN)
 		{
 			return MathUtils.INT_MAX;
@@ -1108,7 +1109,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_verticalMouseWheelScrollStep():Float { return this._verticalMouseWheelScrollStep; }
 	private function set_verticalMouseWheelScrollStep(value:Float):Float
 	{
-		if(this._verticalMouseWheelScrollStep == value)
+		if (this._verticalMouseWheelScrollStep == value)
 		{
 			return value;
 		}
@@ -1216,11 +1217,11 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		}
 		if (!this.isInvalid())
 		{
-			if(value < this._minVerticalPageIndex)
+			if (value < this._minVerticalPageIndex)
 			{
 				value = this._minVerticalPageIndex;
 			}
-			else if(value > this._maxVerticalPageIndex)
+			else if (value > this._maxVerticalPageIndex)
 			{
 				value = this._maxVerticalPageIndex;
 			}
@@ -1473,7 +1474,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	private function get_throwElasticity():Float { return this._throwElasticity; }
 	private function set_throwElasticity(value:Float):Float
 	{
-		if( this.processStyleRestriction("throwElasticity"))
+		if (this.processStyleRestriction("throwElasticity"))
 		{
 			return value;
 		}
@@ -2145,7 +2146,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		{
 			this._topPullView.mask.dispose();
 			this._topPullView.mask = null;
-			if(this._topPullView.parent == this)
+			if (this._topPullView.parent == this)
 			{
 				this.removeRawChildInternal(this._topPullView, false);
 			}
@@ -2489,7 +2490,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		{
 			return value;
 		}
-		if(this._leftPullView == null)
+		if (this._leftPullView == null)
 		{
 			return value;
 		}
@@ -3009,7 +3010,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			this._explicitBackgroundWidth, this._explicitBackgroundHeight,
 			this._explicitBackgroundMinWidth, this._explicitBackgroundMinHeight,
 			this._explicitBackgroundMaxWidth, this._explicitBackgroundMaxHeight);
-		var measureBackground:IMeasureDisplayObject = cast this.currentBackgroundSkin;
+		var measureBackground:IMeasureDisplayObject = SafeCast.safe_cast(this.currentBackgroundSkin, IMeasureDisplayObject);
 		if (Std.isOfType(this.currentBackgroundSkin, IValidating))
 		{
 			cast(this.currentBackgroundSkin, IValidating).validate();
@@ -3360,7 +3361,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			this._explicitBackgroundWidth, this._explicitBackgroundHeight,
 			this._explicitBackgroundMinWidth, this._explicitBackgroundMinHeight,
 			this._explicitBackgroundMaxWidth, this._explicitBackgroundMaxHeight);
-		var measureBackground:IMeasureDisplayObject = cast this.currentBackgroundSkin;
+		var measureBackground:IMeasureDisplayObject = SafeCast.safe_cast(this.currentBackgroundSkin, IMeasureDisplayObject);
 		if (Std.isOfType(this.currentBackgroundSkin, IValidating))
 		{
 			cast(this.currentBackgroundSkin, IValidating).validate();
@@ -4639,7 +4640,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	 */
 	private function removeRawChildAtInternal(index:Int, dispose:Bool = false):DisplayObject
 	{
-		if(Std.isOfType(this, IScrollContainer))
+		if (Std.isOfType(this, IScrollContainer))
 		{
 			return cast(this, IScrollContainer).removeRawChildAt(index, dispose);
 		}
@@ -4807,11 +4808,11 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 					this.topPullViewRatio = (adjustedMinScrollPosition - position) / this._topPullView.height;
 				}
 			}
-			if(this._bottomPullView != null && !this._isBottomPullViewActive)
+			if (this._bottomPullView != null && !this._isBottomPullViewActive)
 			{
 				this.bottomPullViewRatio = 0;
 			}
-			if(!this._hasElasticEdges ||
+			if (!this._hasElasticEdges ||
 				(this._isBottomPullViewActive && this._minVerticalScrollPosition == this._maxVerticalScrollPosition))
 			{
 				//if elastic edges aren't enabled, use the minimum
@@ -5344,7 +5345,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		}
 		
 		var absPixelsPerMS:Float = Math.abs(pixelsPerMS);
-		if(!this._snapToPages && absPixelsPerMS <= MINIMUM_VELOCITY)
+		if (!this._snapToPages && absPixelsPerMS <= MINIMUM_VELOCITY)
 		{
 			this.finishScrollingHorizontally();
 			return;
@@ -5433,14 +5434,14 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		}
 		
 		var absPixelsPerMS:Float = Math.abs(pixelsPerMS);
-		if(!this._snapToPages && absPixelsPerMS <= MINIMUM_VELOCITY)
+		if (!this._snapToPages && absPixelsPerMS <= MINIMUM_VELOCITY)
 		{
 			this.finishScrollingVertically();
 			return;
 		}
 		
 		var duration:Float = this._fixedThrowDuration;
-		if(!this._useFixedThrowDuration)
+		if (!this._useFixedThrowDuration)
 		{
 			duration = this.calculateDynamicThrowDuration(pixelsPerMS);
 		}
@@ -6063,7 +6064,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			this._startTouchY = this._currentTouchY;
 			this._startVerticalScrollPosition = this._verticalScrollPosition;
 			this._isDraggingVertically = true;
-			if(!this._isDraggingHorizontally)
+			if (!this._isDraggingHorizontally)
 			{
 				exclusiveTouch = ExclusiveTouch.forStage(this.stage);
 				exclusiveTouch.removeEventListener(Event.CHANGE, exclusiveTouch_changeHandler);
@@ -6072,11 +6073,11 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 				this.startScroll();
 			}
 		}
-		if(this._isDraggingHorizontally && this._horizontalAutoScrollTween == null)
+		if (this._isDraggingHorizontally && this._horizontalAutoScrollTween == null)
 		{
 			this.updateHorizontalScrollFromTouchPosition(this._currentTouchX);
 		}
-		if(this._isDraggingVertically && this._verticalAutoScrollTween == null)
+		if (this._isDraggingVertically && this._verticalAutoScrollTween == null)
 		{
 			this.updateVerticalScrollFromTouchPosition(this._currentTouchY);
 		}
@@ -6098,12 +6099,12 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		{
 			//we're keeping previous velocity updates to improve accuracy
 			this._previousVelocityX[this._previousVelocityX.length] = this._velocityX;
-			if(this._previousVelocityX.length > MAXIMUM_SAVED_VELOCITY_COUNT)
+			if (this._previousVelocityX.length > MAXIMUM_SAVED_VELOCITY_COUNT)
 			{
 				this._previousVelocityX.shift();
 			}
 			this._previousVelocityY[this._previousVelocityY.length] = this._velocityY;
-			if(this._previousVelocityY.length > MAXIMUM_SAVED_VELOCITY_COUNT)
+			if (this._previousVelocityY.length > MAXIMUM_SAVED_VELOCITY_COUNT)
 			{
 				this._previousVelocityY.shift();
 			}

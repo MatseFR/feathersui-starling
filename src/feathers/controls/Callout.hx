@@ -353,7 +353,7 @@ class Callout extends FeathersControl
 		callout.x = point.x;
 		callout.y = point.y + callout._originGap;
 		Pool.putPoint(point);
-		if(callout._isValidating)
+		if (callout._isValidating)
 		{
 			//no need to invalidate and need to validate again next frame
 			callout._arrowOffset = idealXPosition - xPosition;
@@ -709,7 +709,7 @@ class Callout extends FeathersControl
 		{
 			if (Std.isOfType(this._content, IFeathersControl))
 			{
-				cast(this._content, IFeathersControl).removeEventListener(FeathersEventType.RESIZE, content_resizeHandler);
+				this._content.removeEventListener(FeathersEventType.RESIZE, content_resizeHandler);
 			}
 			if (this._content.parent == this)
 			{
@@ -731,7 +731,7 @@ class Callout extends FeathersControl
 		{
 			if (Std.isOfType(this._content, IFeathersControl))
 			{
-				cast(this._content, IFeathersControl).addEventListener(FeathersEventType.RESIZE, content_resizeHandler);
+				this._content.addEventListener(FeathersEventType.RESIZE, content_resizeHandler);
 			}
 			this.addChild(this._content);
 			if (Std.isOfType(this._content, IFeathersControl))
@@ -1524,7 +1524,7 @@ class Callout extends FeathersControl
 		var needsHeight:Bool = this._explicitHeight != this._explicitHeight; //isNaN
 		var needsMinWidth:Bool = this._explicitMinWidth != this._explicitMinWidth; //isNaN
 		var needsMinHeight:Bool = this._explicitMinHeight != this._explicitMinHeight; //isNaN
-		if(!needsWidth && !needsHeight && !needsMinWidth && !needsMinHeight)
+		if (!needsWidth && !needsHeight && !needsMinWidth && !needsMinHeight)
 		{
 			return false;
 		}
@@ -1905,7 +1905,7 @@ class Callout extends FeathersControl
 				else
 				{
 					var maxRightArrowSkinY:Float = yPosition + this._paddingTop + contentHeight - this._rightArrowSkin.height;
-					if(maxRightArrowSkinY < rightArrowSkinY)
+					if (maxRightArrowSkinY < rightArrowSkinY)
 					{
 						rightArrowSkinY = maxRightArrowSkinY;
 					}
@@ -2073,12 +2073,12 @@ class Callout extends FeathersControl
 					//arrow is opposite, on top side
 					this.measureWithArrowPosition(RelativePosition.TOP);
 					downSpace = (stage.stageHeight - this.actualHeight) - (this._lastGlobalBoundsOfOrigin.y + this._lastGlobalBoundsOfOrigin.height);
-					if(downSpace >= stagePaddingBottom)
+					if (downSpace >= stagePaddingBottom)
 					{
 						positionBelowOrigin(this, this._lastGlobalBoundsOfOrigin);
 						return;
 					}
-					if(downSpace < 0)
+					if (downSpace < 0)
 					{
 						downSpace = 0;
 					}

@@ -342,7 +342,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 		{
 			return value;
 		}
-		if(this._hasLabelTextRenderer == value)
+		if (this._hasLabelTextRenderer == value)
 		{
 			return value;
 		}
@@ -447,7 +447,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 		{
 			return value;
 		}
-		if(this._verticalAlign == value)
+		if (this._verticalAlign == value)
 		{
 			return value;
 		}
@@ -842,7 +842,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	{
 		if (this.processStyleRestriction("defaultIcon"))
 		{
-			if(value != null)
+			if (value != null)
 			{
 				value.dispose();
 			}
@@ -852,7 +852,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 		{
 			return value;
 		}
-		if(this._defaultIcon != null &&
+		if (this._defaultIcon != null &&
 			this.currentIcon == this._defaultIcon)
 		{
 			//if this icon needs to be reused somewhere else, we need to
@@ -1120,7 +1120,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	 */
 	public function getFontStylesForState(state:String):TextFormat
 	{
-		if(this._fontStylesSet == null)
+		if (this._fontStylesSet == null)
 		{
 			return null;
 		}
@@ -1720,7 +1720,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 				this.addChildAt(this.currentIcon, index);
 				if (Std.isOfType(this.currentIcon, IFeathersControl))
 				{
-					cast(this.currentIcon, IFeathersControl).addEventListener(FeathersEventType.RESIZE, currentIcon_resizeHandler);
+					this.currentIcon.addEventListener(FeathersEventType.RESIZE, currentIcon_resizeHandler);
 				}
 			}
 		}
@@ -1737,7 +1737,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 		}
 		if (Std.isOfType(icon, IFeathersControl))
 		{
-			cast(icon, IFeathersControl).removeEventListener(FeathersEventType.RESIZE, currentIcon_resizeHandler);
+			icon.removeEventListener(FeathersEventType.RESIZE, currentIcon_resizeHandler);
 		}
 		if (Std.isOfType(icon, IStateObserver))
 		{
@@ -1755,7 +1755,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	private function getCurrentIcon():DisplayObject
 	{
 		var result:DisplayObject = this._stateToIcon[this._currentState];
-		if(result != null)
+		if (result != null)
 		{
 			return result;
 		}

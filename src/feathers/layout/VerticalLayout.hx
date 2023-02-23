@@ -276,7 +276,7 @@ class VerticalLayout extends BaseLinearLayout implements IVariableVirtualLayout 
 		
 		var calculatedTypicalItemWidth:Float = 0;
 		var calculatedTypicalItemHeight:Float = 0;
-		if(this._useVirtualLayout)
+		if (this._useVirtualLayout)
 		{
 			//if the layout is virtualized, we'll need the dimensions of the
 			//typical item so that we have fallback values when an item is null
@@ -419,7 +419,7 @@ class VerticalLayout extends BaseLinearLayout implements IVariableVirtualLayout 
 				else
 				{
 					headerIndicesIndex--;
-					if(headerIndicesIndex >= 0)
+					if (headerIndicesIndex >= 0)
 					{
 						//this is the index of the "sticky" header, but we
 						//need to save it for later.

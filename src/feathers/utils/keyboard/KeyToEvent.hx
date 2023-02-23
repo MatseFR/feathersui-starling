@@ -248,7 +248,7 @@ class KeyToEvent
 		}
 		var stage:Stage = cast event.currentTarget;
 		stage.removeEventListener(KeyboardEvent.KEY_UP, stage_keyUpHandler);
-		if(this._stage != stage)
+		if (this._stage != stage)
 		{
 			return;
 		}

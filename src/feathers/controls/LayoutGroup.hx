@@ -561,7 +561,7 @@ class LayoutGroup extends FeathersControl
 		{
 			//we use starling.root because a pop-up's root and the stage
 			//root may be different.
-			if(this.stage.starling.root == this)
+			if (this.stage.starling.root == this)
 			{
 				this.autoSizeMode = AutoSizeMode.STAGE;
 			}
@@ -618,7 +618,7 @@ class LayoutGroup extends FeathersControl
 			this.validateChildren();
 		}
 		
-		if(sizeInvalid || clippingInvalid)
+		if (sizeInvalid || clippingInvalid)
 		{
 			this.refreshClipRect();
 		}
@@ -951,7 +951,7 @@ class LayoutGroup extends FeathersControl
 	 */
 	private function layoutGroup_addedToStageHandler(event:Event):Void
 	{
-		if(this._autoSizeMode == AutoSizeMode.STAGE)
+		if (this._autoSizeMode == AutoSizeMode.STAGE)
 		{
 			//if we validated before being added to the stage, or if we've
 			//been removed from stage and added again, we need to be sure

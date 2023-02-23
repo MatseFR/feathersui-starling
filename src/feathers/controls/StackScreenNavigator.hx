@@ -720,7 +720,7 @@ class StackScreenNavigator extends BaseScreenNavigator
 		for (eventName in events.keys())
 		{
 			//signal = null;
-			//if(BaseScreenNavigator.SIGNAL_TYPE !== null &&
+			//if (BaseScreenNavigator.SIGNAL_TYPE !== null &&
 				//this._activeScreen.hasOwnProperty(eventName))
 			//{
 				//signal = this._activeScreen[eventName] as BaseScreenNavigator.SIGNAL_TYPE;

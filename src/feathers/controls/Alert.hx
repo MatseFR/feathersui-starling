@@ -218,7 +218,7 @@ class Alert extends Panel
 		super();
 		this.headerStyleName = DEFAULT_CHILD_STYLE_NAME_HEADER;
 		this.footerStyleName = DEFAULT_CHILD_STYLE_NAME_BUTTON_GROUP;
-		if(this._fontStylesSet == null)
+		if (this._fontStylesSet == null)
 		{
 			this._fontStylesSet = new FontStylesSet();
 			this._fontStylesSet.addEventListener(Event.CHANGE, fontStyles_changeHandler);
@@ -568,7 +568,7 @@ class Alert extends Panel
 		{
 			return value;
 		}
-		if (value && !Std.isOfType(value, PropertyProxyReal))
+		if (value != null && !Std.isOfType(value, PropertyProxyReal))
 		{
 			value = PropertyProxy.fromObject(value);
 		}
@@ -577,7 +577,7 @@ class Alert extends Panel
 			this._messageProperties.removeOnChangeCallback(childProperties_onChange);
 			this._messageProperties.dispose();
 		}
-		this._messageProperties = cast value;
+		this._messageProperties = value != null ? cast value : null;
 		if (this._messageProperties != null)
 		{
 			this._messageProperties.addOnChangeCallback(childProperties_onChange);

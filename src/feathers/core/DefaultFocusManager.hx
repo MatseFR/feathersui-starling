@@ -818,7 +818,7 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 		{
 			return;
 		}
-		if(event.isDefaultPrevented())
+		if (event.isDefaultPrevented())
 		{
 			//something else has already handled this keyboard event
 			return;
@@ -925,7 +925,7 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 	private function stage_keyFocusChangeHandler(event:FocusEvent):Void
 	{
 		//keyCode 0 is sent by IE, for some reason
-		if(event.keyCode != Keyboard.TAB && event.keyCode != 0)
+		if (event.keyCode != Keyboard.TAB && event.keyCode != 0)
 		{
 			return;
 		}
@@ -1044,7 +1044,7 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 			//ignore touches on focusOwner because we consider the
 			//focusOwner to indirectly have focus already
 			var focusOwner:IFocusDisplayObject = this._focus.focusOwner;
-			if(focusOwner == focusTarget)
+			if (focusOwner == focusTarget)
 			{
 				return;
 			}

@@ -2357,7 +2357,7 @@ class TextInput extends FeathersControl implements ITextBaselineControl implemen
 				this.addChildAt(this.currentIcon, index);
 			}
 		}
-		if(this.currentIcon != null &&
+		if (this.currentIcon != null &&
 			(this._originalIconWidth != this._originalIconWidth || //isNaN
 			this._originalIconHeight != this._originalIconHeight)) //isNaN
 		{
@@ -2574,7 +2574,7 @@ class TextInput extends FeathersControl implements ITextBaselineControl implemen
 		//pass focus to the text editor.
 		//if there is no focus manager, then we check if the touch is in
 		//the bounds of the text input.
-		if((this._hasFocus || isInBounds) && !this._textEditorHasFocus)
+		if ((this._hasFocus || isInBounds) && !this._textEditorHasFocus)
 		{
 			this.textEditor.globalToLocal(point, point);
 			this._isWaitingToSetFocus = false;

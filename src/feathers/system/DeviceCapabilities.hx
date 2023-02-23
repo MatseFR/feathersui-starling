@@ -157,7 +157,7 @@ class DeviceCapabilities
 	{
 		var portraitWidth:Float = screenInchesX(stage);
 		var landscapeWidth:Float = screenInchesY(stage);
-		if(portraitWidth > landscapeWidth)
+		if (portraitWidth > landscapeWidth)
 		{
 			//make sure the longer side is used for landscape comparison
 			var temp:Float = landscapeWidth;
@@ -183,7 +183,7 @@ class DeviceCapabilities
 	{
 		var portraitWidth:Float = screenInchesX(stage);
 		var landscapeWidth:Float = screenInchesY(stage);
-		if(portraitWidth > landscapeWidth)
+		if (portraitWidth > landscapeWidth)
 		{
 			//make sure the longer side is used for landscape comparison
 			var temp:Float = landscapeWidth;
@@ -224,12 +224,12 @@ class DeviceCapabilities
 	 */
 	public static function screenInchesX(stage:Stage = null):Float
 	{
-		if(stage == null)
+		if (stage == null)
 		{
 			stage = Starling.current.nativeStage;
 		}
 		var screenWidth:Float = screenPixelWidth;
-		if(screenWidth != screenWidth) //isNaN
+		if (screenWidth != screenWidth) //isNaN
 		{
 			screenWidth = stage.fullScreenWidth;
 		}
@@ -245,12 +245,12 @@ class DeviceCapabilities
 	 */
 	public static function screenInchesY(stage:Stage = null):Float
 	{
-		if(stage == null)
+		if (stage == null)
 		{
 			stage = Starling.current.nativeStage;
 		}
 		var screenHeight:Float = screenPixelHeight;
-		if(screenHeight != screenHeight) //isNaN
+		if (screenHeight != screenHeight) //isNaN
 		{
 			screenHeight = stage.fullScreenHeight;
 		}

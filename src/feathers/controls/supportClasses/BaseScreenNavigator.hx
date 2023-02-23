@@ -206,7 +206,7 @@ abstract class BaseScreenNavigator extends FeathersControl
 		this._autoSizeMode = value;
 		if (this._activeScreen != null)
 		{
-			if(this._autoSizeMode == AutoSizeMode.CONTENT)
+			if (this._autoSizeMode == AutoSizeMode.CONTENT)
 			{
 				this._activeScreen.addEventListener(Event.RESIZE, activeScreen_resizeHandler);
 			}

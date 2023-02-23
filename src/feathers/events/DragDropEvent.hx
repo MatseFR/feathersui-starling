@@ -71,8 +71,11 @@ class DragDropEvent extends Event
 	/**
 	 * Constructor.
 	 */
-	public function new(type:String, dragData:DragData, isDropped:Bool, localX:Float = Math.NaN, localY:Float = Math.NaN, dragSource:IDragSource = null) 
+	public function new(type:String, dragData:DragData, isDropped:Bool, localX:Null<Float> = null, localY:Null<Float> = null, dragSource:IDragSource = null) 
 	{
+		if (localX == null) localX = Math.NaN;
+		if (localY == null) localY = Math.NaN;
+		
 		super(type, false, dragData);
 		this.isDropped = isDropped;
 		this.localX = localX;
@@ -83,7 +86,8 @@ class DragDropEvent extends Event
 	/**
 	 * The <code>DragData</code> associated with the current drag.
 	 */
-	public var dragData(get, never):DragData { return cast this.data; }
+	public var dragData(get, never):DragData;
+	private function get_dragData():DragData { return cast this.data; }
 	
 	/**
 	 * Determines if there has been a drop.

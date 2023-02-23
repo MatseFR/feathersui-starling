@@ -144,7 +144,7 @@ class LayoutViewPort extends LayoutGroup implements IViewPort
 	
 	private function set_minVisibleHeight(value:Float):Float
 	{
-		if(this._explicitMinVisibleHeight == value)
+		if (this._explicitMinVisibleHeight == value)
 		{
 			return value;
 		}
@@ -318,7 +318,7 @@ class LayoutViewPort extends LayoutGroup implements IViewPort
 			//layouts can handle NaN for explicit dimensions
 			this.viewPortBounds.explicitWidth = this._explicitVisibleWidth;
 		}
-		if(this._autoSizeMode == AutoSizeMode.STAGE && needsHeight)
+		if (this._autoSizeMode == AutoSizeMode.STAGE && needsHeight)
 		{
 			this.viewPortBounds.explicitHeight = this.stage.stageHeight;
 		}
@@ -327,7 +327,7 @@ class LayoutViewPort extends LayoutGroup implements IViewPort
 			//layouts can handle NaN for explicit dimensions
 			this.viewPortBounds.explicitHeight = this._explicitVisibleHeight;
 		}
-		if(needsMinWidth)
+		if (needsMinWidth)
 		{
 			//layouts don't expect NaN for minimum dimensions
 			this.viewPortBounds.minWidth = 0;
@@ -336,7 +336,7 @@ class LayoutViewPort extends LayoutGroup implements IViewPort
 		{
 			this.viewPortBounds.minWidth = this._explicitMinVisibleWidth;
 		}
-		if(needsMinHeight)
+		if (needsMinHeight)
 		{
 			//layouts don't expect NaN for minimum dimensions
 			this.viewPortBounds.minHeight = 0;

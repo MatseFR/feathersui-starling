@@ -1047,7 +1047,7 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 		var cachedWidth:Float = Math.NaN;
 		var iNormalized:Int;
 		var item:DisplayObject;
-		if( keyCode == Keyboard.HOME)
+		if (keyCode == Keyboard.HOME)
 		{
 			if (itemCount > 0)
 			{
@@ -1675,12 +1675,12 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 			totalExplicitWidth += item.width + this._gap;
 		}
 		totalExplicitWidth -= this._gap;
-		if(this._firstGap == this._firstGap && //!isNaN
+		if (this._firstGap == this._firstGap && //!isNaN
 			itemCount > 1)
 		{
 			totalExplicitWidth += (this._firstGap - this._gap);
 		}
-		else if(this._lastGap == this._lastGap //!isNaN
+		else if (this._lastGap == this._lastGap //!isNaN
 			&& itemCount > 2)
 		{
 			totalExplicitWidth += (this._lastGap - this._gap);

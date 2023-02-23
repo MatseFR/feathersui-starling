@@ -985,17 +985,20 @@ class Panel extends ScrollContainer implements IFocusExtras
 	 */
 	private function refreshHeaderStyles():Void
 	{
-		//if(Object(this.header).hasOwnProperty(this._headerTitleField))
 		if (Reflect.hasField(this.header, this._headerTitleField))
 		{
 			//this.header[this._headerTitleField] = this._title;
 			Reflect.setProperty(this.header, this._headerTitleField, this._title);
 		}
-		for (propertyName in this._headerProperties)
+		if (this._headerProperties != null)
 		{
-			var propertyValue:Dynamic = this._headerProperties[propertyName];
-			//this.header[propertyName] = propertyValue;
-			Reflect.setProperty(this.header, propertyName, propertyValue);
+			var propertyValue:Dynamic;
+			for (propertyName in this._headerProperties)
+			{
+				propertyValue = this._headerProperties[propertyName];
+				//this.header[propertyName] = propertyValue;
+				Reflect.setProperty(this.header, propertyName, propertyValue);
+			}
 		}
 	}
 	
@@ -1004,11 +1007,15 @@ class Panel extends ScrollContainer implements IFocusExtras
 	 */
 	private function refreshFooterStyles():Void
 	{
-		for (propertyName in this._footerProperties)
+		if (this._footerProperties != null)
 		{
-			var propertyValue:Dynamic = this._footerProperties[propertyName];
-			//this.footer[propertyName] = propertyValue;
-			Reflect.setProperty(this.footer, propertyName, propertyValue);
+			var propertyValue:Dynamic;
+			for (propertyName in this._footerProperties)
+			{
+				propertyValue = this._footerProperties[propertyName];
+				//this.footer[propertyName] = propertyValue;
+				Reflect.setProperty(this.footer, propertyName, propertyValue);
+			}
 		}
 	}
 	

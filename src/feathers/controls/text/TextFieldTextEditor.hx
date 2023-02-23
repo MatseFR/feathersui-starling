@@ -1126,7 +1126,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		}
 		//we'll skip this if the text field isn't visible to avoid running
 		//that code every frame.
-		if(this.textField != null && this.textField.visible)
+		if (this.textField != null && this.textField.visible)
 		{
 			this.transformTextField();
 		}
@@ -1334,7 +1334,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		//if a parent component validates before we're added to the stage,
 		//measureText() may be called before initialization, so we need to
 		//force it.
-		if(!this._isInitialized)
+		if (!this._isInitialized)
 		{
 			this.initializeNow();
 		}
@@ -1398,7 +1398,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		}
 		//if the context's current state is the state that we're modifying,
 		//we need to use the new value immediately.
-		if(this._stateContext != null && this._stateContext.currentState == state)
+		if (this._stateContext != null && this._stateContext.currentState == state)
 		{
 			this.invalidate(FeathersControl.INVALIDATION_FLAG_STATE);
 		}
@@ -1647,7 +1647,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		}
 		textField.defaultTextFormat = this._currentTextFormat;
 		
-		if( this._isHTML)
+		if (this._isHTML)
 		{
 			if (isFormatDifferent || textField.htmlText != this._text)
 			{
@@ -1668,7 +1668,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		{
 			if (isFormatDifferent || textField.text != this._text)
 			{
-				if(textField == this.textField && this._pendingSelectionBeginIndex < 0)
+				if (textField == this.textField && this._pendingSelectionBeginIndex < 0)
 				{
 					this._pendingSelectionBeginIndex = this.textField.selectionBeginIndex;
 					this._pendingSelectionEndIndex = this.textField.selectionEndIndex;
@@ -1803,7 +1803,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		var dataInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_DATA);
 		var stateInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_STATE);
 		
-		if(sizeInvalid)
+		if (sizeInvalid)
 		{
 			this.refreshSnapshotParameters();
 			this.refreshTextFieldSize();
@@ -1902,19 +1902,19 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 		var globalScaleX:Float = GeomUtils.matrixToScaleX(matrix);
 		var globalScaleY:Float = GeomUtils.matrixToScaleY(matrix);
 		var smallerGlobalScale:Float = globalScaleX;
-		if(globalScaleY < smallerGlobalScale)
+		if (globalScaleY < smallerGlobalScale)
 		{
 			smallerGlobalScale = globalScaleY;
 		}
 		var starling:Starling = this.stage != null ? this.stage.starling : Starling.current;
 		var nativeScaleFactor:Float = 1;
-		if(starling.supportHighResolutions)
+		if (starling.supportHighResolutions)
 		{
 			nativeScaleFactor = starling.nativeStage.contentsScaleFactor;
 		}
 		var scaleFactor:Float = starling.contentScaleFactor / nativeScaleFactor;
 		var gutterPositionOffset:Float = 0;
-		if(!this._useGutter || this._border)
+		if (!this._useGutter || this._border)
 		{
 			gutterPositionOffset = 2 * smallerGlobalScale;
 		}
@@ -2148,7 +2148,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 			var target:DisplayObject = this;
 			do
 			{
-				if(!target.visible)
+				if (!target.visible)
 				{
 					this.clearFocus();
 					break;

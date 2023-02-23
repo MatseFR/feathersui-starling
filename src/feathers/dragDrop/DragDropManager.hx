@@ -8,6 +8,7 @@ accordance with the terms of the accompanying license agreement.
 package feathers.dragDrop;
 import feathers.core.PopUpManager;
 import feathers.events.DragDropEvent;
+import feathers.utils.type.SafeCast;
 import openfl.errors.ArgumentError;
 import openfl.errors.IllegalOperationError;
 import openfl.geom.Point;
@@ -67,7 +68,7 @@ class DragDropManager
 	 * Only one drag may be active at a time.
 	 */
 	public static var isDragging(get, never):Bool;
-	private static function get_isDragging():Bool { return _dragData != null;
+	private static function get_isDragging():Bool { return _dragData != null; }
 	
 	/**
 	 * @private
@@ -192,7 +193,7 @@ class DragDropManager
 		{
 			throw new IllegalOperationError("Drag cannot be completed because none is currently active.");
 		}
-		if (dropTarget)
+		if (dropTarget != null)
 		{
 			dropTarget.dispatchEvent(new DragDropEvent(DragDropEvent.DRAG_EXIT, _dragData, false, dropTargetLocalX, dropTargetLocalY, _dragSource));
 			dropTarget = null;
@@ -200,7 +201,7 @@ class DragDropManager
 		var source:IDragSource = _dragSource;
 		var data:DragData = _dragData;
 		cleanup();
-		source.dispatchEvent(new DragDropEvent(DragDropEvent.DRAG_COMPLETE, data, isDropped, NaN, NaN, source));
+		source.dispatchEvent(new DragDropEvent(DragDropEvent.DRAG_COMPLETE, data, isDropped, Math.NaN, Math.NaN, source));
 	}
 	
 	/**
@@ -240,7 +241,7 @@ class DragDropManager
 		{
 			target.globalToLocal(location, location);
 		}
-		if (target != dropTarget)
+		if (target != SafeCast.safe_cast(dropTarget, DisplayObject))
 		{
 			if (dropTarget != null)
 			{
@@ -281,7 +282,7 @@ class DragDropManager
 	 */
 	private static function stage_touchHandler(event:TouchEvent):Void
 	{
-		var stage:Stage = Stage(event.currentTarget);
+		var stage:Stage = cast event.currentTarget;
 		var touch:Touch = event.getTouch(stage, null, _touchPointID);
 		if (touch == null)
 		{
@@ -291,7 +292,7 @@ class DragDropManager
 		{
 			var point:Point = Pool.getPoint();
 			touch.getLocation(stage, point);
-			if (avatar != Null)
+			if (avatar != null)
 			{
 				avatar.x = point.x + avatarOffsetX;
 				avatar.y = point.y + avatarOffsetY;

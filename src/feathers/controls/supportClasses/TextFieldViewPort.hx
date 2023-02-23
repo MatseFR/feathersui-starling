@@ -63,7 +63,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 	private function get_text():String { return this._text; }
 	private function set_text(value:String):String
 	{
-		if(value == null)
+		if (value == null)
 		{
 			value = "";
 		}
@@ -72,7 +72,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 			return value;
 		}
 		this._text = value;
-		this.invalidate(INVALIDATION_FLAG_DATA);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_DATA);
 		return this._text;
 	}
 	
@@ -89,7 +89,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 			return value;
 		}
 		this._isHTML = value;
-		this.invalidate(INVALIDATION_FLAG_DATA);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_DATA);
 		return this._isHTML;
 	}
 	
@@ -119,7 +119,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 		{
 			this._fontStyles.addEventListener(Event.CHANGE, fontStylesSet_changeHandler);
 		}
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._fontStyles;
 	}
 	
@@ -141,7 +141,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 			return value;
 		}
 		this._textFormat = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._textFormat;
 	}
 	
@@ -158,7 +158,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 			return value;
 		}
 		this._disabledTextFormat = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._disabledTextFormat;
 	}
 	
@@ -175,7 +175,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 			return value;
 		}
 		this._styleSheet = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._styleSheet;
 	}
 	
@@ -192,7 +192,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 			return value;
 		}
 		this._embedFonts = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._embedFonts;
 	}
 	
@@ -209,7 +209,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 			return value;
 		}
 		this._antiAliasType = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._antiAliasType;
 	}
 	
@@ -226,7 +226,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 			return value;
 		}
 		this._background = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._background;
 	}
 	
@@ -243,7 +243,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 			return value;
 		}
 		this._backgroundColor = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._backgroundColor;
 	}
 	
@@ -260,7 +260,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 			return value;
 		}
 		this._border = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._border;
 	}
 	
@@ -277,7 +277,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 			return value;
 		}
 		this._borderColor = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._borderColor;
 	}
 	
@@ -294,7 +294,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 			return value;
 		}
 		this._cacheAsBitmap = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._cacheAsBitmap;
 	}
 	
@@ -311,7 +311,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 			return value;
 		}
 		this._condenseWhite = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._condenseWhite;
 	}
 	
@@ -328,7 +328,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 			return value;
 		}
 		this._displayAsPassword = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._displayAsPassword;
 	}
 	
@@ -345,7 +345,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 			return value;
 		}
 		this._gridFitType = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._gridFitType;
 	}
 	
@@ -362,7 +362,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 			return;
 		}
 		this._sharpness = value;
-		this.invalidate(INVALIDATION_FLAG_DATA);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_DATA);
 		return this._sharpness;
 	}
 	
@@ -379,7 +379,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 			return value;
 		}
 		this._thickness = value;
-		this.invalidate(INVALIDATION_FLAG_DATA);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_DATA);
 		return this._thickness;
 	}
 	
@@ -414,7 +414,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 		if (valueIsNaN)
 		{
 			this._actualMinVisibleWidth = 0;
-			this.invalidate(INVALIDATION_FLAG_SIZE);
+			this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 		}
 		else
 		{
@@ -423,7 +423,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 				(this._actualVisibleWidth < value || this._actualVisibleWidth == oldValue))
 			{
 				//only invalidate if this change might affect the visibleWidth
-				this.invalidate(INVALIDATION_FLAG_SIZE);
+				this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 			}
 		}
 		return value;
@@ -448,7 +448,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 			(this._actualVisibleWidth > value || this._actualVisibleWidth == oldValue))
 		{
 			//only invalidate if this change might affect the visibleWidth
-			this.invalidate(INVALIDATION_FLAG_SIZE);
+			this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 		}
 		return this._maxVisibleWidth;
 	}
@@ -477,7 +477,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 		this._explicitVisibleWidth = value;
 		if (this._actualVisibleWidth != value)
 		{
-			this.invalidate(INVALIDATION_FLAG_SIZE);
+			this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 		}
 		return this._explicitVisibleWidth;
 	}
@@ -513,7 +513,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 		if (valueIsNaN)
 		{
 			this._actualMinVisibleHeight = 0;
-			this.invalidate(INVALIDATION_FLAG_SIZE);
+			this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 		}
 		else
 		{
@@ -522,7 +522,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 				(this._actualVisibleHeight < value || this._actualVisibleHeight == oldValue))
 			{
 				//only invalidate if this change might affect the visibleHeight
-				this.invalidate(INVALIDATION_FLAG_SIZE);
+				this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 			}
 		}
 		return this._explicitMinVisibleHeight;
@@ -547,7 +547,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 			(this._actualVisibleHeight > value || this._actualVisibleHeight == oldValue))
 		{
 			//only invalidate if this change might affect the visibleHeight
-			this.invalidate(INVALIDATION_FLAG_SIZE);
+			this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 		}
 		return this._maxVisibleHeight;
 	}
@@ -576,7 +576,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 		this._explicitVisibleHeight = value;
 		if (this._actualVisibleHeight != value)
 		{
-			this.invalidate(INVALIDATION_FLAG_SIZE);
+			this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 		}
 		return this._explicitVisibleHeight;
 	}
@@ -605,7 +605,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 			return value;
 		}
 		this._horizontalScrollPosition = value;
-		this.invalidate(INVALIDATION_FLAG_SCROLL);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SCROLL);
 		return this._horizontalScrollPosition;
 	}
 	
@@ -619,7 +619,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 			return value;
 		}
 		this._verticalScrollPosition = value;
-		this.invalidate(INVALIDATION_FLAG_SCROLL);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SCROLL);
 		return this._verticalScrollPosition;
 	}
 	
@@ -636,7 +636,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 			return value;
 		}
 		this._paddingTop = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._paddingTop;
 	}
 	
@@ -650,7 +650,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 			return value;
 		}
 		this._paddingRight = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._paddingRight;
 	}
 	
@@ -664,7 +664,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 			return value;
 		}
 		this._paddingBottom = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._paddingBottom;
 	}
 	
@@ -678,7 +678,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 			return value;
 		}
 		this._paddingLeft = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._paddingLeft;
 	}
 	
@@ -727,11 +727,11 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 	
 	override function draw():Void
 	{
-		var dataInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_DATA);
-		var sizeInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_SIZE);
-		var scrollInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_SCROLL);
-		var stylesInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_STYLES);
-		var stateInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_STATE);
+		var dataInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_DATA);
+		var sizeInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_SIZE);
+		var scrollInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_SCROLL);
+		var stylesInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_STYLES);
+		var stateInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_STATE);
 		
 		if (stylesInvalid)
 		{
@@ -761,7 +761,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 			}
 			else
 			{
-				if(!this._embedFonts &&
+				if (!this._embedFonts &&
 					this._currentTextFormat == this._fontStylesTextFormat)
 				{
 					//when font styles are passed in from the parent component, we
@@ -800,11 +800,11 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 			{
 				calculatedVisibleWidth = starling.stage.stageWidth;
 			}
-			if(calculatedVisibleWidth < this._explicitMinVisibleWidth)
+			if (calculatedVisibleWidth < this._explicitMinVisibleWidth)
 			{
 				calculatedVisibleWidth = this._explicitMinVisibleWidth;
 			}
-			else if(calculatedVisibleWidth > this._maxVisibleWidth)
+			else if (calculatedVisibleWidth > this._maxVisibleWidth)
 			{
 				calculatedVisibleWidth = this._maxVisibleWidth;
 			}
@@ -853,11 +853,11 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 		{
 			this._currentTextFormat = this._disabledTextFormat;
 		}
-		else if(this._textFormat != null)
+		else if (this._textFormat != null)
 		{
 			this._currentTextFormat = this._textFormat;
 		}
-		else if(this._fontStyles != null)
+		else if (this._fontStyles != null)
 		{
 			this._currentTextFormat = this.getTextFormatFromFontStyles();
 		}
@@ -865,8 +865,8 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 	
 	private function getTextFormatFromFontStyles():flash.text.TextFormat
 	{
-		if (this.isInvalid(INVALIDATION_FLAG_STYLES) ||
-			this.isInvalid(INVALIDATION_FLAG_STATE))
+		if (this.isInvalid(FeathersControl.INVALIDATION_FLAG_STYLES) ||
+			this.isInvalid(FeathersControl.INVALIDATION_FLAG_STATE))
 		{
 			var fontStylesFormat:starling.text.TextFormat;
 			if (this._fontStyles != null)
@@ -921,7 +921,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 	
 	private function fontStylesSet_changeHandler(event:Event):Void
 	{
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 	}
 	
 }

@@ -157,7 +157,7 @@ class DefaultPopUpManager implements IPopUpManager
 		//parent yet, which will trigger the listener if it is added first.
 		popUp.addEventListener(Event.REMOVED_FROM_STAGE, popUp_removedFromStageHandler);
 		
-		if(this._popUps.length == 1)
+		if (this._popUps.length == 1)
 		{
 			this._root.stage.addEventListener(ResizeEvent.RESIZE, stage_resizeHandler);
 		}

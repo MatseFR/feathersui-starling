@@ -44,6 +44,7 @@ class DelayedDownTouchToState extends TouchToState
 			this._stateDelayTimer.removeEventListener(TimerEvent.TIMER_COMPLETE, stateDelayTimer_timerCompleteHandler);
 			this._stateDelayTimer = null;
 		}
+		return value;
 	}
 	
 	/**
@@ -87,7 +88,7 @@ class DelayedDownTouchToState extends TouchToState
 				return;
 			}
 			this._delayedCurrentState = value;
-			if (this._stateDelayTimer)
+			if (this._stateDelayTimer != null)
 			{
 				this._stateDelayTimer.reset();
 			}

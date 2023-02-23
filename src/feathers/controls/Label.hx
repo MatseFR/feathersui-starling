@@ -526,7 +526,7 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 	{
 		if (this.processStyleRestriction("backgroundDisabledSkin"))
 		{
-			if(value != null)
+			if (value != null)
 			{
 				value.dispose();
 			}
@@ -647,17 +647,17 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 	{
 		//we don't dispose it if the label is the parent because it'll
 		//already get disposed in super.dispose()
-		if(this._backgroundSkin != null &&
+		if (this._backgroundSkin != null &&
 			this._backgroundSkin.parent != this)
 		{
 			this._backgroundSkin.dispose();
 		}
-		if(this._backgroundDisabledSkin != null &&
+		if (this._backgroundDisabledSkin != null &&
 			this._backgroundDisabledSkin.parent != this)
 		{
 			this._backgroundDisabledSkin.dispose();
 		}
-		if(this._fontStylesSet != null)
+		if (this._fontStylesSet != null)
 		{
 			this._fontStylesSet.dispose();
 			this._fontStylesSet = null;

@@ -76,12 +76,12 @@ class ConditionalStyleProvider implements IStyleProvider
 		}
 		if (result == true)
 		{
-			if(this._trueStyleProvider != null)
+			if (this._trueStyleProvider != null)
 			{
 				this._trueStyleProvider.applyStyles(target);
 			}
 		}
-		else if(this._falseStyleProvider != null)
+		else if (this._falseStyleProvider != null)
 		{
 			this._falseStyleProvider.applyStyles(target);
 		}

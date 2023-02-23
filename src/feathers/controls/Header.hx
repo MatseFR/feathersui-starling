@@ -941,7 +941,7 @@ class Header extends FeathersControl
 		{
 			value = HorizontalAlign.LEFT;
 		}
-		else if(value == "preferRight")
+		else if (value == "preferRight")
 		{
 			value = HorizontalAlign.RIGHT;
 		}
@@ -1010,7 +1010,7 @@ class Header extends FeathersControl
 		this.leftItems = null;
 		this.rightItems = null;
 		this.centerItems = null;
-		if(this._fontStylesSet != null)
+		if (this._fontStylesSet != null)
 		{
 			this._fontStylesSet.dispose();
 			this._fontStylesSet = null;
@@ -1399,7 +1399,7 @@ class Header extends FeathersControl
 		}
 		
 		var newMinWidth:Float = this._explicitMinWidth;
-		if(needsMinWidth)
+		if (needsMinWidth)
 		{
 			newMinWidth = totalContentWidth + this._paddingLeft + this._paddingRight;
 			if (this.currentBackgroundSkin != null)
@@ -1411,7 +1411,7 @@ class Header extends FeathersControl
 						newMinWidth = measureSkin.minWidth;
 					}
 				}
-				else if(this._explicitBackgroundMinWidth > newMinWidth)
+				else if (this._explicitBackgroundMinWidth > newMinWidth)
 				{
 					newMinWidth = this._explicitBackgroundMinWidth;
 				}
@@ -1572,12 +1572,15 @@ class Header extends FeathersControl
 	{
 		this.titleTextRenderer.fontStyles = this._fontStylesSet;
 		this.titleTextRenderer.wordWrap = this._wordWrap;
-		var propertyValue:Dynamic;
-		for (propertyName in this._titleProperties)
+		if (this._titleProperties != null)
 		{
-			propertyValue = this._titleProperties[propertyName];
-			//this.titleTextRenderer[propertyName] = propertyValue;
-			Reflect.setProperty(this.titleTextRenderer, propertyName, propertyValue);
+			var propertyValue:Dynamic;
+			for (propertyName in this._titleProperties)
+			{
+				propertyValue = this._titleProperties[propertyName];
+				//this.titleTextRenderer[propertyName] = propertyValue;
+				Reflect.setProperty(this.titleTextRenderer, propertyName, propertyValue);
+			}
 		}
 	}
 	
@@ -1597,7 +1600,7 @@ class Header extends FeathersControl
 		{
 			os = os.substring(IOS_NAME_PREFIX.length, os.indexOf("."));
 		}
-		else if(os.indexOf(OLD_IOS_NAME_PREFIX) != -1)
+		else if (os.indexOf(OLD_IOS_NAME_PREFIX) != -1)
 		{
 			os = os.substring(OLD_IOS_NAME_PREFIX.length, os.indexOf("."));
 		}

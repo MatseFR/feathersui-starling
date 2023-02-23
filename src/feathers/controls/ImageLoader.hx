@@ -222,7 +222,7 @@ class ImageLoader extends FeathersControl
 			return value;
 		}
 		this._isRestoringTexture = false;
-		if(this._isInTextureQueue)
+		if (this._isInTextureQueue)
 		{
 			this.removeFromTextureQueue();
 		}
@@ -736,7 +736,7 @@ class ImageLoader extends FeathersControl
 			return value;
 		}
 		this._delayTextureCreation = value;
-		if(!this._delayTextureCreation)
+		if (!this._delayTextureCreation)
 		{
 			this.processPendingTexture();
 		}
@@ -1023,7 +1023,7 @@ class ImageLoader extends FeathersControl
 		var needsHeight:Bool = this._explicitHeight != this._explicitHeight; //isNaN
 		var needsMinWidth:Bool = this._explicitMinWidth != this._explicitMinWidth; //isNaN
 		var needsMinHeight:Bool = this._explicitMinHeight != this._explicitMinHeight; //isNaN
-		if(!needsWidth && !needsHeight && !needsMinWidth && !needsMinHeight)
+		if (!needsWidth && !needsHeight && !needsMinWidth && !needsMinHeight)
 		{
 			return false;
 		}
@@ -1304,7 +1304,7 @@ class ImageLoader extends FeathersControl
 			{
 				this.image.y = this.actualHeight - this._paddingBottom - imageHeight;
 			}
-			else if(this._verticalAlign == VerticalAlign.MIDDLE)
+			else if (this._verticalAlign == VerticalAlign.MIDDLE)
 			{
 				this.image.y = this._paddingTop + ((this.actualHeight - this._paddingTop - this._paddingBottom) - imageHeight) / 2;
 			}

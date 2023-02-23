@@ -392,7 +392,7 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 		{
 			return value;
 		}
-		if(this._restrict == null && value == null)
+		if (this._restrict == null && value == null)
 		{
 			return value;
 		}
@@ -874,7 +874,7 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 			var maxLineWidth:Float = hasExplicitWidth ? this._explicitWidth : this._explicitMaxWidth;
 			if (maxLineWidth > lineWidth)
 			{
-				if(align == TextFormatAlign.RIGHT)
+				if (align == TextFormatAlign.RIGHT)
 				{
 					xPositionOffset = maxLineWidth - lineWidth;
 				}
@@ -1185,7 +1185,7 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 		{
 			if (event.shiftKey)
 			{
-				if(this._selectionAnchorIndex >= 0 && this._selectionAnchorIndex == this._selectionBeginIndex &&
+				if (this._selectionAnchorIndex >= 0 && this._selectionAnchorIndex == this._selectionBeginIndex &&
 					this._selectionBeginIndex != this._selectionEndIndex)
 				{
 					newIndex = this._selectionEndIndex - 1;
@@ -1331,7 +1331,7 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 			return;
 		}
 		var text:String = event.text;
-		if(text == CARRIAGE_RETURN || text == LINE_FEED)
+		if (text == CARRIAGE_RETURN || text == LINE_FEED)
 		{
 			//ignore new lines
 			return;

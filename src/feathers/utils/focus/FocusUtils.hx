@@ -104,7 +104,7 @@ class FocusUtils
 			//see comments in previous condition above for details
 			if (isVertical)
 			{
-				if(minPrimaryDistance2 > 0 && minPrimaryDistance2 < maxPrimaryDistance1)
+				if (minPrimaryDistance2 > 0 && minPrimaryDistance2 < maxPrimaryDistance1)
 				{
 					return false;
 				}

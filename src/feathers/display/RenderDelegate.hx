@@ -50,7 +50,7 @@ class RenderDelegate extends DisplayObject
 	private function get_target():DisplayObject { return this._target; }
 	private function set_target(value:DisplayObject):DisplayObject
 	{
-		if(this._target == value)
+		if (this._target == value)
 		{
 			return value;
 		}

@@ -1330,7 +1330,7 @@ class ButtonGroup extends FeathersControl implements ITextBaselineControl
 		}
 		this._buttonInitializer(button, item);
 		this._buttonToItem[button] = item;
-		if(isNewInstance)
+		if (isNewInstance)
 		{
 			//we need to listen for Event.TRIGGERED after the initializer
 			//is called to avoid runtime errors because the button may be

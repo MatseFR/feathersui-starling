@@ -181,9 +181,9 @@ class TapToSelect
 						isInBounds = cast(this._target, DisplayObject) == stage.hitTest(point);
 					}
 					Pool.putPoint(point);
-					if(isInBounds)
+					if (isInBounds)
 					{
-						if(this._tapToDeselect)
+						if (this._tapToDeselect)
 						{
 							this._target.isSelected = !this._target.isSelected;
 						}
