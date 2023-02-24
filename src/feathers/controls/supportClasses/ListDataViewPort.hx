@@ -37,6 +37,7 @@ import feathers.system.DeviceCapabilities;
 import feathers.utils.type.ArgumentsCount;
 import feathers.utils.type.SafeCast;
 import haxe.Constraints.Function;
+import haxe.ds.ObjectMap;
 import openfl.errors.ArgumentError;
 import openfl.errors.Error;
 import openfl.errors.IllegalOperationError;
@@ -269,8 +270,9 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 	private var _defaultStorage:ItemRendererFactoryStorage = new ItemRendererFactoryStorage();
 	private var _storageMap:Map<String, ItemRendererFactoryStorage> = new Map<String, ItemRendererFactoryStorage>();
 	//private var _rendererMap:Map<Dynamic, IListItemRenderer> = new Map<Dynamic, IListItemRenderer>();
+	private var _rendererMap:ObjectMap<Dynamic, IListItemRenderer> = new ObjectMap<Dynamic, IListItemRenderer>();
 	// TODO : this only works on flash and cpp targets
-	private var _rendererMap:Dictionary<Dynamic, IListItemRenderer> = new Dictionary<Dynamic, IListItemRenderer>(true);
+	//private var _rendererMap:Dictionary<Dynamic, IListItemRenderer> = new Dictionary<Dynamic, IListItemRenderer>(true);
 	private var _minimumItemCount:Int;
 	
 	private var _layoutIndexOffset:Int = 0;
@@ -788,7 +790,7 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 	
 	public function itemToItemRenderer(item:Dynamic):IListItemRenderer
 	{
-		return this._rendererMap[item];
+		return this._rendererMap.get(item);
 	}
 	
 	override public function dispose():Void
@@ -811,7 +813,7 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 		}
 		if (this._rendererMap != null)
 		{
-			//this._rendererMap.clear();
+			this._rendererMap.clear();
 			this._rendererMap = null;
 		}
 		if (this._itemRendererFactories != null)
@@ -960,9 +962,9 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 				this._addItemEffectContexts = new Array<IEffectContext>();
 			}
 			
-			for (item in this._addedItems)
+			for (item in this._addedItems.keys())
 			{
-				itemRenderer = this._rendererMap[item];
+				itemRenderer = this._rendererMap.get(item);
 				if (itemRenderer != null)
 				{
 					this.interruptRemoveItemEffects(itemRenderer, false);
@@ -981,9 +983,9 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 			{
 				this._removeItemEffectContexts = new Array<IEffectContext>();
 			}
-			for (item in this._removedItems)
+			for (item in this._removedItems.keys())
 			{
-				itemRenderer = this._rendererMap[item];
+				itemRenderer = this._rendererMap.get(item);
 				if (itemRenderer != null)
 				{
 					this.interruptRemoveItemEffects(itemRenderer, true);
@@ -1120,7 +1122,7 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 		//a null value at index 0. this is the only time we allow null.
 		if (typicalItem != null || newTypicalItemIsInDataProvider)
 		{
-			typicalRenderer = this._rendererMap[typicalItem];
+			typicalRenderer = this._rendererMap.get(typicalItem);
 			if (typicalRenderer != null)
 			{
 				//at this point, the item already has an item renderer.
@@ -1185,7 +1187,7 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 					//to the renderer map.
 					if (newTypicalItemIsInDataProvider)
 					{
-						this._rendererMap[typicalItem] = typicalRenderer;
+						this._rendererMap.set(typicalItem, typicalRenderer);
 					}
 				}
 			}
@@ -1499,7 +1501,7 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 				continue;
 			}
 			item = this._dataProvider.getItemAt(index);
-			itemRenderer = this._rendererMap[item];
+			itemRenderer = this._rendererMap.get(item);
 			if (this._factoryIDFunction != null && itemRenderer != null)
 			{
 				newFactoryID = this.getFactoryID(itemRenderer.data, index);
@@ -1742,7 +1744,7 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 		
 		if (!isTemporary)
 		{
-			this._rendererMap[item] = itemRenderer;
+			this._rendererMap.set(item, itemRenderer);
 			activeItemRenderers[activeItemRenderers.length] = itemRenderer;
 			itemRenderer.addEventListener(Event.TRIGGERED, renderer_triggeredHandler);
 			itemRenderer.addEventListener(Event.CHANGE, renderer_changeHandler);
@@ -1897,7 +1899,7 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 	private function dataProvider_updateItemHandler(event:Event, index:Int):Void
 	{
 		var item:Dynamic = this._dataProvider.getItemAt(index);
-		var renderer:IListItemRenderer = this._rendererMap[item];
+		var renderer:IListItemRenderer = this._rendererMap.get(item);
 		if (renderer == null)
 		{
 			return;
