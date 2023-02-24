@@ -41,6 +41,7 @@ import openfl.errors.ArgumentError;
 import openfl.errors.Error;
 import openfl.errors.IllegalOperationError;
 import openfl.geom.Point;
+import openfl.utils.Dictionary;
 import starling.core.Starling;
 import starling.display.DisplayObject;
 import starling.events.EnterFrameEvent;
@@ -267,7 +268,9 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 	private var _layoutItems:Array<DisplayObject> = new Array<DisplayObject>();
 	private var _defaultStorage:ItemRendererFactoryStorage = new ItemRendererFactoryStorage();
 	private var _storageMap:Map<String, ItemRendererFactoryStorage> = new Map<String, ItemRendererFactoryStorage>();
-	private var _rendererMap:Map<Dynamic, IListItemRenderer> = new Map<Dynamic, IListItemRenderer>();
+	//private var _rendererMap:Map<Dynamic, IListItemRenderer> = new Map<Dynamic, IListItemRenderer>();
+	// TODO : this only works on flash and cpp targets
+	private var _rendererMap:Dictionary<Dynamic, IListItemRenderer> = new Dictionary<Dynamic, IListItemRenderer>(true);
 	private var _minimumItemCount:Int;
 	
 	private var _layoutIndexOffset:Int = 0;
@@ -808,7 +811,7 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 		}
 		if (this._rendererMap != null)
 		{
-			this._rendererMap.clear();
+			//this._rendererMap.clear();
 			this._rendererMap = null;
 		}
 		if (this._itemRendererFactories != null)
@@ -1654,8 +1657,11 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 			keepCount = itemCount;
 		}
 		var itemRenderer:IListItemRenderer;
-		for (i in 0...keepCount)
+		var i:Int = 0;
+		//for (i in 0...keepCount)
+		while (i < keepCount)
 		{
+			i++;
 			itemRenderer = inactiveItemRenderers.shift();
 			if (itemRenderer == null)
 			{
@@ -1992,7 +1998,8 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 		}
 		else if (isSelected)
 		{
-			this._selectedIndices.data = new Array<Int>()[index];
+			var indices:Array<Int> = [index];
+			this._selectedIndices.data = indices;
 		}
 		else
 		{

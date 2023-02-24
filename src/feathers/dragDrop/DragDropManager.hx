@@ -270,7 +270,8 @@ class DragDropManager
 	 */
 	private static function nativeStage_keyDownHandler(event:KeyboardEvent):Void
 	{
-		if (event.keyCode == Keyboard.ESCAPE || event.keyCode == Keyboard.BACK)
+		// TODO : Keyboard.BACK only available on flash target
+		if (event.keyCode == Keyboard.ESCAPE #if flash || event.keyCode == Keyboard.BACK #end)
 		{
 			event.preventDefault();
 			cancelDrag();

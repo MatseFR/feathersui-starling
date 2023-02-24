@@ -447,6 +447,7 @@ class TextInput extends FeathersControl implements ITextBaselineControl implemen
 	 * @default null
 	 */
 	public var restrict(get, set):String;
+	@:native("_restrict1")
 	private var _restrict:String;
 	private function get_restrict():String { return this._restrict; }
 	private function set_restrict(value:String):String

@@ -360,7 +360,8 @@ class List extends Scroller implements IFocusContainer implements IDragSource im
 		}
 		if (value >= 0)
 		{
-			this._selectedIndices.data = new Array<Int>()[value];
+			var indices:Array<Int> = [value];
+			this._selectedIndices.data = indices;
 		}
 		else
 		{
@@ -866,12 +867,6 @@ class List extends Scroller implements IFocusContainer implements IDragSource im
 		}
 		if (!Std.isOfType(value, PropertyProxyReal))
 		{
-			//var newValue:PropertyProxy = new PropertyProxy();
-			//for(var propertyName:String in value)
-			//{
-				//newValue[propertyName] = value[propertyName];
-			//}
-			//value = newValue;
 			value = PropertyProxy.fromObject(value);
 		}
 		if (this._itemRendererProperties != null)
@@ -1290,6 +1285,16 @@ class List extends Scroller implements IFocusContainer implements IDragSource im
 		{
 			this._itemRendererProperties.dispose();
 			this._itemRendererProperties = null;
+		}
+		if (this._addedItems != null)
+		{
+			this._addedItems.clear();
+			this._addedItems = null;
+		}
+		if (this._removedItems != null)
+		{
+			this._removedItems.clear();
+			this._removedItems = null;
 		}
 		super.dispose();
 	}

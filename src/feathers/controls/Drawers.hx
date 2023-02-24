@@ -4143,6 +4143,9 @@ class Drawers extends FeathersControl
 			//someone else already handled this one
 			return;
 		}
+		
+		// TODO : Keyboard.BACK only available on flash target
+		#if flash
 		if (event.keyCode == Keyboard.BACK)
 		{
 			var isAnyDrawerOpen:Bool = false;
@@ -4171,6 +4174,7 @@ class Drawers extends FeathersControl
 				event.preventDefault();
 			}
 		}
+		#end
 	}
 	
 	/**

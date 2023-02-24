@@ -76,7 +76,7 @@ class DefaultListItemRenderer extends BaseDefaultItemRenderer implements IListIt
 	 */
 	public function new() 
 	{
-		super();	
+		super();
 	}
 	
 	override function get_defaultStyleProvider():IStyleProvider 

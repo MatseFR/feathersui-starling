@@ -1032,12 +1032,15 @@ class Alert extends Panel
 	private function refreshMessageStyles():Void
 	{
 		this.messageTextRenderer.fontStyles = this._fontStylesSet;
-		var propertyValue:Dynamic;
-		for (propertyName in this._messageProperties)
+		if (this._messageProperties != null)
 		{
-			propertyValue = this._messageProperties[propertyName];
-			//this.messageTextRenderer[propertyName] = propertyValue;
-			Reflect.setProperty(this.messageTextRenderer, propertyName, propertyValue);
+			var propertyValue:Dynamic;
+			for (propertyName in this._messageProperties)
+			{
+				propertyValue = this._messageProperties[propertyName];
+				//this.messageTextRenderer[propertyName] = propertyValue;
+				Reflect.setProperty(this.messageTextRenderer, propertyName, propertyValue);
+			}
 		}
 	}
 	
@@ -1143,6 +1146,7 @@ class Alert extends Panel
 			this.closeAlert(item);
 			return;
 		}
+		// TODO : Keyboard.BACK only available on flash target
 		if (this._cancelButtonIndex != -1 &&
 			(#if flash keyCode == Keyboard.BACK || #end keyCode == Keyboard.ESCAPE))
 		{

@@ -204,13 +204,7 @@ class StyleProviderRegistry
 	 */
 	private function validateComponentClass(type:Class<Dynamic>):Void
 	{
-		//if (!this._registerGlobally || Object(type).hasOwnProperty(GLOBAL_STYLE_PROVIDER_PROPERTY_NAME))
-		//if (!this._registerGlobally || Reflect.hasField(type, GLOBAL_STYLE_PROVIDER_PROPERTY_NAME))
-		//trace(Reflect.getProperty(type, "no_property"));
 		#if html5
-		// TODO : find a better way of checking that a property exists in JS
-		//if (!this._registerGlobally || Type.getClassFields(type).contains(GLOBAL_STYLE_PROVIDER_PROPERTY_NAME))
-		//if (untyped '"globalStyleProvider" in type')
 		if (!this._registerGlobally || untyped 'GLOBAL_STYLE_PROVIDER_PROPERTY_NAME in type')
 		#else
 		if (!this._registerGlobally || Reflect.hasField(type, GLOBAL_STYLE_PROVIDER_PROPERTY_NAME))

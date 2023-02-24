@@ -61,6 +61,7 @@ class TextInputRestrict
 	 * @see http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/text/TextField.html#restrict Full description of flash.text.TextField.restrict in Adobe's Flash Platform API Reference
 	 */
 	public var restrict(get, set):String;
+	@:native("_restrict1")
 	private var _restrict:String;
 	private function get_restrict():String { return this._restrict; }
 	private function set_restrict(value:String):String

@@ -994,17 +994,26 @@ class Header extends FeathersControl
 		}
 		if (this._disposeItems)
 		{
-			for (item in this._leftItems)
+			if (this._leftItems != null)
 			{
-				item.dispose();
+				for (item in this._leftItems)
+				{
+					item.dispose();
+				}
 			}
-			for (item in this._centerItems)
+			if (this._centerItems != null)
 			{
-				item.dispose();
+				for (item in this._centerItems)
+				{
+					item.dispose();
+				}
 			}
-			for (item in this._rightItems)
+			if (this._rightItems != null)
 			{
-				item.dispose();
+				for (item in this._rightItems)
+				{
+					item.dispose();
+				}
 			}
 		}
 		this.leftItems = null;

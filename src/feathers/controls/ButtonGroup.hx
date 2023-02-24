@@ -129,7 +129,10 @@ class ButtonGroup extends FeathersControl implements ITextBaselineControl
 	public function new() 
 	{
 		super();
-		
+		if (this._buttonInitializer == null) 
+		{
+			this._buttonInitializer = defaultButtonInitializer;
+		}
 	}
 	
 	/**
@@ -600,7 +603,7 @@ class ButtonGroup extends FeathersControl implements ITextBaselineControl
 	 * @see #lastButtonFactory
 	 */
 	public var buttonFactory(get, set):Void->Button;
-	private var _buttonFactory:Void->Button;
+	private var _buttonFactory:Void->Button = defaultButtonFactory;
 	private function get_buttonFactory():Void->Button { return this._buttonFactory; }
 	private function set_buttonFactory(value:Void->Button):Void->Button
 	{
@@ -727,7 +730,7 @@ class ButtonGroup extends FeathersControl implements ITextBaselineControl
 	 * @see #dataProvider
 	 */
 	public var buttonInitializer(get, set):Button->Dynamic->Void;
-	private var _buttonInitializer:Button->Dynamic->Void;
+	private var _buttonInitializer:Button->Dynamic->Void;// = this.defaultButtonInitializer;
 	private function get_buttonInitializer():Button->Dynamic->Void { return this._buttonInitializer; }
 	private function set_buttonInitializer(value:Button->Dynamic->Void):Button->Dynamic->Void
 	{

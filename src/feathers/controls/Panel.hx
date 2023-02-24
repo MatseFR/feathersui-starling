@@ -405,12 +405,6 @@ class Panel extends ScrollContainer implements IFocusExtras
 		}
 		if (!Std.isOfType(value, PropertyProxyReal))
 		{
-			//var newValue:PropertyProxy = new PropertyProxy();
-			//for(var propertyName:String in value)
-			//{
-				//newValue[propertyName] = value[propertyName];
-			//}
-			//value = newValue;
 			value = PropertyProxy.fromObject(value);
 		}
 		if (this._headerProperties != null)
@@ -543,12 +537,6 @@ class Panel extends ScrollContainer implements IFocusExtras
 		}
 		if (!Std.isOfType(value, PropertyProxyReal))
 		{
-			//var newValue:PropertyProxy = new PropertyProxy();
-			//for(var propertyName:String in value)
-			//{
-				//newValue[propertyName] = value[propertyName];
-			//}
-			//value = newValue;
 			value = PropertyProxy.fromObject(value);
 		}
 		if (this._footerProperties != null)
@@ -985,9 +973,10 @@ class Panel extends ScrollContainer implements IFocusExtras
 	 */
 	private function refreshHeaderStyles():Void
 	{
-		if (Reflect.hasField(this.header, this._headerTitleField))
+		//var fields:Array<String> = Type.getInstanceFields(Type.getClass(this.header));
+		//var index:Int = fields.indexOf(this._headerTitleField);
+		if (Reflect.hasField(this.header, this._headerTitleField) || Reflect.hasField(this.header, "set_" + this._headerTitleField))
 		{
-			//this.header[this._headerTitleField] = this._title;
 			Reflect.setProperty(this.header, this._headerTitleField, this._title);
 		}
 		if (this._headerProperties != null)

@@ -1168,6 +1168,10 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 					totalBitmapHeight -= currentBitmapHeight;
 				}
 				while (totalBitmapHeight > 0);
+				xPosition += currentBitmapWidth;
+				totalBitmapWidth -= currentBitmapWidth;
+				yPosition = offsetY;
+				totalBitmapHeight = this._snapshotHeight;
 			}
 			while (totalBitmapWidth > 0);
 		}
@@ -1861,7 +1865,7 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 		var xPosition:Float = 0;
 		var yPosition:Float = 0;
 		var bitmapData:BitmapData = null;
-		var snapshotIndex:Int = 0;
+		var snapshotIndex:Int = -1;
 		var currentBitmapWidth:Float;
 		var currentBitmapHeight:Float;
 		var snapshot:Image;

@@ -213,26 +213,36 @@ class PanelScreen extends Panel implements IScreen
 			//someone else already handled this one
 			return;
 		}
+		
+		// TODO : Keyboard.BACK only available on flash target
+		#if flash
 		if (this.backButtonHandler != null &&
 			event.keyCode == Keyboard.BACK)
 		{
 			event.preventDefault();
 			this.backButtonHandler();
 		}
+		#end
 		
+		// TODO : Keyboard.MENU only available on flash target
+		#if flash
 		if (this.menuButtonHandler != null &&
 			event.keyCode == Keyboard.MENU)
 		{
 			event.preventDefault();
 			this.menuButtonHandler();
 		}
+		#end
 		
+		// TODO : Keyboard.SEARCH only available on flash target
+		#if flash
 		if (this.searchButtonHandler != null &&
 			event.keyCode == Keyboard.SEARCH)
 		{
 			event.preventDefault();
 			this.searchButtonHandler();
 		}
+		#end
 	}
 	
 }

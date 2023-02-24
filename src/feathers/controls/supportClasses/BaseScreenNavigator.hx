@@ -829,7 +829,7 @@ abstract class BaseScreenNavigator extends FeathersControl
 			var activeScreen:DisplayObject = this._activeScreen;
 			var previousScreen:DisplayObject = this._previousScreenInTransition;
 			var previousScreenID:String = this._previousScreenInTransitionID;
-			item = cast this._screens[previousScreenID];
+			item = previousScreenID != null ? this._screens[previousScreenID] : null;
 			this._previousScreenInTransition = null;
 			this._previousScreenInTransitionID = null;
 			if (previousScreen != null)

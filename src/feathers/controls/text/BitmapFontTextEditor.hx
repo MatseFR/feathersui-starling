@@ -376,6 +376,7 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 	 * @see feathers.controls.TextInput#restrict
 	 */
 	public var restrict(get, set):TextInputRestrict;
+	@:native("_restrict1")
 	private var _restrict:TextInputRestrict;
 	private function get_restrict():String
 	{
