@@ -37,7 +37,7 @@ class ComponentsExplorer extends Sprite
 		
 		_starling = new Starling(Main, stage, null, null, Context3DRenderMode.AUTO, "auto");
 		_starling.enableErrorChecking = Capabilities.isDebugger;
-		_starling.showStats = true;//Capabilities.isDebugger;
+		_starling.showStats = false;//Capabilities.isDebugger;
 		_starling.skipUnchangedFrames = true;
 		_starling.supportBrowserZoom = true;
 		_starling.supportHighResolutions = false;

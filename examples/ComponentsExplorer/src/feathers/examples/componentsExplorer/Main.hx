@@ -4,11 +4,40 @@ import feathers.controls.Drawers;
 import feathers.controls.StackScreenNavigator;
 import feathers.controls.StackScreenNavigatorItem;
 import feathers.core.IFeathersControl;
+import feathers.core.PropertyProxy;
 import feathers.examples.componentsExplorer.data.EmbeddedAssets;
+import feathers.examples.componentsExplorer.data.GroupedListSettings;
+import feathers.examples.componentsExplorer.data.ListSettings;
+import feathers.examples.componentsExplorer.data.NumericStepperSettings;
+import feathers.examples.componentsExplorer.data.SliderSettings;
 import feathers.examples.componentsExplorer.screens.AlertScreen;
+import feathers.examples.componentsExplorer.screens.AutoCompleteScreen;
+import feathers.examples.componentsExplorer.screens.ButtonGroupScreen;
+import feathers.examples.componentsExplorer.screens.ButtonScreen;
+import feathers.examples.componentsExplorer.screens.CalloutScreen;
+import feathers.examples.componentsExplorer.screens.CheckScreen;
+import feathers.examples.componentsExplorer.screens.ListScreen;
+import feathers.examples.componentsExplorer.screens.ListSettingsScreen;
+import feathers.examples.componentsExplorer.screens.PageIndicatorScreen;
+import feathers.examples.componentsExplorer.screens.PanelComponentScreen;
+//import feathers.examples.componentsExplorer.screens.GroupedListScreen;
+//import feathers.examples.componentsExplorer.screens.GroupedListSettingsScreen;
+import feathers.examples.componentsExplorer.screens.LabelScreen;
+import feathers.examples.componentsExplorer.screens.NumericStepperScreen;
+import feathers.examples.componentsExplorer.screens.NumericStepperSettingsScreen;
+import feathers.examples.componentsExplorer.screens.ProgressBarScreen;
+import feathers.examples.componentsExplorer.screens.RadioScreen;
+import feathers.examples.componentsExplorer.screens.SliderScreen;
+import feathers.examples.componentsExplorer.screens.SliderSettingsScreen;
+import feathers.motion.Cover;
+import feathers.motion.Reveal;
+import openfl.Vector;
+import feathers.examples.componentsExplorer.screens.MainMenuScreen;
+import feathers.layout.Orientation;
 import feathers.motion.Slide;
 import feathers.system.DeviceCapabilities;
 import feathers.themes.MetalWorksDesktopTheme;
+import starling.core.Starling;
 import starling.events.Event;
 
 /**
@@ -26,9 +55,33 @@ class Main extends Drawers
 	}
 	
 	private var _navigator:StackScreenNavigator;
+	private var _menu:MainMenuScreen;
+	
+	//private function test(index:Int, ...rest:Int):Void
+	//{
+		//trace(rest);
+	//}
+	
+	//private function vectorTest(vec:Vector<Dynamic>):Void
+	//{
+		//
+	//}
 	
 	override function initialize():Void 
 	{
+		// TESTING
+		//var vec:Vector<Int> = new Vector<Int>();
+		//vectorTest(vec);
+		//var proxy:PropertyProxy = new PropertyProxy();
+		//proxy.settings = {a:1, b:true};
+		//var settings:GroupedListSettings = new GroupedListSettings();
+		//proxy.settings = settings;
+		//var array:Array<Dynamic> = new Array<Dynamic>();
+		//array.push({ label: "Alert", screen: ScreenID.ALERT });
+		//array.push({ label: "Button", screen: ScreenID.BUTTON });
+		//test(1, 2, 3, 4, 5);
+		//\TESTING
+		
 		//never forget to call super.initialize()
 		super.initialize();
 		
@@ -41,28 +94,145 @@ class Main extends Drawers
 		alertItem.addPopEvent(Event.COMPLETE);
 		this._navigator.addScreen(ScreenID.ALERT, alertItem);
 		
-		//if (DeviceCapabilities.isTablet(Starling.current.nativeStage))
-		//{
-			////we don't want the screens bleeding outside the navigator's
-			////bounds on top of a drawer when a transition is active, so
-			////enable clipping.
-			//this._navigator.clipContent = true;
-			//this._menu = new MainMenuScreen();
-			//this._menu.addEventListener(Event.CHANGE, mainMenu_tabletChangeHandler);
-			//this._menu.height = 200;
-			//this.leftDrawer = this._menu;
-			//this.leftDrawerDockMode = Orientation.BOTH;
-		//}
-		//else
-		//{
-			//var mainMenuItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(MainMenuScreen);
-			//mainMenuItem.setFunctionForPushEvent(Event.CHANGE, mainMenu_phoneChangeHandler);
-			//this._navigator.addScreen(ScreenID.MAIN_MENU, mainMenuItem);
-			//this._navigator.rootScreenID = ScreenID.MAIN_MENU;
-		//}
+		var autoCompleteItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(AutoCompleteScreen);
+		autoCompleteItem.addPopEvent(Event.COMPLETE);
+		this._navigator.addScreen(ScreenID.AUTO_COMPLETE, autoCompleteItem);
+		
+		var buttonItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(ButtonScreen);
+		buttonItem.addPopEvent(Event.COMPLETE);
+		this._navigator.addScreen(ScreenID.BUTTON, buttonItem);
+		
+		var buttonGroupItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(ButtonGroupScreen);
+		buttonGroupItem.addPopEvent(Event.COMPLETE);
+		this._navigator.addScreen(ScreenID.BUTTON_GROUP, buttonGroupItem);
+		
+		var calloutItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(CalloutScreen);
+		calloutItem.addPopEvent(Event.COMPLETE);
+		this._navigator.addScreen(ScreenID.CALLOUT, calloutItem);
+		
+		var checkItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(CheckScreen);
+		checkItem.addPopEvent(Event.COMPLETE);
+		this._navigator.addScreen(ScreenID.CHECK, checkItem);
+		
+		//var groupedListSettings:GroupedListSettings = new GroupedListSettings();
+		//var groupedListItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(GroupedListScreen);
+		//groupedListItem.setScreenIDForPushEvent(GroupedListScreen.SHOW_SETTINGS, ScreenID.GROUPED_LIST_SETTINGS);
+		//groupedListItem.addPopEvent(Event.COMPLETE);
+		//groupedListItem.properties.settings = groupedListSettings;
+		//this._navigator.addScreen(ScreenID.GROUPED_LIST, groupedListItem);
+		
+		//var groupedListSettingsItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(GroupedListSettingsScreen);
+		//groupedListSettingsItem.addPopEvent(Event.COMPLETE);
+		//groupedListSettingsItem.properties.settings = groupedListSettings;
+		////custom push and pop transitions for this settings screen
+		//groupedListSettingsItem.pushTransition = Cover.createCoverUpTransition();
+		//groupedListSettingsItem.popTransition = Reveal.createRevealDownTransition();
+		//this._navigator.addScreen(ScreenID.GROUPED_LIST_SETTINGS, groupedListSettingsItem);
+		
+		var labelItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(LabelScreen);
+		labelItem.addPopEvent(Event.COMPLETE);
+		this._navigator.addScreen(ScreenID.LABEL, labelItem);
+		
+		var listSettings:ListSettings = new ListSettings();
+		var listItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(ListScreen);
+		listItem.setScreenIDForPushEvent(ListScreen.SHOW_SETTINGS, ScreenID.LIST_SETTINGS);
+		listItem.addPopEvent(Event.COMPLETE);
+		listItem.properties.settings = listSettings;
+		this._navigator.addScreen(ScreenID.LIST, listItem);
+		
+		var listSettingsItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(ListSettingsScreen);
+		listSettingsItem.addPopEvent(Event.COMPLETE);
+		listSettingsItem.properties.settings = listSettings;
+		//custom push and pop transitions for this settings screen
+		listSettingsItem.pushTransition = Cover.createCoverUpTransition();
+		listSettingsItem.popTransition = Reveal.createRevealDownTransition();
+		this._navigator.addScreen(ScreenID.LIST_SETTINGS, listSettingsItem);
+		
+		var numericStepperSettings:NumericStepperSettings = new NumericStepperSettings();
+		var numericStepperItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(NumericStepperScreen);
+		numericStepperItem.setScreenIDForPushEvent(NumericStepperScreen.SHOW_SETTINGS, ScreenID.NUMERIC_STEPPER_SETTINGS);
+		numericStepperItem.addPopEvent(Event.COMPLETE);
+		numericStepperItem.properties.settings = numericStepperSettings;
+		this._navigator.addScreen(ScreenID.NUMERIC_STEPPER, numericStepperItem);
+		
+		var numericStepperSettingsItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(NumericStepperSettingsScreen);
+		numericStepperSettingsItem.addPopEvent(Event.COMPLETE);
+		numericStepperSettingsItem.properties.settings = numericStepperSettings;
+		//custom push and pop transitions for this settings screen
+		numericStepperSettingsItem.pushTransition = Cover.createCoverUpTransition();
+		numericStepperSettingsItem.popTransition = Reveal.createRevealDownTransition();
+		this._navigator.addScreen(ScreenID.NUMERIC_STEPPER_SETTINGS, numericStepperSettingsItem);
+		
+		var pageIndicatorItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(PageIndicatorScreen);
+		pageIndicatorItem.addPopEvent(Event.COMPLETE);
+		this._navigator.addScreen(ScreenID.PAGE_INDICATOR, pageIndicatorItem);
+		
+		var panelItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(PanelComponentScreen);
+		panelItem.addPopEvent(Event.COMPLETE);
+		this._navigator.addScreen(ScreenID.PANEL, panelItem);
+		
+		var progressBarItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(ProgressBarScreen);
+		progressBarItem.addPopEvent(Event.COMPLETE);
+		this._navigator.addScreen(ScreenID.PROGRESS_BAR, progressBarItem);
+		
+		var radioItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(RadioScreen);
+		radioItem.addPopEvent(Event.COMPLETE);
+		this._navigator.addScreen(ScreenID.RADIO, radioItem);
+		
+		var sliderSettings:SliderSettings = new SliderSettings();
+		var sliderItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(SliderScreen);
+		sliderItem.setScreenIDForPushEvent(SliderScreen.SHOW_SETTINGS, ScreenID.SLIDER_SETTINGS);
+		sliderItem.addPopEvent(Event.COMPLETE);
+		sliderItem.properties.settings = sliderSettings;
+		this._navigator.addScreen(ScreenID.SLIDER, sliderItem);
+		
+		var sliderSettingsItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(SliderSettingsScreen);
+		sliderSettingsItem.addPopEvent(Event.COMPLETE);
+		sliderSettingsItem.properties.settings = sliderSettings;
+		//custom push and pop transitions for this settings screen
+		sliderSettingsItem.pushTransition = Cover.createCoverUpTransition();
+		sliderSettingsItem.popTransition = Reveal.createRevealDownTransition();
+		this._navigator.addScreen(ScreenID.SLIDER_SETTINGS, sliderSettingsItem);
+		
+		if (DeviceCapabilities.isTablet(Starling.current.nativeStage))
+		{
+			//we don't want the screens bleeding outside the navigator's
+			//bounds on top of a drawer when a transition is active, so
+			//enable clipping.
+			this._navigator.clipContent = true;
+			this._menu = new MainMenuScreen();
+			this._menu.addEventListener(Event.CHANGE, mainMenu_tabletChangeHandler);
+			this._menu.height = 200;
+			this.leftDrawer = this._menu;
+			this.leftDrawerDockMode = Orientation.BOTH;
+		}
+		else
+		{
+			var mainMenuItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(MainMenuScreen);
+			mainMenuItem.setFunctionForPushEvent(Event.CHANGE, mainMenu_phoneChangeHandler);
+			this._navigator.addScreen(ScreenID.MAIN_MENU, mainMenuItem);
+			this._navigator.rootScreenID = ScreenID.MAIN_MENU;
+		}
 		
 		this._navigator.pushTransition = Slide.createSlideLeftTransition();
 		this._navigator.popTransition = Slide.createSlideRightTransition();
+	}
+	
+	private function mainMenu_phoneChangeHandler(event:Event):Void
+	{
+		//when MainMenuScreen dispatches Event.CHANGE, its selectedScreenID
+		//property has been updated. use that to show the correct screen.
+		var screen:MainMenuScreen = cast event.currentTarget;
+		this._navigator.pushScreen(screen.selectedScreenID, event.data);
+		//pass the data from the event to save it for when we pop back.
+	}
+	
+	private function mainMenu_tabletChangeHandler(event:Event):Void
+	{
+		//since this navigation is triggered by an external menu, we don't
+		//want to push a new screen onto the stack. we want to start fresh.
+		var screen:MainMenuScreen = cast event.currentTarget;
+		this._navigator.rootScreenID = screen.selectedScreenID;
 	}
 	
 }
