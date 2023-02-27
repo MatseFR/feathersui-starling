@@ -25,16 +25,17 @@ class VectorCollection extends EventDispatcher implements IListCollection
 	/**
 	 * Constructor.
 	 */
-	public function new(data:Dynamic = null) 
+	public function new(data:Vector<Dynamic> = null) 
 	{
+		super();
 		if (data == null)
 		{
 			data = new Vector<Dynamic>();
 		}
-		else if (!Std.isOfType(data, Vector))
-		{
-			throw new ArgumentError("VectorCollection data must be of type Vector");
-		}
+		//else if (!Std.isOfType(data, Vector))
+		//{
+			//throw new ArgumentError("VectorCollection data must be of type Vector");
+		//}
 		this._vectorData = data;
 	}
 	
@@ -333,9 +334,10 @@ class VectorCollection extends EventDispatcher implements IListCollection
 		}
 		//var filteredData:Vector.<*> = this._filterAndSortData as Vector.<*>;
 		//var vectorData:Vector.<*> = this._vectorData as Vector.<*>;
+		var item:Dynamic;
 		if (this._filterAndSortData != null)
 		{
-			var item:Dynamic = this._filterAndSortData.removeAt(index);
+			item = this._filterAndSortData.removeAt(index);
 			var unfilteredIndex:Int = this._vectorData.indexOf(item);
 			this._vectorData.removeAt(unfilteredIndex);
 		}

@@ -6,6 +6,7 @@ This program is free software. You can redistribute and/or modify it in
 accordance with the terms of the accompanying license agreement.
 */
 package feathers.data;
+import feathers.core.IFeathersEventDispatcher;
 
 /**
  * A source of items to display in the pop-up list of an
@@ -15,7 +16,7 @@ package feathers.data;
  *
  * @productversion Feathers 2.1.0
  */
-interface IAutoCompleteSource 
+interface IAutoCompleteSource extends IFeathersEventDispatcher
 {
 	/**
 	 * Loads suggestions based on the text entered into an

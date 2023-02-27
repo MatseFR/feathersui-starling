@@ -16,6 +16,7 @@ import feathers.core.PropertyProxyReal;
 import feathers.events.FeathersEventType;
 import feathers.skins.IStyleProvider;
 import feathers.utils.skins.SkinsUtils;
+import feathers.utils.type.SafeCast;
 import haxe.Constraints.Function;
 import starling.display.DisplayObject;
 import starling.events.Event;
@@ -749,7 +750,7 @@ class Panel extends ScrollContainer implements IFocusExtras
 			this._explicitBackgroundWidth, this._explicitBackgroundHeight,
 			this._explicitBackgroundMinWidth, this._explicitBackgroundMinHeight,
 			this._explicitBackgroundMaxWidth, this._explicitBackgroundMaxHeight);
-		var measureBackground:IMeasureDisplayObject = cast this.currentBackgroundSkin;
+		var measureBackground:IMeasureDisplayObject = SafeCast.safe_cast(this.currentBackgroundSkin, IMeasureDisplayObject);
 		if (Std.isOfType(this.currentBackgroundSkin, IValidating))
 		{
 			cast(this.currentBackgroundSkin, IValidating).validate();

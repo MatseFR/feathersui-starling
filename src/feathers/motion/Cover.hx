@@ -168,7 +168,7 @@ class Cover
 	 */
 	public static function createCoverDownTransition(duration:Float = 0.5, ease:Dynamic = Transitions.EASE_OUT, tweenProperties:Dynamic = null):Function
 	{
-		return function(oldScreen:DisplayObject, newScreen:DisplayObject, onComplete:Function, managed:Boolean = false):IEffectContext
+		return function(oldScreen:DisplayObject, newScreen:DisplayObject, onComplete:Function, managed:Bool = false):IEffectContext
 		{
 			if (oldScreen == null && newScreen == null)
 			{
@@ -319,7 +319,7 @@ class CoverTween extends Tween
 		}
 	}
 	
-	private function cleanupTween():void
+	private function cleanupTween():Void
 	{
 		this._temporaryParent.removeFromParent(true);
 		this._temporaryParent = null;

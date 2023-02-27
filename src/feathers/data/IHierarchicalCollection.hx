@@ -29,7 +29,7 @@ interface IHierarchicalCollection extends IFeathersEventDispatcher
 	 * avoid excessive garbage collection from temporary objects created by
 	 * <code>...rest</code> arguments.</p>
 	 */
-	function getLength(...rest:Array<Int>):Int;
+	function getLength(...rest:Int):Int;
 	
 	/**
 	 * The number of items at the specified location in the collection.
@@ -49,7 +49,7 @@ interface IHierarchicalCollection extends IFeathersEventDispatcher
 	 *
 	 * @see #updateAll()
 	 */
-	function updateItemAt(index:Int, ...rest:Array<Int>):Void;
+	function updateItemAt(index:Int, ...rest:Int):Void;
 	
 	/**
 	 * Call <code>updateAll()</code> to manually inform any component
@@ -95,7 +95,7 @@ interface IHierarchicalCollection extends IFeathersEventDispatcher
 	 * avoid excessive garbage collection from temporary objects created by
 	 * <code>...rest</code> arguments.</p>
 	 */
-	function addItemAt(item:Dynamic, index:Int, ...rest:Array<Int>):Void;
+	function addItemAt(item:Dynamic, index:Int, ...rest:Int):Void;
 	
 	/**
 	 * Adds an item to the collection, at the specified location.
@@ -111,7 +111,7 @@ interface IHierarchicalCollection extends IFeathersEventDispatcher
 	 * avoid excessive garbage collection from temporary objects created by
 	 * <code>...rest</code> arguments.</p>
 	 */
-	function removeItemAt(index:Int, ...rest:Array<Int>):Dynamic;
+	function removeItemAt(index:Int, ...rest:Int):Dynamic;
 
 	/**
 	 * Removes the item at the specified location from the collection and
@@ -137,7 +137,7 @@ interface IHierarchicalCollection extends IFeathersEventDispatcher
 	 * avoid excessive garbage collection from temporary objects created by
 	 * <code>...rest</code> arguments.</p>
 	 */
-	function setItemAt(item:Dynamic, index:Int, ...rest:Array<Int>):Void;
+	function setItemAt(item:Dynamic, index:Int, ...rest:Int):Void;
 
 	/**
 	 * Replaces the item at the specified location with a new item.

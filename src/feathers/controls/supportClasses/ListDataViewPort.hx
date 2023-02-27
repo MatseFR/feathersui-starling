@@ -365,10 +365,10 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 		return this._itemRendererType;
 	}
 	
-	public var itemRendererFactory(get, set):Function;
-	private var _itemRendererFactory:Function;
-	private function get_itemRendererFactory():Function { return this._itemRendererFactory; }
-	private function set_itemRendererFactory(value:Function):Function
+	public var itemRendererFactory(get, set):Void->IListItemRenderer;
+	private var _itemRendererFactory:Void->IListItemRenderer;
+	private function get_itemRendererFactory():Void->IListItemRenderer { return this._itemRendererFactory; }
+	private function set_itemRendererFactory(value:Void->IListItemRenderer):Void->IListItemRenderer
 	{
 		if (this._itemRendererFactory == value)
 		{
@@ -380,10 +380,10 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 		return this._itemRendererFactory;
 	}
 	
-	public var itemRendererFactories(get, set):Map<String, Function>;
-	private var _itemRendererFactories:Map<String, Function>;
-	private function get_itemRendererFactories():Map<String, Function> { return this._itemRendererFactories; }
-	private function set_itemRendererFactories(value:Map<String, Function>):Map<String, Function>
+	public var itemRendererFactories(get, set):Map<String, Void->IListItemRenderer>;
+	private var _itemRendererFactories:Map<String, Void->IListItemRenderer>;
+	private function get_itemRendererFactories():Map<String, Void->IListItemRenderer> { return this._itemRendererFactories; }
+	private function set_itemRendererFactories(value:Map<String, Void->IListItemRenderer>):Map<String, Void->IListItemRenderer>
 	{
 		if (this._itemRendererFactories == value)
 		{

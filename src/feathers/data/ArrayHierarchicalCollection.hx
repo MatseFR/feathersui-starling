@@ -27,6 +27,7 @@ class ArrayHierarchicalCollection extends EventDispatcher implements IHierarchic
 	 */
 	public function new(arrayData:Array<Dynamic> = null) 
 	{
+		super();
 		if (arrayData == null)
 		{
 			arrayData = new Array<Dynamic>();
@@ -84,7 +85,7 @@ class ArrayHierarchicalCollection extends EventDispatcher implements IHierarchic
 	 *
 	 * @throws RangeError Branch not found at specified location
 	 */
-	public function getLength(...rest:Array<Int>):Int
+	public function getLength(...rest:Int):Int
 	{
 		var branch:Array<Dynamic> = this._arrayData;
 		var indexCount:Int = rest.length;
@@ -131,9 +132,11 @@ class ArrayHierarchicalCollection extends EventDispatcher implements IHierarchic
 	 *
 	 * @see #updateAll()
 	 */
-	public function updateItemAt(index:Int, ...rest:Array<Int>):Void
+	public function updateItemAt(index:Int, ...rest:Int):Void
 	{
-		rest.insert(0, index);
+		//rest.insert(0, index);
+		var indices:Array<Int> = rest;
+		indices.insert(0, index);
 		this.dispatchEventWith(CollectionEventType.UPDATE_ITEM, false, rest);
 	}
 	
@@ -152,9 +155,11 @@ class ArrayHierarchicalCollection extends EventDispatcher implements IHierarchic
 	 *
 	 * @see #getItemAtLocation()
 	 */
-	public function getItemAt(index:Int, ...rest:Array<Int>):Dynamic
+	public function getItemAt(index:Int, ...rest:Int):Dynamic
 	{
-		rest.insert(0, index);
+		//rest.insert(0, index);
+		var indices:Array<Int> = rest;
+		indices.insert(0, index);
 		var branch:Array<Dynamic> = this._arrayData;
 		var indexCount:Int = rest.length - 1;
 		for (i in 0...indexCount)
@@ -219,9 +224,11 @@ class ArrayHierarchicalCollection extends EventDispatcher implements IHierarchic
 	 *
 	 * @throws RangeError Branch not found at specified location
 	 */
-	public function addItemAt(item:Object, index:Int, ...rest:Array<Int>):Void
+	public function addItemAt(item:Dynamic, index:Int, ...rest:Int):Void
 	{
-		rest.insert(0, index);
+		//rest.insert(0, index);
+		var indices:Array<Int> = rest;
+		indices.insert(0, index);
 		var branch:Array<Dynamic> = this._arrayData;
 		var indexCount:Int = rest.length - 1;
 		for (i in 0...indexCount)
@@ -278,9 +285,11 @@ class ArrayHierarchicalCollection extends EventDispatcher implements IHierarchic
 	 *
 	 * @throws RangeError Branch not found at specified location
 	 */
-	public function removeItemAt(index:Int, ...rest:Array<Int>):Dynamic
+	public function removeItemAt(index:Int, ...rest:Int):Dynamic
 	{
-		rest.insert(0, index);
+		//rest.insert(0, index);
+		var indices:Array<Int> = rest;
+		indices.insert(0, index);
 		var branch:Array<Dynamic> = this._arrayData;
 		var indexCount:Int = rest.length - 1;
 		for (i in 0...indexCount)
@@ -293,7 +302,7 @@ class ArrayHierarchicalCollection extends EventDispatcher implements IHierarchic
 			}
 		}
 		index = rest[indexCount];
-		var item:Dynamic = branch.removeAt(index);
+		var item:Dynamic = branch.splice(index, 1)[0];
 		this.dispatchEventWith(Event.CHANGE);
 		this.dispatchEventWith(CollectionEventType.REMOVE_ITEM, false, rest);
 		return item;
@@ -314,7 +323,7 @@ class ArrayHierarchicalCollection extends EventDispatcher implements IHierarchic
 		var branch:Array<Dynamic> = this._arrayData;
 		var indexCount:Int = location.length - 1;
 		var index:Int;
-		for (i in 0...indexCount; i++)
+		for (i in 0...indexCount)
 		{
 			index = location[i];
 			branch = cast Reflect.getProperty(branch[index], this._childrenField);
@@ -365,9 +374,11 @@ class ArrayHierarchicalCollection extends EventDispatcher implements IHierarchic
 	 *
 	 * @throws RangeError Branch not found at specified location
 	 */
-	public function setItemAt(item:Dynamic, index:Int, ...rest:Array<Int>):Void
+	public function setItemAt(item:Dynamic, index:Int, ...rest:Int):Void
 	{
-		rest.insert(0, index);
+		//rest.insert(0, index);
+		var indices:Array<Int> = rest;
+		indices.insert(0, index);
 		var branch:Array<Dynamic> = this._arrayData;
 		var indexCount:Int = rest.length - 1;
 		for (i in 0...indexCount)
@@ -447,7 +458,7 @@ class ArrayHierarchicalCollection extends EventDispatcher implements IHierarchic
 			disposeBranch(group);
 		}
 		
-		var itemCount:Int = getLength(path);//this.getLength.apply(this, path);
+		var itemCount:Int = FunctionApply.apply(getLength, path);//this.getLength.apply(this, path);
 		var item:Dynamic;
 		for (i in 0...itemCount)
 		{

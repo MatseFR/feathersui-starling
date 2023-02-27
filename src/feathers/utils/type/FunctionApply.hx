@@ -46,7 +46,7 @@ class FunctionApply
                 default: return Reflect.callMethod(func, func, args.slice(0, maxNumArgs));
             }
         }
-		return null
+		return null;
     }
 	
 }

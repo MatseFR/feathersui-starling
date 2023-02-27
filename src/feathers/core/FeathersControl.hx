@@ -7,9 +7,9 @@ accordance with the terms of the accompanying license agreement.
 */
 package feathers.core;
 
-import feathers.controls.text.BitmapFontTextRenderer;
 import feathers.controls.text.TextFieldTextEditor;
 import feathers.controls.text.TextFieldTextRenderer;
+import feathers.core.IFeathersControl;
 import feathers.events.FeathersEventType;
 import feathers.layout.ILayoutData;
 import feathers.layout.ILayoutDisplayObject;
@@ -27,12 +27,10 @@ import openfl.errors.IllegalOperationError;
 import openfl.geom.Matrix;
 import openfl.geom.Point;
 import openfl.geom.Rectangle;
-import feathers.core.IFeathersControl;
 import starling.display.DisplayObject;
 import starling.display.Sprite;
 import starling.events.Event;
 import starling.events.EventDispatcher;
-import starling.utils.MathUtil;
 import starling.utils.MatrixUtil;
 import starling.utils.Pool;
 
@@ -1822,11 +1820,10 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 		{
 			throw new IllegalOperationError("Cannot set focus indicator skin on a component that does not implement feathers.core.IFocusDisplayObject");
 		}
-		// TODO: translate this code to haxe
-		//if (this.processStyleRestriction(arguments.callee))
-		//{
-			//return value;
-		//}
+		if (this.processStyleRestriction("focusIndicatorSkin"))
+		{
+			return value;
+		}
 		if (this._focusIndicatorSkin == value)
 		{
 			return value;

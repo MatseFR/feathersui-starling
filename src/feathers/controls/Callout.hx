@@ -265,7 +265,7 @@ class Callout extends FeathersControl
 	 */
 	public static function show(content:DisplayObject, origin:DisplayObject,
 		supportedPositions:Array<String> = null, isModal:Bool = true, customCalloutFactory:Void->Callout = null,
-		customOverlayFactory:Void->Quad = null):Callout
+		customOverlayFactory:Void->DisplayObject = null):Callout
 	{
 		if (origin.stage == null)
 		{

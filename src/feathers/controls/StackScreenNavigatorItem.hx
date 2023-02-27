@@ -7,6 +7,8 @@ accordance with the terms of the accompanying license agreement.
 */
 package feathers.controls;
 import feathers.controls.supportClasses.IScreenNavigatorItem;
+import feathers.core.PropertyProxy;
+import feathers.core.PropertyProxyReal;
 import haxe.Constraints.Function;
 import haxe.ds.Map;
 import openfl.errors.ArgumentError;
@@ -50,7 +52,7 @@ class StackScreenNavigatorItem implements IScreenNavigatorItem
 	 * @param popEvent An event that pops the screen from the top of the stack.
 	 * @param properties A set of key-value pairs to pass to the screen when it is shown.
 	 */
-	public function new(screen:Dynamic = null, pushEvents:Map<String, Dynamic> = null, popEvent:String = null, properties:Map<String, Dynamic> = null) 
+	public function new(screen:Dynamic = null, pushEvents:Map<String, Dynamic> = null, popEvent:String = null, properties:Dynamic = null) 
 	{
 		this._screen = screen;
 		this._pushEvents = pushEvents != null ? pushEvents : new Map();
@@ -58,7 +60,8 @@ class StackScreenNavigatorItem implements IScreenNavigatorItem
 		{
 			this.addPopEvent(popEvent);
 		}
-		this._properties = properties != null ? properties : new Map();
+		//this._properties = properties != null ? properties : new Map();
+		this.properties = properties;
 	}
 	
 	
@@ -71,7 +74,8 @@ class StackScreenNavigatorItem implements IScreenNavigatorItem
 		}
 		if (this._properties != null)
 		{
-			this._properties.clear();
+			//this._properties.clear();
+			this._properties.dispose();
 			this._properties = null;
 		}
 		if (this._replaceEvents != null)
@@ -218,25 +222,53 @@ class StackScreenNavigatorItem implements IScreenNavigatorItem
 	 * property, and a pair's value is the value to be passed to the
 	 * screen's property.
 	 */
-	public var properties(get, set):Map<String, Dynamic>;
-	private var _properties:Map<String, Dynamic>;
-	private function get_properties():Map<String, Dynamic> { return this._properties; }
-	private function set_properties(value:Map<String, Dynamic>):Map<String, Dynamic>
+	public var properties(get, set):PropertyProxy;
+	private var _properties:PropertyProxy;
+	private function get_properties():PropertyProxy
+	{
+		if (this._properties == null)
+		{
+			this._properties = new PropertyProxy();
+		}
+		return this._properties;
+	}
+	
+	private function set_properties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._properties == value)
 		{
 			return value;
 		}
+		//if (value != null && !Std.isOfType(value, PropertyProxyReal))
+		//{
+			//value = PropertyProxy.fromObject(value);
+		//}
 		if (this._properties != null)
 		{
-			this._properties.clear();
+			this._properties.dispose();
 		}
-		if (value == null)
-		{
-			value = new Map<String, Dynamic>();
-		}
-		return this._properties = value;
+		this._properties = value != null ? cast value : null;
+		return this._properties;
 	}
+	//public var properties(get, set):Map<String, Dynamic>;
+	//private var _properties:Map<String, Dynamic>;
+	//private function get_properties():Map<String, Dynamic> { return this._properties; }
+	//private function set_properties(value:Map<String, Dynamic>):Map<String, Dynamic>
+	//{
+		//if (this._properties == value)
+		//{
+			//return value;
+		//}
+		//if (this._properties != null)
+		//{
+			//this._properties.clear();
+		//}
+		//if (value == null)
+		//{
+			//value = new Map<String, Dynamic>();
+		//}
+		//return this._properties = value;
+	//}
 	
 	/**
 	 * A custom push transition for this screen only. If <code>null</code>,
@@ -284,10 +316,10 @@ class StackScreenNavigatorItem implements IScreenNavigatorItem
 	 * @see feathers.controls.StackScreenNavigator#pushTransition
 	 * @see ../../../help/transitions.html Transitions for Feathers screen navigators
 	 */
-	public var pushTransition(get, set):DisplayObject->DisplayObject->(Dynamic->Void)->Void;
-	private var _pushTransition:DisplayObject->DisplayObject->(Dynamic->Void)->Void;
-	private function get_pushTransition():DisplayObject->DisplayObject->(Dynamic->Void)->Void { return this._pushTransition; }
-	private function set_pushTransition(value:DisplayObject->DisplayObject->(Dynamic->Void)->Void):DisplayObject->DisplayObject->(Dynamic->Void)->Void
+	public var pushTransition(get, set):Function;
+	private var _pushTransition:Function;
+	private function get_pushTransition():Function { return this._pushTransition; }
+	private function set_pushTransition(value:Function):Function
 	{
 		return this._pushTransition = value;
 	}
@@ -338,10 +370,10 @@ class StackScreenNavigatorItem implements IScreenNavigatorItem
 	 * @see feathers.controls.StackScreenNavigator#popTransition
 	 * @see ../../../help/transitions.html Transitions for Feathers screen navigators
 	 */
-	public var popTransition(get, set):DisplayObject->DisplayObject->(Dynamic->Void)->Void;
-	private var _popTransition:DisplayObject->DisplayObject->(Dynamic->Void)->Void;
-	private function get_popTransition():DisplayObject->DisplayObject->(Dynamic->Void)->Void { return this._popTransition; }
-	private function set_popTransition(value:DisplayObject->DisplayObject->(Dynamic->Void)->Void):DisplayObject->DisplayObject->(Dynamic->Void)->Void
+	public var popTransition(get, set):Function;
+	private var _popTransition:Function;
+	private function get_popTransition():Function { return this._popTransition; }
+	private function set_popTransition(value:Function):Function
 	{
 		return this._popTransition = value;
 	}
@@ -593,9 +625,15 @@ class StackScreenNavigatorItem implements IScreenNavigatorItem
 		}
 		if (this._properties != null)
 		{
-			for (propertyName in this._properties.keys())
+			//for (propertyName in this._properties.keys())
+			//{
+				//Reflect.setProperty(screenInstance, propertyName, this._properties[propertyName]);
+			//}
+			var propertyValue:Dynamic;
+			for (propertyName in this._properties)
 			{
-				Reflect.setProperty(screenInstance, propertyName, this._properties[propertyName]);
+				propertyValue = this._properties[propertyName];
+				Reflect.setProperty(screenInstance, propertyName, propertyValue);
 			}
 		}
 		

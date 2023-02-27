@@ -649,7 +649,7 @@ class List extends Scroller implements IFocusContainer implements IDragSource im
 	/**
 	 * @private
 	 */
-	private var _itemRendererFactories:Map<String, Function>;
+	private var _itemRendererFactories:Map<String, Void->IListItemRenderer>;
 	
 	/**
 	 * A function called that is expected to return a new item renderer. Has
@@ -678,10 +678,10 @@ class List extends Scroller implements IFocusContainer implements IDragSource im
 	 * @see #itemRendererType
 	 * @see #setItemRendererFactoryWithID()
 	 */
-	public var itemRendererFactory(get, set):Function;
-	private var _itemRendererFactory:Function;
-	private function get_itemRendererFactory():Function { return this._itemRendererFactory; }
-	private function set_itemRendererFactory(value:Function):Function
+	public var itemRendererFactory(get, set):Void->IListItemRenderer;
+	private var _itemRendererFactory:Void->IListItemRenderer;
+	private function get_itemRendererFactory():Void->IListItemRenderer { return this._itemRendererFactory; }
+	private function set_itemRendererFactory(value:Void->IListItemRenderer):Void->IListItemRenderer
 	{
 		if (this._itemRendererFactory == value)
 		{
@@ -747,7 +747,7 @@ class List extends Scroller implements IFocusContainer implements IDragSource im
 		this._factoryIDFunction = value;
 		if (value != null && this._itemRendererFactories == null)
 		{
-			this._itemRendererFactories = new Map<String, Function>();
+			this._itemRendererFactories = new Map<String, Void->IListItemRenderer>();
 		}
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._factoryIDFunction;
@@ -1118,7 +1118,7 @@ class List extends Scroller implements IFocusContainer implements IDragSource im
 	 * @see #factoryIDFunction
 	 * @see #getItemRendererFactoryWithID()
 	 */
-	public function setItemRendererFactoryWithID(id:String, factory:Function):Void
+	public function setItemRendererFactoryWithID(id:String, factory:Void->IListItemRenderer):Void
 	{
 		if (id == null)
 		{
@@ -1127,7 +1127,7 @@ class List extends Scroller implements IFocusContainer implements IDragSource im
 		}
 		if (this._itemRendererFactories == null)
 		{
-			this._itemRendererFactories = new Map<String, Function>();
+			this._itemRendererFactories = new Map<String, Void->IListItemRenderer>();
 		}
 		if (factory != null)
 		{

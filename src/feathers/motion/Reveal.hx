@@ -170,7 +170,7 @@ class Reveal
 	 */
 	public static function createRevealDownTransition(duration:Float = 0.5, ease:Dynamic = Transitions.EASE_OUT, tweenProperties:Dynamic = null):Function
 	{
-		return function(oldScreen:DisplayObject, newScreen:DisplayObject, onComplete:Function, managed:Boolean = false):IEffectContext
+		return function(oldScreen:DisplayObject, newScreen:DisplayObject, onComplete:Function, managed:Bool = false):IEffectContext
 		{
 			if (oldScreen == null && newScreen == null)
 			{
@@ -203,7 +203,7 @@ class Reveal
 	 */
 	private static function slideOutOldScreen(oldScreen:DisplayObject,
 		xOffset:Float, yOffset:Float, duration:Float, ease:Dynamic,
-		tweenProperties:Dynamic, onComplete:Function, managed:Boolean):IEffectContext
+		tweenProperties:Dynamic, onComplete:Function, managed:Bool):IEffectContext
 	{
 		var tween:Tween = new Tween(oldScreen, duration, ease);
 		if (xOffset != 0)
@@ -345,7 +345,7 @@ class RevealTween extends Tween
 		this._temporaryParent = null;
 		this._savedNewScreen.visible = true;
 		this._savedNewScreen = null;
-		if (this._savedOldScreen)
+		if (this._savedOldScreen != null)
 		{
 			this._savedOldScreen.x = 0;
 			this._savedOldScreen.y = 0;

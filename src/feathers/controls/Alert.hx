@@ -553,7 +553,7 @@ class Alert extends Panel
 	 */
 	public var messageProperties(get, set):Dynamic;
 	private var _messageProperties:PropertyProxy;
-	private function get_messageProperties():PropertyProxy
+	private function get_messageProperties():Dynamic
 	{
 		if (this._messageProperties == null)
 		{
