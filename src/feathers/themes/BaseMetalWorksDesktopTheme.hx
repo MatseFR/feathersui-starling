@@ -24,6 +24,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 package feathers.themes;
 import feathers.controls.Alert;
+import feathers.controls.AutoComplete;
 import feathers.controls.AutoSizeMode;
 import feathers.controls.Button;
 import feathers.controls.ButtonGroup;
@@ -37,8 +38,12 @@ import feathers.controls.ImageLoader;
 import feathers.controls.Label;
 import feathers.controls.LayoutGroup;
 import feathers.controls.List;
+import feathers.controls.NumericStepper;
+import feathers.controls.PageIndicator;
+import feathers.controls.PageIndicatorInteractionMode;
 import feathers.controls.Panel;
 import feathers.controls.PanelScreen;
+import feathers.controls.PickerList;
 import feathers.controls.ProgressBar;
 import feathers.controls.Radio;
 import feathers.controls.ScrollBar;
@@ -50,11 +55,14 @@ import feathers.controls.Scroller;
 import feathers.controls.SimpleScrollBar;
 import feathers.controls.Slider;
 import feathers.controls.SpinnerList;
+import feathers.controls.StepperButtonLayoutMode;
 import feathers.controls.TextCallout;
 import feathers.controls.TextInput;
 import feathers.controls.TextInputState;
 import feathers.controls.ToggleButton;
+import feathers.controls.ToggleSwitch;
 import feathers.controls.TrackLayoutMode;
+import feathers.controls.popups.DropDownPopUpContentManager;
 import feathers.controls.renderers.BaseDefaultItemRenderer;
 import feathers.controls.renderers.DefaultGroupedListHeaderOrFooterRenderer;
 import feathers.controls.renderers.DefaultGroupedListItemRenderer;
@@ -856,8 +864,8 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		this.getStyleProviderForClass(Button).setFunctionForStyleName(THEME_STYLE_NAME_ALERT_BUTTON_GROUP_BUTTON, this.setAlertButtonGroupButtonStyles);
 		
 		//autocomplete
-		//this.getStyleProviderForClass(AutoComplete).defaultStyleFunction = this.setTextInputStyles;
-		//this.getStyleProviderForClass(List).setFunctionForStyleName(AutoComplete.DEFAULT_CHILD_STYLE_NAME_LIST, this.setDropDownListStyles);
+		this.getStyleProviderForClass(AutoComplete).defaultStyleFunction = this.setTextInputStyles;
+		this.getStyleProviderForClass(List).setFunctionForStyleName(AutoComplete.DEFAULT_CHILD_STYLE_NAME_LIST, this.setDropDownListStyles);
 		
 		//button
 		this.getStyleProviderForClass(Button).defaultStyleFunction = this.setButtonStyles;
@@ -922,13 +930,13 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		this.getStyleProviderForClass(List).defaultStyleFunction = this.setListStyles;
 		
 		//numeric stepper
-		//this.getStyleProviderForClass(NumericStepper).defaultStyleFunction = this.setNumericStepperStyles;
-		//this.getStyleProviderForClass(TextInput).setFunctionForStyleName(NumericStepper.DEFAULT_CHILD_STYLE_NAME_TEXT_INPUT, this.setNumericStepperTextInputStyles);
-		//this.getStyleProviderForClass(Button).setFunctionForStyleName(NumericStepper.DEFAULT_CHILD_STYLE_NAME_DECREMENT_BUTTON, this.setNumericStepperDecrementButtonStyles);
-		//this.getStyleProviderForClass(Button).setFunctionForStyleName(NumericStepper.DEFAULT_CHILD_STYLE_NAME_INCREMENT_BUTTON, this.setNumericStepperIncrementButtonStyles);
+		this.getStyleProviderForClass(NumericStepper).defaultStyleFunction = this.setNumericStepperStyles;
+		this.getStyleProviderForClass(TextInput).setFunctionForStyleName(NumericStepper.DEFAULT_CHILD_STYLE_NAME_TEXT_INPUT, this.setNumericStepperTextInputStyles);
+		this.getStyleProviderForClass(Button).setFunctionForStyleName(NumericStepper.DEFAULT_CHILD_STYLE_NAME_DECREMENT_BUTTON, this.setNumericStepperDecrementButtonStyles);
+		this.getStyleProviderForClass(Button).setFunctionForStyleName(NumericStepper.DEFAULT_CHILD_STYLE_NAME_INCREMENT_BUTTON, this.setNumericStepperIncrementButtonStyles);
 		
 		//page indicator
-		//this.getStyleProviderForClass(PageIndicator).defaultStyleFunction = this.setPageIndicatorStyles;
+		this.getStyleProviderForClass(PageIndicator).defaultStyleFunction = this.setPageIndicatorStyles;
 		
 		//panel
 		this.getStyleProviderForClass(Panel).defaultStyleFunction = this.setPanelStyles;
@@ -939,10 +947,10 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		this.getStyleProviderForClass(Header).setFunctionForStyleName(PanelScreen.DEFAULT_CHILD_STYLE_NAME_HEADER, this.setPanelScreenHeaderStyles);
 		
 		//picker list (see also: list and item renderers)
-		//this.getStyleProviderForClass(PickerList).defaultStyleFunction = this.setPickerListStyles;
-		//this.getStyleProviderForClass(Button).setFunctionForStyleName(PickerList.DEFAULT_CHILD_STYLE_NAME_BUTTON, this.setPickerListButtonStyles);
-		//this.getStyleProviderForClass(ToggleButton).setFunctionForStyleName(PickerList.DEFAULT_CHILD_STYLE_NAME_BUTTON, this.setPickerListButtonStyles);
-		//this.getStyleProviderForClass(List).setFunctionForStyleName(PickerList.DEFAULT_CHILD_STYLE_NAME_LIST, this.setDropDownListStyles);
+		this.getStyleProviderForClass(PickerList).defaultStyleFunction = this.setPickerListStyles;
+		this.getStyleProviderForClass(Button).setFunctionForStyleName(PickerList.DEFAULT_CHILD_STYLE_NAME_BUTTON, this.setPickerListButtonStyles);
+		this.getStyleProviderForClass(ToggleButton).setFunctionForStyleName(PickerList.DEFAULT_CHILD_STYLE_NAME_BUTTON, this.setPickerListButtonStyles);
+		this.getStyleProviderForClass(List).setFunctionForStyleName(PickerList.DEFAULT_CHILD_STYLE_NAME_LIST, this.setDropDownListStyles);
 		
 		//progress bar
 		this.getStyleProviderForClass(ProgressBar).defaultStyleFunction = this.setProgressBarStyles;
@@ -1017,10 +1025,10 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		this.getStyleProviderForClass(ToggleButton).setFunctionForStyleName(Button.ALTERNATE_STYLE_NAME_QUIET_BUTTON, this.setQuietButtonStyles);
 		
 		//toggle switch
-		//this.getStyleProviderForClass(ToggleSwitch).defaultStyleFunction = this.setToggleSwitchStyles;
-		//this.getStyleProviderForClass(Button).setFunctionForStyleName(ToggleSwitch.DEFAULT_CHILD_STYLE_NAME_THUMB, this.setToggleSwitchThumbStyles);
-		//this.getStyleProviderForClass(ToggleButton).setFunctionForStyleName(ToggleSwitch.DEFAULT_CHILD_STYLE_NAME_THUMB, this.setToggleSwitchThumbStyles);
-		//this.getStyleProviderForClass(Button).setFunctionForStyleName(ToggleSwitch.DEFAULT_CHILD_STYLE_NAME_ON_TRACK, this.setToggleSwitchTrackStyles);
+		this.getStyleProviderForClass(ToggleSwitch).defaultStyleFunction = this.setToggleSwitchStyles;
+		this.getStyleProviderForClass(Button).setFunctionForStyleName(ToggleSwitch.DEFAULT_CHILD_STYLE_NAME_THUMB, this.setToggleSwitchThumbStyles);
+		this.getStyleProviderForClass(ToggleButton).setFunctionForStyleName(ToggleSwitch.DEFAULT_CHILD_STYLE_NAME_THUMB, this.setToggleSwitchThumbStyles);
+		this.getStyleProviderForClass(Button).setFunctionForStyleName(ToggleSwitch.DEFAULT_CHILD_STYLE_NAME_ON_TRACK, this.setToggleSwitchTrackStyles);
 		//we don't need a style function for the off track in this theme
 		//the toggle switch layout uses a single track
 		
@@ -1117,20 +1125,20 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		scroller.focusPadding = 0;
 	}
 	
-	//private function setDropDownListStyles(list:List):Void
-	//{
-		//this.setListStyles(list);
-		//
-		//var layout:VerticalLayout = new VerticalLayout();
-		//layout.useVirtualLayout = true;
-		//layout.padding = 0;
-		//layout.gap = 0;
-		//layout.horizontalAlign = HorizontalAlign.JUSTIFY;
-		//layout.verticalAlign = VerticalAlign.TOP;
-		//layout.resetTypicalItemDimensionsOnMeasure = true;
-		//layout.maxRowCount = 5;
-		//list.layout = layout;
-	//}
+	private function setDropDownListStyles(list:List):Void
+	{
+		this.setListStyles(list);
+		
+		var layout:VerticalLayout = new VerticalLayout();
+		layout.useVirtualLayout = true;
+		layout.padding = 0;
+		layout.gap = 0;
+		layout.horizontalAlign = HorizontalAlign.JUSTIFY;
+		layout.verticalAlign = VerticalAlign.TOP;
+		layout.resetTypicalItemDimensionsOnMeasure = true;
+		layout.maxRowCount = 5;
+		list.layout = layout;
+	}
 	
 	//-------------------------
 	// Alert
@@ -1877,37 +1885,37 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	// NumericStepper
 	//-------------------------
 	
-	//private function setNumericStepperStyles(stepper:NumericStepper):Void
-	//{
-		//stepper.buttonLayoutMode = StepperButtonLayoutMode.RIGHT_SIDE_VERTICAL;
-		//
-		//var focusIndicatorSkin:Image = new Image(this.focusIndicatorSkinTexture);
-		//focusIndicatorSkin.scale9Grid = FOCUS_INDICATOR_SCALE_9_GRID;
-		//stepper.focusIndicatorSkin = focusIndicatorSkin;
-		//stepper.focusPadding = this.focusPaddingSize;
-	//}
+	private function setNumericStepperStyles(stepper:NumericStepper):Void
+	{
+		stepper.buttonLayoutMode = StepperButtonLayoutMode.RIGHT_SIDE_VERTICAL;
+		
+		var focusIndicatorSkin:Image = new Image(this.focusIndicatorSkinTexture);
+		focusIndicatorSkin.scale9Grid = FOCUS_INDICATOR_SCALE_9_GRID;
+		stepper.focusIndicatorSkin = focusIndicatorSkin;
+		stepper.focusPadding = this.focusPaddingSize;
+	}
 	
-	//private function setNumericStepperTextInputStyles(input:TextInput):Void
-	//{
-		//var skin:ImageSkin = new ImageSkin(this.backgroundSkinTexture);
-		//skin.setTextureForState(TextInputState.DISABLED, this.backgroundDisabledSkinTexture);
-		//skin.setTextureForState(TextInputState.FOCUSED, this.backgroundFocusedSkinTexture);
-		//skin.scale9Grid = DEFAULT_SCALE9_GRID;
-		//skin.width = this.gridSize;
-		//skin.height = this.controlSize;
-		//skin.minWidth = this.gridSize;
-		//skin.minHeight = this.controlSize;
-		//input.backgroundSkin = skin;
-		//
-		//input.fontStyles = this.lightCenteredUIFontStyles.clone();
-		//input.disabledFontStyles = this.lightCenteredDisabledUIFontStyles.clone();
-		//
-		//input.gap = this.smallGutterSize;
-		//input.paddingTop = this.smallGutterSize;
-		//input.paddingBottom = this.smallGutterSize;
-		//input.paddingLeft = this.gutterSize;
-		//input.paddingRight = this.gutterSize;
-	//}
+	private function setNumericStepperTextInputStyles(input:TextInput):Void
+	{
+		var skin:ImageSkin = new ImageSkin(this.backgroundSkinTexture);
+		skin.setTextureForState(TextInputState.DISABLED, this.backgroundDisabledSkinTexture);
+		skin.setTextureForState(TextInputState.FOCUSED, this.backgroundFocusedSkinTexture);
+		skin.scale9Grid = DEFAULT_SCALE9_GRID;
+		skin.width = this.gridSize;
+		skin.height = this.controlSize;
+		skin.minWidth = this.gridSize;
+		skin.minHeight = this.controlSize;
+		input.backgroundSkin = skin;
+		
+		input.fontStyles = this.lightCenteredUIFontStyles.clone();
+		input.disabledFontStyles = this.lightCenteredDisabledUIFontStyles.clone();
+		
+		input.gap = this.smallGutterSize;
+		input.paddingTop = this.smallGutterSize;
+		input.paddingBottom = this.smallGutterSize;
+		input.paddingLeft = this.gutterSize;
+		input.paddingRight = this.gutterSize;
+	}
 	
 	private function setNumericStepperDecrementButtonStyles(button:Button):Void
 	{
@@ -1955,16 +1963,16 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	// PageIndicator
 	//-------------------------
 	
-	//private function setPageIndicatorStyles(pageIndicator:PageIndicator):Void
-	//{
-		//pageIndicator.interactionMode = PageIndicatorInteractionMode.PRECISE;
-		//
-		//pageIndicator.normalSymbolFactory = this.pageIndicatorNormalSymbolFactory;
-		//pageIndicator.selectedSymbolFactory = this.pageIndicatorSelectedSymbolFactory;
-		//
-		//pageIndicator.gap = this.gutterSize;
-		//pageIndicator.padding = this.smallGutterSize;
-	//}
+	private function setPageIndicatorStyles(pageIndicator:PageIndicator):Void
+	{
+		pageIndicator.interactionMode = PageIndicatorInteractionMode.PRECISE;
+		
+		pageIndicator.normalSymbolFactory = this.pageIndicatorNormalSymbolFactory;
+		pageIndicator.selectedSymbolFactory = this.pageIndicatorSelectedSymbolFactory;
+		
+		pageIndicator.gap = this.gutterSize;
+		pageIndicator.padding = this.smallGutterSize;
+	}
 	
 	//-------------------------
 	// Panel
@@ -2022,12 +2030,12 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	// PickerList
 	//-------------------------
 	
-	//private function setPickerListStyles(list:PickerList):Void
-	//{
-		//list.popUpContentManager = new DropDownPopUpContentManager();
-		//list.toggleButtonOnOpenAndClose = true;
-		//list.buttonFactory = pickerListButtonFactory;
-	//}
+	private function setPickerListStyles(list:PickerList):Void
+	{
+		list.popUpContentManager = new DropDownPopUpContentManager();
+		list.toggleButtonOnOpenAndClose = true;
+		list.buttonFactory = pickerListButtonFactory;
+	}
 	
 	private function setPickerListButtonStyles(button:Button):Void
 	{
@@ -2706,21 +2714,21 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	// ToggleSwitch
 	//-------------------------
 
-	//private function setToggleSwitchStyles(toggle:ToggleSwitch):Void
-	//{
-		//toggle.trackLayoutMode = TrackLayoutMode.SINGLE;
-		//
-		//var focusIndicatorSkin:Image = new Image(this.focusIndicatorSkinTexture);
-		//focusIndicatorSkin.scale9Grid = FOCUS_INDICATOR_SCALE_9_GRID;
-		//toggle.focusIndicatorSkin = focusIndicatorSkin;
-		//toggle.focusPadding = this.focusPaddingSize;
-		//
-		//toggle.offLabelFontStyles = this.lightUIFontStyles.clone();
-		//toggle.offLabelDisabledFontStyles = this.lightDisabledUIFontStyles.clone();
-		//
-		//toggle.onLabelFontStyles = this.selectedUIFontStyles.clone();
-		//toggle.onLabelDisabledFontStyles = this.lightDisabledUIFontStyles.clone();
-	//}
+	private function setToggleSwitchStyles(toggle:ToggleSwitch):Void
+	{
+		toggle.trackLayoutMode = TrackLayoutMode.SINGLE;
+		
+		var focusIndicatorSkin:Image = new Image(this.focusIndicatorSkinTexture);
+		focusIndicatorSkin.scale9Grid = FOCUS_INDICATOR_SCALE_9_GRID;
+		toggle.focusIndicatorSkin = focusIndicatorSkin;
+		toggle.focusPadding = this.focusPaddingSize;
+		
+		toggle.offLabelFontStyles = this.lightUIFontStyles.clone();
+		toggle.offLabelDisabledFontStyles = this.lightDisabledUIFontStyles.clone();
+		
+		toggle.onLabelFontStyles = this.selectedUIFontStyles.clone();
+		toggle.onLabelDisabledFontStyles = this.lightDisabledUIFontStyles.clone();
+	}
 	
 	private function setToggleSwitchThumbStyles(thumb:Button):Void
 	{
