@@ -42,7 +42,6 @@ import openfl.errors.ArgumentError;
 import openfl.errors.Error;
 import openfl.errors.IllegalOperationError;
 import openfl.geom.Point;
-import openfl.utils.Dictionary;
 import starling.core.Starling;
 import starling.display.DisplayObject;
 import starling.events.EnterFrameEvent;
@@ -460,7 +459,7 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 		}
 		if (this._itemRendererProperties != null)
 		{
-			this._itemRendererProperties.removeOnChangeCallback(childProperties_onChange);
+			//this._itemRendererProperties.removeOnChangeCallback(childProperties_onChange);
 			this._itemRendererProperties.dispose();
 		}
 		this._itemRendererProperties = value;

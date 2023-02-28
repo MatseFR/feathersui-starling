@@ -7,6 +7,7 @@ accordance with the terms of the accompanying license agreement.
 */
 package feathers.controls;
 import feathers.core.FeathersControl;
+import feathers.core.IFeathersControl;
 import feathers.core.IFocusDisplayObject;
 import feathers.core.IMeasureDisplayObject;
 import feathers.core.IStateObserver;
@@ -14,7 +15,6 @@ import feathers.core.ITextBaselineControl;
 import feathers.core.ITextRenderer;
 import feathers.core.IValidating;
 import feathers.core.PropertyProxy;
-import feathers.core.PropertyProxyReal;
 import feathers.events.FeathersEventType;
 import feathers.layout.HorizontalAlign;
 import feathers.layout.RelativePosition;
@@ -29,7 +29,6 @@ import feathers.utils.type.SafeCast;
 import openfl.geom.Matrix;
 import openfl.geom.Point;
 import openfl.ui.Keyboard;
-import feathers.core.IFeathersControl;
 import starling.display.DisplayObject;
 import starling.events.Event;
 import starling.rendering.Painter;
@@ -653,14 +652,16 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 		{
 			return value;
 		}
-		//var savedCallee:Function = arguments.callee;
+		
 		function changeHandler(event:Event):Void
 		{
 			processStyleRestriction("fontStyles");
 		}
-		if (value != null)
+		
+		var oldValue:TextFormat = this._fontStylesSet.format;
+		if (oldValue != null)
 		{
-			value.removeEventListener(Event.CHANGE, changeHandler);
+			oldValue.removeEventListener(Event.CHANGE, changeHandler);
 		}
 		this._fontStylesSet.format = value;
 		if (value != null)
@@ -681,14 +682,16 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 		{
 			return value;
 		}
-		//var savedCallee:Function = arguments.callee;
+		
 		function changeHandler(event:Event):Void
 		{
 			processStyleRestriction("disabledFontStyles");
 		}
-		if (value != null)
+		
+		var oldValue:TextFormat = this._fontStylesSet.disabledFormat;
+		if (oldValue != null)
 		{
-			value.removeEventListener(Event.CHANGE, changeHandler);
+			oldValue.removeEventListener(Event.CHANGE, changeHandler);
 		}
 		this._fontStylesSet.disabledFormat = value;
 		if (value != null)
@@ -801,9 +804,9 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	 * @see feathers.core.ITextRenderer
 	 * @see #fontStyles
 	 */
-	public var defaultLabelProperties(get, set):Dynamic;
+	public var defaultLabelProperties(get, set):PropertyProxy;
 	private var _defaultLabelProperties:PropertyProxy;
-	private function get_defaultLabelProperties():Dynamic
+	private function get_defaultLabelProperties():PropertyProxy
 	{
 		if (this._defaultLabelProperties == null)
 		{
@@ -812,18 +815,18 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 		return this._defaultLabelProperties;
 	}
 	
-	private function set_defaultLabelProperties(value:Dynamic):Dynamic
+	private function set_defaultLabelProperties(value:PropertyProxy):PropertyProxy
 	{
-		if (!Std.isOfType(value, PropertyProxyReal))
-		{
-			value = PropertyProxy.fromObject(value);
-		}
+		//if (!Std.isOfType(value, PropertyProxyReal))
+		//{
+			//value = PropertyProxy.fromObject(value);
+		//}
 		if (this._defaultLabelProperties != null)
 		{
-			this._defaultLabelProperties.removeOnChangeCallback(childProperties_onChange);
+			//this._defaultLabelProperties.removeOnChangeCallback(childProperties_onChange);
 			this._defaultLabelProperties.dispose();
 		}
-		this._defaultLabelProperties = cast value;
+		this._defaultLabelProperties = value;
 		if (this._defaultLabelProperties != null)
 		{
 			this._defaultLabelProperties.addOnChangeCallback(childProperties_onChange);
@@ -1150,13 +1153,16 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 		{
 			return;
 		}
+		
 		function changeHandler(event:Event):Void
 		{
 			processStyleRestriction(key);
 		}
-		if (format != null)
+		
+		var oldFormat:TextFormat = this._fontStylesSet.getFormatForState(state);
+		if (oldFormat != null)
 		{
-			format.removeEventListener(Event.CHANGE, changeHandler);
+			oldFormat.removeEventListener(Event.CHANGE, changeHandler);
 		}
 		this._fontStylesSet.setFormatForState(state, format);
 		if (format != null)
@@ -2109,7 +2115,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	/**
 	 * @private
 	 */
-	private function childProperties_onChange(proxy:PropertyProxyReal, name:String):Void
+	private function childProperties_onChange(proxy:PropertyProxy, name:String):Void
 	{
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 	}

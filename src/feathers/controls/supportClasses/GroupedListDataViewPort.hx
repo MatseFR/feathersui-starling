@@ -499,9 +499,9 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 		return this._typicalItem;
 	}
 	
-	public var itemRendererProperties(get, set):Dynamic;
+	public var itemRendererProperties(get, set):PropertyProxy;
 	private var _itemRendererProperties:PropertyProxy;
-	private function get_itemRendererProperties():Dynamic
+	private function get_itemRendererProperties():PropertyProxy
 	{
 		if (this._itemRendererProperties == null)
 		{
@@ -510,22 +510,22 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 		return this._itemRendererProperties;
 	}
 	
-	private function set_itemRendererProperties(value:Dynamic):Dynamic
+	private function set_itemRendererProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._itemRendererProperties == value)
 		{
 			return value;
 		}
-		if (value != null && !Std.isOfType(value, PropertyProxyReal))
-		{
-			value = PropertyProxy.fromObject(value);
-		}
+		//if (value != null && !Std.isOfType(value, PropertyProxyReal))
+		//{
+			//value = PropertyProxy.fromObject(value);
+		//}
 		if (this._itemRendererProperties != null)
 		{
-			this._itemRendererProperties.removeOnChangeCallback(childProperties_onChange);
+			//this._itemRendererProperties.removeOnChangeCallback(childProperties_onChange);
 			this._itemRendererProperties.dispose();
 		}
-		this._itemRendererProperties = value != null ? cast value : null;
+		this._itemRendererProperties = value;
 		if (this._itemRendererProperties != null)
 		{
 			this._itemRendererProperties.addOnChangeCallback(childProperties_onChange);
@@ -747,9 +747,9 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 		return this._customHeaderRendererStyleName;
 	}
 	
-	public var headerRendererProperties(get, set):Dynamic;
+	public var headerRendererProperties(get, set):PropertyProxy;
 	private var _headerRendererProperties:PropertyProxy;
-	private function get_headerRendererProperties():Dynamic
+	private function get_headerRendererProperties():PropertyProxy
 	{
 		if (this._headerRendererProperties == null)
 		{
@@ -758,22 +758,22 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 		return this._headerRendererProperties;
 	}
 	
-	private function set_headerRendererProperties(value:Dynamic):Dynamic
+	private function set_headerRendererProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._headerRendererProperties == value)
 		{
 			return value;
 		}
-		if (value != null && !Std.isOfType(value, PropertyProxyReal))
-		{
-			value = PropertyProxy.fromObject(value);
-		}
+		//if (value != null && !Std.isOfType(value, PropertyProxyReal))
+		//{
+			//value = PropertyProxy.fromObject(value);
+		//}
 		if (this._headerRendererProperties != null)
 		{
-			this._headerRendererProperties.removeOnChangeCallback(childProperties_onChange);
+			//this._headerRendererProperties.removeOnChangeCallback(childProperties_onChange);
 			this._headerRendererProperties.dispose();
 		}
-		this._headerRendererProperties = value != null ? cast value : null;
+		this._headerRendererProperties = value;
 		if (this._headerRendererProperties != null)
 		{
 			this._headerRendererProperties.addOnChangeCallback(childProperties_onChange);
@@ -860,9 +860,9 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 		return this._customFooterRendererStyleName;
 	}
 	
-	public var footerRendererProperties(get, set):Dynamic;
+	public var footerRendererProperties(get, set):PropertyProxy;
 	private var _footerRendererProperties:PropertyProxy;
-	private function get_footerRendererProperties():Dynamic 
+	private function get_footerRendererProperties():PropertyProxy 
 	{
 		if (this._footerRendererProperties == null)
 		{
@@ -871,22 +871,22 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 		return this._footerRendererProperties;
 	}
 	
-	private function set_footerRendererProperties(value:Dynamic):Dynamic
+	private function set_footerRendererProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._footerRendererProperties == value)
 		{
 			return value;
 		}
-		if (value != null && !Std.isOfType(value, PropertyProxyReal))
-		{
-			value = PropertyProxy.fromObject(value);
-		}
+		//if (value != null && !Std.isOfType(value, PropertyProxyReal))
+		//{
+			//value = PropertyProxy.fromObject(value);
+		//}
 		if (this._footerRendererProperties != null)
 		{
-			this._footerRendererProperties.removeOnChangeCallback(childProperties_onChange);
+			//this._footerRendererProperties.removeOnChangeCallback(childProperties_onChange);
 			this._footerRendererProperties.dispose();
 		}
-		this._footerRendererProperties = value != null ? cast value : null;
+		this._footerRendererProperties = value;
 		if (this._footerRendererProperties != null)
 		{
 			this._footerRendererProperties.addOnChangeCallback(childProperties_onChange);

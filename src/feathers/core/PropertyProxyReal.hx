@@ -211,6 +211,7 @@ class PropertyProxyReal
 	 */
 	public function dispose():Void
 	{
+		this._onChangeCallbacks = null;
 		this._storage.clear();
 	}
 	

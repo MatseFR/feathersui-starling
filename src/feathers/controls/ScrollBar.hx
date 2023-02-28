@@ -13,7 +13,6 @@ import feathers.core.IFocusDisplayObject;
 import feathers.core.IMeasureDisplayObject;
 import feathers.core.IValidating;
 import feathers.core.PropertyProxy;
-import feathers.core.PropertyProxyReal;
 import feathers.events.FeathersEventType;
 import feathers.layout.Direction;
 import feathers.skins.IStyleProvider;
@@ -804,9 +803,9 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	 * @see #minimumTrackFactory
 	 * @see feathers.controls.BasicButton
 	 */
-	public var minimumTrackProperties(get, set):Dynamic;
+	public var minimumTrackProperties(get, set):PropertyProxy;
 	private var _minimumTrackProperties:PropertyProxy;
-	private function get_minimumTrackProperties():Dynamic
+	private function get_minimumTrackProperties():PropertyProxy
 	{
 		if (this._minimumTrackProperties == null)
 		{
@@ -815,32 +814,32 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 		return this._minimumTrackProperties;
 	}
 	
-	private function set_minimumTrackProperties(value:Dynamic):Dynamic
+	private function set_minimumTrackProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._minimumTrackProperties == value)
 		{
 			return value;
 		}
-		if (value == null)
-		{
-			value = new PropertyProxy();
-		}
-		if (!Std.isOfType(value, PropertyProxyReal))
-		{
-			//var newValue:PropertyProxy = new PropertyProxy();
-			//for(var propertyName:String in value)
-			//{
-				//newValue[propertyName] = value[propertyName];
-			//}
-			//value = newValue;
-			value = PropertyProxy.fromObject(value);
-		}
+		//if (value == null)
+		//{
+			//value = new PropertyProxy();
+		//}
+		//if (!Std.isOfType(value, PropertyProxyReal))
+		//{
+			////var newValue:PropertyProxy = new PropertyProxy();
+			////for(var propertyName:String in value)
+			////{
+				////newValue[propertyName] = value[propertyName];
+			////}
+			////value = newValue;
+			//value = PropertyProxy.fromObject(value);
+		//}
 		if (this._minimumTrackProperties != null)
 		{
-			this._minimumTrackProperties.removeOnChangeCallback(minimumTrackProperties_onChange);
+			//this._minimumTrackProperties.removeOnChangeCallback(minimumTrackProperties_onChange);
 			this._minimumTrackProperties.dispose();
 		}
-		this._minimumTrackProperties = cast value;
+		this._minimumTrackProperties = value;
 		if (this._minimumTrackProperties != null)
 		{
 			this._minimumTrackProperties.addOnChangeCallback(minimumTrackProperties_onChange);
@@ -940,9 +939,9 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	 * @see #maximumTrackFactory
 	 * @see feathers.controls.BasicButton
 	 */
-	public var maximumTrackProperties(get, set):Dynamic;
+	public var maximumTrackProperties(get, set):PropertyProxy;
 	private var _maximumTrackProperties:PropertyProxy;
-	private function get_maximumTrackProperties():Dynamic
+	private function get_maximumTrackProperties():PropertyProxy
 	{
 		if (this._maximumTrackProperties == null)
 		{
@@ -951,32 +950,32 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 		return this._maximumTrackProperties;
 	}
 	
-	private function set_maximumTrackProperties(value:Dynamic):Dynamic
+	private function set_maximumTrackProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._maximumTrackProperties == value)
 		{
 			return value;
 		}
-		if (value == null)
-		{
-			value = new PropertyProxy();
-		}
-		if (!Std.isOfType(value, PropertyProxyReal))
-		{
-			//var newValue:PropertyProxy = new PropertyProxy();
-			//for(var propertyName:String in value)
-			//{
-				//newValue[propertyName] = value[propertyName];
-			//}
-			//value = newValue;
-			value = PropertyProxy.fromObject(value);
-		}
+		//if (value == null)
+		//{
+			//value = new PropertyProxy();
+		//}
+		//if (!Std.isOfType(value, PropertyProxyReal))
+		//{
+			////var newValue:PropertyProxy = new PropertyProxy();
+			////for(var propertyName:String in value)
+			////{
+				////newValue[propertyName] = value[propertyName];
+			////}
+			////value = newValue;
+			//value = PropertyProxy.fromObject(value);
+		//}
 		if (this._maximumTrackProperties != null)
 		{
-			this._maximumTrackProperties.removeOnChangeCallback(maximumTrackProperties_onChange);
+			//this._maximumTrackProperties.removeOnChangeCallback(maximumTrackProperties_onChange);
 			this._maximumTrackProperties.dispose();
 		}
-		this._maximumTrackProperties = cast value;
+		this._maximumTrackProperties = value;
 		if (this._maximumTrackProperties != null)
 		{
 			this._maximumTrackProperties.addOnChangeCallback(maximumTrackProperties_onChange);
@@ -1075,9 +1074,9 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	 * @see #thumbFactory
 	 * @see feathers.controls.BasicButton
 	 */
-	public var thumbProperties(get, set):Dynamic;
+	public var thumbProperties(get, set):PropertyProxy;
 	private var _thumbProperties:PropertyProxy;
-	private function get_thumbProperties():Dynamic
+	private function get_thumbProperties():PropertyProxy
 	{
 		if (this._thumbProperties == null)
 		{
@@ -1086,32 +1085,32 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 		return this._thumbProperties;
 	}
 	
-	private function set_thumbProperties(value:Dynamic):Dynamic
+	private function set_thumbProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._thumbProperties == value)
 		{
 			return value;
 		}
-		if (value == null)
-		{
-			value = new PropertyProxy();
-		}
-		if (!Std.isOfType(value, PropertyProxyReal))
-		{
-			//var newValue:PropertyProxy = new PropertyProxy();
-			//for(var propertyName:String in value)
-			//{
-				//newValue[propertyName] = value[propertyName];
-			//}
-			//value = newValue;
-			value = PropertyProxy.fromObject(value);
-		}
+		//if (value == null)
+		//{
+			//value = new PropertyProxy();
+		//}
+		//if (!Std.isOfType(value, PropertyProxyReal))
+		//{
+			////var newValue:PropertyProxy = new PropertyProxy();
+			////for(var propertyName:String in value)
+			////{
+				////newValue[propertyName] = value[propertyName];
+			////}
+			////value = newValue;
+			//value = PropertyProxy.fromObject(value);
+		//}
 		if (this._thumbProperties != null)
 		{
-			this._thumbProperties.removeOnChangeCallback(thumbProperties_onChange);
+			//this._thumbProperties.removeOnChangeCallback(thumbProperties_onChange);
 			this._thumbProperties.dispose();
 		}
-		this._thumbProperties = cast value;
+		this._thumbProperties = value;
 		if (this._thumbProperties != null)
 		{
 			this._thumbProperties.addOnChangeCallback(thumbProperties_onChange);
@@ -1212,9 +1211,9 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	 * @see #decrementButtonFactory
 	 * @see feathers.controls.BasicButton
 	 */
-	public var decrementButtonProperties(get, set):Dynamic;
+	public var decrementButtonProperties(get, set):PropertyProxy;
 	private var _decrementButtonProperties:PropertyProxy;
-	private function get_decrementButtonProperties():Dynamic
+	private function get_decrementButtonProperties():PropertyProxy
 	{
 		if (this._decrementButtonProperties == null)
 		{
@@ -1223,32 +1222,32 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 		return this._decrementButtonProperties;
 	}
 	
-	private function set_decrementButtonProperties(value:Dynamic):Dynamic
+	private function set_decrementButtonProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._decrementButtonProperties == value)
 		{
 			return value;
 		}
-		if (value == null)
-		{
-			value = new PropertyProxy();
-		}
-		if (!Std.isOfType(value, PropertyProxyReal))
-		{
-			//var newValue:PropertyProxy = new PropertyProxy();
-			//for(var propertyName:String in value)
-			//{
-				//newValue[propertyName] = value[propertyName];
-			//}
-			//value = newValue;
-			value = PropertyProxy.fromObject(value);
-		}
+		//if (value == null)
+		//{
+			//value = new PropertyProxy();
+		//}
+		//if (!Std.isOfType(value, PropertyProxyReal))
+		//{
+			////var newValue:PropertyProxy = new PropertyProxy();
+			////for(var propertyName:String in value)
+			////{
+				////newValue[propertyName] = value[propertyName];
+			////}
+			////value = newValue;
+			//value = PropertyProxy.fromObject(value);
+		//}
 		if (this._decrementButtonProperties != null)
 		{
-			this._decrementButtonProperties.removeOnChangeCallback(decrementButtonProperties_onChange);
+			//this._decrementButtonProperties.removeOnChangeCallback(decrementButtonProperties_onChange);
 			this._decrementButtonProperties.dispose();
 		}
-		this._decrementButtonProperties = cast value;
+		this._decrementButtonProperties = value;
 		if (this._decrementButtonProperties != null)
 		{
 			this._decrementButtonProperties.addOnChangeCallback(decrementButtonProperties_onChange);
@@ -1349,9 +1348,9 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	 * @see #incrementButtonFactory
 	 * @see feathers.controls.BasicButton
 	 */
-	public var incrementButtonProperties(get, set):Dynamic;
+	public var incrementButtonProperties(get, set):PropertyProxy;
 	private var _incrementButtonProperties:PropertyProxy;
-	private function get_incrementButtonProperties():Dynamic
+	private function get_incrementButtonProperties():PropertyProxy
 	{
 		if (this._incrementButtonProperties == null)
 		{
@@ -1360,32 +1359,32 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 		return this._incrementButtonProperties;
 	}
 	
-	private function set_incrementButtonProperties(value:Dynamic):Dynamic
+	private function set_incrementButtonProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._incrementButtonProperties == value)
 		{
 			return value;
 		}
-		if (value == null)
-		{
-			value = new PropertyProxy();
-		}
-		if (!Std.isOfType(value, PropertyProxyReal))
-		{
-			//var newValue:PropertyProxy = new PropertyProxy();
-			//for(var propertyName:String in value)
-			//{
-				//newValue[propertyName] = value[propertyName];
-			//}
-			//value = newValue;
-			value = PropertyProxy.fromObject(value);
-		}
+		//if (value == null)
+		//{
+			//value = new PropertyProxy();
+		//}
+		//if (!Std.isOfType(value, PropertyProxyReal))
+		//{
+			////var newValue:PropertyProxy = new PropertyProxy();
+			////for(var propertyName:String in value)
+			////{
+				////newValue[propertyName] = value[propertyName];
+			////}
+			////value = newValue;
+			//value = PropertyProxy.fromObject(value);
+		//}
 		if (this._incrementButtonProperties != null)
 		{
-			this._incrementButtonProperties.removeOnChangeCallback(incrementButtonProperties_onChange);
+			//this._incrementButtonProperties.removeOnChangeCallback(incrementButtonProperties_onChange);
 			this._incrementButtonProperties.dispose();
 		}
-		this._incrementButtonProperties = cast value;
+		this._incrementButtonProperties = value;
 		if (this._incrementButtonProperties != null)
 		{
 			this._incrementButtonProperties.addOnChangeCallback(incrementButtonProperties_onChange);
@@ -2673,7 +2672,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	/**
 	 * @private
 	 */
-	private function thumbProperties_onChange(proxy:PropertyProxyReal, name:Dynamic):Void
+	private function thumbProperties_onChange(proxy:PropertyProxy, name:Dynamic):Void
 	{
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 	}
@@ -2681,7 +2680,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	/**
 	 * @private
 	 */
-	private function minimumTrackProperties_onChange(proxy:PropertyProxyReal, name:Dynamic):Void
+	private function minimumTrackProperties_onChange(proxy:PropertyProxy, name:Dynamic):Void
 	{
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 	}
@@ -2689,7 +2688,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	/**
 	 * @private
 	 */
-	private function maximumTrackProperties_onChange(proxy:PropertyProxyReal, name:Dynamic):Void
+	private function maximumTrackProperties_onChange(proxy:PropertyProxy, name:Dynamic):Void
 	{
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 	}
@@ -2697,7 +2696,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	/**
 	 * @private
 	 */
-	private function decrementButtonProperties_onChange(proxy:PropertyProxyReal, name:Dynamic):Void
+	private function decrementButtonProperties_onChange(proxy:PropertyProxy, name:Dynamic):Void
 	{
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 	}
@@ -2705,7 +2704,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 	/**
 	 * @private
 	 */
-	private function incrementButtonProperties_onChange(proxy:PropertyProxyReal, name:Dynamic):Void
+	private function incrementButtonProperties_onChange(proxy:PropertyProxy, name:Dynamic):Void
 	{
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 	}

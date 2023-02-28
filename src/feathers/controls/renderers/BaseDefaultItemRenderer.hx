@@ -17,7 +17,6 @@ import feathers.core.IStateObserver;
 import feathers.core.ITextRenderer;
 import feathers.core.IValidating;
 import feathers.core.PropertyProxy;
-import feathers.core.PropertyProxyReal;
 import feathers.events.FeathersEventType;
 import feathers.layout.HorizontalAlign;
 import feathers.layout.RelativePosition;
@@ -2387,7 +2386,7 @@ class BaseDefaultItemRenderer extends ToggleButton implements IFocusContainer
 	 * @see #iconLabelField
 	 * @see #iconLabelFunction
 	 */
-	public var iconLabelProperties(get, set):Dynamic;
+	public var iconLabelProperties(get, set):PropertyProxy;
 	private var _iconLabelProperties:PropertyProxy;
 	private function get_iconLabelProperties():PropertyProxy
 	{
@@ -2398,32 +2397,32 @@ class BaseDefaultItemRenderer extends ToggleButton implements IFocusContainer
 		return this._iconLabelProperties;
 	}
 	
-	private function set_iconLabelProperties(value:Dynamic):Dynamic
+	private function set_iconLabelProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._iconLabelProperties == value)
 		{
 			return value;
 		}
-		if (value == null)
-		{
-			value = new PropertyProxy();
-		}
-		if (!Std.isOfType(value, PropertyProxyReal))
-		{
-			//var newValue:PropertyProxy = new PropertyProxy();
-			//for(var propertyName:String in value)
-			//{
-				//newValue[propertyName] = value[propertyName];
-			//}
-			//value = newValue;
-			value = PropertyProxy.fromObject(value);
-		}
+		//if (value == null)
+		//{
+			//value = new PropertyProxy();
+		//}
+		//if (!Std.isOfType(value, PropertyProxyReal))
+		//{
+			////var newValue:PropertyProxy = new PropertyProxy();
+			////for(var propertyName:String in value)
+			////{
+				////newValue[propertyName] = value[propertyName];
+			////}
+			////value = newValue;
+			//value = PropertyProxy.fromObject(value);
+		//}
 		if (this._iconLabelProperties != null)
 		{
-			this._iconLabelProperties.removeOnChangeCallback(childProperties_onChange);
+			//this._iconLabelProperties.removeOnChangeCallback(childProperties_onChange);
 			this._iconLabelProperties.dispose();
 		}
-		this._iconLabelProperties = cast value;
+		this._iconLabelProperties = value;
 		if (this._iconLabelProperties != null)
 		{
 			this._iconLabelProperties.addOnChangeCallback(childProperties_onChange);
@@ -2612,9 +2611,9 @@ class BaseDefaultItemRenderer extends ToggleButton implements IFocusContainer
 	}
 	
 	
-	public var accessoryLabelProperties(get, set):Dynamic;
+	public var accessoryLabelProperties(get, set):PropertyProxy;
 	private var _accessoryLabelProperties:PropertyProxy;
-	private function get_accessoryLabelProperties():Dynamic
+	private function get_accessoryLabelProperties():PropertyProxy
 	{
 		if (this._accessoryLabelProperties == null)
 		{
@@ -2623,32 +2622,32 @@ class BaseDefaultItemRenderer extends ToggleButton implements IFocusContainer
 		return this._accessoryLabelProperties;
 	}
 	
-	private function set_accessoryLabelProperties(value:Dynamic):Dynamic
+	private function set_accessoryLabelProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._accessoryLabelProperties == value)
 		{
 			return value;
 		}
-		if (value == null)
-		{
-			value = new PropertyProxy();
-		}
-		if (!Std.isOfType(value, PropertyProxyReal))
-		{
-			//var newValue:PropertyProxy = new PropertyProxy();
-			//for(var propertyName:String in value)
-			//{
-				//newValue[propertyName] = value[propertyName];
-			//}
-			//value = newValue;
-			value = PropertyProxy.fromObject(value);
-		}
+		//if (value == null)
+		//{
+			//value = new PropertyProxy();
+		//}
+		//if (!Std.isOfType(value, PropertyProxyReal))
+		//{
+			////var newValue:PropertyProxy = new PropertyProxy();
+			////for(var propertyName:String in value)
+			////{
+				////newValue[propertyName] = value[propertyName];
+			////}
+			////value = newValue;
+			//value = PropertyProxy.fromObject(value);
+		//}
 		if (this._accessoryLabelProperties != null)
 		{
-			this._accessoryLabelProperties.removeOnChangeCallback(childProperties_onChange);
+			//this._accessoryLabelProperties.removeOnChangeCallback(childProperties_onChange);
 			this._accessoryLabelProperties.dispose();
 		}
-		this._accessoryLabelProperties = cast value;
+		this._accessoryLabelProperties = value;
 		if (this._accessoryLabelProperties != null)
 		{
 			this._accessoryLabelProperties.addOnChangeCallback(childProperties_onChange);
@@ -3206,10 +3205,12 @@ class BaseDefaultItemRenderer extends ToggleButton implements IFocusContainer
 		{
 			return;
 		}
+		
 		function changeHandler(event:Event):Void
 		{
 			processStyleRestriction(key);
 		}
+		
 		var oldFormat:TextFormat = this._iconLabelFontStylesSet.getFormatForState(state);
 		if (oldFormat != null)
 		{
@@ -3267,10 +3268,12 @@ class BaseDefaultItemRenderer extends ToggleButton implements IFocusContainer
 		{
 			return;
 		}
+		
 		function changeHandler(event:Event):Void
 		{
 			processStyleRestriction(key);
 		}
+		
 		var oldFormat:TextFormat = this._accessoryLabelFontStylesSet.getFormatForState(state);
 		if (oldFormat != null)
 		{

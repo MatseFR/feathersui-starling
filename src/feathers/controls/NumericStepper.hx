@@ -11,7 +11,6 @@ import feathers.core.FeathersControl;
 import feathers.core.IAdvancedNativeFocusOwner;
 import feathers.core.ITextBaselineControl;
 import feathers.core.PropertyProxy;
-import feathers.core.PropertyProxyReal;
 import feathers.events.ExclusiveTouch;
 import feathers.events.FeathersEventType;
 import feathers.skins.IStyleProvider;
@@ -662,9 +661,9 @@ class NumericStepper extends FeathersControl implements IRange implements IAdvan
 	 * @see #decrementButtonFactory
 	 * @see feathers.controls.Button
 	 */
-	public var decrementButtonProperties(get, set):Dynamic;
+	public var decrementButtonProperties(get, set):PropertyProxy;
 	private var _decrementButtonProperties:PropertyProxy;
-	private function get_decrementButtonProperties():Dynamic
+	private function get_decrementButtonProperties():PropertyProxy
 	{
 		if (this._decrementButtonProperties == null)
 		{
@@ -673,22 +672,22 @@ class NumericStepper extends FeathersControl implements IRange implements IAdvan
 		return this._decrementButtonProperties;
 	}
 	
-	private function set_decrementButtonProperties(value:Dynamic):Dynamic
+	private function set_decrementButtonProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._decrementButtonProperties == value)
 		{
 			return value;
 		}
-		if (value != null && !Std.isOfType(value, PropertyProxyReal))
-		{
-			value = PropertyProxy.fromObject(value);
-		}
+		//if (value != null && !Std.isOfType(value, PropertyProxyReal))
+		//{
+			//value = PropertyProxy.fromObject(value);
+		//}
 		if (this._decrementButtonProperties != null)
 		{
-			this._decrementButtonProperties.removeOnChangeCallback(childProperties_onChange);
+			//this._decrementButtonProperties.removeOnChangeCallback(childProperties_onChange);
 			this._decrementButtonProperties.dispose();
 		}
-		this._decrementButtonProperties = value != null ? cast value : null;
+		this._decrementButtonProperties = value;
 		if (this._decrementButtonProperties != null)
 		{
 			this._decrementButtonProperties.addOnChangeCallback(childProperties_onChange);
@@ -808,9 +807,9 @@ class NumericStepper extends FeathersControl implements IRange implements IAdvan
 	 * @see #incrementButtonFactory
 	 * @see feathers.controls.Button
 	 */
-	public var incrementButtonProperties(get, set):Dynamic;
+	public var incrementButtonProperties(get, set):PropertyProxy;
 	private var _incrementButtonProperties:PropertyProxy;
-	private function get_incrementButtonProperties():Dynamic
+	private function get_incrementButtonProperties():PropertyProxy
 	{
 		if (this._incrementButtonProperties == null)
 		{
@@ -819,22 +818,22 @@ class NumericStepper extends FeathersControl implements IRange implements IAdvan
 		return this._incrementButtonProperties;
 	}
 	
-	private function set_incrementButtonProperties(value:Dynamic):Dynamic
+	private function set_incrementButtonProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._incrementButtonProperties == value)
 		{
 			return value;
 		}
-		if (value != null && !Std.isOfType(value, PropertyProxyReal))
-		{
-			value = PropertyProxy.fromObject(value);
-		}
+		//if (value != null && !Std.isOfType(value, PropertyProxyReal))
+		//{
+			//value = PropertyProxy.fromObject(value);
+		//}
 		if (this._incrementButtonProperties != null)
 		{
-			this._incrementButtonProperties.removeOnChangeCallback(childProperties_onChange);
+			//this._incrementButtonProperties.removeOnChangeCallback(childProperties_onChange);
 			this._incrementButtonProperties.dispose();
 		}
-		this._incrementButtonProperties = value != null ? cast value : null;
+		this._incrementButtonProperties = value;
 		if (this._incrementButtonProperties != null)
 		{
 			this._incrementButtonProperties.addOnChangeCallback(childProperties_onChange);
@@ -952,9 +951,9 @@ class NumericStepper extends FeathersControl implements IRange implements IAdvan
 	 * @see #textInputFactory
 	 * @see feathers.controls.TextInput
 	 */
-	public var textInputProperties(get, set):Dynamic;
+	public var textInputProperties(get, set):PropertyProxy;
 	private var _textInputProperties:PropertyProxy;
-	private function get_textInputProperties():Dynamic
+	private function get_textInputProperties():PropertyProxy
 	{
 		if (this._textInputProperties == null)
 		{
@@ -963,21 +962,21 @@ class NumericStepper extends FeathersControl implements IRange implements IAdvan
 		return this._textInputProperties;
 	}
 	
-	private function set_textInputProperties(value:Dynamic):Dynamic
+	private function set_textInputProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._textInputProperties == value)
 		{
 			return value;
 		}
-		if (value != null && !Std.isOfType(value, PropertyProxyReal))
-		{
-			value = PropertyProxy.fromObject(value);
-		}
+		//if (value != null && !Std.isOfType(value, PropertyProxyReal))
+		//{
+			//value = PropertyProxy.fromObject(value);
+		//}
 		if (this._textInputProperties != null)
 		{
 			this._textInputProperties.dispose();
 		}
-		this._textInputProperties = value != null ? cast value : null;
+		this._textInputProperties = value;
 		if (this._textInputProperties != null)
 		{
 			this._textInputProperties.addOnChangeCallback(childProperties_onChange);

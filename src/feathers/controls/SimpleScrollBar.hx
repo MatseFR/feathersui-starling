@@ -8,11 +8,11 @@ accordance with the terms of the accompanying license agreement.
 package feathers.controls;
 
 import feathers.core.FeathersControl;
+import feathers.core.IFeathersControl;
 import feathers.core.IFocusDisplayObject;
 import feathers.core.IMeasureDisplayObject;
 import feathers.core.IValidating;
 import feathers.core.PropertyProxy;
-import feathers.core.PropertyProxyReal;
 import feathers.events.FeathersEventType;
 import feathers.layout.Direction;
 import feathers.skins.IStyleProvider;
@@ -20,7 +20,6 @@ import feathers.utils.math.MathUtils;
 import openfl.events.TimerEvent;
 import openfl.geom.Point;
 import openfl.utils.Timer;
-import feathers.core.IFeathersControl;
 import starling.display.DisplayObject;
 import starling.display.Quad;
 import starling.events.Event;
@@ -565,9 +564,9 @@ class SimpleScrollBar extends FeathersControl implements IDirectionalScrollBar
 	 * @see #thumbFactory
 	 * @see feathers.controls.BasicButton
 	 */
-	public var thumbProperties(get, set):Dynamic;
+	public var thumbProperties(get, set):PropertyProxy;
 	private var _thumbProperties:PropertyProxy;
-	private function get_thumbProperties():Dynamic
+	private function get_thumbProperties():PropertyProxy
 	{
 		if (this._thumbProperties == null)
 		{
@@ -576,32 +575,32 @@ class SimpleScrollBar extends FeathersControl implements IDirectionalScrollBar
 		return this._thumbProperties;
 	}
 	
-	private function set_thumbProperties(value:Dynamic):Dynamic
+	private function set_thumbProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._thumbProperties == value)
 		{
 			return value;
 		}
-		if (value == null)
-		{
-			value = new PropertyProxy();
-		}
-		if (!Std.isOfType(value, PropertyProxyReal))
-		{
-			var newValue:PropertyProxy = PropertyProxy.fromObject(value);
-			//var newValue:PropertyProxy = new PropertyProxy();
-			//for(var propertyName:String in value)
-			//{
-				//newValue[propertyName] = value[propertyName];
-			//}
-			value = newValue;
-		}
+		//if (value == null)
+		//{
+			//value = new PropertyProxy();
+		//}
+		//if (!Std.isOfType(value, PropertyProxyReal))
+		//{
+			//var newValue:PropertyProxy = PropertyProxy.fromObject(value);
+			////var newValue:PropertyProxy = new PropertyProxy();
+			////for(var propertyName:String in value)
+			////{
+				////newValue[propertyName] = value[propertyName];
+			////}
+			//value = newValue;
+		//}
 		if (this._thumbProperties != null)
 		{
-			this._thumbProperties.removeOnChangeCallback(thumbProperties_onChange);
+			//this._thumbProperties.removeOnChangeCallback(thumbProperties_onChange);
 			this._thumbProperties.dispose();
 		}
-		this._thumbProperties = cast value;
+		this._thumbProperties = value;
 		if (this._thumbProperties != null)
 		{
 			this._thumbProperties.addOnChangeCallback(thumbProperties_onChange);
@@ -1124,7 +1123,7 @@ class SimpleScrollBar extends FeathersControl implements IDirectionalScrollBar
 	/**
 	 * @private
 	 */
-	private function thumbProperties_onChange(proxy:PropertyProxyReal, name:String):Void
+	private function thumbProperties_onChange(proxy:PropertyProxy, name:String):Void
 	{
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 	}

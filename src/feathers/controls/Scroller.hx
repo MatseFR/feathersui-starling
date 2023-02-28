@@ -7,12 +7,13 @@ accordance with the terms of the accompanying license agreement.
 */
 package feathers.controls;
 
+import feathers.controls.supportClasses.IViewPort;
 import feathers.core.FeathersControl;
+import feathers.core.IFeathersControl;
 import feathers.core.IFocusDisplayObject;
 import feathers.core.IMeasureDisplayObject;
 import feathers.core.IValidating;
 import feathers.core.PropertyProxy;
-import feathers.core.PropertyProxyReal;
 import feathers.events.ExclusiveTouch;
 import feathers.events.FeathersEventType;
 import feathers.layout.Direction;
@@ -31,8 +32,6 @@ import openfl.events.MouseEvent;
 import openfl.geom.Point;
 import openfl.geom.Rectangle;
 import openfl.ui.Keyboard;
-import feathers.controls.supportClasses.IViewPort;
-import feathers.core.IFeathersControl;
 import starling.animation.Transitions;
 import starling.animation.Tween;
 import starling.core.Starling;
@@ -598,9 +597,9 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	 * @see feathers.controls.SimpleScrollBar
 	 * @see feathers.controls.ScrollBar
 	 */
-	public var horizontalScrollBarProperties(get, set):Dynamic;
+	public var horizontalScrollBarProperties(get, set):PropertyProxy;
 	private var _horizontalScrollBarProperties:PropertyProxy;
-	private function get_horizontalScrollBarProperties():Dynamic
+	private function get_horizontalScrollBarProperties():PropertyProxy
 	{
 		if (this._horizontalScrollBarProperties == null)
 		{
@@ -609,32 +608,32 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		return this._horizontalScrollBarProperties;
 	}
 	
-	private function set_horizontalScrollBarProperties(value:Dynamic):Dynamic
+	private function set_horizontalScrollBarProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._horizontalScrollBarProperties == value)
 		{
 			return value;
 		}
-		if (value == null)
-		{
-			value = new PropertyProxy();
-		}
-		if (!Std.isOfType(value, PropertyProxyReal))
-		{
-			var newValue:PropertyProxy = PropertyProxy.fromObject(value);
-			//var newValue:PropertyProxy = new PropertyProxy();
-			//for(var propertyName:String in value)
-			//{
-				//newValue[propertyName] = value[propertyName];
-			//}
-			value = newValue;
-		}
+		//if (value == null)
+		//{
+			//value = new PropertyProxy();
+		//}
+		//if (!Std.isOfType(value, PropertyProxyReal))
+		//{
+			//var newValue:PropertyProxy = PropertyProxy.fromObject(value);
+			////var newValue:PropertyProxy = new PropertyProxy();
+			////for(var propertyName:String in value)
+			////{
+				////newValue[propertyName] = value[propertyName];
+			////}
+			//value = newValue;
+		//}
 		if (this._horizontalScrollBarProperties != null)
 		{
-			this._horizontalScrollBarProperties.removeOnChangeCallback(childProperties_onChange);
+			//this._horizontalScrollBarProperties.removeOnChangeCallback(childProperties_onChange);
 			this._horizontalScrollBarProperties.dispose();
 		}
-		this._horizontalScrollBarProperties = cast value;
+		this._horizontalScrollBarProperties = value;
 		if (this._horizontalScrollBarProperties != null)
 		{
 			this._horizontalScrollBarProperties.addOnChangeCallback(childProperties_onChange);
@@ -777,9 +776,9 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	 * @see feathers.controls.SimpleScrollBar
 	 * @see feathers.controls.ScrollBar
 	 */
-	public var verticalScrollBarProperties(get, set):Dynamic;
+	public var verticalScrollBarProperties(get, set):PropertyProxy;
 	private var _verticalScrollBarProperties:PropertyProxy;
-	private function get_verticalScrollBarProperties():Dynamic
+	private function get_verticalScrollBarProperties():PropertyProxy
 	{
 		if (this._verticalScrollBarProperties == null)
 		{
@@ -788,32 +787,32 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		return this._verticalScrollBarProperties;
 	}
 	
-	private function set_verticalScrollBarProperties(value:Dynamic):Dynamic
+	private function set_verticalScrollBarProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._horizontalScrollBarProperties == value)
 		{
 			return value;
 		}
-		if (value == null)
-		{
-			value = new PropertyProxy();
-		}
-		if (!Std.isOfType(value, PropertyProxyReal))
-		{
-			var newValue:PropertyProxy = PropertyProxy.fromObject(value);
-			//var newValue:PropertyProxy = new PropertyProxy();
-			//for(var propertyName:String in value)
-			//{
-				//newValue[propertyName] = value[propertyName];
-			//}
-			value = newValue;
-		}
+		//if (value == null)
+		//{
+			//value = new PropertyProxy();
+		//}
+		//if (!Std.isOfType(value, PropertyProxyReal))
+		//{
+			//var newValue:PropertyProxy = PropertyProxy.fromObject(value);
+			////var newValue:PropertyProxy = new PropertyProxy();
+			////for(var propertyName:String in value)
+			////{
+				////newValue[propertyName] = value[propertyName];
+			////}
+			//value = newValue;
+		//}
 		if (this._verticalScrollBarProperties != null)
 		{
-			this._verticalScrollBarProperties.removeOnChangeCallback(childProperties_onChange);
+			//this._verticalScrollBarProperties.removeOnChangeCallback(childProperties_onChange);
 			this._verticalScrollBarProperties.dispose();
 		}
-		this._verticalScrollBarProperties = cast value;
+		this._verticalScrollBarProperties = value;
 		if (this._verticalScrollBarProperties != null)
 		{
 			this._verticalScrollBarProperties.addOnChangeCallback(childProperties_onChange);
@@ -2628,6 +2627,16 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 			this._backgroundDisabledSkin.parent != this)
 		{
 			this._backgroundDisabledSkin.dispose();
+		}
+		if (this._horizontalScrollBarProperties != null)
+		{
+			this._horizontalScrollBarProperties.dispose();
+			this._horizontalScrollBarProperties = null;
+		}
+		if (this._verticalScrollBarProperties != null)
+		{
+			this._verticalScrollBarProperties.dispose();
+			this._verticalScrollBarProperties = null;
 		}
 		super.dispose();
 	}
@@ -6141,7 +6150,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 	/**
 	 * @private
 	 */
-	private function childProperties_onChange(proxy:PropertyProxyReal, name:String):Void
+	private function childProperties_onChange(proxy:PropertyProxy, name:String):Void
 	{
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 	}

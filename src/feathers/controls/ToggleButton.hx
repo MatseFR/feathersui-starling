@@ -278,15 +278,16 @@ class ToggleButton extends Button implements IGroupedToggle
 		{
 			return value;
 		}
-		//var savedCallee:Function = arguments.callee;
+		
 		function changeHandler(event:Event):Void
 		{
-			//processStyleRestriction(savedCallee);
 			processStyleRestriction("selectedFontStyles");
 		}
-		if ( value != null)
+		
+		var oldValue:TextFormat = this._fontStylesSet.selectedFormat;
+		if (oldValue != null)
 		{
-			value.removeEventListener(Event.CHANGE, changeHandler);
+			oldValue.removeEventListener(Event.CHANGE, changeHandler);
 		}
 		this._fontStylesSet.selectedFormat = value;
 		if (value != null)

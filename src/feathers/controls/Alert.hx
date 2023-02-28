@@ -13,7 +13,6 @@ import feathers.core.ITextRenderer;
 import feathers.core.IValidating;
 import feathers.core.PopUpManager;
 import feathers.core.PropertyProxy;
-import feathers.core.PropertyProxyReal;
 import feathers.data.IListCollection;
 import feathers.events.FeathersEventType;
 import feathers.layout.HorizontalAlign;
@@ -431,9 +430,11 @@ class Alert extends Panel
 		{
 			processStyleRestriction("fontStyles");
 		}
-		if (value != null)
+		
+		var oldValue:TextFormat = this._fontStylesSet.format;
+		if (oldValue != null)
 		{
-			value.removeEventListener(Event.CHANGE, changeHandler);
+			oldValue.removeEventListener(Event.CHANGE, changeHandler);
 		}
 		this._fontStylesSet.format = value;
 		if (value != null)
@@ -459,9 +460,11 @@ class Alert extends Panel
 		{
 			processStyleRestriction("disabledFontStyles");
 		}
-		if (value != null)
+		
+		var oldValue:TextFormat = this._fontStylesSet.disabledFormat;
+		if (oldValue != null)
 		{
-			value.removeEventListener(Event.CHANGE, changeHandler);
+			oldValue.removeEventListener(Event.CHANGE, changeHandler);
 		}
 		this._fontStylesSet.disabledFormat = value;
 		if (value != null)
@@ -551,9 +554,9 @@ class Alert extends Panel
 	 * @see #messageFactory
 	 * @see feathers.core.ITextRenderer
 	 */
-	public var messageProperties(get, set):Dynamic;
+	public var messageProperties(get, set):PropertyProxy;
 	private var _messageProperties:PropertyProxy;
-	private function get_messageProperties():Dynamic
+	private function get_messageProperties():PropertyProxy
 	{
 		if (this._messageProperties == null)
 		{
@@ -562,22 +565,22 @@ class Alert extends Panel
 		return this._messageProperties;
 	}
 	
-	private function set_messageProperties(value:Dynamic):Dynamic
+	private function set_messageProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._messageProperties == value)
 		{
 			return value;
 		}
-		if (value != null && !Std.isOfType(value, PropertyProxyReal))
-		{
-			value = PropertyProxy.fromObject(value);
-		}
+		//if (value != null && !Std.isOfType(value, PropertyProxyReal))
+		//{
+			//value = PropertyProxy.fromObject(value);
+		//}
 		if (this._messageProperties != null)
 		{
-			this._messageProperties.removeOnChangeCallback(childProperties_onChange);
+			//this._messageProperties.removeOnChangeCallback(childProperties_onChange);
 			this._messageProperties.dispose();
 		}
-		this._messageProperties = value != null ? cast value : null;
+		this._messageProperties = value;
 		if (this._messageProperties != null)
 		{
 			this._messageProperties.addOnChangeCallback(childProperties_onChange);
@@ -721,7 +724,7 @@ class Alert extends Panel
 	{
 		var dataInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_DATA);
 		var stylesInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_STYLES);
-		var stateInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_STATE);
+		//var stateInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_STATE);
 		var textRendererInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_TEXT_RENDERER);
 		
 		if (textRendererInvalid)

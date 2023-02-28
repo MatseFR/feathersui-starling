@@ -8,7 +8,6 @@ accordance with the terms of the accompanying license agreement.
 package feathers.controls;
 import feathers.controls.supportClasses.IScreenNavigatorItem;
 import feathers.core.PropertyProxy;
-import feathers.core.PropertyProxyReal;
 import haxe.Constraints.Function;
 import haxe.ds.Map;
 import openfl.errors.ArgumentError;
@@ -52,7 +51,7 @@ class StackScreenNavigatorItem implements IScreenNavigatorItem
 	 * @param popEvent An event that pops the screen from the top of the stack.
 	 * @param properties A set of key-value pairs to pass to the screen when it is shown.
 	 */
-	public function new(screen:Dynamic = null, pushEvents:Map<String, Dynamic> = null, popEvent:String = null, properties:Dynamic = null) 
+	public function new(screen:Dynamic = null, pushEvents:Map<String, Dynamic> = null, popEvent:String = null, properties:PropertyProxy = null) 
 	{
 		this._screen = screen;
 		this._pushEvents = pushEvents != null ? pushEvents : new Map();
@@ -74,7 +73,6 @@ class StackScreenNavigatorItem implements IScreenNavigatorItem
 		}
 		if (this._properties != null)
 		{
-			//this._properties.clear();
 			this._properties.dispose();
 			this._properties = null;
 		}
@@ -247,7 +245,7 @@ class StackScreenNavigatorItem implements IScreenNavigatorItem
 		{
 			this._properties.dispose();
 		}
-		this._properties = value != null ? cast value : null;
+		this._properties = value;
 		return this._properties;
 	}
 	//public var properties(get, set):Map<String, Dynamic>;

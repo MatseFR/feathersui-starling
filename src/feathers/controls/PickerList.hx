@@ -19,7 +19,6 @@ import feathers.core.IFocusDisplayObject;
 import feathers.core.ITextBaselineControl;
 import feathers.core.IToggle;
 import feathers.core.PropertyProxy;
-import feathers.core.PropertyProxyReal;
 import feathers.data.IListCollection;
 import feathers.events.CollectionEventType;
 import feathers.events.FeathersEventType;
@@ -613,9 +612,9 @@ class PickerList extends FeathersControl implements IFocusDisplayObject implemen
 	 * @see #buttonFactory
 	 * @see feathers.controls.Button
 	 */
-	public var buttonProperties(get, set):Dynamic;
+	public var buttonProperties(get, set):PropertyProxy;
 	private var _buttonProperties:PropertyProxy;
-	private function get_buttonProperties():Dynamic
+	private function get_buttonProperties():PropertyProxy
 	{
 		if (this._buttonProperties == null)
 		{
@@ -624,21 +623,21 @@ class PickerList extends FeathersControl implements IFocusDisplayObject implemen
 		return this._buttonProperties;
 	}
 	
-	private function set_buttonProperties(value:Dynamic):Dynamic
+	private function set_buttonProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._buttonProperties == value)
 		{
 			return value;
 		}
-		if (value != null && !Std.isOfType(value, PropertyProxyReal))
-		{
-			value = PropertyProxy.fromObject(value);
-		}
+		//if (value != null && !Std.isOfType(value, PropertyProxyReal))
+		//{
+			//value = PropertyProxy.fromObject(value);
+		//}
 		if (this._buttonProperties != null)
 		{
 			this._buttonProperties.dispose();
 		}
-		this._buttonProperties = value != null ? cast value : null;
+		this._buttonProperties = value;
 		if (this._buttonProperties != null)
 		{
 			this._buttonProperties.addOnChangeCallback(childProperties_onChange);
@@ -736,9 +735,9 @@ class PickerList extends FeathersControl implements IFocusDisplayObject implemen
 	 * @see #listFactory
 	 * @see feathers.controls.List
 	 */
-	public var listProperties(get, set):Dynamic;
+	public var listProperties(get, set):PropertyProxy;
 	private var _listProperties:PropertyProxy;
-	private function get_listProperties():Dynamic
+	private function get_listProperties():PropertyProxy
 	{
 		if (this._listProperties == null)
 		{
@@ -747,21 +746,21 @@ class PickerList extends FeathersControl implements IFocusDisplayObject implemen
 		return this._listProperties;
 	}
 	
-	private function set_listProperties(value:Dynamic):Dynamic
+	private function set_listProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._listProperties == value)
 		{
 			return value;
 		}
-		if (value != null && !Std.isOfType(value, PropertyProxyReal))
-		{
-			value = PropertyProxy.fromObject(value);
-		}
+		//if (value != null && !Std.isOfType(value, PropertyProxyReal))
+		//{
+			//value = PropertyProxy.fromObject(value);
+		//}
 		if (this._listProperties != null)
 		{
 			this._listProperties.dispose();
 		}
-		this._listProperties = value != null ? cast value : null;
+		this._listProperties = value;
 		if (this._listProperties != null)
 		{
 			this._listProperties.addOnChangeCallback(childProperties_onChange);

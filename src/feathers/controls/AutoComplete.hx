@@ -476,6 +476,11 @@ class AutoComplete extends TextInput
 			this._popUpContentManager.dispose();
 			this._popUpContentManager = null;
 		}
+		if (this._listProperties != null)
+		{
+			this._listProperties.dispose();
+			this._listProperties = null;
+		}
 		super.dispose();
 	}
 	

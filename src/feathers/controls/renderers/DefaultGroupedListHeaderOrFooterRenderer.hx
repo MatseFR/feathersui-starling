@@ -14,7 +14,6 @@ import feathers.core.IMeasureDisplayObject;
 import feathers.core.ITextRenderer;
 import feathers.core.IValidating;
 import feathers.core.PropertyProxy;
-import feathers.core.PropertyProxyReal;
 import feathers.layout.HorizontalAlign;
 import feathers.layout.VerticalAlign;
 import feathers.skins.IStyleProvider;
@@ -726,9 +725,9 @@ class DefaultGroupedListHeaderOrFooterRenderer extends FeathersControl implement
 	}
 	
 	
-	public var contentLabelProperties(get, set):Dynamic;
+	public var contentLabelProperties(get, set):PropertyProxy;
 	private var _contentLabelProperties:PropertyProxy;
-	private function get_contentLabelProperties():Dynamic
+	private function get_contentLabelProperties():PropertyProxy
 	{
 		if (this._contentLabelProperties == null)
 		{
@@ -737,26 +736,26 @@ class DefaultGroupedListHeaderOrFooterRenderer extends FeathersControl implement
 		return this._contentLabelProperties;
 	}
 	
-	private function set_contentLabelProperties(value:Dynamic):Dynamic
+	private function set_contentLabelProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._contentLabelProperties == value)
 		{
 			return value;
 		}
-		if (value == null)
-		{
-			value = new PropertyProxy();
-		}
-		if (!Std.isOfType(value, PropertyProxyReal))
-		{
-			value = PropertyProxy.fromObject(value);
-		}
+		//if (value == null)
+		//{
+			//value = new PropertyProxy();
+		//}
+		//if (!Std.isOfType(value, PropertyProxyReal))
+		//{
+			//value = PropertyProxy.fromObject(value);
+		//}
 		if (this._contentLabelProperties != null)
 		{
-			this._contentLabelProperties.removeOnChangeCallback(contentLabelProperties_onChange);
+			//this._contentLabelProperties.removeOnChangeCallback(contentLabelProperties_onChange);
 			this._contentLabelProperties.dispose();
 		}
-		this._contentLabelProperties = cast value;
+		this._contentLabelProperties = value;
 		if (this._contentLabelProperties != null)
 		{
 			this._contentLabelProperties.addOnChangeCallback(contentLabelProperties_onChange);

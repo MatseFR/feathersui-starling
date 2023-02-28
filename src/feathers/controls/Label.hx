@@ -8,18 +8,17 @@ accordance with the terms of the accompanying license agreement.
 package feathers.controls;
 
 import feathers.core.FeathersControl;
+import feathers.core.IFeathersControl;
 import feathers.core.IMeasureDisplayObject;
 import feathers.core.ITextBaselineControl;
 import feathers.core.ITextRenderer;
 import feathers.core.IToolTip;
 import feathers.core.IValidating;
 import feathers.core.PropertyProxy;
-import feathers.core.PropertyProxyReal;
 import feathers.skins.IStyleProvider;
 import feathers.text.FontStylesSet;
 import feathers.utils.skins.SkinsUtils;
 import openfl.geom.Point;
-import feathers.core.IFeathersControl;
 import starling.display.DisplayObject;
 import starling.events.Event;
 import starling.text.TextFormat;
@@ -309,14 +308,16 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 		{
 			return value;
 		}
-		//var savedCallee:Function = arguments.callee;
+		
 		function changeHandler(event:Event):Void
 		{
 			processStyleRestriction("fontStyles");
 		}
-		if (value != null)
+		
+		var oldValue:TextFormat = this._fontStylesSet.format;
+		if (oldValue != null)
 		{
-			value.removeEventListener(Event.CHANGE, changeHandler);
+			oldValue.removeEventListener(Event.CHANGE, changeHandler);
 		}
 		this._fontStylesSet.format = value;
 		if (value != null)
@@ -337,14 +338,16 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 		{
 			return value;
 		}
-		//var savedCallee:Function = arguments.callee;
+		
 		function changeHandler(event:Event):Void
 		{
 			processStyleRestriction("disabledFontStyles");
 		}
-		if (value != null)
+		
+		var oldValue:TextFormat = this._fontStylesSet.disabledFormat;
+		if (oldValue != null)
 		{
-			value.removeEventListener(Event.CHANGE, changeHandler);
+			oldValue.removeEventListener(Event.CHANGE, changeHandler);
 		}
 		this._fontStylesSet.disabledFormat = value;
 		if (value != null)
@@ -386,9 +389,9 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 	 * @see #textRendererFactory
 	 * @see feathers.core.ITextRenderer
 	 */
-	public var textRendererProperties(get, set):Dynamic;
+	public var textRendererProperties(get, set):PropertyProxy;
 	private var _textRendererProperties:PropertyProxy;
-	private function get_textRendererProperties():Dynamic
+	private function get_textRendererProperties():PropertyProxy
 	{
 		if (this._textRendererProperties == null)
 		{
@@ -396,22 +399,22 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 		}
 		return this._textRendererProperties;
 	}
-	private function set_textRendererProperties(value:Dynamic):Dynamic
+	private function set_textRendererProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._textRendererProperties == value)
 		{
 			return value;
 		}
-		if (value != null && !Std.isOfType(value, PropertyProxyReal))
-		{
-			value = PropertyProxy.fromObject(value);
-		}
+		//if (value != null && !Std.isOfType(value, PropertyProxyReal))
+		//{
+			//value = PropertyProxy.fromObject(value);
+		//}
 		if (this._textRendererProperties != null)
 		{
-			this._textRendererProperties.removeOnChangeCallback(textRendererProperties_onChange);
+			//this._textRendererProperties.removeOnChangeCallback(textRendererProperties_onChange);
 			this._textRendererProperties.dispose();
 		}
-		this._textRendererProperties = cast value;
+		this._textRendererProperties = value;
 		if (this._textRendererProperties != null)
 		{
 			this._textRendererProperties.addOnChangeCallback(textRendererProperties_onChange);
@@ -1038,7 +1041,7 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 	/**
 	 * @private
 	 */
-	private function textRendererProperties_onChange(proxy:PropertyProxyReal, propertyName:String):Void
+	private function textRendererProperties_onChange(proxy:PropertyProxy, propertyName:String):Void
 	{
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 	}

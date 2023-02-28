@@ -13,7 +13,6 @@ import feathers.core.IFocusDisplayObject;
 import feathers.core.IMeasureDisplayObject;
 import feathers.core.IValidating;
 import feathers.core.PropertyProxy;
-import feathers.core.PropertyProxyReal;
 import feathers.events.ExclusiveTouch;
 import feathers.events.FeathersEventType;
 import feathers.layout.Direction;
@@ -770,9 +769,9 @@ class Slider extends FeathersControl implements IDirectionalScrollBar implements
 	 * @see #minimumTrackFactory
 	 * @see feathers.controls.BasicButton
 	 */
-	public var minimumTrackProperties(get, set):Dynamic;
+	public var minimumTrackProperties(get, set):PropertyProxy;
 	private var _minimumTrackProperties:PropertyProxy;
-	private function get_minimumTrackProperties():Dynamic
+	private function get_minimumTrackProperties():PropertyProxy
 	{
 		if (this._minimumTrackProperties == null)
 		{
@@ -781,32 +780,32 @@ class Slider extends FeathersControl implements IDirectionalScrollBar implements
 		return this._minimumTrackProperties;
 	}
 	
-	private function set_minimumTrackProperties(value:Dynamic):Dynamic
+	private function set_minimumTrackProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._minimumTrackProperties == value)
 		{
 			return value;
 		}
-		if (value == null)
-		{
-			value = new PropertyProxy();
-		}
-		if (!Std.isOfType(value, PropertyProxyReal))
-		{
-			//var newValue:PropertyProxy = new PropertyProxy();
-			//for(var propertyName:String in value)
-			//{
-				//newValue[propertyName] = value[propertyName];
-			//}
-			//value = newValue;
-			value = PropertyProxy.fromObject(value);
-		}
+		//if (value == null)
+		//{
+			//value = new PropertyProxy();
+		//}
+		//if (!Std.isOfType(value, PropertyProxyReal))
+		//{
+			////var newValue:PropertyProxy = new PropertyProxy();
+			////for(var propertyName:String in value)
+			////{
+				////newValue[propertyName] = value[propertyName];
+			////}
+			////value = newValue;
+			//value = PropertyProxy.fromObject(value);
+		//}
 		if (this._minimumTrackProperties != null)
 		{
-			this._minimumTrackProperties.removeOnChangeCallback(childProperties_onChange);
+			//this._minimumTrackProperties.removeOnChangeCallback(childProperties_onChange);
 			this._minimumTrackProperties.dispose();
 		}
-		this._minimumTrackProperties = cast value;
+		this._minimumTrackProperties = value;
 		if (this._minimumTrackProperties != null)
 		{
 			this._minimumTrackProperties.addOnChangeCallback(childProperties_onChange);
@@ -906,9 +905,9 @@ class Slider extends FeathersControl implements IDirectionalScrollBar implements
 	 * @see #maximumTrackFactory
 	 * @see feathers.controls.BasicButton
 	 */
-	public var maximumTrackProperties(get, set):Dynamic;
+	public var maximumTrackProperties(get, set):PropertyProxy;
 	private var _maximumTrackProperties:PropertyProxy;
-	private function get_maximumTrackProperties():Dynamic
+	private function get_maximumTrackProperties():PropertyProxy
 	{
 		if (this._maximumTrackProperties == null)
 		{
@@ -917,32 +916,32 @@ class Slider extends FeathersControl implements IDirectionalScrollBar implements
 		return this._maximumTrackProperties;
 	}
 	
-	private function set_maximumTrackProperties(value:Dynamic):Dynamic
+	private function set_maximumTrackProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._maximumTrackProperties == value)
 		{
 			return value;
 		}
-		if (value == null)
-		{
-			value = new PropertyProxy();
-		}
-		if (!Std.isOfType(value, PropertyProxyReal))
-		{
-			//var newValue:PropertyProxy = new PropertyProxy();
-			//for(var propertyName:String in value)
-			//{
-				//newValue[propertyName] = value[propertyName];
-			//}
-			//value = newValue;
-			value = PropertyProxy.fromObject(value);
-		}
+		//if (value == null)
+		//{
+			//value = new PropertyProxy();
+		//}
+		//if (!Std.isOfType(value, PropertyProxyReal))
+		//{
+			////var newValue:PropertyProxy = new PropertyProxy();
+			////for(var propertyName:String in value)
+			////{
+				////newValue[propertyName] = value[propertyName];
+			////}
+			////value = newValue;
+			//value = PropertyProxy.fromObject(value);
+		//}
 		if (this._maximumTrackProperties != null)
 		{
-			this._maximumTrackProperties.removeOnChangeCallback(childProperties_onChange);
+			//this._maximumTrackProperties.removeOnChangeCallback(childProperties_onChange);
 			this._maximumTrackProperties.dispose();
 		}
-		this._maximumTrackProperties = cast value;
+		this._maximumTrackProperties = value;
 		if (this._maximumTrackProperties != null)
 		{
 			this._maximumTrackProperties.addOnChangeCallback(childProperties_onChange);
@@ -1042,9 +1041,9 @@ class Slider extends FeathersControl implements IDirectionalScrollBar implements
 	 * @see feathers.controls.BasicButton
 	 * @see #thumbFactory
 	 */
-	public var thumbProperties(get, set):Dynamic;
+	public var thumbProperties(get, set):PropertyProxy;
 	private var _thumbProperties:PropertyProxy;
-	private function get_thumbProperties():Dynamic
+	private function get_thumbProperties():PropertyProxy
 	{
 		if (this._thumbProperties == null)
 		{
@@ -1053,32 +1052,32 @@ class Slider extends FeathersControl implements IDirectionalScrollBar implements
 		return this._thumbProperties;
 	}
 	
-	private function set_thumbProperties(value:Dynamic):Dynamic
+	private function set_thumbProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._thumbProperties == value)
 		{
 			return value;
 		}
-		if (!value)
-		{
-			value = new PropertyProxy();
-		}
-		if (!Std.isOfType(value, PropertyProxyReal))
-		{
-			//var newValue:PropertyProxy = new PropertyProxy();
-			//for(var propertyName:String in value)
-			//{
-				//newValue[propertyName] = value[propertyName];
-			//}
-			//value = newValue;
-			value = PropertyProxy.fromObject(value);
-		}
+		//if (!value)
+		//{
+			//value = new PropertyProxy();
+		//}
+		//if (!Std.isOfType(value, PropertyProxyReal))
+		//{
+			////var newValue:PropertyProxy = new PropertyProxy();
+			////for(var propertyName:String in value)
+			////{
+				////newValue[propertyName] = value[propertyName];
+			////}
+			////value = newValue;
+			//value = PropertyProxy.fromObject(value);
+		//}
 		if (this._thumbProperties != null)
 		{
-			this._thumbProperties.removeOnChangeCallback(childProperties_onChange);
+			//this._thumbProperties.removeOnChangeCallback(childProperties_onChange);
 			this._thumbProperties.dispose();
 		}
-		this._thumbProperties = cast value;
+		this._thumbProperties = value;
 		if (this._thumbProperties != null)
 		{
 			this._thumbProperties.addOnChangeCallback(childProperties_onChange);

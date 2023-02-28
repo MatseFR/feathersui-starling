@@ -22,7 +22,6 @@ import feathers.core.ITextRenderer;
 import feathers.core.IValidating;
 import feathers.core.PopUpManager;
 import feathers.core.PropertyProxy;
-import feathers.core.PropertyProxyReal;
 import feathers.events.FeathersEventType;
 import feathers.layout.RelativePosition;
 import feathers.layout.VerticalAlign;
@@ -600,9 +599,11 @@ class TextInput extends FeathersControl implements ITextBaselineControl implemen
 		{
 			processStyleRestriction("fontStyles");
 		}
-		if (value != null)
+		
+		var oldValue:TextFormat = this._fontStylesSet.format;
+		if (oldValue != null)
 		{
-			value.removeEventListener(Event.CHANGE, changeHandler);
+			oldValue.removeEventListener(Event.CHANGE, changeHandler);
 		}
 		this._fontStylesSet.format = value;
 		if (value != null)
@@ -628,9 +629,11 @@ class TextInput extends FeathersControl implements ITextBaselineControl implemen
 		{
 			processStyleRestriction("disabledFontStyles");
 		}
-		if (value != null)
+		
+		var oldValue:TextFormat = this._fontStylesSet.disabledFormat;
+		if (oldValue != null)
 		{
-			value.removeEventListener(Event.CHANGE, changeHandler);
+			oldValue.removeEventListener(Event.CHANGE, changeHandler);
 		}
 		this._fontStylesSet.disabledFormat = value;
 		if (value != null)
@@ -722,9 +725,11 @@ class TextInput extends FeathersControl implements ITextBaselineControl implemen
 		{
 			processStyleRestriction("promptFontStyles");
 		}
-		if (value != null)
+		
+		var oldValue:TextFormat = this._promptFontStylesSet.format;
+		if (oldValue != null)
 		{
-			value.removeEventListener(Event.CHANGE, changeHandler);
+			oldValue.removeEventListener(Event.CHANGE, changeHandler);
 		}
 		this._promptFontStylesSet.format = value;
 		if (value != null)
@@ -750,9 +755,11 @@ class TextInput extends FeathersControl implements ITextBaselineControl implemen
 		{
 			processStyleRestriction("promptDisabledFontStyles");
 		}
-		if (value != null)
+		
+		var oldValue:TextFormat = this._promptFontStylesSet.disabledFormat;
+		if (oldValue != null)
 		{
-			value.removeEventListener(Event.CHANGE, changeHandler);
+			oldValue.removeEventListener(Event.CHANGE, changeHandler);
 		}
 		this._promptFontStylesSet.disabledFormat = value;
 		if (value != null)
@@ -860,9 +867,9 @@ class TextInput extends FeathersControl implements ITextBaselineControl implemen
 	 * @see #promptFactory
 	 * @see feathers.core.ITextRenderer
 	 */
-	public var promptProperties(get, set):Dynamic;
+	public var promptProperties(get, set):PropertyProxy;
 	private var _promptProperties:PropertyProxy;
-	private function get_promptProperties():Dynamic
+	private function get_promptProperties():PropertyProxy
 	{
 		if (this._promptProperties == null)
 		{
@@ -871,25 +878,26 @@ class TextInput extends FeathersControl implements ITextBaselineControl implemen
 		return this._promptProperties;
 	}
 	
-	private function set_promptProperties(value:Dynamic):Dynamic
+	private function set_promptProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._promptProperties == value)
 		{
 			return value;
 		}
-		if (value == null)
-		{
-			value = new PropertyProxy();
-		}
-		if (!Std.isOfType(value, PropertyProxyReal))
-		{
-			value = PropertyProxy.fromObject(value);
-		}
+		//if (value == null)
+		//{
+			//value = new PropertyProxy();
+		//}
+		//if (!Std.isOfType(value, PropertyProxyReal))
+		//{
+			//value = PropertyProxy.fromObject(value);
+		//}
 		if (this._promptProperties != null)
 		{
-			this._promptProperties.removeOnChangeCallback(childProperties_onChange);
+			//this._promptProperties.removeOnChangeCallback(childProperties_onChange);
+			this._promptProperties.dispose();
 		}
-		this._promptProperties = cast value;
+		this._promptProperties = value;
 		if (this._promptProperties != null)
 		{
 			this._promptProperties.addOnChangeCallback(childProperties_onChange);
@@ -1323,9 +1331,9 @@ class TextInput extends FeathersControl implements ITextBaselineControl implemen
 	 * @see #textEditorFactory
 	 * @see feathers.core.ITextEditor
 	 */
-	public var textEditorProperties(get, set):Dynamic;
+	public var textEditorProperties(get, set):PropertyProxy;
 	private var _textEditorProperties:PropertyProxy;
-	private function get_textEditorProperties():Dynamic
+	private function get_textEditorProperties():PropertyProxy
 	{
 		if (this._textEditorProperties == null)
 		{
@@ -1334,25 +1342,26 @@ class TextInput extends FeathersControl implements ITextBaselineControl implemen
 		return this._textEditorProperties;
 	}
 	
-	private function set_textEditorProperties(value:Dynamic):Dynamic
+	private function set_textEditorProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._textEditorProperties == value)
 		{
 			return value;
 		}
-		if (value)
-		{
-			value = new PropertyProxy();
-		}
-		if (!Std.isOfType(value, PropertyProxyReal))
-		{
-			value = PropertyProxy.fromObject(value);
-		}
+		//if (value)
+		//{
+			//value = new PropertyProxy();
+		//}
+		//if (!Std.isOfType(value, PropertyProxyReal))
+		//{
+			//value = PropertyProxy.fromObject(value);
+		//}
 		if (this._textEditorProperties != null)
 		{
-			this._textEditorProperties.removeOnChangeCallback(childProperties_onChange);
+			//this._textEditorProperties.removeOnChangeCallback(childProperties_onChange);
+			this._textEditorProperties.dispose();
 		}
-		this._textEditorProperties = cast value;
+		this._textEditorProperties = value;
 		if (this._textEditorProperties != null)
 		{
 			this._textEditorProperties.addOnChangeCallback(childProperties_onChange);
@@ -1552,13 +1561,16 @@ class TextInput extends FeathersControl implements ITextBaselineControl implemen
 		{
 			return;
 		}
+		
 		function changeHandler(event:Event):Void
 		{
 			processStyleRestriction(key);
 		}
-		if (format != null)
+		
+		var oldFormat:TextFormat = this._fontStylesSet.getFormatForState(state);
+		if (oldFormat != null)
 		{
-			format.removeEventListener(Event.CHANGE, changeHandler);
+			oldFormat.removeEventListener(Event.CHANGE, changeHandler);
 		}
 		this._fontStylesSet.setFormatForState(state, format);
 		if (format != null)
@@ -1611,13 +1623,16 @@ class TextInput extends FeathersControl implements ITextBaselineControl implemen
 		{
 			return;
 		}
+		
 		function changeHandler(event:Event):Void
 		{
 			processStyleRestriction(key);
 		}
-		if (format != null)
+		
+		var oldFormat:TextFormat = this._promptFontStylesSet.getFormatForState(state);
+		if (oldFormat != null)
 		{
-			format.removeEventListener(Event.CHANGE, changeHandler);
+			oldFormat.removeEventListener(Event.CHANGE, changeHandler);
 		}
 		this._promptFontStylesSet.setFormatForState(state, format);
 		if (format != null)

@@ -873,9 +873,9 @@ class ButtonGroup extends FeathersControl implements ITextBaselineControl
 	 * @see #lastButtonFactory
 	 * @see feathers.controls.Button
 	 */
-	public var buttonProperties(get, set):Dynamic;
+	public var buttonProperties(get, set):PropertyProxy;
 	private var _buttonProperties:PropertyProxy;
-	private function get_buttonProperties():Dynamic
+	private function get_buttonProperties():PropertyProxy
 	{
 		if (this._buttonProperties == null)
 		{
@@ -884,26 +884,26 @@ class ButtonGroup extends FeathersControl implements ITextBaselineControl
 		return this._buttonProperties;
 	}
 	
-	private function set_buttonProperties(value:Dynamic):Dynamic
+	private function set_buttonProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._buttonProperties == value)
 		{
 			return value;
 		}
-		if (value == null)
-		{
-			value = new PropertyProxy();
-		}
-		if (!Std.isOfType(value, PropertyProxyReal))
-		{
-			value = PropertyProxy.fromObject(value);
-		}
+		//if (value == null)
+		//{
+			//value = new PropertyProxy();
+		//}
+		//if (!Std.isOfType(value, PropertyProxyReal))
+		//{
+			//value = PropertyProxy.fromObject(value);
+		//}
 		if (this._buttonProperties != null)
 		{
-			this._buttonProperties.removeOnChangeCallback(childProperties_onChange);
+			//this._buttonProperties.removeOnChangeCallback(childProperties_onChange);
 			this._buttonProperties.dispose();
 		}
-		this._buttonProperties = cast value;
+		this._buttonProperties = value;
 		if (this._buttonProperties != null)
 		{
 			this._buttonProperties.addOnChangeCallback(childProperties_onChange);

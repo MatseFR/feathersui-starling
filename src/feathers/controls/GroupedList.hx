@@ -15,7 +15,6 @@ import feathers.controls.supportClasses.GroupedListDataViewPort;
 import feathers.core.FeathersControl;
 import feathers.core.IFocusContainer;
 import feathers.core.PropertyProxy;
-import feathers.core.PropertyProxyReal;
 import feathers.data.IHierarchicalCollection;
 import feathers.events.CollectionEventType;
 import feathers.layout.HorizontalAlign;
@@ -25,7 +24,6 @@ import feathers.layout.VerticalAlign;
 import feathers.layout.VerticalLayout;
 import feathers.skins.IStyleProvider;
 import feathers.system.DeviceCapabilities;
-import feathers.utils.type.SafeCast;
 import haxe.Constraints.Function;
 import openfl.errors.ArgumentError;
 import openfl.events.KeyboardEvent;
@@ -812,9 +810,9 @@ class GroupedList extends Scroller implements IFocusContainer
 	 * @see feathers.controls.renderers.IGroupedListItemRenderer
 	 * @see feathers.controls.renderers.DefaultGroupedListItemRenderer
 	 */
-	public var itemRendererProperties(get, set):Dynamic;
+	public var itemRendererProperties(get, set):PropertyProxy;
 	private var _itemRendererProperties:PropertyProxy;
-	private function get_itemRendererProperties():Dynamic
+	private function get_itemRendererProperties():PropertyProxy
 	{
 		if (this._itemRendererProperties == null)
 		{
@@ -823,26 +821,26 @@ class GroupedList extends Scroller implements IFocusContainer
 		return this._itemRendererProperties;
 	}
 	
-	private function set_itemRendererProperties(value:Dynamic):Dynamic
+	private function set_itemRendererProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._itemRendererProperties == value)
 		{
 			return value;
 		}
-		if (value == null)
-		{
-			value = new PropertyProxy();
-		}
-		if (!Std.isOfType(value, PropertyProxyReal))
-		{
-			value = PropertyProxy.fromObject(value);
-		}
+		//if (value == null)
+		//{
+			//value = new PropertyProxy();
+		//}
+		//if (!Std.isOfType(value, PropertyProxyReal))
+		//{
+			//value = PropertyProxy.fromObject(value);
+		//}
 		if (this._itemRendererProperties != null)
 		{
-			this._itemRendererProperties.removeOnChangeCallback(childProperties_onChange);
+			//this._itemRendererProperties.removeOnChangeCallback(childProperties_onChange);
 			this._itemRendererProperties.dispose();
 		}
-		this._itemRendererProperties = cast value;
+		this._itemRendererProperties = value;
 		if (this._itemRendererProperties != null)
 		{
 			this._itemRendererProperties.addOnChangeCallback(childProperties_onChange);
@@ -1349,9 +1347,9 @@ class GroupedList extends Scroller implements IFocusContainer
 	 * @see feathers.controls.renderers.IGroupedListHeaderOrFooterRenderer
 	 * @see feathers.controls.renderers.DefaultGroupedListHeaderOrFooterRenderer
 	 */
-	public var headerRendererProperties(get, set):Dynamic;
+	public var headerRendererProperties(get, set):PropertyProxy;
 	private var _headerRendererProperties:PropertyProxy;
-	private function get_headerRendererProperties():Dynamic
+	private function get_headerRendererProperties():PropertyProxy
 	{
 		if (this._headerRendererProperties == null)
 		{
@@ -1360,26 +1358,26 @@ class GroupedList extends Scroller implements IFocusContainer
 		return this._headerRendererProperties;
 	}
 	
-	private function set_headerRendererProperties(value:Dynamic):Dynamic
+	private function set_headerRendererProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._headerRendererProperties == value)
 		{
 			return value;
 		}
-		if (value == null)
-		{
-			value = new PropertyProxy();
-		}
-		if (!Std.isOfType(value, PropertyProxyReal))
-		{
-			value = PropertyProxy.fromObject(value);
-		}
+		//if (value == null)
+		//{
+			//value = new PropertyProxy();
+		//}
+		//if (!Std.isOfType(value, PropertyProxyReal))
+		//{
+			//value = PropertyProxy.fromObject(value);
+		//}
 		if (this._headerRendererProperties != null)
 		{
-			this._headerRendererProperties.removeOnChangeCallback(childProperties_onChange);
+			//this._headerRendererProperties.removeOnChangeCallback(childProperties_onChange);
 			this._headerRendererProperties.dispose();
 		}
-		this._headerRendererProperties = cast value;
+		this._headerRendererProperties = value;
 		if (this._headerRendererProperties != null)
 		{
 			this._headerRendererProperties.addOnChangeCallback(childProperties_onChange);
@@ -1587,9 +1585,9 @@ class GroupedList extends Scroller implements IFocusContainer
 	 * @see feathers.controls.renderers.IGroupedListHeaderOrFooterRenderer
 	 * @see feathers.controls.renderers.DefaultGroupedListHeaderOrFooterRenderer
 	 */
-	public var footerRendererProperties(get, set):Dynamic;
+	public var footerRendererProperties(get, set):PropertyProxy;
 	private var _footerRendererProperties:PropertyProxy;
-	private function get_footerRendererProperties():Dynamic
+	private function get_footerRendererProperties():PropertyProxy
 	{
 		if (this._footerRendererProperties == null)
 		{
@@ -1598,26 +1596,26 @@ class GroupedList extends Scroller implements IFocusContainer
 		return this._footerRendererProperties;
 	}
 	
-	private function set_footerRendererProperties(value:Dynamic):Dynamic
+	private function set_footerRendererProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._footerRendererProperties == value)
 		{
 			return value;
 		}
-		if (value == null)
-		{
-			value = new PropertyProxy();
-		}
-		if (!Std.isOfType(value, PropertyProxyReal))
-		{
-			value = PropertyProxy.fromObject(value);
-		}
+		//if (value == null)
+		//{
+			//value = new PropertyProxy();
+		//}
+		//if (!Std.isOfType(value, PropertyProxyReal))
+		//{
+			//value = PropertyProxy.fromObject(value);
+		//}
 		if (this._footerRendererProperties != null)
 		{
-			this._footerRendererProperties.removeOnChangeCallback(childProperties_onChange);
+			//this._footerRendererProperties.removeOnChangeCallback(childProperties_onChange);
 			this._footerRendererProperties.dispose();
 		}
-		this._footerRendererProperties = cast value;
+		this._footerRendererProperties = value;
 		if (this._footerRendererProperties != null)
 		{
 			this._footerRendererProperties.addOnChangeCallback(childProperties_onChange);

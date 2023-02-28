@@ -13,7 +13,6 @@ import feathers.core.IMeasureDisplayObject;
 import feathers.core.ITextRenderer;
 import feathers.core.IValidating;
 import feathers.core.PropertyProxy;
-import feathers.core.PropertyProxyReal;
 import feathers.events.FeathersEventType;
 import feathers.layout.HorizontalAlign;
 import feathers.layout.HorizontalLayout;
@@ -25,7 +24,6 @@ import feathers.system.DeviceCapabilities;
 import feathers.text.FontStylesSet;
 import feathers.utils.display.ScreenDensityScaleCalculator;
 import feathers.utils.skins.SkinsUtils;
-import haxe.Constraints.Function;
 import openfl.display.Stage;
 import openfl.display.StageDisplayState;
 import openfl.events.FullScreenEvent;
@@ -775,14 +773,16 @@ class Header extends FeathersControl
 		{
 			return value;
 		}
-		//var savedCallee:Function = this.set_fontStyles;
+		
 		function changeHandler(event:Event):Void
 		{
 			processStyleRestriction("fontStyles");
 		}
-		if (value != null)
+		
+		var oldValue:TextFormat = this._fontStylesSet.format;
+		if (oldValue != null)
 		{
-			value.removeEventListener(Event.CHANGE, changeHandler);
+			oldValue.removeEventListener(Event.CHANGE, changeHandler);
 		}
 		this._fontStylesSet.format = value;
 		if (value != null)
@@ -803,14 +803,16 @@ class Header extends FeathersControl
 		{
 			return value;
 		}
-		//var savedCallee:Function = this.set_disabledFontStyles;
+		
 		function changeHandler(event:Event):Void
 		{
 			processStyleRestriction("disabledFontStyles");
 		}
-		if (value != null)
+		
+		var oldValue:TextFormat = this._fontStylesSet.disabledFormat;
+		if (oldValue != null)
 		{
-			value.removeEventListener(Event.CHANGE, changeHandler);
+			oldValue.removeEventListener(Event.CHANGE, changeHandler);
 		}
 		this._fontStylesSet.disabledFormat = value;
 		if (value != null)
@@ -894,9 +896,9 @@ class Header extends FeathersControl
 	 * @see #titleFactory
 	 * @see feathers.core.ITextRenderer
 	 */
-	public var titleProperties(get, set):Dynamic;
+	public var titleProperties(get, set):PropertyProxy;
 	private var _titleProperties:PropertyProxy;
-	private function get_titleProperties():Dynamic
+	private function get_titleProperties():PropertyProxy
 	{
 		if (this._titleProperties == null)
 		{
@@ -905,22 +907,22 @@ class Header extends FeathersControl
 		return this._titleProperties;
 	}
 	
-	private function set_titleProperties(value:Dynamic):Dynamic
+	private function set_titleProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._titleProperties == value)
 		{
 			return value;
 		}
-		if (value != null && !Std.isOfType(value, PropertyProxyReal))
-		{
-			value = PropertyProxy.fromObject(value);
-		}
+		//if (value != null && !Std.isOfType(value, PropertyProxyReal))
+		//{
+			//value = PropertyProxy.fromObject(value);
+		//}
 		if (this._titleProperties != null)
 		{
-			this._titleProperties.removeOnChangeCallback(titleProperties_onChange);
+			//this._titleProperties.removeOnChangeCallback(titleProperties_onChange);
 			this._titleProperties.dispose();
 		}
-		this._titleProperties = cast value;
+		this._titleProperties = value;
 		if (this._titleProperties != null)
 		{
 			this._titleProperties.addOnChangeCallback(titleProperties_onChange);
@@ -1922,7 +1924,7 @@ class Header extends FeathersControl
 	/**
 	 * @private
 	 */
-	private function titleProperties_onChange(proxy:PropertyProxyReal, propertyName:String):Void
+	private function titleProperties_onChange(proxy:PropertyProxy, propertyName:String):Void
 	{
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 	}

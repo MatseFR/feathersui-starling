@@ -12,10 +12,10 @@ import feathers.controls.supportClasses.ListDataViewPort;
 import feathers.core.FeathersControl;
 import feathers.core.IFocusContainer;
 import feathers.core.PropertyProxy;
-import feathers.core.PropertyProxyReal;
 import feathers.data.IListCollection;
 import feathers.data.ListCollection;
 import feathers.dragDrop.IDragSource;
+import feathers.dragDrop.IDropTarget;
 import feathers.events.CollectionEventType;
 import feathers.layout.HorizontalAlign;
 import feathers.layout.ILayout;
@@ -25,7 +25,6 @@ import feathers.layout.VerticalAlign;
 import feathers.layout.VerticalLayout;
 import feathers.skins.IStyleProvider;
 import feathers.system.DeviceCapabilities;
-import feathers.utils.math.MathUtils;
 import haxe.Constraints.Function;
 import openfl.errors.ArgumentError;
 import openfl.events.KeyboardEvent;
@@ -35,7 +34,6 @@ import starling.display.DisplayObject;
 import starling.events.Event;
 import starling.utils.Pool;
 
-import feathers.dragDrop.IDropTarget;
 
 /**
  * Displays a one-dimensional list of items. Supports scrolling, custom
@@ -844,9 +842,9 @@ class List extends Scroller implements IFocusContainer implements IDragSource im
 	 * @see feathers.controls.renderers.IListItemRenderer
 	 * @see feathers.controls.renderers.DefaultListItemRenderer
 	 */
-	public var itemRendererProperties(get, set):Dynamic;
+	public var itemRendererProperties(get, set):PropertyProxy;
 	private var _itemRendererProperties:PropertyProxy;
-	private function get_itemRendererProperties():Dynamic
+	private function get_itemRendererProperties():PropertyProxy
 	{
 		if (this._itemRendererProperties == null)
 		{
@@ -855,26 +853,26 @@ class List extends Scroller implements IFocusContainer implements IDragSource im
 		return this._itemRendererProperties;
 	}
 	
-	private function set_itemRendererProperties(value:Dynamic):Dynamic
+	private function set_itemRendererProperties(value:PropertyProxy):PropertyProxy
 	{
 		if (this._itemRendererProperties == value)
 		{
 			return value;
 		}
-		if (value == null)
-		{
-			value = new PropertyProxy();
-		}
-		if (!Std.isOfType(value, PropertyProxyReal))
-		{
-			value = PropertyProxy.fromObject(value);
-		}
+		//if (value == null)
+		//{
+			//value = new PropertyProxy();
+		//}
+		//if (!Std.isOfType(value, PropertyProxyReal))
+		//{
+			//value = PropertyProxy.fromObject(value);
+		//}
 		if (this._itemRendererProperties != null)
 		{
-			this._itemRendererProperties.removeOnChangeCallback(childProperties_onChange);
+			//this._itemRendererProperties.removeOnChangeCallback(childProperties_onChange);
 			this._itemRendererProperties.dispose();
 		}
-		this._itemRendererProperties = cast value;
+		this._itemRendererProperties = value;
 		if (this._itemRendererProperties != null)
 		{
 			this._itemRendererProperties.addOnChangeCallback(childProperties_onChange);
