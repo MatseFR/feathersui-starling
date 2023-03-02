@@ -383,7 +383,7 @@ class LayoutGroup extends FeathersControl
 			child.removeEventListener(FeathersEventType.LAYOUT_DATA_CHANGE, child_layoutDataChangeHandler);
 		}
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_LAYOUT);
-		return super.removeChildAt(index, dispose);
+		return child;
 	}
 	
 	/**
