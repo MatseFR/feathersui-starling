@@ -18,7 +18,7 @@ package feathers.core;
  *
  * @productversion Feathers 1.0.0
  */
-@:forward(iterator)
+@:forward(iterator, dispose, addOnChangeCallback, removeOnChangeCallback)
 abstract PropertyProxy(PropertyProxyReal) from PropertyProxyReal to PropertyProxyReal
 {
 	/**
