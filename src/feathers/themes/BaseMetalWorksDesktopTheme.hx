@@ -51,14 +51,19 @@ import feathers.controls.ScrollBarDisplayMode;
 import feathers.controls.ScrollContainer;
 import feathers.controls.ScrollInteractionMode;
 import feathers.controls.ScrollPolicy;
+import feathers.controls.ScrollScreen;
+import feathers.controls.ScrollText;
 import feathers.controls.Scroller;
 import feathers.controls.SimpleScrollBar;
 import feathers.controls.Slider;
 import feathers.controls.SpinnerList;
 import feathers.controls.StepperButtonLayoutMode;
+import feathers.controls.TabBar;
+import feathers.controls.TextArea;
 import feathers.controls.TextCallout;
 import feathers.controls.TextInput;
 import feathers.controls.TextInputState;
+import feathers.controls.Toast;
 import feathers.controls.ToggleButton;
 import feathers.controls.ToggleSwitch;
 import feathers.controls.TrackLayoutMode;
@@ -67,6 +72,8 @@ import feathers.controls.renderers.BaseDefaultItemRenderer;
 import feathers.controls.renderers.DefaultGroupedListHeaderOrFooterRenderer;
 import feathers.controls.renderers.DefaultGroupedListItemRenderer;
 import feathers.controls.renderers.DefaultListItemRenderer;
+import feathers.controls.text.TextFieldTextEditor;
+import feathers.controls.text.TextFieldTextRenderer;
 import feathers.core.FeathersControl;
 import feathers.core.FocusManager;
 import feathers.core.PopUpManager;
@@ -275,19 +282,19 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	 * The default global text renderer factory for this theme creates a
 	 * TextBlockTextRenderer.
 	 */
-	//private static function textRendererFactory():TextBlockTextRenderer
-	//{
-	//return new TextBlockTextRenderer();
-	//}
+	private static function textRendererFactory():TextFieldTextRenderer
+	{
+		return new TextFieldTextRenderer();
+	}
 
 	/**
 	 * The default global text editor factory for this theme creates a
 	 * TextBlockTextEditor.
 	 */
-	//private static function textEditorFactory():TextBlockTextEditor
-	//{
-	//return new TextBlockTextEditor();
-	//}
+	private static function textEditorFactory():TextFieldTextEditor
+	{
+		return new TextFieldTextEditor();
+	}
 
 	/**
 	 * This theme's scroll bar type is ScrollBar.
@@ -659,12 +666,12 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	private function initializeGlobals():Void
 	{
 		// TODO : restore when ready
-		//FeathersControl.defaultTextRendererFactory = textRendererFactory;
-		//FeathersControl.defaultTextEditorFactory = textEditorFactory;
+		FeathersControl.defaultTextRendererFactory = textRendererFactory;
+		FeathersControl.defaultTextEditorFactory = textEditorFactory;
 
 		PopUpManager.overlayFactory = popUpOverlayFactory;
-		//Callout.stagePadding = this.smallGutterSize;
-		//Toast.containerFactory = toastContainerFactory;
+		Callout.stagePadding = this.smallGutterSize;
+		Toast.containerFactory = toastContainerFactory;
 
 		var stage:Stage = this.starling.stage;
 		FocusManager.setEnabledForStage(stage, true);
@@ -977,10 +984,10 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		this.getStyleProviderForClass(ScrollContainer).setFunctionForStyleName(ScrollContainer.ALTERNATE_STYLE_NAME_TOOLBAR, this.setToolbarScrollContainerStyles);
 		
 		//scroll screen
-		//this.getStyleProviderForClass(ScrollScreen).defaultStyleFunction = this.setScrollScreenStyles;
+		this.getStyleProviderForClass(ScrollScreen).defaultStyleFunction = this.setScrollScreenStyles;
 		
 		//scroll text
-		//this.getStyleProviderForClass(ScrollText).defaultStyleFunction = this.setScrollTextStyles;
+		this.getStyleProviderForClass(ScrollText).defaultStyleFunction = this.setScrollTextStyles;
 		
 		//simple scroll bar
 		this.getStyleProviderForClass(SimpleScrollBar).defaultStyleFunction = this.setSimpleScrollBarStyles;
@@ -999,8 +1006,8 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		this.getStyleProviderForClass(SpinnerList).defaultStyleFunction = this.setSpinnerListStyles;
 		
 		//tab bar
-		//this.getStyleProviderForClass(TabBar).defaultStyleFunction = this.setTabBarStyles;
-		//this.getStyleProviderForClass(ToggleButton).setFunctionForStyleName(TabBar.DEFAULT_CHILD_STYLE_NAME_TAB, this.setTabStyles);
+		this.getStyleProviderForClass(TabBar).defaultStyleFunction = this.setTabBarStyles;
+		this.getStyleProviderForClass(ToggleButton).setFunctionForStyleName(TabBar.DEFAULT_CHILD_STYLE_NAME_TAB, this.setTabStyles);
 		
 		//text input
 		this.getStyleProviderForClass(TextInput).defaultStyleFunction = this.setTextInputStyles;
@@ -1009,16 +1016,16 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		this.getStyleProviderForClass(TextCallout).setFunctionForStyleName(TextInput.DEFAULT_CHILD_STYLE_NAME_ERROR_CALLOUT, this.setTextInputErrorCalloutStyles);
 		
 		//text area
-		//this.getStyleProviderForClass(TextArea).defaultStyleFunction = this.setTextAreaStyles;
-		//this.getStyleProviderForClass(TextCallout).setFunctionForStyleName(TextArea.DEFAULT_CHILD_STYLE_NAME_ERROR_CALLOUT, this.setTextAreaErrorCalloutStyles);
+		this.getStyleProviderForClass(TextArea).defaultStyleFunction = this.setTextAreaStyles;
+		this.getStyleProviderForClass(TextCallout).setFunctionForStyleName(TextArea.DEFAULT_CHILD_STYLE_NAME_ERROR_CALLOUT, this.setTextAreaErrorCalloutStyles);
 		
 		//text callout
 		this.getStyleProviderForClass(TextCallout).defaultStyleFunction = this.setTextCalloutStyles;
 		
 		//toast
-		//this.getStyleProviderForClass(Toast).defaultStyleFunction = this.setToastStyles;
-		//this.getStyleProviderForClass(ButtonGroup).setFunctionForStyleName(Toast.DEFAULT_CHILD_STYLE_NAME_ACTIONS, this.setToastActionsStyles);
-		//this.getStyleProviderForClass(Button).setFunctionForStyleName(THEME_STYLE_NAME_TOAST_ACTIONS_BUTTON, this.setToastActionsButtonStyles);
+		this.getStyleProviderForClass(Toast).defaultStyleFunction = this.setToastStyles;
+		this.getStyleProviderForClass(ButtonGroup).setFunctionForStyleName(Toast.DEFAULT_CHILD_STYLE_NAME_ACTIONS, this.setToastActionsStyles);
+		this.getStyleProviderForClass(Button).setFunctionForStyleName(THEME_STYLE_NAME_TOAST_ACTIONS_BUTTON, this.setToastActionsButtonStyles);
 		
 		//toggle button
 		this.getStyleProviderForClass(ToggleButton).defaultStyleFunction = this.setButtonStyles;
@@ -2366,24 +2373,24 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	// ScrollScreen
 	//-------------------------
 	
-	//private function setScrollScreenStyles(screen:ScrollScreen):Void
-	//{
-		//this.setScrollerStyles(screen);
-	//}
+	private function setScrollScreenStyles(screen:ScrollScreen):Void
+	{
+		this.setScrollerStyles(screen);
+	}
 	
 	//-------------------------
 	// ScrollText
 	//-------------------------
 	
-	//private function setScrollTextStyles(text:ScrollText):Void
-	//{
-		//this.setScrollerStyles(text);
-		//
-		//text.fontStyles = this.lightScrollTextFontStyles.clone();
-		//text.disabledFontStyles = this.lightDisabledScrollTextFontStyles.clone();
-		//
-		//text.padding = this.gutterSize;
-	//}
+	private function setScrollTextStyles(text:ScrollText):Void
+	{
+		this.setScrollerStyles(text);
+		
+		text.fontStyles = this.lightScrollTextFontStyles.clone();
+		text.disabledFontStyles = this.lightDisabledScrollTextFontStyles.clone();
+		
+		text.padding = this.gutterSize;
+	}
 	
 	//-------------------------
 	// SimpleScrollBar
@@ -2531,6 +2538,17 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		this.setListStyles(list);
 	}
 	
+	//-------------------------
+	// TabBar
+	//-------------------------
+
+	private function setTabBarStyles(tabBar:TabBar):Void
+	{
+		tabBar.distributeTabSizes = false;
+		tabBar.horizontalAlign = HorizontalAlign.LEFT;
+		tabBar.verticalAlign = VerticalAlign.JUSTIFY;
+	}
+
 	private function setTabStyles(tab:ToggleButton):Void
 	{
 		var skin:ImageSkin = new ImageSkin(this.tabUpSkinTexture);
@@ -2544,18 +2562,18 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		skin.minWidth = this.controlSize;
 		skin.minHeight = this.controlSize;
 		tab.defaultSkin = skin;
-		
+
 		tab.fontStyles = this.lightUIFontStyles.clone();
 		tab.selectedFontStyles = this.darkUIFontStyles.clone();
 		tab.setFontStylesForState(ButtonState.DOWN, this.darkUIFontStyles.clone());
 		tab.setFontStylesForState(ButtonState.DISABLED, this.lightDisabledUIFontStyles.clone());
 		tab.setFontStylesForState(ButtonState.DISABLED_AND_SELECTED, this.darkDisabledUIFontStyles.clone());
-		
+
 		var focusIndicatorSkin:Image = new Image(this.focusIndicatorSkinTexture);
 		focusIndicatorSkin.scale9Grid = FOCUS_INDICATOR_SCALE_9_GRID;
 		tab.focusIndicatorSkin = focusIndicatorSkin;
 		tab.focusPadding = this.focusPaddingSize;
-		
+
 		tab.paddingTop = this.smallGutterSize;
 		tab.paddingBottom = this.smallGutterSize;
 		tab.paddingLeft = this.gutterSize;
@@ -2567,39 +2585,39 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	// TextArea
 	//-------------------------
 	
-	//private function setTextAreaStyles(textArea:TextArea):Void
-	//{
-		//this.setScrollerStyles(textArea);
-		//
-		//var skin:ImageSkin = new ImageSkin(this.backgroundSkinTexture);
-		//skin.setTextureForState(TextInputState.DISABLED, this.backgroundDisabledSkinTexture);
-		//skin.setTextureForState(TextInputState.FOCUSED, this.backgroundFocusedSkinTexture);
-		//skin.setTextureForState(TextInputState.ERROR, this.backgroundDangerSkinTexture);
-		//skin.scale9Grid = DEFAULT_SCALE9_GRID;
-		//skin.width = this.wideControlSize * 2;
-		//skin.height = this.wideControlSize;
-		//textArea.backgroundSkin = skin;
-		//
-		//textArea.fontStyles = this.lightScrollTextFontStyles.clone();
-		//textArea.disabledFontStyles = this.lightDisabledScrollTextFontStyles.clone();
-		//
-		//textArea.promptFontStyles = this.lightFontStyles.clone();
-		//textArea.promptDisabledFontStyles = this.lightDisabledFontStyles.clone();
-		//
-		//textArea.padding = this.borderSize;
-		//textArea.innerPadding = this.smallGutterSize;
-	//}
+	private function setTextAreaStyles(textArea:TextArea):Void
+	{
+		this.setScrollerStyles(textArea);
+		
+		var skin:ImageSkin = new ImageSkin(this.backgroundSkinTexture);
+		skin.setTextureForState(TextInputState.DISABLED, this.backgroundDisabledSkinTexture);
+		skin.setTextureForState(TextInputState.FOCUSED, this.backgroundFocusedSkinTexture);
+		skin.setTextureForState(TextInputState.ERROR, this.backgroundDangerSkinTexture);
+		skin.scale9Grid = DEFAULT_SCALE9_GRID;
+		skin.width = this.wideControlSize * 2;
+		skin.height = this.wideControlSize;
+		textArea.backgroundSkin = skin;
+		
+		textArea.fontStyles = this.lightScrollTextFontStyles.clone();
+		textArea.disabledFontStyles = this.lightDisabledScrollTextFontStyles.clone();
+		
+		textArea.promptFontStyles = this.lightFontStyles.clone();
+		textArea.promptDisabledFontStyles = this.lightDisabledFontStyles.clone();
+		
+		textArea.padding = this.borderSize;
+		textArea.innerPadding = this.smallGutterSize;
+	}
 	
-	//private function setTextAreaErrorCalloutStyles(callout:TextCallout):Void
-	//{
-		//this.setDangerCalloutStyles(callout);
-		//
-		//callout.fontStyles = this.lightFontStyles.clone();
-		//callout.disabledFontStyles = this.lightDisabledFontStyles.clone();
-		//
-		//callout.horizontalAlign = HorizontalAlign.LEFT;
-		//callout.verticalAlign = VerticalAlign.TOP;
-	//}
+	private function setTextAreaErrorCalloutStyles(callout:TextCallout):Void
+	{
+		this.setDangerCalloutStyles(callout);
+		
+		callout.fontStyles = this.lightFontStyles.clone();
+		callout.disabledFontStyles = this.lightDisabledFontStyles.clone();
+		
+		callout.horizontalAlign = HorizontalAlign.LEFT;
+		callout.verticalAlign = VerticalAlign.TOP;
+	}
 	
 	//-------------------------
 	// TextCallout
@@ -2678,37 +2696,37 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	// Toast
 	//-------------------------
 	
-	//private function setToastStyles(toast:Toast):Void
-	//{
-		//var backgroundSkin:Image = new Image(this.backgroundPopUpSkinTexture);
-		//backgroundSkin.scale9Grid = SIMPLE_SCALE9_GRID;
-		//toast.backgroundSkin = backgroundSkin;
-		//
-		//toast.fontStyles = this.lightFontStyles.clone();
-		//
-		//toast.width = this.extraWideControlSize;
-		//toast.paddingTop = this.gutterSize;
-		//toast.paddingRight = this.gutterSize;
-		//toast.paddingBottom = this.gutterSize;
-		//toast.paddingLeft = this.gutterSize;
-		//toast.gap = Number.POSITIVE_INFINITY;
-		//toast.minGap = this.smallGutterSize;
-		//toast.horizontalAlign = HorizontalAlign.LEFT;
-		//toast.verticalAlign = VerticalAlign.MIDDLE;
-	//}
+	private function setToastStyles(toast:Toast):Void
+	{
+		var backgroundSkin:Image = new Image(this.backgroundPopUpSkinTexture);
+		backgroundSkin.scale9Grid = SIMPLE_SCALE9_GRID;
+		toast.backgroundSkin = backgroundSkin;
+		
+		toast.fontStyles = this.lightFontStyles.clone();
+		
+		toast.width = this.extraWideControlSize;
+		toast.paddingTop = this.gutterSize;
+		toast.paddingRight = this.gutterSize;
+		toast.paddingBottom = this.gutterSize;
+		toast.paddingLeft = this.gutterSize;
+		toast.gap = Math.POSITIVE_INFINITY;
+		toast.minGap = this.smallGutterSize;
+		toast.horizontalAlign = HorizontalAlign.LEFT;
+		toast.verticalAlign = VerticalAlign.MIDDLE;
+	}
 	
-	//private function setToastActionsStyles(group:ButtonGroup):Void
-	//{
-		//group.direction = Direction.HORIZONTAL;
-		//group.gap = this.smallGutterSize;
-		//group.customButtonStyleName = THEME_STYLE_NAME_TOAST_ACTIONS_BUTTON;
-	//}
+	private function setToastActionsStyles(group:ButtonGroup):Void
+	{
+		group.direction = Direction.HORIZONTAL;
+		group.gap = this.smallGutterSize;
+		group.customButtonStyleName = THEME_STYLE_NAME_TOAST_ACTIONS_BUTTON;
+	}
 	
-	//private function setToastActionsButtonStyles(button:Button):Void
-	//{
-		//button.fontStyles = this.selectedUIFontStyles.clone();
-		//button.setFontStylesForState(ButtonState.DOWN, this.lightUIFontStyles);
-	//}
+	private function setToastActionsButtonStyles(button:Button):Void
+	{
+		button.fontStyles = this.selectedUIFontStyles.clone();
+		button.setFontStylesForState(ButtonState.DOWN, this.lightUIFontStyles);
+	}
 	
 	//-------------------------
 	// ToggleSwitch

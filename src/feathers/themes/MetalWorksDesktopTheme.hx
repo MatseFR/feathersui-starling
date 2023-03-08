@@ -46,7 +46,7 @@ class MetalWorksDesktopTheme extends BaseMetalWorksDesktopTheme
 	/**
 	 * @private
 	 */
-	private static inline var ATLAS_SCALE_FACTOR:Int = 2;
+	private static inline var ATLAS_SCALE_FACTOR:Float = 2;
 	
 	/**
 	 * Constructor.
@@ -68,8 +68,6 @@ class MetalWorksDesktopTheme extends BaseMetalWorksDesktopTheme
 	 */
 	private function initializeTextureAtlas():Void
 	{
-		//atlas = new TextureAtlas(Texture.fromBitmapData(Assets.getBitmapData(Config.PATH_IMAGE + "hex/hex_types.png")),
-		//Xml.parse(Assets.getText(Config.PATH_IMAGE + "hex/hex_types.xml")));
 		var atlasBitmapData:BitmapData = Assets.getBitmapData(ATLAS_BITMAP);
 		var atlasTexture:Texture = Texture.fromBitmapData(atlasBitmapData, false, false, ATLAS_SCALE_FACTOR);
 		atlasTexture.root.onRestore = this.atlasTexture_onRestore;
