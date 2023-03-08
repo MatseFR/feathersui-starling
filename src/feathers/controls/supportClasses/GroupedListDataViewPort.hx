@@ -28,6 +28,7 @@ import feathers.layout.ViewPortBounds;
 import feathers.utils.type.ArgumentsCount;
 import feathers.utils.type.SafeCast;
 import haxe.Constraints.Function;
+import haxe.ds.ObjectMap;
 import openfl.errors.ArgumentError;
 import openfl.errors.Error;
 import openfl.errors.IllegalOperationError;
@@ -318,17 +319,32 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 	private var _unrenderedItems:Array<Int> = new Array<Int>();
 	private var _defaultItemRendererStorage:GroupItemRendererFactoryStorage = new GroupItemRendererFactoryStorage();
 	private var _itemStorageMap:Map<String, GroupItemRendererFactoryStorage> = new Map<String, GroupItemRendererFactoryStorage>();
-	private var _itemRendererMap:Map<Dynamic, IGroupedListItemRenderer> = new Map<Dynamic, IGroupedListItemRenderer>();
+	// #if html5
+	// private var _itemRendererMap:Map<Dynamic, IGroupedListItemRenderer> = new Map<Dynamic, IGroupedListItemRenderer>();
+	// #else
+	private var _itemObjectRendererMap:ObjectMap<Dynamic, IGroupedListItemRenderer> = new ObjectMap<Dynamic, IGroupedListItemRenderer>();
+	private var _itemSimpleRendererMap:Map<Dynamic, IGroupedListItemRenderer> = new Map<Dynamic, IGroupedListItemRenderer>();
+	// #end
 	
 	private var _unrenderedHeaders:Array<Int> = new Array<Int>();
 	private var _defaultHeaderRendererStorage:HeaderRendererFactoryStorage = new HeaderRendererFactoryStorage();
 	private var _headerStorageMap:Map<String, HeaderRendererFactoryStorage> = new Map<String, HeaderRendererFactoryStorage>();
-	private var _headerRendererMap:Map<Dynamic, IGroupedListHeaderRenderer> = new Map<Dynamic, IGroupedListHeaderRenderer>();
+	// #if html5
+	// private var _headerRendererMap:Map<Dynamic, IGroupedListHeaderRenderer> = new Map<Dynamic, IGroupedListHeaderRenderer>();
+	// #else
+	private var _headerObjectRendererMap:ObjectMap<Dynamic, IGroupedListHeaderRenderer> = new ObjectMap<Dynamic, IGroupedListHeaderRenderer>();
+	private var _headerSimpleRendererMap:Map<Dynamic, IGroupedListHeaderRenderer> = new Map<Dynamic, IGroupedListHeaderRenderer>();
+	// #end
 	
 	private var _unrenderedFooters:Array<Int> = new Array<Int>();
 	private var _defaultFooterRendererStorage:FooterRendererFactoryStorage = new FooterRendererFactoryStorage();
 	private var _footerStorageMap:Map<String, FooterRendererFactoryStorage> = new Map<String, FooterRendererFactoryStorage>();
-	private var _footerRendererMap:Map<Dynamic, IGroupedListFooterRenderer> = new Map<Dynamic, IGroupedListFooterRenderer>();
+	// #if html5
+	// private var _footerRendererMap:Map<Dynamic, IGroupedListFooterRenderer> = new Map<Dynamic, IGroupedListFooterRenderer>();
+	// #else
+	private var _footerObjectRendererMap:ObjectMap<Dynamic, IGroupedListFooterRenderer> = new ObjectMap<Dynamic, IGroupedListFooterRenderer>();
+	private var _footerSimpleRendererMap:Map<Dynamic, IGroupedListFooterRenderer> = new Map<Dynamic, IGroupedListFooterRenderer>();
+	// #end
 	
 	private var _headerIndices:Array<Int> = new Array<Int>();
 	private var _footerIndices:Array<Int> = new Array<Int>();
@@ -516,13 +532,8 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 		{
 			return value;
 		}
-		//if (value != null && !Std.isOfType(value, PropertyProxyReal))
-		//{
-			//value = PropertyProxy.fromObject(value);
-		//}
 		if (this._itemRendererProperties != null)
 		{
-			//this._itemRendererProperties.removeOnChangeCallback(childProperties_onChange);
 			this._itemRendererProperties.dispose();
 		}
 		this._itemRendererProperties = value;
@@ -764,13 +775,8 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 		{
 			return value;
 		}
-		//if (value != null && !Std.isOfType(value, PropertyProxyReal))
-		//{
-			//value = PropertyProxy.fromObject(value);
-		//}
 		if (this._headerRendererProperties != null)
 		{
-			//this._headerRendererProperties.removeOnChangeCallback(childProperties_onChange);
 			this._headerRendererProperties.dispose();
 		}
 		this._headerRendererProperties = value;
@@ -877,13 +883,8 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 		{
 			return value;
 		}
-		//if (value != null && !Std.isOfType(value, PropertyProxyReal))
-		//{
-			//value = PropertyProxy.fromObject(value);
-		//}
 		if (this._footerRendererProperties != null)
 		{
-			//this._footerRendererProperties.removeOnChangeCallback(childProperties_onChange);
 			this._footerRendererProperties.dispose();
 		}
 		this._footerRendererProperties = value;
@@ -1030,7 +1031,15 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 		//{
 			//return IGroupedListItemRenderer(this._itemRendererMap[item.toXMLString()]);
 		//}
-		return this._itemRendererMap[item];
+		// return this._itemRendererMap.get(item);
+		if (Std.isOfType(item, String) || Std.isOfType(item, Int) || Std.isOfType(item, Float))
+		{
+			return this._itemSimpleRendererMap[item];
+		}
+		else
+		{
+			return this._itemObjectRendererMap.get(item);
+		}
 	}
 	
 	public function headerDataToHeaderRenderer(headerData:Dynamic):IGroupedListHeaderRenderer
@@ -1040,7 +1049,15 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 		//{
 			//return IGroupedListHeaderRenderer(this._headerRendererMap[headerData.toXMLString()]);
 		//}
-		return this._headerRendererMap[headerData];
+		// return this._headerRendererMap.get(headerData);
+		if (Std.isOfType(headerData, String) || Std.isOfType(headerData, Int) || Std.isOfType(headerData, Float))
+		{
+			return this._headerSimpleRendererMap[headerData];
+		}
+		else
+		{
+			return this._headerObjectRendererMap.get(headerData);
+		}
 	}
 	
 	public function footerDataToFooterRenderer(footerData:Dynamic):IGroupedListFooterRenderer
@@ -1050,7 +1067,15 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 		//{
 			//return IGroupedListFooterRenderer(this._footerRendererMap[footerData.toXMLString()]);
 		//}
-		return this._footerRendererMap[footerData];
+		// return this._footerRendererMap.get(footerData);
+		if (Std.isOfType(footerData, String) || Std.isOfType(footerData, Int) || Std.isOfType(footerData, Float))
+		{
+			return this._footerSimpleRendererMap[footerData];
+		}
+		else
+		{
+			return this._footerObjectRendererMap.get(footerData);
+		}
 	}
 	
 	override public function dispose():Void
@@ -1065,10 +1090,20 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 			this._itemRendererFactories.clear();
 			this._itemRendererFactories = null;
 		}
-		if (this._itemRendererMap != null)
+		// if (this._itemRendererMap != null)
+		// {
+		// 	this._itemRendererMap.clear();
+		// 	this._itemRendererMap = null;
+		// }
+		if (this._itemObjectRendererMap != null)
 		{
-			this._itemRendererMap.clear();
-			this._itemRendererMap = null;
+			this._itemObjectRendererMap.clear();
+			this._itemObjectRendererMap = null;
+		}
+		if (this._itemSimpleRendererMap != null)
+		{
+			this._itemSimpleRendererMap.clear();
+			this._itemSimpleRendererMap = null;
 		}
 		if (this._itemStorageMap != null)
 		{
@@ -1081,10 +1116,20 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 			this._headerRendererFactories.clear();
 			this._headerRendererFactories = null;
 		}
-		if (this._headerRendererMap != null)
+		// if (this._headerRendererMap != null)
+		// {
+		// 	this._headerRendererMap.clear();
+		// 	this._headerRendererMap = null;
+		// }
+		if (this._headerObjectRendererMap != null)
 		{
-			this._headerRendererMap.clear();
-			this._headerRendererMap = null;
+			this._headerObjectRendererMap.clear();
+			this._headerObjectRendererMap = null;
+		}
+		if (this._headerSimpleRendererMap != null)
+		{
+			this._headerSimpleRendererMap.clear();
+			this._headerSimpleRendererMap = null;
 		}
 		if (this._headerStorageMap != null)
 		{
@@ -1097,10 +1142,20 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 			this._footerRendererFactories.clear();
 			this._footerRendererFactories = null;
 		}
-		if (this._footerRendererMap != null)
+		// if (this._footerRendererMap != null)
+		// {
+		// 	this._footerRendererMap.clear();
+		// 	this._footerRendererMap = null;
+		// }
+		if (this._footerObjectRendererMap != null)
 		{
-			this._footerRendererMap.clear();
-			this._footerRendererMap = null;
+			this._footerObjectRendererMap.clear();
+			this._footerObjectRendererMap = null;
+		}
+		if (this._footerSimpleRendererMap != null)
+		{
+			this._footerSimpleRendererMap.clear();
+			this._footerSimpleRendererMap = null;
 		}
 		if (this._footerStorageMap != null)
 		{
@@ -1415,11 +1470,14 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 			//var propertyValue:Object = this._itemRendererProperties[propertyName];
 			//displayRenderer[propertyName] = propertyValue;
 		//}
-		var propertyValue:Dynamic;
-		for (propertyName in this._itemRendererProperties)
+		if (this._itemRendererProperties != null)
 		{
-			propertyValue = this._itemRendererProperties[propertyName];
-			Reflect.setProperty(renderer, propertyName, propertyValue);
+			var propertyValue:Dynamic;
+			for (propertyName in this._itemRendererProperties)
+			{
+				propertyValue = this._itemRendererProperties[propertyName];
+				Reflect.setProperty(renderer, propertyName, propertyValue);
+			}
 		}
 	}
 	
@@ -1431,11 +1489,14 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 			//var propertyValue:Object = this._headerRendererProperties[propertyName];
 			//displayRenderer[propertyName] = propertyValue;
 		//}
-		var propertyValue:Dynamic;
-		for (propertyName in this._headerRendererProperties)
+		if (this._headerRendererProperties != null)
 		{
-			propertyValue = this._headerRendererProperties[propertyName];
-			Reflect.setProperty(renderer, propertyName, propertyValue);
+			var propertyValue:Dynamic;
+			for (propertyName in this._headerRendererProperties)
+			{
+				propertyValue = this._headerRendererProperties[propertyName];
+				Reflect.setProperty(renderer, propertyName, propertyValue);
+			}
 		}
 	}
 	
@@ -1447,11 +1508,14 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 			//var propertyValue:Object = this._footerRendererProperties[propertyName];
 			//displayRenderer[propertyName] = propertyValue;
 		//}
-		var propertyValue:Dynamic;
-		for (propertyName in this._footerRendererProperties)
+		if (this._footerRendererProperties != null)
 		{
-			propertyValue = this._footerRendererProperties[propertyName];
-			Reflect.setProperty(renderer, propertyName, propertyValue);
+			var propertyValue:Dynamic;
+			for (propertyName in this._footerRendererProperties)
+			{
+				propertyValue = this._footerRendererProperties[propertyName];
+				Reflect.setProperty(renderer, propertyName, propertyValue);
+			}
 		}
 	}
 	
@@ -1531,8 +1595,16 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 				//}
 				//else
 				//{
-					this._itemRendererMap.remove(item);
+					// this._itemRendererMap.remove(item);
 				//}
+				if (Std.isOfType(item, String) || Std.isOfType(item, Int) || Std.isOfType(item, Float))
+				{
+					this._itemSimpleRendererMap.remove(item);
+				}
+				else
+				{
+					this._itemObjectRendererMap.remove(item);
+				}
 			}
 			this.destroyItemRenderer(this._typicalItemRenderer);
 			this._typicalItemRenderer = null;
@@ -1880,8 +1952,16 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 				//}
 				//else
 				//{
-					this._itemRendererMap.remove(item);
+					// this._itemRendererMap.remove(item);
 				//}
+				if (Std.isOfType(item, String) || Std.isOfType(item, Int) || Std.isOfType(item, Float))
+				{
+					this._itemSimpleRendererMap.remove(item);
+				}
+				else
+				{
+					this._itemObjectRendererMap.remove(item);
+				}
 			}
 		}
 		if (itemRenderer != null)
@@ -1956,8 +2036,16 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 				//}
 				//else
 				//{
-					this._headerRendererMap.remove(header);
+					// this._headerRendererMap.remove(header);
 				//}
+				if (Std.isOfType(header, String) || Std.isOfType(header, Int) || Std.isOfType(header, Float))
+				{
+					this._headerSimpleRendererMap.remove(header);
+				}
+				else
+				{
+					this._headerObjectRendererMap.remove(header);
+				}
 			}
 		}
 		if (headerRenderer != null)
@@ -2011,8 +2099,16 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 				//}
 				//else
 				//{
-					this._footerRendererMap.remove(footer);
+					// this._footerRendererMap.remove(footer);
 				//}
+				if (Std.isOfType(footer, String) || Std.isOfType(footer, Int) || Std.isOfType(footer, Float))
+				{
+					this._footerSimpleRendererMap.remove(footer);
+				}
+				else
+				{
+					this._footerObjectRendererMap.remove(footer);
+				}
 			}
 		}
 		if (footerRenderer != null)
@@ -2129,8 +2225,16 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 			//}
 			//else
 			//{
-				this._itemRendererMap.remove(item);
+				// this._itemRendererMap.remove(item);
 			//}
+			if (Std.isOfType(item, String) || Std.isOfType(item, Int) || Std.isOfType(item, Float))
+			{
+				this._itemSimpleRendererMap.remove(item);
+			}
+			else
+			{
+				this._itemObjectRendererMap.remove(item);
+			}
 		}
 	}
 	
@@ -2156,8 +2260,16 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 			//}
 			//else
 			//{
-				this._headerRendererMap.remove(headerData);
+				// this._headerRendererMap.remove(headerData);
 			//}
+			if (Std.isOfType(headerData, String) || Std.isOfType(headerData, Int) || Std.isOfType(headerData, Float))
+			{
+				this._headerSimpleRendererMap.remove(headerData);
+			}
+			else
+			{
+				this._headerObjectRendererMap.remove(headerData);
+			}
 		}
 	}
 	
@@ -2183,8 +2295,16 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 			//}
 			//else
 			//{
-				this._footerRendererMap.remove(footerData);
+				// this._footerRendererMap.remove(footerData);
 			//}
+			if (Std.isOfType(footerData, String) || Std.isOfType(footerData, Int) || Std.isOfType(footerData, Float))
+			{
+				this._footerSimpleRendererMap.remove(footerData);
+			}
+			else
+			{
+				this._footerObjectRendererMap.remove(footerData);
+			}
 		}
 	}
 	
@@ -2343,8 +2463,16 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 			//}
 			//else
 			//{
-				this._itemRendererMap[item] = itemRenderer;
+				// this._itemRendererMap.set(item, itemRenderer);
 			//}
+			if (Std.isOfType(item, String) || Std.isOfType(item, Int) || Std.isOfType(item, Float))
+			{
+				this._itemSimpleRendererMap[item] = itemRenderer;
+			}
+			else
+			{
+				this._itemObjectRendererMap.set(item, itemRenderer);
+			}
 			activeItemRenderers.push(itemRenderer);
 			itemRenderer.addEventListener(Event.TRIGGERED, renderer_triggeredHandler);
 			itemRenderer.addEventListener(Event.CHANGE, renderer_changeHandler);
@@ -2401,8 +2529,16 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 			//}
 			//else
 			//{
-				this._headerRendererMap[header] = headerRenderer;
+				// this._headerRendererMap.set(header, headerRenderer);
 			//}
+			if (Std.isOfType(header, String) || Std.isOfType(header, Int) || Std.isOfType(header, Float))
+			{
+				this._headerSimpleRendererMap[header] = headerRenderer;
+			}
+			else
+			{
+				this._headerObjectRendererMap.set(header, headerRenderer);
+			}
 			activeHeaderRenderers.push(headerRenderer);
 			headerRenderer.addEventListener(FeathersEventType.RESIZE, headerRenderer_resizeHandler);
 			this._owner.dispatchEventWith(FeathersEventType.RENDERER_ADD, false, headerRenderer);
@@ -2457,8 +2593,16 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 			//}
 			//else
 			//{
-				this._footerRendererMap[footer] = footerRenderer;
+				// this._footerRendererMap.set(footer, footerRenderer);
 			//}
+			if (Std.isOfType(footer, String) || Std.isOfType(footer, Int) || Std.isOfType(footer, Float))
+			{
+				this._footerSimpleRendererMap[footer] = footerRenderer;
+			}
+			else
+			{
+				this._footerObjectRendererMap.set(footer, footerRenderer);
+			}
 			activeFooterRenderers[activeFooterRenderers.length] = footerRenderer;
 			footerRenderer.addEventListener(FeathersEventType.RESIZE, footerRenderer_resizeHandler);
 			this._owner.dispatchEventWith(FeathersEventType.RENDERER_ADD, false, footerRenderer);
