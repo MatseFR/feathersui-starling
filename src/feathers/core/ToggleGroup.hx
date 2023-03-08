@@ -69,7 +69,7 @@ class ToggleGroup extends EventDispatcher
 			return value;
 		}
 		this._isSelectionRequired = value;
-		if (this._isSelectionRequired && this._selectedIndex < 0 && this._items.length > 0)
+		if (this._isSelectionRequired && this._selectedIndex < 0 && this._items.length != 0)
 		{
 			this.selectedIndex = 0;
 		}

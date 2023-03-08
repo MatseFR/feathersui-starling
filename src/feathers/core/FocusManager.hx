@@ -123,7 +123,7 @@ class FocusManager
 		}
 		else
 		{
-			while (stack.length > 0)
+			while (stack.length != 0)
 			{
 				stack.pop().isEnabled = false;
 			}
@@ -139,7 +139,7 @@ class FocusManager
 	{
 		for (stack in STAGE_TO_STACK)
 		{
-			while (stack.length > 0)
+			while (stack.length != 0)
 			{
 				stack.pop().isEnabled = false;
 			}

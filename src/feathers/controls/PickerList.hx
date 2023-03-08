@@ -7,6 +7,7 @@ accordance with the terms of the accompanying license agreement.
 */
 package feathers.controls;
 
+import feathers.utils.type.Property;
 import feathers.controls.popups.CalloutPopUpContentManager;
 import feathers.controls.popups.DropDownPopUpContentManager;
 import feathers.controls.popups.IPersistentPopUpContentManager;
@@ -339,7 +340,7 @@ class PickerList extends FeathersControl implements IFocusDisplayObject implemen
 	public var selectedItem(get, set):Dynamic;
 	private function get_selectedItem():Dynamic
 	{
-		if (this._dataProvider != null || this._selectedIndex < 0 || this._selectedIndex >= this._dataProvider.length)
+		if (this._dataProvider == null || this._selectedIndex < 0 || this._selectedIndex >= this._dataProvider.length)
 		{
 			return null;
 		}
@@ -629,10 +630,6 @@ class PickerList extends FeathersControl implements IFocusDisplayObject implemen
 		{
 			return value;
 		}
-		//if (value != null && !Std.isOfType(value, PropertyProxyReal))
-		//{
-			//value = PropertyProxy.fromObject(value);
-		//}
 		if (this._buttonProperties != null)
 		{
 			this._buttonProperties.dispose();
@@ -752,10 +749,6 @@ class PickerList extends FeathersControl implements IFocusDisplayObject implemen
 		{
 			return value;
 		}
-		//if (value != null && !Std.isOfType(value, PropertyProxyReal))
-		//{
-			//value = PropertyProxy.fromObject(value);
-		//}
 		if (this._listProperties != null)
 		{
 			this._listProperties.dispose();
@@ -908,7 +901,7 @@ class PickerList extends FeathersControl implements IFocusDisplayObject implemen
 				return labelResult.toString();
 			}
 		}
-		else if (this._labelField != null && item != null && Reflect.hasField(item, this._labelField))
+		else if (this._labelField != null && item != null && Property.existsRead(item, this._labelField))
 		{
 			labelResult = Reflect.getProperty(item, this._labelField);
 			if (Std.isOfType(labelResult, String))

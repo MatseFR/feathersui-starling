@@ -859,17 +859,8 @@ class List extends Scroller implements IFocusContainer implements IDragSource im
 		{
 			return value;
 		}
-		//if (value == null)
-		//{
-			//value = new PropertyProxy();
-		//}
-		//if (!Std.isOfType(value, PropertyProxyReal))
-		//{
-			//value = PropertyProxy.fromObject(value);
-		//}
 		if (this._itemRendererProperties != null)
 		{
-			//this._itemRendererProperties.removeOnChangeCallback(childProperties_onChange);
 			this._itemRendererProperties.dispose();
 		}
 		this._itemRendererProperties = value;

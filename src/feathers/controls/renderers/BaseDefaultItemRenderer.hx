@@ -25,6 +25,7 @@ import feathers.text.FontStylesSet;
 import feathers.utils.skins.SkinsUtils;
 import feathers.utils.touch.DelayedDownTouchToState;
 import feathers.utils.type.ArgumentsCount;
+import feathers.utils.type.Property;
 import feathers.utils.type.SafeCast;
 import haxe.Constraints.Function;
 import openfl.geom.Point;
@@ -2403,23 +2404,8 @@ class BaseDefaultItemRenderer extends ToggleButton implements IFocusContainer
 		{
 			return value;
 		}
-		//if (value == null)
-		//{
-			//value = new PropertyProxy();
-		//}
-		//if (!Std.isOfType(value, PropertyProxyReal))
-		//{
-			////var newValue:PropertyProxy = new PropertyProxy();
-			////for(var propertyName:String in value)
-			////{
-				////newValue[propertyName] = value[propertyName];
-			////}
-			////value = newValue;
-			//value = PropertyProxy.fromObject(value);
-		//}
 		if (this._iconLabelProperties != null)
 		{
-			//this._iconLabelProperties.removeOnChangeCallback(childProperties_onChange);
 			this._iconLabelProperties.dispose();
 		}
 		this._iconLabelProperties = value;
@@ -2628,23 +2614,8 @@ class BaseDefaultItemRenderer extends ToggleButton implements IFocusContainer
 		{
 			return value;
 		}
-		//if (value == null)
-		//{
-			//value = new PropertyProxy();
-		//}
-		//if (!Std.isOfType(value, PropertyProxyReal))
-		//{
-			////var newValue:PropertyProxy = new PropertyProxy();
-			////for(var propertyName:String in value)
-			////{
-				////newValue[propertyName] = value[propertyName];
-			////}
-			////value = newValue;
-			//value = PropertyProxy.fromObject(value);
-		//}
 		if (this._accessoryLabelProperties != null)
 		{
-			//this._accessoryLabelProperties.removeOnChangeCallback(childProperties_onChange);
 			this._accessoryLabelProperties.dispose();
 		}
 		this._accessoryLabelProperties = value;
@@ -2805,7 +2776,7 @@ class BaseDefaultItemRenderer extends ToggleButton implements IFocusContainer
 				return labelResult.toString();
 			}
 		}
-		else if (this._labelField != null && item != null && Reflect.hasField(item, this._labelField))
+		else if (this._labelField != null && item != null && Property.existsRead(item, this._labelField))
 		{
 			labelResult = Reflect.getProperty(item, this._labelField);
 			if (Std.isOfType(labelResult, String))
@@ -2867,7 +2838,7 @@ class BaseDefaultItemRenderer extends ToggleButton implements IFocusContainer
 			this.refreshIconSource(source);
 			return this.iconLoader;
 		}
-		else if (this._iconSourceField != null && item != null && Reflect.hasField(item, this._iconSourceField))
+		else if (this._iconSourceField != null && item != null && Property.existsRead(item, this._iconSourceField))
 		{
 			source = Reflect.getProperty(item, this._iconSourceField);
 			this.refreshIconSource(source);
@@ -2898,7 +2869,7 @@ class BaseDefaultItemRenderer extends ToggleButton implements IFocusContainer
 			}
 			return cast this.iconLabel;
 		}
-		else if (this._iconLabelField != null && item != null && Reflect.hasField(item, this._iconLabelField))
+		else if (this._iconLabelField != null && item != null && Property.existsRead(item, this._iconLabelField))
 		{
 			labelResult = Reflect.getProperty(item, this._iconLabelField);
 			if (Std.isOfType(labelResult, String))
@@ -2924,7 +2895,7 @@ class BaseDefaultItemRenderer extends ToggleButton implements IFocusContainer
 			}
 			return cast this._iconFunction(item);
 		}
-		else if (this._iconField != null && item != null && Reflect.hasField(item, this._iconField))
+		else if (this._iconField != null && item != null && Property.existsRead(item, this._iconField))
 		{
 			return cast Reflect.getProperty(item, this._iconField);
 		}

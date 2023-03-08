@@ -13,7 +13,7 @@ package feathers.controls.popups;
  *
  * @productversion Feathers 2.3.0
  */
-interface IPopUpContentManagerWithPrompt 
+interface IPopUpContentManagerWithPrompt extends IPopUpContentManager
 {
 	/**
 	 * Some descriptive text to display with the pop-up.

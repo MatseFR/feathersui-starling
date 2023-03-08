@@ -817,13 +817,12 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 	
 	private function set_defaultLabelProperties(value:PropertyProxy):PropertyProxy
 	{
-		//if (!Std.isOfType(value, PropertyProxyReal))
-		//{
-			//value = PropertyProxy.fromObject(value);
-		//}
+		if (this._defaultLabelProperties == value)
+		{
+			return value;
+		}
 		if (this._defaultLabelProperties != null)
 		{
-			//this._defaultLabelProperties.removeOnChangeCallback(childProperties_onChange);
 			this._defaultLabelProperties.dispose();
 		}
 		this._defaultLabelProperties = value;
@@ -1688,7 +1687,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 			return;
 		}
 		this.labelTextRenderer.text = this._label;
-		this.labelTextRenderer.visible = this._label != null && this._label.length > 0;
+		this.labelTextRenderer.visible = this._label != null && this._label.length != 0;
 		this.labelTextRenderer.isEnabled = this._isEnabled;
 	}
 	

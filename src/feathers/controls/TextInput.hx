@@ -884,17 +884,8 @@ class TextInput extends FeathersControl implements ITextBaselineControl implemen
 		{
 			return value;
 		}
-		//if (value == null)
-		//{
-			//value = new PropertyProxy();
-		//}
-		//if (!Std.isOfType(value, PropertyProxyReal))
-		//{
-			//value = PropertyProxy.fromObject(value);
-		//}
 		if (this._promptProperties != null)
 		{
-			//this._promptProperties.removeOnChangeCallback(childProperties_onChange);
 			this._promptProperties.dispose();
 		}
 		this._promptProperties = value;
@@ -1348,17 +1339,8 @@ class TextInput extends FeathersControl implements ITextBaselineControl implemen
 		{
 			return value;
 		}
-		//if (value)
-		//{
-			//value = new PropertyProxy();
-		//}
-		//if (!Std.isOfType(value, PropertyProxyReal))
-		//{
-			//value = PropertyProxy.fromObject(value);
-		//}
 		if (this._textEditorProperties != null)
 		{
-			//this._textEditorProperties.removeOnChangeCallback(childProperties_onChange);
 			this._textEditorProperties.dispose();
 		}
 		this._textEditorProperties = value;

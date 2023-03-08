@@ -1154,7 +1154,7 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 					if (snapshotIndex < 0)
 					{
 						snapshot = this.textSnapshot;
-						snapshot.visible = this._text.length > 0 && this._snapshotWidth > 0 && this._snapshotHeight > 0;
+						snapshot.visible = this._text.length != 0 && this._snapshotWidth > 0 && this._snapshotHeight > 0;
 					}
 					else
 					{
@@ -1803,7 +1803,7 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 			rectangleSnapshotHeight *= this._lastGlobalScaleY;
 		}
 		if (rectangleSnapshotWidth >= 1 && rectangleSnapshotHeight >= 1 &&
-			this._nativeFilters != null && this._nativeFilters.length > 0)
+			this._nativeFilters != null && this._nativeFilters.length != 0)
 		{
 			HELPER_MATRIX.identity();
 			HELPER_MATRIX.scale(scaleFactor, scaleFactor);

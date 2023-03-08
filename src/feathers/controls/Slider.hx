@@ -786,23 +786,8 @@ class Slider extends FeathersControl implements IDirectionalScrollBar implements
 		{
 			return value;
 		}
-		//if (value == null)
-		//{
-			//value = new PropertyProxy();
-		//}
-		//if (!Std.isOfType(value, PropertyProxyReal))
-		//{
-			////var newValue:PropertyProxy = new PropertyProxy();
-			////for(var propertyName:String in value)
-			////{
-				////newValue[propertyName] = value[propertyName];
-			////}
-			////value = newValue;
-			//value = PropertyProxy.fromObject(value);
-		//}
 		if (this._minimumTrackProperties != null)
 		{
-			//this._minimumTrackProperties.removeOnChangeCallback(childProperties_onChange);
 			this._minimumTrackProperties.dispose();
 		}
 		this._minimumTrackProperties = value;
@@ -922,23 +907,8 @@ class Slider extends FeathersControl implements IDirectionalScrollBar implements
 		{
 			return value;
 		}
-		//if (value == null)
-		//{
-			//value = new PropertyProxy();
-		//}
-		//if (!Std.isOfType(value, PropertyProxyReal))
-		//{
-			////var newValue:PropertyProxy = new PropertyProxy();
-			////for(var propertyName:String in value)
-			////{
-				////newValue[propertyName] = value[propertyName];
-			////}
-			////value = newValue;
-			//value = PropertyProxy.fromObject(value);
-		//}
 		if (this._maximumTrackProperties != null)
 		{
-			//this._maximumTrackProperties.removeOnChangeCallback(childProperties_onChange);
 			this._maximumTrackProperties.dispose();
 		}
 		this._maximumTrackProperties = value;
@@ -1058,23 +1028,8 @@ class Slider extends FeathersControl implements IDirectionalScrollBar implements
 		{
 			return value;
 		}
-		//if (!value)
-		//{
-			//value = new PropertyProxy();
-		//}
-		//if (!Std.isOfType(value, PropertyProxyReal))
-		//{
-			////var newValue:PropertyProxy = new PropertyProxy();
-			////for(var propertyName:String in value)
-			////{
-				////newValue[propertyName] = value[propertyName];
-			////}
-			////value = newValue;
-			//value = PropertyProxy.fromObject(value);
-		//}
 		if (this._thumbProperties != null)
 		{
-			//this._thumbProperties.removeOnChangeCallback(childProperties_onChange);
 			this._thumbProperties.dispose();
 		}
 		this._thumbProperties = value;

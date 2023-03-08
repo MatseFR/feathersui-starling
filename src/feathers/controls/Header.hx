@@ -913,13 +913,8 @@ class Header extends FeathersControl
 		{
 			return value;
 		}
-		//if (value != null && !Std.isOfType(value, PropertyProxyReal))
-		//{
-			//value = PropertyProxy.fromObject(value);
-		//}
 		if (this._titleProperties != null)
 		{
-			//this._titleProperties.removeOnChangeCallback(titleProperties_onChange);
 			this._titleProperties.dispose();
 		}
 		this._titleProperties = value;
@@ -1211,9 +1206,9 @@ class Header extends FeathersControl
 		
 		var totalContentWidth:Float = 0;
 		var maxContentHeight:Float = 0;
-		var hasLeftItems:Bool = this._leftItems != null && this._leftItems.length > 0;
-		var hasRightItems:Bool = this._rightItems != null && this._rightItems.length > 0;
-		var hasCenterItems:Bool = this._centerItems != null && this._centerItems.length > 0;
+		var hasLeftItems:Bool = this._leftItems != null && this._leftItems.length != 0;
+		var hasRightItems:Bool = this._rightItems != null && this._rightItems.length != 0;
+		var hasCenterItems:Bool = this._centerItems != null && this._centerItems.length != 0;
 		var oldIgnoreItemResizing:Bool = this._ignoreItemResizing;
 		var item:DisplayObject;
 		var itemCount:Int;
@@ -1785,9 +1780,9 @@ class Header extends FeathersControl
 	 */
 	private function layoutTitle():Void
 	{
-		var hasLeftItems:Bool = this._leftItems != null && this._leftItems.length > 0;
-		var hasRightItems:Bool = this._rightItems != null && this._rightItems.length > 0;
-		var hasCenterItems:Bool = this._centerItems != null && this._centerItems.length > 0;
+		var hasLeftItems:Bool = this._leftItems != null && this._leftItems.length != 0;
+		var hasRightItems:Bool = this._rightItems != null && this._rightItems.length != 0;
+		var hasCenterItems:Bool = this._centerItems != null && this._centerItems.length != 0;
 		if (this._titleAlign == HorizontalAlign.CENTER && hasCenterItems)
 		{
 			this.titleTextRenderer.visible = false;

@@ -6,6 +6,8 @@ This program is free software. You can redistribute and/or modify it in
 accordance with the terms of the accompanying license agreement.
 */
 package feathers.controls.text;
+import feathers.controls.supportClasses.IViewPort;
+import feathers.core.ITextEditor;
 
 /**
  * Handles the editing of multiline text.
@@ -14,7 +16,7 @@ package feathers.controls.text;
  *
  * @productversion Feathers 1.1.0
  */
-interface ITextEditorViewPort 
+interface ITextEditorViewPort extends ITextEditor extends IViewPort
 {
 	/**
 	 * The padding between the top edge of the viewport and the text.
@@ -34,5 +36,5 @@ interface ITextEditorViewPort
 	/**
 	 * The padding between the left edge of the viewport and the text.
 	 */
-	public var paddingleft(get, set):Float;
+	public var paddingLeft(get, set):Float;
 }

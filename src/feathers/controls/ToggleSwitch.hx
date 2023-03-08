@@ -512,13 +512,8 @@ class ToggleSwitch extends FeathersControl implements IToggle implements IFocusD
 		{
 			return value;
 		}
-		//if (value != null && !Std.isOfType(value, PropertyProxyReal))
-		//{
-			//value = PropertyProxy.fromObject(value);
-		//}
 		if (this._defaultLabelProperties != null)
 		{
-			//this._defaultLabelProperties.removeOnChangeCallback(childProperties_onChange);
 			this._defaultLabelProperties.dispose();
 		}
 		this._defaultLabelProperties = value;
@@ -573,13 +568,8 @@ class ToggleSwitch extends FeathersControl implements IToggle implements IFocusD
 		{
 			return value;
 		}
-		//if (value != null && !Std.isOfType(value, PropertyProxyReal))
-		//{
-			//value = PropertyProxy.fromObject(value);
-		//}
 		if (this._disabledLabelProperties != null)
 		{
-			//this._disabledLabelProperties.removeOnChangeCallback(childProperties_onChange);
 			this._disabledLabelProperties.dispose();
 		}
 		this._disabledLabelProperties = value;
@@ -634,13 +624,8 @@ class ToggleSwitch extends FeathersControl implements IToggle implements IFocusD
 		{
 			return value;
 		}
-		//if (value != null && !Std.isOfType(value, PropertyProxyReal))
-		//{
-			//value = PropertyProxy.fromObject(value);
-		//}
 		if (this._onLabelProperties != null)
 		{
-			//this._onLabelProperties.removeOnChangeCallback(childProperties_onChange);
 			this._onLabelProperties.dispose();
 		}
 		this._onLabelProperties = value;
@@ -695,13 +680,8 @@ class ToggleSwitch extends FeathersControl implements IToggle implements IFocusD
 		{
 			return value;
 		}
-		//if (value != null && !Std.isOfType(value, PropertyProxyReal))
-		//{
-			//value = PropertyProxy.fromObject(value);
-		//}
 		if (this._offLabelProperties != null)
 		{
-			//this._offLabelProperties.removeOnChangeCallback(childProperties_onChange);
 			this._offLabelProperties.dispose();
 		}
 		this._offLabelProperties = value;
@@ -1384,13 +1364,8 @@ class ToggleSwitch extends FeathersControl implements IToggle implements IFocusD
 		{
 			return value;
 		}
-		//if (value != null && !Std.isOfType(value, PropertyProxyReal))
-		//{
-			//value = PropertyProxy.fromObject(value);
-		//}
 		if (this._onTrackProperties != null)
 		{
-			//this._onTrackProperties.removeOnChangeCallback(childProperties_onChange);
 			this._onTrackProperties.dispose();
 		}
 		this._onTrackProperties = value;
@@ -1508,13 +1483,8 @@ class ToggleSwitch extends FeathersControl implements IToggle implements IFocusD
 		{
 			return value;
 		}
-		//if (value != null && !Std.isOfType(value, PropertyProxyReal))
-		//{
-			//value = PropertyProxy.fromObject(value);
-		//}
 		if (this._offTrackProperties != null)
 		{
-			//this._offTrackProperties.removeOnChangeCallback(childProperties_onChange);
 			this._offTrackProperties.dispose();
 		}
 		this._offTrackProperties = value;
@@ -1631,13 +1601,8 @@ class ToggleSwitch extends FeathersControl implements IToggle implements IFocusD
 		{
 			return value;
 		}
-		//if (value != null && !Std.isOfType(value, PropertyProxyReal))
-		//{
-			//value = PropertyProxy.fromObject(value);
-		//}
 		if (this._thumbProperties != null)
 		{
-			//this._thumbProperties.removeOnChangeCallback(childProperties_onChange);
 			this._thumbProperties.dispose();
 		}
 		this._thumbProperties = value;
@@ -2831,7 +2796,8 @@ class ToggleSwitch extends FeathersControl implements IToggle implements IFocusD
 		{
 			this._touchPointID = -1;
 		}
-		if (this._touchPointID != -1 || !(event.keyCode == Keyboard.SPACE || (event.keyCode == Keyboard.ENTER && (event.keyLocation == KeyLocation.D_PAD || DeviceCapabilities.simulateDPad))))
+		// TODO : KeyLocation.D_PAD only exists on flash target
+		if (this._touchPointID != -1 || !(event.keyCode == Keyboard.SPACE || (event.keyCode == Keyboard.ENTER && (#if flash event.keyLocation == KeyLocation.D_PAD || #end DeviceCapabilities.simulateDPad))))
 		{
 			return;
 		}
@@ -2843,7 +2809,8 @@ class ToggleSwitch extends FeathersControl implements IToggle implements IFocusD
 	 */
 	private function stage_keyUpHandler(event:KeyboardEvent):Void
 	{
-		if (this._touchPointID != MathUtils.INT_MAX || !(event.keyCode == Keyboard.SPACE || (event.keyCode == Keyboard.ENTER && (event.keyLocation == KeyLocation.D_PAD || DeviceCapabilities.simulateDPad))))
+		// TODO : KeyLocation.D_PAD only exists on flash target
+		if (this._touchPointID != MathUtils.INT_MAX || !(event.keyCode == Keyboard.SPACE || (event.keyCode == Keyboard.ENTER && (#if flash event.keyLocation == KeyLocation.D_PAD || #end DeviceCapabilities.simulateDPad))))
 		{
 			return;
 		}

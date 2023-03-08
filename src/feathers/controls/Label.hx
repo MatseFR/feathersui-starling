@@ -405,13 +405,8 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 		{
 			return value;
 		}
-		//if (value != null && !Std.isOfType(value, PropertyProxyReal))
-		//{
-			//value = PropertyProxy.fromObject(value);
-		//}
 		if (this._textRendererProperties != null)
 		{
-			//this._textRendererProperties.removeOnChangeCallback(textRendererProperties_onChange);
 			this._textRendererProperties.dispose();
 		}
 		this._textRendererProperties = value;
@@ -1007,7 +1002,7 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 	private function refreshTextRendererData():Void
 	{
 		this.textRenderer.text = this._text;
-		this.textRenderer.visible = this._text != null && this._text.length > 0;
+		this.textRenderer.visible = this._text != null && this._text.length != 0;
 	}
 	
 	/**

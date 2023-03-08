@@ -581,23 +581,8 @@ class SimpleScrollBar extends FeathersControl implements IDirectionalScrollBar
 		{
 			return value;
 		}
-		//if (value == null)
-		//{
-			//value = new PropertyProxy();
-		//}
-		//if (!Std.isOfType(value, PropertyProxyReal))
-		//{
-			//var newValue:PropertyProxy = PropertyProxy.fromObject(value);
-			////var newValue:PropertyProxy = new PropertyProxy();
-			////for(var propertyName:String in value)
-			////{
-				////newValue[propertyName] = value[propertyName];
-			////}
-			//value = newValue;
-		//}
 		if (this._thumbProperties != null)
 		{
-			//this._thumbProperties.removeOnChangeCallback(thumbProperties_onChange);
 			this._thumbProperties.dispose();
 		}
 		this._thumbProperties = value;

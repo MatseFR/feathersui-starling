@@ -609,7 +609,8 @@ class DropDownPopUpContentManager extends EventDispatcher implements IPopUpConte
 			//someone else already handled this one
 			return;
 		}
-		if (event.keyCode != Keyboard.BACK && event.keyCode != Keyboard.ESCAPE)
+		// TODO : Keyboard.BACK only available on flash target
+		if (#if flash event.keyCode != Keyboard.BACK && #end event.keyCode != Keyboard.ESCAPE)
 		{
 			return;
 		}

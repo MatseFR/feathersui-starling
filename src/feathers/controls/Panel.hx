@@ -6,6 +6,7 @@ This program is free software. You can redistribute and/or modify it in
 accordance with the terms of the accompanying license agreement.
 */
 package feathers.controls;
+import feathers.utils.type.Property;
 import feathers.core.FeathersControl;
 import feathers.core.IFeathersControl;
 import feathers.core.IFocusExtras;
@@ -399,17 +400,8 @@ class Panel extends ScrollContainer implements IFocusExtras
 		{
 			return value;
 		}
-		//if (value == null)
-		//{
-			//value = new PropertyProxy();
-		//}
-		//if (!Std.isOfType(value, PropertyProxyReal))
-		//{
-			//value = PropertyProxy.fromObject(value);
-		//}
 		if (this._headerProperties != null)
 		{
-			//this._headerProperties.removeOnChangeCallback(childProperties_onChange);
 			this._headerProperties.dispose();
 		}
 		this._headerProperties = value;
@@ -531,17 +523,8 @@ class Panel extends ScrollContainer implements IFocusExtras
 		{
 			return value;
 		}
-		//if (value == null)
-		//{
-			//value = new PropertyProxy();
-		//}
-		//if (!Std.isOfType(value, PropertyProxyReal))
-		//{
-			//value = PropertyProxy.fromObject(value);
-		//}
 		if (this._footerProperties != null)
 		{
-			//this._footerProperties.removeOnChangeCallback(childProperties_onChange);
 			this._footerProperties.dispose();
 		}
 		this._footerProperties = value;
@@ -973,9 +956,7 @@ class Panel extends ScrollContainer implements IFocusExtras
 	 */
 	private function refreshHeaderStyles():Void
 	{
-		//var fields:Array<String> = Type.getInstanceFields(Type.getClass(this.header));
-		//var index:Int = fields.indexOf(this._headerTitleField);
-		if (Reflect.hasField(this.header, this._headerTitleField) || Reflect.hasField(this.header, "set_" + this._headerTitleField))
+		if (Property.existsWrite(this.header, this._headerTitleField))
 		{
 			Reflect.setProperty(this.header, this._headerTitleField, this._title);
 		}
@@ -985,7 +966,6 @@ class Panel extends ScrollContainer implements IFocusExtras
 			for (propertyName in this._headerProperties)
 			{
 				propertyValue = this._headerProperties[propertyName];
-				//this.header[propertyName] = propertyValue;
 				Reflect.setProperty(this.header, propertyName, propertyValue);
 			}
 		}

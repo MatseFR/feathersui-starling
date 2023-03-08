@@ -200,7 +200,7 @@ class StackScreenNavigator extends BaseScreenNavigator
 	public var stackCount(get, never):Int;
 	private function get_stackCount():Int
 	{
-		if (this._stack.length > 0)
+		if (this._stack.length != 0)
 		{
 			return this._stack.length + 1;
 		}
@@ -1075,7 +1075,7 @@ class StackScreenNavigator extends BaseScreenNavigator
 			signalListener = function(...rest:Array<Dynamic>):Void
 			{
 				var data:Dynamic = null;
-				if (rest.length > 0)
+				if (rest.length != 0)
 				{
 					data = rest[0];
 				}

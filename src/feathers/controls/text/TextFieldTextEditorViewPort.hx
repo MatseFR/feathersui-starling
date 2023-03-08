@@ -8,6 +8,7 @@ accordance with the terms of the accompanying license agreement.
 package feathers.controls.text;
 import feathers.core.FeathersControl;
 import feathers.skins.IStyleProvider;
+import feathers.utils.geom.GeomUtils;
 import feathers.utils.math.MathUtils;
 import openfl.errors.ArgumentError;
 import openfl.events.Event;
@@ -28,7 +29,7 @@ import starling.utils.Pool;
  *
  * @productversion Feathers 1.1.0
  */
-class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
+class TextFieldTextEditorViewPort extends TextFieldTextEditor implements ITextEditorViewPort
 {
 	/**
 	 * The default <code>IStyleProvider</code> for all <code>TextFieldTextEditorViewPort</code>
@@ -84,7 +85,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 		if (valueIsNaN &&
 			this._explicitMinVisibleWidth != this._explicitMinVisibleWidth) //isNaN
 		{
-			return;
+			return value;
 		}
 		var oldValue:Float = this._explicitMinVisibleWidth;
 		this._explicitMinVisibleWidth = value;
@@ -113,7 +114,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 	{
 		if (this._maxVisibleWidth == value)
 		{
-			return;
+			return value;
 		}
 		if (value != value) //isNaN
 		{
@@ -149,7 +150,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 		if (this._explicitVisibleWidth == value ||
 			(value != value && this._explicitVisibleWidth != this._explicitVisibleWidth)) //isNaN
 		{
-			return;
+			return value;
 		}
 		this._explicitVisibleWidth = value;
 		if (this._actualVisibleWidth != value)
@@ -165,7 +166,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 	private var _explicitMinVisibleHeight:Float;
 	
 	public var minVisibleHeight(get, set):Float;
-	private function get_minVisibleWidth():Float
+	private function get_minVisibleHeight():Float
 	{
 		if (this._explicitMinVisibleHeight != this._explicitMinVisibleHeight) //isNaN
 		{
@@ -178,20 +179,20 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 	{
 		if (this._explicitMinVisibleHeight == value)
 		{
-			return;
+			return value;
 		}
 		var valueIsNaN:Bool = value != value; //isNaN
 		if (valueIsNaN &&
 			this._explicitMinVisibleHeight != this._explicitMinVisibleHeight) //isNaN
 		{
-			return;
+			return value;
 		}
 		var oldValue:Float = this._explicitMinVisibleHeight;
 		this._explicitMinVisibleHeight = value;
 		if (valueIsNaN)
 		{
 			this._actualMinVisibleHeight = 0;
-			this.invalidate(INVALIDATION_FLAG_SIZE);
+			this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 		}
 		else
 		{
@@ -200,7 +201,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 				(this._actualVisibleHeight < value || this._actualVisibleHeight == oldValue))
 			{
 				//only invalidate if this change might affect the visibleHeight
-				this.invalidate(INVALIDATION_FLAG_SIZE);
+				this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 			}
 		}
 		return this._explicitMinVisibleHeight;
@@ -213,7 +214,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 	{
 		if (this._maxVisibleHeight == value)
 		{
-			return;
+			return value;
 		}
 		if (value != value) //isNaN
 		{
@@ -249,7 +250,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 		if (this._explicitVisibleHeight == value ||
 			(value != value && this._explicitVisibleHeight != this._explicitVisibleHeight)) //isNaN
 		{
-			return;
+			return value;
 		}
 		this._explicitVisibleHeight = value;
 		if (this._actualVisibleHeight != value)
@@ -276,6 +277,16 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 	
 	public var verticalScrollStep(get, never):Float;
 	private function get_verticalScrollStep():Float { return this._scrollStep; }
+	
+	public var horizontalScrollPosition(get, set):Float;
+	private var _horizontalScrollPosition:Float = 0;
+	private function get_horizontalScrollPosition():Float { return this._horizontalScrollPosition; }
+	private function set_horizontalScrollPosition(value:Float):Float
+	{
+		//this value is basically ignored because the text does not scroll
+		//horizontally. instead, it wraps.
+		return this._horizontalScrollPosition = value;
+	}
 	
 	public var verticalScrollPosition(get, set):Float;
 	private var _verticalScrollPosition:Float = 0;
@@ -337,7 +348,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 	{
 		if (this._paddingTop == value)
 		{
-			return;
+			return value;
 		}
 		this._paddingTop = value;
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
@@ -357,7 +368,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 	{
 		if (this._paddingRight == value)
 		{
-			return;
+			return value;
 		}
 		this._paddingRight = value;
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
@@ -377,7 +388,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 	{
 		if (this._paddingBottom == value)
 		{
-			return;
+			return value;
 		}
 		this._paddingBottom = value;
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
@@ -397,7 +408,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 	{
 		if (this._paddingLeft == value)
 		{
-			return;
+			return value;
 		}
 		this._paddingLeft = value;
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
@@ -552,11 +563,12 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 		var starling:Starling = this.stage != null ? this.stage.starling : Starling.current;
 		var scaleFactor:Float = starling.contentScaleFactor;
 		var clipWidth:Float = textFieldWidth * scaleFactor;
+		var matrix:Matrix = null;
 		if (this._updateSnapshotOnScaleChange)
 		{
-			var matrix:Matrix = Pool.getMatrix();
+			matrix = Pool.getMatrix();
 			this.getTransformationMatrix(this.stage, matrix);
-			clipWidth *= matrixToScaleX(matrix);
+			clipWidth *= GeomUtils.matrixToScaleX(matrix);
 		}
 		if (clipWidth < 0)
 		{
@@ -565,7 +577,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 		var clipHeight:Float = textFieldHeight * scaleFactor;
 		if (this._updateSnapshotOnScaleChange)
 		{
-			clipHeight *= matrixToScaleY(matrix);
+			clipHeight *= GeomUtils.matrixToScaleY(matrix);
 			Pool.putMatrix(matrix);
 		}
 		if (clipHeight < 0)
@@ -607,7 +619,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 		super.commitStylesAndData(textField);
 		if (textField == this.textField)
 		{
-			this._scrollStep = textField.getLineMetrics(0).height;
+			this._scrollStep = Std.int(textField.getLineMetrics(0).height);
 		}
 	}
 	
@@ -627,8 +639,8 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 		var point:Point = Pool.getPoint();
 		this.getTransformationMatrix(this.stage, matrix);
 		MatrixUtil.transformCoords(matrix, 0, 0, point);
-		var scaleX:Float = matrixToScaleX(matrix) * scaleFactor;
-		var scaleY:Float = matrixToScaleY(matrix) * scaleFactor;
+		var scaleX:Float = GeomUtils.matrixToScaleX(matrix) * scaleFactor;
+		var scaleY:Float = GeomUtils.matrixToScaleY(matrix) * scaleFactor;
 		var offsetX:Float = Math.fround(this._paddingLeft * scaleX);
 		var offsetY:Float = Math.fround((this._paddingTop + this._verticalScrollPosition) * scaleY);
 		var starlingViewPort:Rectangle = starling.viewPort;
@@ -639,7 +651,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 		}
 		this.textField.x = offsetX + Math.fround(starlingViewPort.x + (point.x * scaleFactor) - gutterPositionOffset * scaleX);
 		this.textField.y = offsetY + Math.fround(starlingViewPort.y + (point.y * scaleFactor) - gutterPositionOffset * scaleY);
-		this.textField.rotation = matrixToRotation(matrix) * 180 / Math.PI;
+		this.textField.rotation = GeomUtils.matrixToRotation(matrix) * 180 / Math.PI;
 		this.textField.scaleX = scaleX;
 		this.textField.scaleY = scaleY;
 		Pool.putPoint(point);
@@ -651,7 +663,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 	 */
 	override function positionSnapshot():Void
 	{
-		if (!this.textSnapshot)
+		if (this.textSnapshot == null)
 		{
 			return;
 		}
@@ -668,7 +680,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 	override function checkIfNewSnapshotIsNeeded():Void
 	{
 		super.checkIfNewSnapshotIsNeeded();
-		this._needsNewTexture = this._needsNewTexture || this.isInvalid(INVALIDATION_FLAG_SCROLL);
+		this._needsNewTexture = this._needsNewTexture || this.isInvalid(FeathersControl.INVALIDATION_FLAG_SCROLL);
 	}
 	
 	/**
@@ -678,7 +690,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 	{
 		this.textField.addEventListener(Event.SCROLL, textField_scrollHandler);
 		super.textField_focusInHandler(event);
-		this.invalidate(INVALIDATION_FLAG_SIZE);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 	}
 	
 	/**
@@ -688,7 +700,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 	{
 		this.textField.removeEventListener(Event.SCROLL, textField_scrollHandler);
 		super.textField_focusOutHandler(event);
-		this.invalidate(INVALIDATION_FLAG_SIZE);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 	}
 	
 	/**
@@ -704,7 +716,7 @@ class TextFieldTextEditorViewPort extends TextFieldTextEditor implements
 		{
 			return;
 		}
-		var scroller:Scroller = Scroller(this.parent);
+		var scroller:Scroller = cast this.parent;
 		if (scroller.maxVerticalScrollPosition > 0 && this.textField.maxScrollV > 1)
 		{
 			var calculatedVerticalScrollPosition:Float = scroller.maxVerticalScrollPosition * (scrollV - 1) / (this.textField.maxScrollV - 1);

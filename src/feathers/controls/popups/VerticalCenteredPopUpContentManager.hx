@@ -335,7 +335,8 @@ class VerticalCenteredPopUpContentManager extends EventDispatcher implements IPo
 			//someone else already handled this one
 			return;
 		}
-		if (event.keyCode != Keyboard.BACK && event.keyCode != Keyboard.ESCAPE)
+		// TODO : Keyboard.BACK only exists on flash target
+		if (#if flash event.keyCode != Keyboard.BACK && #end event.keyCode != Keyboard.ESCAPE)
 		{
 			return;
 		}

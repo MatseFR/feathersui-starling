@@ -742,17 +742,8 @@ class DefaultGroupedListHeaderOrFooterRenderer extends FeathersControl implement
 		{
 			return value;
 		}
-		//if (value == null)
-		//{
-			//value = new PropertyProxy();
-		//}
-		//if (!Std.isOfType(value, PropertyProxyReal))
-		//{
-			//value = PropertyProxy.fromObject(value);
-		//}
 		if (this._contentLabelProperties != null)
 		{
-			//this._contentLabelProperties.removeOnChangeCallback(contentLabelProperties_onChange);
 			this._contentLabelProperties.dispose();
 		}
 		this._contentLabelProperties = value;
@@ -1557,11 +1548,14 @@ class DefaultGroupedListHeaderOrFooterRenderer extends FeathersControl implement
 		this.contentLabel.fontStyles = this._fontStylesSet;
 		this.contentLabel.wordWrap = this._wordWrap;
 		
-		var propertyValue:Dynamic;
-		for (propertyName in this._contentLabelProperties)
+		if (this._contentLabelProperties != null)
 		{
-			propertyValue = this._contentLabelProperties[propertyName];
-			Reflect.setProperty(this.contentLabel, propertyName, propertyValue);
+			var propertyValue:Dynamic;
+			for (propertyName in this._contentLabelProperties)
+			{
+				propertyValue = this._contentLabelProperties[propertyName];
+				Reflect.setProperty(this.contentLabel, propertyName, propertyValue);
+			}
 		}
 	}
 	

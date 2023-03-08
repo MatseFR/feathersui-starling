@@ -540,7 +540,8 @@ class GroupedList extends Scroller implements IFocusContainer
 		this._helperLocation.resize(2);
 		this._helperLocation[0] = this._selectedGroupIndex;
 		this._helperLocation[1] = this._selectedItemIndex;
-		var result:Dynamic = this._dataProvider.getItemAt(this._selectedGroupIndex, this._selectedItemIndex);
+		//var result:Dynamic = this._dataProvider.getItemAt(this._selectedGroupIndex, this._selectedItemIndex);
+		var result:Dynamic = this._dataProvider.getItemAt(this._helperLocation);
 		this._helperLocation.resize(0);
 		return result;
 	}
@@ -827,17 +828,8 @@ class GroupedList extends Scroller implements IFocusContainer
 		{
 			return value;
 		}
-		//if (value == null)
-		//{
-			//value = new PropertyProxy();
-		//}
-		//if (!Std.isOfType(value, PropertyProxyReal))
-		//{
-			//value = PropertyProxy.fromObject(value);
-		//}
 		if (this._itemRendererProperties != null)
 		{
-			//this._itemRendererProperties.removeOnChangeCallback(childProperties_onChange);
 			this._itemRendererProperties.dispose();
 		}
 		this._itemRendererProperties = value;
@@ -1364,17 +1356,8 @@ class GroupedList extends Scroller implements IFocusContainer
 		{
 			return value;
 		}
-		//if (value == null)
-		//{
-			//value = new PropertyProxy();
-		//}
-		//if (!Std.isOfType(value, PropertyProxyReal))
-		//{
-			//value = PropertyProxy.fromObject(value);
-		//}
 		if (this._headerRendererProperties != null)
 		{
-			//this._headerRendererProperties.removeOnChangeCallback(childProperties_onChange);
 			this._headerRendererProperties.dispose();
 		}
 		this._headerRendererProperties = value;
@@ -1602,17 +1585,12 @@ class GroupedList extends Scroller implements IFocusContainer
 		{
 			return value;
 		}
-		//if (value == null)
-		//{
-			//value = new PropertyProxy();
-		//}
 		//if (!Std.isOfType(value, PropertyProxyReal))
 		//{
 			//value = PropertyProxy.fromObject(value);
 		//}
 		if (this._footerRendererProperties != null)
 		{
-			//this._footerRendererProperties.removeOnChangeCallback(childProperties_onChange);
 			this._footerRendererProperties.dispose();
 		}
 		this._footerRendererProperties = value;
@@ -2275,14 +2253,14 @@ class GroupedList extends Scroller implements IFocusContainer
 					this._helperLocation.resize(2);
 					this._helperLocation[0] = this._selectedGroupIndex;
 					this._helperLocation[1] = this._selectedItemIndex;
-					pendingData = this._dataProvider.getItemAt(this.pendingGroupIndex, this.pendingItemIndex);
+					pendingData = this._dataProvider.getItemAt(this._helperLocation);
 					this._helperLocation.resize(0);
 				}
 				else
 				{
 					this._helperLocation.resize(1);
 					this._helperLocation[0] = this._selectedGroupIndex;
-					pendingData = this._dataProvider.getItemAt(this.pendingGroupIndex);
+					pendingData = this._dataProvider.getItemAt(this._helperLocation);
 					this._helperLocation.resize(0);
 				}
 			}

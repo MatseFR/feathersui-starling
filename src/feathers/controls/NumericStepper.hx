@@ -678,13 +678,8 @@ class NumericStepper extends FeathersControl implements IRange implements IAdvan
 		{
 			return value;
 		}
-		//if (value != null && !Std.isOfType(value, PropertyProxyReal))
-		//{
-			//value = PropertyProxy.fromObject(value);
-		//}
 		if (this._decrementButtonProperties != null)
 		{
-			//this._decrementButtonProperties.removeOnChangeCallback(childProperties_onChange);
 			this._decrementButtonProperties.dispose();
 		}
 		this._decrementButtonProperties = value;
@@ -824,13 +819,8 @@ class NumericStepper extends FeathersControl implements IRange implements IAdvan
 		{
 			return value;
 		}
-		//if (value != null && !Std.isOfType(value, PropertyProxyReal))
-		//{
-			//value = PropertyProxy.fromObject(value);
-		//}
 		if (this._incrementButtonProperties != null)
 		{
-			//this._incrementButtonProperties.removeOnChangeCallback(childProperties_onChange);
 			this._incrementButtonProperties.dispose();
 		}
 		this._incrementButtonProperties = value;

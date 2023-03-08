@@ -571,13 +571,8 @@ class Alert extends Panel
 		{
 			return value;
 		}
-		//if (value != null && !Std.isOfType(value, PropertyProxyReal))
-		//{
-			//value = PropertyProxy.fromObject(value);
-		//}
 		if (this._messageProperties != null)
 		{
-			//this._messageProperties.removeOnChangeCallback(childProperties_onChange);
 			this._messageProperties.dispose();
 		}
 		this._messageProperties = value;

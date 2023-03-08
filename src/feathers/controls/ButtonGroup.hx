@@ -890,17 +890,8 @@ class ButtonGroup extends FeathersControl implements ITextBaselineControl
 		{
 			return value;
 		}
-		//if (value == null)
-		//{
-			//value = new PropertyProxy();
-		//}
-		//if (!Std.isOfType(value, PropertyProxyReal))
-		//{
-			//value = PropertyProxy.fromObject(value);
-		//}
 		if (this._buttonProperties != null)
 		{
-			//this._buttonProperties.removeOnChangeCallback(childProperties_onChange);
 			this._buttonProperties.dispose();
 		}
 		this._buttonProperties = value;

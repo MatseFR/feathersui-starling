@@ -614,23 +614,8 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		{
 			return value;
 		}
-		//if (value == null)
-		//{
-			//value = new PropertyProxy();
-		//}
-		//if (!Std.isOfType(value, PropertyProxyReal))
-		//{
-			//var newValue:PropertyProxy = PropertyProxy.fromObject(value);
-			////var newValue:PropertyProxy = new PropertyProxy();
-			////for(var propertyName:String in value)
-			////{
-				////newValue[propertyName] = value[propertyName];
-			////}
-			//value = newValue;
-		//}
 		if (this._horizontalScrollBarProperties != null)
 		{
-			//this._horizontalScrollBarProperties.removeOnChangeCallback(childProperties_onChange);
 			this._horizontalScrollBarProperties.dispose();
 		}
 		this._horizontalScrollBarProperties = value;
@@ -793,23 +778,8 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 		{
 			return value;
 		}
-		//if (value == null)
-		//{
-			//value = new PropertyProxy();
-		//}
-		//if (!Std.isOfType(value, PropertyProxyReal))
-		//{
-			//var newValue:PropertyProxy = PropertyProxy.fromObject(value);
-			////var newValue:PropertyProxy = new PropertyProxy();
-			////for(var propertyName:String in value)
-			////{
-				////newValue[propertyName] = value[propertyName];
-			////}
-			//value = newValue;
-		//}
 		if (this._verticalScrollBarProperties != null)
 		{
-			//this._verticalScrollBarProperties.removeOnChangeCallback(childProperties_onChange);
 			this._verticalScrollBarProperties.dispose();
 		}
 		this._verticalScrollBarProperties = value;

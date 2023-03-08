@@ -359,7 +359,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 	{
 		if (this._sharpness == value)
 		{
-			return;
+			return value;
 		}
 		this._sharpness = value;
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_DATA);
@@ -623,8 +623,8 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 		return this._verticalScrollPosition;
 	}
 	
-	public var requiresMeasurementOnScroll(get, never):Bool
-	private function get_requiresMeasurementOnScroll():Float { return false; }
+	public var requiresMeasurementOnScroll(get, never):Bool;
+	private function get_requiresMeasurementOnScroll():Bool { return false; }
 	
 	public var paddingTop(get, set):Float;
 	private var _paddingTop:Float = 0;
@@ -745,7 +745,10 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 			this._textField.displayAsPassword = this._displayAsPassword;
 			this._textField.gridFitType = this._gridFitType;
 			this._textField.sharpness = this._sharpness;
+			// TODO : openfl.text.TextField.thickness only exists on flash target
+			#if flash
 			this._textField.thickness = this._thickness;
+			#end
 			this._textField.cacheAsBitmap = this._cacheAsBitmap;
 			this._textField.x = this._paddingLeft;
 			this._textField.y = this._paddingTop;
@@ -835,7 +838,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 		if (sizeInvalid || scrollInvalid)
 		{
 			var scrollRect:Rectangle = this._textFieldContainer.scrollRect;
-			if (!scrollRect)
+			if (scrollRect == null)
 			{
 				scrollRect = new Rectangle();
 			}
@@ -868,7 +871,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 		if (this.isInvalid(FeathersControl.INVALIDATION_FLAG_STYLES) ||
 			this.isInvalid(FeathersControl.INVALIDATION_FLAG_STATE))
 		{
-			var fontStylesFormat:starling.text.TextFormat;
+			var fontStylesFormat:starling.text.TextFormat = null;
 			if (this._fontStyles != null)
 			{
 				fontStylesFormat = this._fontStyles.getTextFormatForTarget(this);

@@ -2042,10 +2042,10 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 			resultRect = new Rectangle();
 		}
 		
-		var minX:Float = MathUtils.FLOAT_MIN;
-		var maxX:Float = MathUtils.FLOAT_MAX;
-		var minY:Float = MathUtils.FLOAT_MIN;
-		var maxY:Float = MathUtils.FLOAT_MAX;
+		var minX:Float = MathUtils.FLOAT_MAX;
+		var maxX:Float = MathUtils.FLOAT_MIN;
+		var minY:Float = MathUtils.FLOAT_MAX;
+		var maxY:Float = MathUtils.FLOAT_MIN;
 		
 		if (targetSpace == this) //optimization
 		{
