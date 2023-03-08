@@ -443,7 +443,7 @@ class VerticalLayout extends BaseLinearLayout implements IVariableVirtualLayout 
 			
 			if (this._useVirtualLayout && this._hasVariableItemDimensions)
 			{
-				cachedHeight = this._virtualCache[iNormalized];
+				cachedHeight = iNormalized < this._virtualCache.length ? this._virtualCache[iNormalized] : Math.NaN;
 			}
 			if (this._useVirtualLayout && item == null)
 			{
@@ -841,9 +841,11 @@ class VerticalLayout extends BaseLinearLayout implements IVariableVirtualLayout 
 			}
 			else
 			{
+				var cachedHeight:Float;
 				for (i in 0...itemCount)
 				{
-					var cachedHeight:Float = this._virtualCache[i];
+					cachedHeight = i < this._virtualCache.length ? this._virtualCache[i] : Math.NaN;
+					
 					if (cachedHeight != cachedHeight) //isNaN
 					{
 						positionY += calculatedTypicalItemHeight + this._gap;
@@ -1067,7 +1069,9 @@ class VerticalLayout extends BaseLinearLayout implements IVariableVirtualLayout 
 			{
 				gap = this._lastGap;
 			}
-			cachedHeight = this._virtualCache[i];
+			
+			cachedHeight = i < this._virtualCache.length ? this._virtualCache[i] : Math.NaN;
+			
 			if (cachedHeight != cachedHeight) //isNaN
 			{
 				itemHeight = calculatedTypicalItemHeight;
@@ -1184,7 +1188,8 @@ class VerticalLayout extends BaseLinearLayout implements IVariableVirtualLayout 
 		{
 			if (this._hasVariableItemDimensions)
 			{
-				itemHeight = this._virtualCache[index];
+				itemHeight = index < this._virtualCache.length ? this._virtualCache[index] : Math.NaN;
+				
 				if (itemHeight != itemHeight) //isNaN
 				{
 					itemHeight = this._typicalItem.height;
@@ -1280,7 +1285,7 @@ class VerticalLayout extends BaseLinearLayout implements IVariableVirtualLayout 
 				iNormalized = i + indexOffset;
 				if (this._useVirtualLayout && this._hasVariableItemDimensions)
 				{
-					cachedHeight = this._virtualCache[i];
+					cachedHeight = i < this._virtualCache.length ? this._virtualCache[i] : Math.NaN;
 				}
 				if (iNormalized < 0 || iNormalized >= itemArrayCount)
 				{
@@ -1333,7 +1338,7 @@ class VerticalLayout extends BaseLinearLayout implements IVariableVirtualLayout 
 				iNormalized = i + indexOffset;
 				if (this._useVirtualLayout && this._hasVariableItemDimensions)
 				{
-					cachedHeight = this._virtualCache[i];
+					cachedHeight = i < this._virtualCache.length ? this._virtualCache[i] : Math.NaN;
 				}
 				if (iNormalized < 0 || iNormalized >= itemArrayCount)
 				{
@@ -1429,7 +1434,7 @@ class VerticalLayout extends BaseLinearLayout implements IVariableVirtualLayout 
 		{
 			if (this._hasVariableItemDimensions)
 			{
-				itemHeight = this._virtualCache[index];
+				itemHeight = index < this._virtualCache.length ? this._virtualCache[index] : Math.NaN;
 				if (itemHeight != itemHeight) //isNaN
 				{
 					itemHeight = this._typicalItem.height;
@@ -1571,7 +1576,7 @@ class VerticalLayout extends BaseLinearLayout implements IVariableVirtualLayout 
 			}
 			if (this._useVirtualLayout && this._hasVariableItemDimensions)
 			{
-				cachedHeight = this._virtualCache[i];
+				cachedHeight = i < this._virtualCache.length ? this._virtualCache[i] : Math.NaN;
 			}
 			if (this._useVirtualLayout && item == null)
 			{
@@ -2095,7 +2100,7 @@ class VerticalLayout extends BaseLinearLayout implements IVariableVirtualLayout 
 			}
 			if (this._useVirtualLayout && this._hasVariableItemDimensions)
 			{
-				cachedHeight = this._virtualCache[iNormalized];
+				cachedHeight = iNormalized < this._virtualCache.length ? this._virtualCache[iNormalized] : Math.NaN;
 			}
 			if (this._useVirtualLayout && item == null)
 			{
