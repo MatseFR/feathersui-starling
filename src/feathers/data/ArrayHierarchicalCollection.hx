@@ -7,12 +7,10 @@ accordance with the terms of the accompanying license agreement.
 */
 package feathers.data;
 import feathers.events.CollectionEventType;
-import feathers.utils.type.FunctionApply;
 import haxe.Constraints.Function;
 import openfl.errors.RangeError;
 import starling.events.Event;
 import starling.events.EventDispatcher;
-import starling.utils.Execute;
 
 /**
  * Wraps an <code>Array</code> data source with a common API for use with
@@ -85,22 +83,22 @@ class ArrayHierarchicalCollection extends EventDispatcher implements IHierarchic
 	 *
 	 * @throws RangeError Branch not found at specified location
 	 */
-	public function getLength(...rest:Int):Int
-	{
-		var branch:Array<Dynamic> = this._arrayData;
-		var indexCount:Int = rest.length;
-		var index:Int;
-		for (i in 0...indexCount)
-		{
-			index = rest[i];
-			branch = cast Reflect.getProperty(branch[index], this._childrenField);
-			if (branch == null)
-			{
-				throw new RangeError("Branch not found at location: " + rest);
-			}
-		}
-		return branch.length;
-	}
+	//public function getLength(indices:Array<Int>):Int
+	//{
+		//var branch:Array<Dynamic> = this._arrayData;
+		//var indexCount:Int = indices.length;
+		//var index:Int;
+		//for (i in 0...indexCount)
+		//{
+			//index = indices[i];
+			//branch = cast Reflect.getProperty(branch[index], this._childrenField);
+			//if (branch == null)
+			//{
+				//throw new RangeError("Branch not found at location: " + rest);
+			//}
+		//}
+		//return branch.length;
+	//}
 	
 	/**
 	 * @copy feathers.data.IHierarchicalCollection#getLengthAtLocation()
@@ -132,12 +130,9 @@ class ArrayHierarchicalCollection extends EventDispatcher implements IHierarchic
 	 *
 	 * @see #updateAll()
 	 */
-	public function updateItemAt(index:Int, ...rest:Int):Void
+	public function updateItemAt(indices:Array<Int>):Void
 	{
-		//rest.insert(0, index);
-		var indices:Array<Int> = rest;
-		indices.insert(0, index);
-		this.dispatchEventWith(CollectionEventType.UPDATE_ITEM, false, rest);
+		this.dispatchEventWith(CollectionEventType.UPDATE_ITEM, false, indices);
 	}
 	
 	/**
@@ -155,23 +150,21 @@ class ArrayHierarchicalCollection extends EventDispatcher implements IHierarchic
 	 *
 	 * @see #getItemAtLocation()
 	 */
-	public function getItemAt(index:Int, ...rest:Int):Dynamic
+	public function getItemAt(indices:Array<Int>):Dynamic
 	{
-		//rest.insert(0, index);
-		var indices:Array<Int> = rest;
-		indices.insert(0, index);
 		var branch:Array<Dynamic> = this._arrayData;
-		var indexCount:Int = rest.length - 1;
+		var indexCount:Int = indices.length - 1;
+		var index:Int;
 		for (i in 0...indexCount)
 		{
-			index = rest[i];
+			index = indices[i];
 			branch = cast Reflect.getProperty(branch[index], this._childrenField);
 			if (branch == null)
 			{
 				return null;
 			}
 		}
-		var lastIndex:Int = rest[indexCount];
+		var lastIndex:Int = indices[indexCount];
 		return branch[lastIndex];
 	}
 	
@@ -224,26 +217,24 @@ class ArrayHierarchicalCollection extends EventDispatcher implements IHierarchic
 	 *
 	 * @throws RangeError Branch not found at specified location
 	 */
-	public function addItemAt(item:Dynamic, index:Int, ...rest:Int):Void
+	public function addItemAt(item:Dynamic, indices:Array<Int>):Void
 	{
-		//rest.insert(0, index);
-		var indices:Array<Int> = rest;
-		indices.insert(0, index);
 		var branch:Array<Dynamic> = this._arrayData;
-		var indexCount:Int = rest.length - 1;
+		var indexCount:Int = indices.length - 1;
+		var index:Int;
 		for (i in 0...indexCount)
 		{
-			index = rest[i];
+			index = indices[i];
 			branch = cast Reflect.getProperty(branch[index], this._childrenField);
 			if (branch == null)
 			{
-				throw new RangeError("Branch not found at location: " + rest);
+				throw new RangeError("Branch not found at location: " + indices);
 			}
 		}
-		index = rest[indexCount];
+		index = indices[indexCount];
 		branch.insert(index, item);
 		this.dispatchEventWith(Event.CHANGE);
-		this.dispatchEventWith(CollectionEventType.ADD_ITEM, false, rest);
+		this.dispatchEventWith(CollectionEventType.ADD_ITEM, false, indices);
 	}
 	
 	/**
@@ -285,26 +276,24 @@ class ArrayHierarchicalCollection extends EventDispatcher implements IHierarchic
 	 *
 	 * @throws RangeError Branch not found at specified location
 	 */
-	public function removeItemAt(index:Int, ...rest:Int):Dynamic
+	public function removeItemAt(indices:Array<Int>):Dynamic
 	{
-		//rest.insert(0, index);
-		var indices:Array<Int> = rest;
-		indices.insert(0, index);
 		var branch:Array<Dynamic> = this._arrayData;
-		var indexCount:Int = rest.length - 1;
+		var indexCount:Int = indices.length - 1;
+		var index:Int;
 		for (i in 0...indexCount)
 		{
-			index = rest[i];
+			index = indices[i];
 			branch = cast Reflect.getProperty(branch[index], this._childrenField);
 			if (branch == null)
 			{
-				throw new RangeError("Branch not found at location: " + rest);
+				throw new RangeError("Branch not found at location: " + indices);
 			}
 		}
-		index = rest[indexCount];
+		index = indices[indexCount];
 		var item:Dynamic = branch.splice(index, 1)[0];
 		this.dispatchEventWith(Event.CHANGE);
-		this.dispatchEventWith(CollectionEventType.REMOVE_ITEM, false, rest);
+		this.dispatchEventWith(CollectionEventType.REMOVE_ITEM, false, indices);
 		return item;
 	}
 	
@@ -358,7 +347,8 @@ class ArrayHierarchicalCollection extends EventDispatcher implements IHierarchic
 	 */
 	public function removeAll():Void
 	{
-		if (this.getLength() == 0)
+		//if (this.getLength() == 0)
+		if (this._arrayData.length == 0)
 		{
 			return;
 		}
@@ -374,25 +364,23 @@ class ArrayHierarchicalCollection extends EventDispatcher implements IHierarchic
 	 *
 	 * @throws RangeError Branch not found at specified location
 	 */
-	public function setItemAt(item:Dynamic, index:Int, ...rest:Int):Void
+	public function setItemAt(item:Dynamic, indices:Array<Int>):Void
 	{
-		//rest.insert(0, index);
-		var indices:Array<Int> = rest;
-		indices.insert(0, index);
 		var branch:Array<Dynamic> = this._arrayData;
-		var indexCount:Int = rest.length - 1;
+		var indexCount:Int = indices.length - 1;
+		var index:Int;
 		for (i in 0...indexCount)
 		{
-			index = rest[i];
+			index = indices[i];
 			branch = cast Reflect.getProperty(branch[index], this._childrenField);
 			if (branch == null)
 			{
-				throw new RangeError("Branch not found at location: " + rest);
+				throw new RangeError("Branch not found at location: " + indices);
 			}
 		}
-		index = rest[indexCount];
+		index = indices[indexCount];
 		branch[index] = item;
-		this.dispatchEventWith(CollectionEventType.REPLACE_ITEM, false, rest);
+		this.dispatchEventWith(CollectionEventType.REPLACE_ITEM, false, indices);
 		this.dispatchEventWith(Event.CHANGE);
 	}
 	
@@ -415,7 +403,7 @@ class ArrayHierarchicalCollection extends EventDispatcher implements IHierarchic
 		{
 			index = location[i];
 			branch = cast Reflect.getProperty(branch[index], this._childrenField);
-			if(branch == null)
+			if (branch == null)
 			{
 				throw new RangeError("Branch not found at location: " + location);
 			}
@@ -458,12 +446,12 @@ class ArrayHierarchicalCollection extends EventDispatcher implements IHierarchic
 			disposeBranch(group);
 		}
 		
-		var itemCount:Int = FunctionApply.apply(getLength, path);//this.getLength.apply(this, path);
+		var itemCount:Int = getLengthAtLocation(path);//FunctionApply.apply(getLength, path);//this.getLength.apply(this, path);
 		var item:Dynamic;
 		for (i in 0...itemCount)
 		{
 			path[path.length] = i;
-			item = FunctionApply.apply(this.getItemAt, path);//this.getItemAt.apply(this, path);
+			item = getItemAt(path);//FunctionApply.apply(this.getItemAt, path);//this.getItemAt.apply(this, path);
 			if (this.isBranch(item))
 			{
 				this.disposeGroupInternal(item, path, disposeBranch, disposeItem);
