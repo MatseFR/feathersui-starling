@@ -8,16 +8,11 @@ import feathers.data.ArrayCollection;
 import feathers.events.FeathersEventType;
 import feathers.layout.AnchorLayout;
 import feathers.layout.AnchorLayoutData;
-import feathers.layout.VerticalLayout;
 import feathers.system.DeviceCapabilities;
 import openfl.system.Capabilities;
 import starling.core.Starling;
 import starling.events.Event;
 
-/**
- * ...
- * @author Matse
- */
 class MainMenuScreen extends PanelScreen 
 {
 
@@ -56,24 +51,24 @@ class MainMenuScreen extends PanelScreen
 			{ label: "Check", screen: ScreenID.CHECK },
 			//{ label: "Data Grid", screen: ScreenID.DATA_GRID },
 			//{ label: "Date Time Spinner", screen: ScreenID.DATE_TIME_SPINNER },
-			//{ label: "Grouped List", screen: ScreenID.GROUPED_LIST },
+			{ label: "Grouped List", screen: ScreenID.GROUPED_LIST },
 			{ label: "Item Renderer", screen: ScreenID.ITEM_RENDERER },
 			{ label: "Label", screen: ScreenID.LABEL },
 			{ label: "List", screen: ScreenID.LIST },
 			{ label: "Numeric Stepper", screen: ScreenID.NUMERIC_STEPPER },
 			{ label: "Page Indicator", screen: ScreenID.PAGE_INDICATOR },
 			{ label: "Panel", screen: ScreenID.PANEL },
-			//{ label: "Picker List", screen: ScreenID.PICKER_LIST },
+			{ label: "Picker List", screen: ScreenID.PICKER_LIST },
 			{ label: "Progress Bar", screen: ScreenID.PROGRESS_BAR },
 			{ label: "Radio", screen: ScreenID.RADIO },
-			//{ label: "Scroll Text", screen: ScreenID.SCROLL_TEXT },
+			{ label: "Scroll Text", screen: ScreenID.SCROLL_TEXT },
 			{ label: "Slider", screen: ScreenID.SLIDER},
-			//{ label: "Spinner List", screen: ScreenID.SPINNER_LIST },
-			//{ label: "Tab Bar", screen: ScreenID.TAB_BAR },
-			//{ label: "Text Callout", screen: ScreenID.TEXT_CALLOUT },
-			//{ label: "Text Input and Text Area", screen: ScreenID.TEXT_INPUT },
-			//{ label: "Toast", screen: ScreenID.TOAST },
-			//{ label: "Toggle Switch", screen: ScreenID.TOGGLES },
+			{ label: "Spinner List", screen: ScreenID.SPINNER_LIST },
+			{ label: "Tab Bar", screen: ScreenID.TAB_BAR },
+			{ label: "Text Callout", screen: ScreenID.TEXT_CALLOUT },
+			{ label: "Text Input and Text Area", screen: ScreenID.TEXT_INPUT },
+			{ label: "Toast", screen: ScreenID.TOAST },
+			{ label: "Toggle Switch", screen: ScreenID.TOGGLES },
 			//{ label: "Tree", screen: ScreenID.TREE },
 		]);
 		//if (Capabilities.playerType == "Desktop") //this means AIR, even for mobile

@@ -11,10 +11,6 @@ import feathers.system.DeviceCapabilities;
 import starling.core.Starling;
 import starling.events.Event;
 
-/**
- * ...
- * @author Matse
- */
 class ButtonGroupScreen extends PanelScreen 
 {
 

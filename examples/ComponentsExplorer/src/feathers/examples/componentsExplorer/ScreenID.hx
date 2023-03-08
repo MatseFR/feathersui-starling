@@ -1,12 +1,7 @@
 package feathers.examples.componentsExplorer;
 
-/**
- * ...
- * @author Matse
- */
 class ScreenID 
 {
-
 	public static inline var MAIN_MENU:String = "mainMenu";
 	public static inline var ALERT:String = "alert";
 	public static inline var AUTO_COMPLETE:String = "autoComplete";
@@ -43,5 +38,4 @@ class ScreenID
 	public static inline var TOGGLES:String = "toggles";
 	public static inline var TREE:String = "tree";
 	public static inline var WEB_VIEW:String = "webView";
-	
 }

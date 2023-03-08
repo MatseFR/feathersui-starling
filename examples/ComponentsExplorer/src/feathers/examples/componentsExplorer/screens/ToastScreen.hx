@@ -1,9 +1,10 @@
 package feathers.examples.componentsExplorer.screens;
 
-import feathers.controls.Alert;
 import feathers.controls.Button;
+import feathers.controls.ButtonGroup;
 import feathers.controls.Header;
 import feathers.controls.PanelScreen;
+import feathers.controls.Toast;
 import feathers.data.ArrayCollection;
 import feathers.layout.AnchorLayout;
 import feathers.layout.AnchorLayoutData;
@@ -11,33 +12,35 @@ import feathers.system.DeviceCapabilities;
 import starling.core.Starling;
 import starling.events.Event;
 
-class AlertScreen extends PanelScreen 
+class ToastScreen extends PanelScreen 
 {
-
 	public function new() 
 	{
 		super();
 	}
 	
-	private var _showAlertButton:Button;
-	
-	override function initialize():Void 
+	private var _showToastButtons:ButtonGroup;
+
+	override function initialize():Void
 	{
 		//never forget to call super.initialize()
 		super.initialize();
 		
-		this.title = "Alert";
+		this.title = "Toast";
 		
 		this.layout = new AnchorLayout();
 		
-		this._showAlertButton = new Button();
-		this._showAlertButton.label = "Show Alert";
-		this._showAlertButton.addEventListener(Event.TRIGGERED, showAlertButton_triggeredHandler);
-		var buttonLayoutData:AnchorLayoutData = new AnchorLayoutData();
-		buttonLayoutData.horizontalCenter = 0;
-		buttonLayoutData.verticalCenter = 0;
-		this._showAlertButton.layoutData = buttonLayoutData;
-		this.addChild(this._showAlertButton);
+		this._showToastButtons = new ButtonGroup();
+		this._showToastButtons.dataProvider = new ArrayCollection(
+		[
+			{ label: "Show Toast with Message", triggered: showMessageButton_triggeredHandler },
+			{ label: "Show Toast with Actions", triggered: showActionsButton_triggeredHandler },
+		]);
+		var buttonGroupLayoutData:AnchorLayoutData = new AnchorLayoutData();
+		buttonGroupLayoutData.horizontalCenter = 0;
+		buttonGroupLayoutData.verticalCenter = 0;
+		this._showToastButtons.layoutData = buttonGroupLayoutData;
+		this.addChild(this._showToastButtons);
 		
 		this.headerFactory = this.customHeaderFactory;
 		
@@ -78,23 +81,22 @@ class AlertScreen extends PanelScreen
 		this.onBackButton();
 	}
 	
-	private function showAlertButton_triggeredHandler(event:Event):Void
+	private function showMessageButton_triggeredHandler(event:Event):Void
 	{
-		var alert:Alert = Alert.show("I just wanted you to know that I have a very important message to share with you.", "Alert", new ArrayCollection(
-		[
-			{ label: "OK" },
-			{ label: "Cancel" }
-		]));
-		//when the enter key is pressed, treat it as OK
-		alert.acceptButtonIndex = 0;
-		//when the back or escape key is pressed, treat it as cancel
-		alert.cancelButtonIndex = 1;
-		alert.addEventListener(Event.CLOSE, alert_closeHandler);
+		Toast.showMessage("Hi, there!");
 	}
 
+	private function showActionsButton_triggeredHandler(event:Event):Void
+	{
+		Toast.showMessageWithActions("I have an action", new ArrayCollection(
+		[
+			{ label: "Neat!" }
+		]));
+	}
+	
 	private function alert_closeHandler(event:Event, data:Dynamic):Void
 	{
-		if (data)
+		if (data != null)
 		{
 			trace("alert closed with item:", data.label);
 		}

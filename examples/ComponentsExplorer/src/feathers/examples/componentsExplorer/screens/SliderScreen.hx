@@ -13,7 +13,6 @@ import feathers.system.DeviceCapabilities;
 import starling.core.Starling;
 import starling.events.Event;
 
-
 class SliderScreen extends PanelScreen 
 {
 	public static inline var SHOW_SETTINGS:String = "showSettings";
@@ -21,7 +20,6 @@ class SliderScreen extends PanelScreen
 	public function new() 
 	{
 		super();
-		
 	}
 	
 	public var settings:SliderSettings;

@@ -1,5 +1,6 @@
 package feathers.examples.componentsExplorer.screens;
 
+import feathers.Debug;
 import feathers.controls.Button;
 import feathers.controls.GroupedList;
 import feathers.controls.Header;
@@ -15,10 +16,6 @@ import feathers.system.DeviceCapabilities;
 import starling.core.Starling;
 import starling.events.Event;
 
-/**
- * ...
- * @author Matse
- */
 class GroupedListScreen extends PanelScreen 
 {
 	public static inline var SHOW_SETTINGS:String = "showSettings";
@@ -40,6 +37,8 @@ class GroupedListScreen extends PanelScreen
 		this.title = "Grouped List";
 		
 		this.layout = new AnchorLayout();
+		
+		Debug.ready = true;
 		
 		var groups:Array<Dynamic> =
 		[
@@ -104,11 +103,13 @@ class GroupedListScreen extends PanelScreen
 		];
 		
 		this._list = new GroupedList();
-		if(this.settings.style == GroupedListSettings.STYLE_INSET)
+		if (this.settings.style == GroupedListSettings.STYLE_INSET)
 		{
 			this._list.styleNameList.add(GroupedList.ALTERNATE_STYLE_NAME_INSET_GROUPED_LIST);
 		}
 		this._list.dataProvider = new ArrayHierarchicalCollection(groups);
+		//var collection:ArrayHierarchicalCollection = new ArrayHierarchicalCollection();
+		//this._list.dataProvider = collection;
 		this._list.typicalItem = { text: "Item 1000" };
 		this._list.isSelectable = this.settings.isSelectable;
 		this._list.hasElasticEdges = this.settings.hasElasticEdges;

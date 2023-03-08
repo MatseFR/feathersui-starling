@@ -115,7 +115,7 @@ class ItemRendererSettingsScreen extends PanelScreen
 		
 		this._accessoryTypePicker = new PickerList();
 		this._accessoryTypePicker.typicalItem = ItemRendererSettings.ICON_ACCESSORY_TYPE_DISPLAY_OBJECT;
-		this._accessoryTypePicker.dataProvider = new VectorCollection(new <String>
+		this._accessoryTypePicker.dataProvider = new ArrayCollection(
 		[
 			ItemRendererSettings.ICON_ACCESSORY_TYPE_DISPLAY_OBJECT,
 			ItemRendererSettings.ICON_ACCESSORY_TYPE_TEXTURE,
@@ -255,7 +255,7 @@ class ItemRendererSettingsScreen extends PanelScreen
 
 	private function hasIconToggle_changeHandler(event:Event):Void
 	{
-		this.settings.hasIcon = this._hasIconToggle.isSelected
+		this.settings.hasIcon = this._hasIconToggle.isSelected;
 	}
 
 	private function iconTypePicker_changeHandler(event:Event):Void
@@ -275,7 +275,7 @@ class ItemRendererSettingsScreen extends PanelScreen
 
 	private function hasAccessoryToggle_changeHandler(event:Event):Void
 	{
-		this.settings.hasAccessory = this._hasAccessoryToggle.isSelected
+		this.settings.hasAccessory = this._hasAccessoryToggle.isSelected;
 	}
 
 	private function accessoryTypePicker_changeHandler(event:Event):Void

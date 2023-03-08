@@ -8,10 +8,6 @@ import openfl.system.Capabilities;
 import starling.core.Starling;
 import starling.events.Event;
 
-/**
- * ...
- * @author Matse
- */
 class ComponentsExplorer extends Sprite 
 {
 	private var _starling:Starling;

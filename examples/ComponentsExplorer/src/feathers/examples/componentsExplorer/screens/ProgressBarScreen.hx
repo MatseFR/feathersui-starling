@@ -14,10 +14,6 @@ import starling.animation.Tween;
 import starling.core.Starling;
 import starling.events.Event;
 
-/**
- * ...
- * @author Matse
- */
 class ProgressBarScreen extends PanelScreen 
 {
 

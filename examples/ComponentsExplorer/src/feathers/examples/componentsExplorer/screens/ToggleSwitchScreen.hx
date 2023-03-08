@@ -1,63 +1,60 @@
 package feathers.examples.componentsExplorer.screens;
 
 import feathers.controls.Button;
-import feathers.controls.Check;
 import feathers.controls.Header;
 import feathers.controls.PanelScreen;
-import feathers.controls.ScrollPolicy;
+import feathers.controls.ToggleSwitch;
 import feathers.layout.HorizontalAlign;
+import feathers.layout.TiledRowsLayout;
 import feathers.layout.VerticalAlign;
-import feathers.layout.VerticalLayout;
 import feathers.system.DeviceCapabilities;
 import starling.core.Starling;
 import starling.events.Event;
 
-class CheckScreen extends PanelScreen 
+class ToggleSwitchScreen extends PanelScreen 
 {
-
 	public function new() 
 	{
 		super();
 	}
 	
-	private var _check:Check;
-	private var _checked:Check;
-	private var _disabled:Check;
-	private var _selectedDisabled:Check;
+	private var _toggle:ToggleSwitch;
+	private var _selected:ToggleSwitch;
+	private var _disabled:ToggleSwitch;
+	private var _selectedDisabled:ToggleSwitch;
 	
-	override function initialize():Void 
+	override function initialize():Void
 	{
 		//never forget to call super.initialize()
 		super.initialize();
 		
-		this.title = "Check";
+		this.title = "Toggle Switch";
 		
-		var verticalLayout:VerticalLayout = new VerticalLayout();
-		verticalLayout.horizontalAlign = HorizontalAlign.LEFT;
-		verticalLayout.verticalAlign = VerticalAlign.TOP;
-		verticalLayout.padding = 12;
-		verticalLayout.gap = 8;
-		this.layout = verticalLayout;
+		var layout:TiledRowsLayout = new TiledRowsLayout();
+		layout.requestedColumnCount = 2;
+		layout.useSquareTiles = false;
+		layout.horizontalAlign = HorizontalAlign.CENTER;
+		layout.verticalAlign = VerticalAlign.TOP;
+		layout.tileHorizontalAlign = HorizontalAlign.CENTER;
+		layout.tileVerticalAlign = VerticalAlign.TOP;
+		layout.padding = 12;
+		layout.horizontalGap = 12;
+		layout.verticalGap = 44;
+		this.layout = layout;
 		
-		this.verticalScrollPolicy = ScrollPolicy.ON;
+		this._toggle = new ToggleSwitch();
+		this._toggle.addEventListener(Event.CHANGE, toggleSwitch_changeHandler);
+		this.addChild(this._toggle);
 		
-		this._check = new Check();
-		this._check.label = "Default";
-		this._check.addEventListener(Event.CHANGE, check_changeHandler);
-		this.addChild(this._check);
+		this._selected = new ToggleSwitch();
+		this._selected.isSelected = true;
+		this.addChild(this._selected);
 		
-		this._checked = new Check();
-		this._checked.label = "Selected";
-		this._checked.isSelected = true;
-		this.addChild(this._checked);
-		
-		this._disabled = new Check();
-		this._disabled.label = "Disabled";
+		this._disabled = new ToggleSwitch();
 		this._disabled.isEnabled = false;
 		this.addChild(this._disabled);
 		
-		this._selectedDisabled = new Check();
-		this._selectedDisabled.label = "Selected and Disabled";
+		this._selectedDisabled = new ToggleSwitch();
 		this._selectedDisabled.isSelected = true;
 		this._selectedDisabled.isEnabled = false;
 		this.addChild(this._selectedDisabled);
@@ -96,14 +93,13 @@ class CheckScreen extends PanelScreen
 		this.dispatchEventWith(Event.COMPLETE);
 	}
 
-	private function check_changeHandler(event:Event):Void
+	private function toggleSwitch_changeHandler(event:Event):Void
 	{
-		trace("check changed:", this._check.isSelected);
+		trace("toggle switch changed:", this._toggle.isSelected);
 	}
 
 	private function backButton_triggeredHandler(event:Event):Void
 	{
 		this.onBackButton();
 	}
-	
 }

@@ -15,7 +15,6 @@ import feathers.layout.AnchorLayoutData;
 import starling.display.DisplayObject;
 import starling.events.Event;
 
-
 class SliderSettingsScreen extends PanelScreen 
 {
 	

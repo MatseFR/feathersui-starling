@@ -4,6 +4,7 @@ import feathers.controls.Button;
 import feathers.controls.Header;
 import feathers.controls.List;
 import feathers.controls.PanelScreen;
+import feathers.controls.ToggleSwitch;
 import feathers.controls.renderers.DefaultListItemRenderer;
 import feathers.controls.renderers.IListItemRenderer;
 import feathers.core.FeathersControl;
@@ -17,10 +18,6 @@ import starling.core.Starling;
 import starling.display.DisplayObject;
 import starling.events.Event;
 
-/**
- * ...
- * @author Matse
- */
 class ItemRendererScreen extends PanelScreen 
 {
 	public static inline var SHOW_SETTINGS:String = "showSettings";
@@ -137,7 +134,7 @@ class ItemRendererScreen extends PanelScreen
 					
 					//clear these in case this setting has changed
 					Reflect.deleteField(this._listItem, "accessoryTexture");
-					Reflect.deleteField(this._listItem, "accessory";
+					Reflect.deleteField(this._listItem, "accessory");
 				
 				case ItemRendererSettings.ICON_ACCESSORY_TYPE_TEXTURE:
 					this._listItem.accessoryTexture = EmbeddedAssets.SKULL_ICON_LIGHT;

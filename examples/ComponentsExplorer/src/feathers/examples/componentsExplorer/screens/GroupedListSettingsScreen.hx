@@ -7,13 +7,11 @@ import feathers.controls.PanelScreen;
 import feathers.controls.PickerList;
 import feathers.controls.ToggleSwitch;
 import feathers.data.ArrayCollection;
-import feathers.data.VectorCollection;
 import feathers.examples.componentsExplorer.data.GroupedListSettings;
 import feathers.layout.AnchorLayout;
 import feathers.layout.AnchorLayoutData;
 import starling.display.DisplayObject;
 import starling.events.Event;
-
 
 class GroupedListSettingsScreen extends PanelScreen 
 {
@@ -53,7 +51,7 @@ class GroupedListSettingsScreen extends PanelScreen
 		this.layout = new AnchorLayout();
 		
 		this._stylePicker = new PickerList();
-		this._stylePicker.dataProvider = new VectorCollection(
+		this._stylePicker.dataProvider = new ArrayCollection(
 		[
 			GroupedListSettings.STYLE_NORMAL,
 			GroupedListSettings.STYLE_INSET

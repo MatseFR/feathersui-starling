@@ -1,10 +1,11 @@
 package feathers.examples.componentsExplorer.screens;
 
 import feathers.controls.Button;
-import feathers.controls.Check;
 import feathers.controls.Header;
 import feathers.controls.PanelScreen;
 import feathers.controls.ScrollPolicy;
+import feathers.controls.TextArea;
+import feathers.controls.TextInput;
 import feathers.layout.HorizontalAlign;
 import feathers.layout.VerticalAlign;
 import feathers.layout.VerticalLayout;
@@ -12,28 +13,30 @@ import feathers.system.DeviceCapabilities;
 import starling.core.Starling;
 import starling.events.Event;
 
-class CheckScreen extends PanelScreen 
+class TextInputScreen extends PanelScreen 
 {
-
 	public function new() 
 	{
 		super();
 	}
 	
-	private var _check:Check;
-	private var _checked:Check;
-	private var _disabled:Check;
-	private var _selectedDisabled:Check;
+	private var _input:TextInput;
+	private var _disabledInput:TextInput;
+	private var _passwordInput:TextInput;
+	private var _errorInput:TextInput;
+	private var _notEditableInput:TextInput;
+	private var _searchInput:TextInput;
+	private var _textArea:TextArea;
 	
-	override function initialize():Void 
+	override function initialize():Void
 	{
 		//never forget to call super.initialize()
 		super.initialize();
 		
-		this.title = "Check";
+		this.title = "Text Input";
 		
 		var verticalLayout:VerticalLayout = new VerticalLayout();
-		verticalLayout.horizontalAlign = HorizontalAlign.LEFT;
+		verticalLayout.horizontalAlign = HorizontalAlign.CENTER;
 		verticalLayout.verticalAlign = VerticalAlign.TOP;
 		verticalLayout.padding = 12;
 		verticalLayout.gap = 8;
@@ -41,26 +44,39 @@ class CheckScreen extends PanelScreen
 		
 		this.verticalScrollPolicy = ScrollPolicy.ON;
 		
-		this._check = new Check();
-		this._check.label = "Default";
-		this._check.addEventListener(Event.CHANGE, check_changeHandler);
-		this.addChild(this._check);
+		this._input = new TextInput();
+		this._input.prompt = "Normal Text Input";
+		this.addChild(this._input);
 		
-		this._checked = new Check();
-		this._checked.label = "Selected";
-		this._checked.isSelected = true;
-		this.addChild(this._checked);
+		this._disabledInput = new TextInput();
+		this._disabledInput.prompt = "Disabled Input";
+		this._disabledInput.isEnabled = false;
+		this.addChild(this._disabledInput);
 		
-		this._disabled = new Check();
-		this._disabled.label = "Disabled";
-		this._disabled.isEnabled = false;
-		this.addChild(this._disabled);
+		this._searchInput = new TextInput();
+		this._searchInput.styleNameList.add(TextInput.ALTERNATE_STYLE_NAME_SEARCH_TEXT_INPUT);
+		this._searchInput.prompt = "Search Input";
+		this.addChild(this._searchInput);
 		
-		this._selectedDisabled = new Check();
-		this._selectedDisabled.label = "Selected and Disabled";
-		this._selectedDisabled.isSelected = true;
-		this._selectedDisabled.isEnabled = false;
-		this.addChild(this._selectedDisabled);
+		this._passwordInput = new TextInput();
+		this._passwordInput.prompt = "Password Input";
+		this._passwordInput.displayAsPassword = true;
+		this.addChild(this._passwordInput);
+		
+		this._errorInput = new TextInput();
+		this._errorInput.prompt = "Error Input";
+		this._errorInput.errorString = "Oh, no! It's an error!";
+		this.addChild(this._errorInput);
+		
+		this._notEditableInput = new TextInput();
+		this._notEditableInput.text = "Not Editable";
+		this._notEditableInput.isEditable = false;
+		this.addChild(this._notEditableInput);
+		
+		//note: using TextArea on mobile generally isn't recommended.
+		//consider TextInput with a multiline StageTextTextEditor instead.
+		this._textArea = new TextArea();
+		this.addChild(this._textArea);
 		
 		this.headerFactory = this.customHeaderFactory;
 		
@@ -90,20 +106,14 @@ class CheckScreen extends PanelScreen
 		}
 		return header;
 	}
-
+	
 	private function onBackButton():Void
 	{
 		this.dispatchEventWith(Event.COMPLETE);
 	}
-
-	private function check_changeHandler(event:Event):Void
-	{
-		trace("check changed:", this._check.isSelected);
-	}
-
+	
 	private function backButton_triggeredHandler(event:Event):Void
 	{
 		this.onBackButton();
 	}
-	
 }

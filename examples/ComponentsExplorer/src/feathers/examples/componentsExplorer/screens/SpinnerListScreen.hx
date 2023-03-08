@@ -2,63 +2,63 @@ package feathers.examples.componentsExplorer.screens;
 
 import feathers.controls.Button;
 import feathers.controls.Header;
-import feathers.controls.List;
 import feathers.controls.PanelScreen;
+import feathers.controls.SpinnerList;
 import feathers.controls.renderers.DefaultListItemRenderer;
 import feathers.controls.renderers.IListItemRenderer;
 import feathers.data.ArrayCollection;
 import feathers.events.FeathersEventType;
-import feathers.examples.componentsExplorer.data.ListSettings;
 import feathers.layout.AnchorLayout;
 import feathers.layout.AnchorLayoutData;
 import feathers.system.DeviceCapabilities;
 import starling.core.Starling;
 import starling.events.Event;
 
-class ListScreen extends PanelScreen 
+class SpinnerListScreen extends PanelScreen 
 {
-	public static inline var SHOW_SETTINGS:String = "showSettings";
-	
 	public function new() 
 	{
 		super();
 	}
 	
-	public var settings:ListSettings;
-
-	private var _list:List;
+	private var _list:SpinnerList;
 	
 	override function initialize():Void
 	{
 		//never forget to call super.initialize()
 		super.initialize();
 		
-		this.title = "List";
+		this.title = "Spinner List";
 		
 		this.layout = new AnchorLayout();
 		
-		var items:Array<Dynamic> = [];
-		var item:Dynamic;
-		for (i in 0...150)
-		{
-			item = {text: "Item " + (i + 1)};
-			items[i] = item;
-		}
-		
-		this._list = new List();
-		this._list.dataProvider = new ArrayCollection(items);
+		this._list = new SpinnerList();
+		this._list.dataProvider = new ArrayCollection(
+		[
+			{ text: "Aardvark" },
+			{ text: "Alligator" },
+			{ text: "Alpaca" },
+			{ text: "Anteater" },
+			{ text: "Baboon" },
+			{ text: "Bear" },
+			{ text: "Beaver" },
+			{ text: "Canary" },
+			{ text: "Cat" },
+			{ text: "Deer" },
+			{ text: "Dingo" },
+			{ text: "Dog" },
+			{ text: "Dolphin" },
+			{ text: "Donkey" },
+			{ text: "Dragonfly" },
+			{ text: "Duck" },
+			{ text: "Dung Beetle" },
+			{ text: "Eagle" },
+			{ text: "Earthworm" },
+			{ text: "Eel" },
+			{ text: "Elk" },
+			{ text: "Fox" },
+		]);
 		this._list.typicalItem = {text: "Item 1000"};
-		this._list.isSelectable = this.settings.isSelectable;
-		this._list.allowMultipleSelection = this.settings.allowMultipleSelection;
-		this._list.hasElasticEdges = this.settings.hasElasticEdges;
-		//optimization: since this list fills the entire screen, there's no
-		//need for clipping. clipping should not be disabled if there's a
-		//chance that item renderers could be visible if they appear outside
-		//the list's bounds
-		this._list.clipContent = false;
-		//optimization: when the background is covered by all item
-		//renderers, don't render it
-		this._list.autoHideBackground = true;
 		this._list.itemRendererFactory = function():IListItemRenderer
 		{
 			var renderer:DefaultListItemRenderer = new DefaultListItemRenderer();
@@ -71,7 +71,13 @@ class ListScreen extends PanelScreen
 			return renderer;
 		};
 		this._list.addEventListener(Event.CHANGE, list_changeHandler);
-		this._list.layoutData = new AnchorLayoutData(0, 0, 0, 0);
+		
+		var listLayoutData:AnchorLayoutData = new AnchorLayoutData();
+		listLayoutData.left = 0;
+		listLayoutData.right = 0;
+		listLayoutData.verticalCenter = 0;
+		this._list.layoutData = listLayoutData;
+		
 		this.addChild(this._list);
 		
 		this.headerFactory = this.customHeaderFactory;
@@ -102,16 +108,9 @@ class ListScreen extends PanelScreen
 				backButton
 			];
 		}
-		var settingsButton:Button = new Button();
-		settingsButton.label = "Settings";
-		settingsButton.addEventListener(Event.TRIGGERED, settingsButton_triggeredHandler);
-		header.rightItems = 
-		[
-			settingsButton
-		];
 		return header;
 	}
-	
+
 	private function onBackButton():Void
 	{
 		this.dispatchEventWith(Event.COMPLETE);
@@ -121,21 +120,14 @@ class ListScreen extends PanelScreen
 	{
 		this._list.revealScrollBars();
 	}
-	
+
 	private function backButton_triggeredHandler(event:Event):Void
 	{
 		this.onBackButton();
 	}
 
-	private function settingsButton_triggeredHandler(event:Event):Void
-	{
-		this.dispatchEventWith(SHOW_SETTINGS);
-	}
-
 	private function list_changeHandler(event:Event):Void
 	{
-		var selectedIndices:Array<Int> = this._list.selectedIndices;
-		trace("List change:", selectedIndices.length > 0 ? selectedIndices : this._list.selectedIndex);
+		trace("SpinnerList change:", this._list.selectedIndex);
 	}
-	
 }

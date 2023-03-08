@@ -4,9 +4,9 @@ import feathers.controls.Drawers;
 import feathers.controls.StackScreenNavigator;
 import feathers.controls.StackScreenNavigatorItem;
 import feathers.core.IFeathersControl;
-import feathers.core.PropertyProxy;
 import feathers.examples.componentsExplorer.data.EmbeddedAssets;
 import feathers.examples.componentsExplorer.data.GroupedListSettings;
+import feathers.examples.componentsExplorer.data.ItemRendererSettings;
 import feathers.examples.componentsExplorer.data.ListSettings;
 import feathers.examples.componentsExplorer.data.NumericStepperSettings;
 import feathers.examples.componentsExplorer.data.SliderSettings;
@@ -16,12 +16,23 @@ import feathers.examples.componentsExplorer.screens.ButtonGroupScreen;
 import feathers.examples.componentsExplorer.screens.ButtonScreen;
 import feathers.examples.componentsExplorer.screens.CalloutScreen;
 import feathers.examples.componentsExplorer.screens.CheckScreen;
+import feathers.examples.componentsExplorer.screens.GroupedListScreen;
+import feathers.examples.componentsExplorer.screens.GroupedListSettingsScreen;
+import feathers.examples.componentsExplorer.screens.ItemRendererScreen;
+import feathers.examples.componentsExplorer.screens.ItemRendererSettingsScreen;
 import feathers.examples.componentsExplorer.screens.ListScreen;
 import feathers.examples.componentsExplorer.screens.ListSettingsScreen;
 import feathers.examples.componentsExplorer.screens.PageIndicatorScreen;
 import feathers.examples.componentsExplorer.screens.PanelComponentScreen;
-//import feathers.examples.componentsExplorer.screens.GroupedListScreen;
-//import feathers.examples.componentsExplorer.screens.GroupedListSettingsScreen;
+import feathers.examples.componentsExplorer.screens.PickerListScreen;
+import feathers.examples.componentsExplorer.screens.ScrollTextScreen;
+import feathers.examples.componentsExplorer.screens.SpinnerListScreen;
+import feathers.examples.componentsExplorer.screens.TabBarScreen;
+import feathers.examples.componentsExplorer.screens.TextCalloutScreen;
+import feathers.examples.componentsExplorer.screens.TextInputScreen;
+import feathers.examples.componentsExplorer.screens.ToastScreen;
+import feathers.examples.componentsExplorer.screens.ToggleSwitchScreen;
+import feathers.themes.MetalWorksMobileTheme;
 import feathers.examples.componentsExplorer.screens.LabelScreen;
 import feathers.examples.componentsExplorer.screens.NumericStepperScreen;
 import feathers.examples.componentsExplorer.screens.NumericStepperSettingsScreen;
@@ -31,57 +42,29 @@ import feathers.examples.componentsExplorer.screens.SliderScreen;
 import feathers.examples.componentsExplorer.screens.SliderSettingsScreen;
 import feathers.motion.Cover;
 import feathers.motion.Reveal;
-import openfl.Vector;
 import feathers.examples.componentsExplorer.screens.MainMenuScreen;
 import feathers.layout.Orientation;
 import feathers.motion.Slide;
 import feathers.system.DeviceCapabilities;
-import feathers.themes.MetalWorksDesktopTheme;
 import starling.core.Starling;
 import starling.events.Event;
 
-/**
- * ...
- * @author Matse
- */
 class Main extends Drawers 
 {
 
 	public function new(content:IFeathersControl=null) 
 	{
 		//set up the theme right away!
-		new MetalWorksDesktopTheme();
+		//new MetalWorksDesktopTheme();
+		new MetalWorksMobileTheme();
 		super(content);
 	}
 	
 	private var _navigator:StackScreenNavigator;
 	private var _menu:MainMenuScreen;
 	
-	//private function test(index:Int, ...rest:Int):Void
-	//{
-		//trace(rest);
-	//}
-	
-	//private function vectorTest(vec:Vector<Dynamic>):Void
-	//{
-		//
-	//}
-	
 	override function initialize():Void 
 	{
-		// TESTING
-		//var vec:Vector<Int> = new Vector<Int>();
-		//vectorTest(vec);
-		//var proxy:PropertyProxy = new PropertyProxy();
-		//proxy.settings = {a:1, b:true};
-		//var settings:GroupedListSettings = new GroupedListSettings();
-		//proxy.settings = settings;
-		//var array:Array<Dynamic> = new Array<Dynamic>();
-		//array.push({ label: "Alert", screen: ScreenID.ALERT });
-		//array.push({ label: "Button", screen: ScreenID.BUTTON });
-		//test(1, 2, 3, 4, 5);
-		//\TESTING
-		
 		//never forget to call super.initialize()
 		super.initialize();
 		
@@ -114,20 +97,35 @@ class Main extends Drawers
 		checkItem.addPopEvent(Event.COMPLETE);
 		this._navigator.addScreen(ScreenID.CHECK, checkItem);
 		
-		//var groupedListSettings:GroupedListSettings = new GroupedListSettings();
-		//var groupedListItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(GroupedListScreen);
-		//groupedListItem.setScreenIDForPushEvent(GroupedListScreen.SHOW_SETTINGS, ScreenID.GROUPED_LIST_SETTINGS);
-		//groupedListItem.addPopEvent(Event.COMPLETE);
-		//groupedListItem.properties.settings = groupedListSettings;
-		//this._navigator.addScreen(ScreenID.GROUPED_LIST, groupedListItem);
+		var groupedListSettings:GroupedListSettings = new GroupedListSettings();
+		var groupedListItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(GroupedListScreen);
+		groupedListItem.setScreenIDForPushEvent(GroupedListScreen.SHOW_SETTINGS, ScreenID.GROUPED_LIST_SETTINGS);
+		groupedListItem.addPopEvent(Event.COMPLETE);
+		groupedListItem.properties.settings = groupedListSettings;
+		this._navigator.addScreen(ScreenID.GROUPED_LIST, groupedListItem);
 		
-		//var groupedListSettingsItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(GroupedListSettingsScreen);
-		//groupedListSettingsItem.addPopEvent(Event.COMPLETE);
-		//groupedListSettingsItem.properties.settings = groupedListSettings;
-		////custom push and pop transitions for this settings screen
-		//groupedListSettingsItem.pushTransition = Cover.createCoverUpTransition();
-		//groupedListSettingsItem.popTransition = Reveal.createRevealDownTransition();
-		//this._navigator.addScreen(ScreenID.GROUPED_LIST_SETTINGS, groupedListSettingsItem);
+		var groupedListSettingsItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(GroupedListSettingsScreen);
+		groupedListSettingsItem.addPopEvent(Event.COMPLETE);
+		groupedListSettingsItem.properties.settings = groupedListSettings;
+		//custom push and pop transitions for this settings screen
+		groupedListSettingsItem.pushTransition = Cover.createCoverUpTransition();
+		groupedListSettingsItem.popTransition = Reveal.createRevealDownTransition();
+		this._navigator.addScreen(ScreenID.GROUPED_LIST_SETTINGS, groupedListSettingsItem);
+		
+		var itemRendererSettings:ItemRendererSettings = new ItemRendererSettings();
+		var itemRendererItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(ItemRendererScreen);
+		itemRendererItem.setScreenIDForPushEvent(ItemRendererScreen.SHOW_SETTINGS, ScreenID.ITEM_RENDERER_SETTINGS);
+		itemRendererItem.addPopEvent(Event.COMPLETE);
+		itemRendererItem.properties.settings = itemRendererSettings;
+		this._navigator.addScreen(ScreenID.ITEM_RENDERER, itemRendererItem);
+
+		var itemRendererSettingsItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(ItemRendererSettingsScreen);
+		itemRendererSettingsItem.addPopEvent(Event.COMPLETE);
+		itemRendererSettingsItem.properties.settings = itemRendererSettings;
+		//custom push and pop transitions for this settings screen
+		itemRendererSettingsItem.pushTransition = Cover.createCoverUpTransition();
+		itemRendererSettingsItem.popTransition = Reveal.createRevealDownTransition();
+		this._navigator.addScreen(ScreenID.ITEM_RENDERER_SETTINGS, itemRendererSettingsItem);
 		
 		var labelItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(LabelScreen);
 		labelItem.addPopEvent(Event.COMPLETE);
@@ -171,6 +169,10 @@ class Main extends Drawers
 		panelItem.addPopEvent(Event.COMPLETE);
 		this._navigator.addScreen(ScreenID.PANEL, panelItem);
 		
+		var pickerListItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(PickerListScreen);
+		pickerListItem.addPopEvent(Event.COMPLETE);
+		this._navigator.addScreen(ScreenID.PICKER_LIST, pickerListItem);
+		
 		var progressBarItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(ProgressBarScreen);
 		progressBarItem.addPopEvent(Event.COMPLETE);
 		this._navigator.addScreen(ScreenID.PROGRESS_BAR, progressBarItem);
@@ -178,6 +180,10 @@ class Main extends Drawers
 		var radioItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(RadioScreen);
 		radioItem.addPopEvent(Event.COMPLETE);
 		this._navigator.addScreen(ScreenID.RADIO, radioItem);
+		
+		var scrollTextItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(ScrollTextScreen);
+		scrollTextItem.addPopEvent(Event.COMPLETE);
+		this._navigator.addScreen(ScreenID.SCROLL_TEXT, scrollTextItem);
 		
 		var sliderSettings:SliderSettings = new SliderSettings();
 		var sliderItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(SliderScreen);
@@ -193,6 +199,30 @@ class Main extends Drawers
 		sliderSettingsItem.pushTransition = Cover.createCoverUpTransition();
 		sliderSettingsItem.popTransition = Reveal.createRevealDownTransition();
 		this._navigator.addScreen(ScreenID.SLIDER_SETTINGS, sliderSettingsItem);
+		
+		var spinnerListItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(SpinnerListScreen);
+		spinnerListItem.addPopEvent(Event.COMPLETE);
+		this._navigator.addScreen(ScreenID.SPINNER_LIST, spinnerListItem);
+		
+		var tabBarItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(TabBarScreen);
+		tabBarItem.addPopEvent(Event.COMPLETE);
+		this._navigator.addScreen(ScreenID.TAB_BAR, tabBarItem);
+		
+		var textCalloutItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(TextCalloutScreen);
+		textCalloutItem.addPopEvent(Event.COMPLETE);
+		this._navigator.addScreen(ScreenID.TEXT_CALLOUT, textCalloutItem);
+		
+		var textInputItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(TextInputScreen);
+		textInputItem.addPopEvent(Event.COMPLETE);
+		this._navigator.addScreen(ScreenID.TEXT_INPUT, textInputItem);
+		
+		var toastItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(ToastScreen);
+		toastItem.addPopEvent(Event.COMPLETE);
+		this._navigator.addScreen(ScreenID.TOAST, toastItem);
+		
+		var togglesItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(ToggleSwitchScreen);
+		togglesItem.addPopEvent(Event.COMPLETE);
+		this._navigator.addScreen(ScreenID.TOGGLES, togglesItem);
 		
 		if (DeviceCapabilities.isTablet(Starling.current.nativeStage))
 		{

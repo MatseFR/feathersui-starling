@@ -1,9 +1,10 @@
 package feathers.examples.componentsExplorer.screens;
 
-import feathers.controls.Alert;
 import feathers.controls.Button;
 import feathers.controls.Header;
+import feathers.controls.Label;
 import feathers.controls.PanelScreen;
+import feathers.controls.TabBar;
 import feathers.data.ArrayCollection;
 import feathers.layout.AnchorLayout;
 import feathers.layout.AnchorLayoutData;
@@ -11,33 +12,44 @@ import feathers.system.DeviceCapabilities;
 import starling.core.Starling;
 import starling.events.Event;
 
-class AlertScreen extends PanelScreen 
+class TabBarScreen extends PanelScreen 
 {
-
 	public function new() 
 	{
 		super();
 	}
 	
-	private var _showAlertButton:Button;
-	
-	override function initialize():Void 
+	private var _tabBar:TabBar;
+	private var _label:Label;
+
+	override function initialize():Void
 	{
 		//never forget to call super.initialize()
 		super.initialize();
 		
-		this.title = "Alert";
+		this.title = "Tab Bar";
 		
 		this.layout = new AnchorLayout();
 		
-		this._showAlertButton = new Button();
-		this._showAlertButton.label = "Show Alert";
-		this._showAlertButton.addEventListener(Event.TRIGGERED, showAlertButton_triggeredHandler);
-		var buttonLayoutData:AnchorLayoutData = new AnchorLayoutData();
-		buttonLayoutData.horizontalCenter = 0;
-		buttonLayoutData.verticalCenter = 0;
-		this._showAlertButton.layoutData = buttonLayoutData;
-		this.addChild(this._showAlertButton);
+		this._tabBar = new TabBar();
+		this._tabBar.dataProvider = new ArrayCollection(
+		[
+			{ label: "One" },
+			{ label: "Two" },
+			{ label: "Three" },
+			{ label: "Disabled", isEnabled: false },
+		]);
+		this._tabBar.addEventListener(Event.CHANGE, tabBar_changeHandler);
+		this._tabBar.layoutData = new AnchorLayoutData(Math.NaN, 0, 0, 0);
+		this.addChild(this._tabBar);
+		
+		this._label = new Label();
+		this._label.text = "selectedIndex: " + this._tabBar.selectedIndex;
+		var labelLayoutData:AnchorLayoutData = new AnchorLayoutData();
+		labelLayoutData.horizontalCenter = 0;
+		labelLayoutData.verticalCenter = 0;
+		this._label.layoutData = labelLayoutData;
+		this.addChild(this._label);
 		
 		this.headerFactory = this.customHeaderFactory;
 		
@@ -67,41 +79,20 @@ class AlertScreen extends PanelScreen
 		}
 		return header;
 	}
-	
+
 	private function onBackButton():Void
 	{
 		this.dispatchEventWith(Event.COMPLETE);
 	}
-	
+
 	private function backButton_triggeredHandler(event:Event):Void
 	{
 		this.onBackButton();
 	}
-	
-	private function showAlertButton_triggeredHandler(event:Event):Void
-	{
-		var alert:Alert = Alert.show("I just wanted you to know that I have a very important message to share with you.", "Alert", new ArrayCollection(
-		[
-			{ label: "OK" },
-			{ label: "Cancel" }
-		]));
-		//when the enter key is pressed, treat it as OK
-		alert.acceptButtonIndex = 0;
-		//when the back or escape key is pressed, treat it as cancel
-		alert.cancelButtonIndex = 1;
-		alert.addEventListener(Event.CLOSE, alert_closeHandler);
-	}
 
-	private function alert_closeHandler(event:Event, data:Dynamic):Void
+	private function tabBar_changeHandler(event:Event):Void
 	{
-		if (data)
-		{
-			trace("alert closed with item:", data.label);
-		}
-		else
-		{
-			trace("alert closed without item");
-		}
+		this._label.text = "selectedIndex: " + this._tabBar.selectedIndex;
 	}
 	
 }

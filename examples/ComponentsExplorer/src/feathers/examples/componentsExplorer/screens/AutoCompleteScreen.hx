@@ -7,14 +7,12 @@ import feathers.controls.PanelScreen;
 import feathers.controls.ScrollPolicy;
 import feathers.data.ArrayCollection;
 import feathers.data.LocalAutoCompleteSource;
-import feathers.data.VectorCollection;
 import feathers.layout.HorizontalAlign;
 import feathers.layout.VerticalAlign;
 import feathers.layout.VerticalLayout;
 import feathers.system.DeviceCapabilities;
 import starling.core.Starling;
 import starling.events.Event;
-
 
 class AutoCompleteScreen extends PanelScreen 
 {

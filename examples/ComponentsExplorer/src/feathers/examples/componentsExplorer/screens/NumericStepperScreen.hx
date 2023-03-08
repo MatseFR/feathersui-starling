@@ -11,7 +11,6 @@ import feathers.system.DeviceCapabilities;
 import starling.core.Starling;
 import starling.events.Event;
 
-
 class NumericStepperScreen extends PanelScreen 
 {
 	public static inline var SHOW_SETTINGS:String = "showSettings";
