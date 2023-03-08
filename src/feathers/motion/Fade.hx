@@ -32,7 +32,7 @@ class Fade
 	/**
 	 * @private
 	 */
-	private static const SCREEN_REQUIRED_ERROR:String = "Cannot transition if both old screen and new screen are null.";
+	private static inline var SCREEN_REQUIRED_ERROR:String = "Cannot transition if both old screen and new screen are null.";
 
 	/**
 	 * Creates an effect function that fades in the target component by
@@ -161,6 +161,7 @@ class Fade
 			{
 				throw new ArgumentError(SCREEN_REQUIRED_ERROR);
 			}
+			var tween:FadeTween;
 			if (newScreen != null)
 			{
 				newScreen.alpha = 0;
@@ -171,7 +172,7 @@ class Fade
 				{
 					oldScreen.alpha = 1;
 				}
-				var tween:FadeTween = new FadeTween(newScreen, null, duration, ease, onComplete, tweenProperties);
+				tween = new FadeTween(newScreen, null, duration, ease, onComplete, tweenProperties);
 			}
 			else
 			{
@@ -209,6 +210,7 @@ class Fade
 			{
 				throw new ArgumentError(SCREEN_REQUIRED_ERROR);
 			}
+			var tween:FadeTween;
 			if (oldScreen != null)
 			{
 				//make sure the old screen is on top
@@ -219,7 +221,7 @@ class Fade
 				{
 					newScreen.alpha = 1;
 				}
-				var tween:FadeTween = new FadeTween(oldScreen, null, duration, ease, onComplete, tweenProperties);
+				tween = new FadeTween(oldScreen, null, duration, ease, onComplete, tweenProperties);
 			}
 			else
 			{
@@ -258,6 +260,7 @@ class Fade
 			{
 				throw new ArgumentError(SCREEN_REQUIRED_ERROR);
 			}
+			var tween:FadeTween;
 			if (newScreen != null)
 			{
 				newScreen.alpha = 0;
@@ -265,7 +268,7 @@ class Fade
 				{
 					oldScreen.alpha = 1;
 				}
-				var tween:FadeTween = new FadeTween(newScreen, oldScreen, duration, ease, onComplete, tweenProperties);
+				tween = new FadeTween(newScreen, oldScreen, duration, ease, onComplete, tweenProperties);
 			}
 			else //we only have the old screen
 			{
@@ -276,7 +279,7 @@ class Fade
 			{
 				return new TweenEffectContext(null, tween);
 			}
-			Starling.juggler.add(tween);
+			Starling.currentJuggler.add(tween);
 			return null;
 		};
 	}
