@@ -319,32 +319,23 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 	private var _unrenderedItems:Array<Int> = new Array<Int>();
 	private var _defaultItemRendererStorage:GroupItemRendererFactoryStorage = new GroupItemRendererFactoryStorage();
 	private var _itemStorageMap:Map<String, GroupItemRendererFactoryStorage> = new Map<String, GroupItemRendererFactoryStorage>();
-	// #if html5
-	// private var _itemRendererMap:Map<Dynamic, IGroupedListItemRenderer> = new Map<Dynamic, IGroupedListItemRenderer>();
-	// #else
+	
 	private var _itemObjectRendererMap:ObjectMap<Dynamic, IGroupedListItemRenderer> = new ObjectMap<Dynamic, IGroupedListItemRenderer>();
 	private var _itemSimpleRendererMap:Map<Dynamic, IGroupedListItemRenderer> = new Map<Dynamic, IGroupedListItemRenderer>();
-	// #end
 	
 	private var _unrenderedHeaders:Array<Int> = new Array<Int>();
 	private var _defaultHeaderRendererStorage:HeaderRendererFactoryStorage = new HeaderRendererFactoryStorage();
 	private var _headerStorageMap:Map<String, HeaderRendererFactoryStorage> = new Map<String, HeaderRendererFactoryStorage>();
-	// #if html5
-	// private var _headerRendererMap:Map<Dynamic, IGroupedListHeaderRenderer> = new Map<Dynamic, IGroupedListHeaderRenderer>();
-	// #else
+	
 	private var _headerObjectRendererMap:ObjectMap<Dynamic, IGroupedListHeaderRenderer> = new ObjectMap<Dynamic, IGroupedListHeaderRenderer>();
 	private var _headerSimpleRendererMap:Map<Dynamic, IGroupedListHeaderRenderer> = new Map<Dynamic, IGroupedListHeaderRenderer>();
-	// #end
 	
 	private var _unrenderedFooters:Array<Int> = new Array<Int>();
 	private var _defaultFooterRendererStorage:FooterRendererFactoryStorage = new FooterRendererFactoryStorage();
 	private var _footerStorageMap:Map<String, FooterRendererFactoryStorage> = new Map<String, FooterRendererFactoryStorage>();
-	// #if html5
-	// private var _footerRendererMap:Map<Dynamic, IGroupedListFooterRenderer> = new Map<Dynamic, IGroupedListFooterRenderer>();
-	// #else
+	
 	private var _footerObjectRendererMap:ObjectMap<Dynamic, IGroupedListFooterRenderer> = new ObjectMap<Dynamic, IGroupedListFooterRenderer>();
 	private var _footerSimpleRendererMap:Map<Dynamic, IGroupedListFooterRenderer> = new Map<Dynamic, IGroupedListFooterRenderer>();
-	// #end
 	
 	private var _headerIndices:Array<Int> = new Array<Int>();
 	private var _footerIndices:Array<Int> = new Array<Int>();

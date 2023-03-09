@@ -18,7 +18,6 @@ import feathers.layout.VerticalAlign;
 import starling.display.DisplayObject;
 import starling.events.Event;
 
-
 class ItemRendererSettingsScreen extends PanelScreen 
 {
 	private static inline var GAP_LABEL_INFINITE:String = "Fill Available Space";
