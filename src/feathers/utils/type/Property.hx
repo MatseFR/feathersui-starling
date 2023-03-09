@@ -13,8 +13,33 @@ class Property
 		// TODO : use untyped hasOwnProperty ?
 		return Reflect.hasField(object, propertyName) || Reflect.hasField(object, "get_" + propertyName);
 		#elseif html5
-		if (Reflect.hasField(object, propertyName)) return true;
-		return untyped propertyName + " in object";
+		if (Std.isOfType(object, String))
+		{
+			// trace("string");
+			return false;
+		}
+		var type = Type.typeof(object);
+		switch (type)
+		{
+			case Type.ValueType.TNull, Type.ValueType.TInt, Type.ValueType.TFloat, Type.ValueType.TBool, Type.ValueType.TFunction, Type.ValueType.TUnknown :
+				// trace("trash");
+				return false;
+
+			case Type.ValueType.TObject :
+				// trace("object");
+				return Reflect.hasField(object, propertyName);
+			
+			default :
+				// trace("default");
+				if (Reflect.hasField(object, propertyName))
+				{
+					return true;
+				}
+				return Reflect.getProperty(object, propertyName) != null;
+		}
+		// if (Std.isOfType(object, String) || Std.isOfType(object, Int) || Std.isOfType(object, Float) || Std)
+		// if (Reflect.hasField(object, propertyName)) return true;
+		// return untyped propertyName + " in object";
 		#else
 		// TODO : find a better way to check that a property exists on cpp target
 		if (Reflect.hasField(object, propertyName)) return true;
@@ -26,12 +51,13 @@ class Property
 	static public function existsWrite(object:Dynamic, propertyName:String):Bool
 	{
 		#if flash
-		return Reflect.hasField(object, proppropertyName) || Reflect.hasField(object, "set_" + propertyName);
+		return Reflect.hasField(object, propertyName) || Reflect.hasField(object, "set_" + propertyName);
 		#elseif html5
 		if (Reflect.hasField(object, propertyName)) return true;
 		return untyped propertyName + " in object";
 		#else
 		if (Reflect.hasField(object, propertyName)) return true;
+		return false;
 		#end
 	}
 	
