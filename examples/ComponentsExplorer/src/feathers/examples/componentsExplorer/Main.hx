@@ -1,5 +1,6 @@
 package feathers.examples.componentsExplorer;
 
+import feathers.themes.MetalWorksDesktopTheme;
 import feathers.controls.Drawers;
 import feathers.controls.StackScreenNavigator;
 import feathers.controls.StackScreenNavigatorItem;
@@ -48,6 +49,7 @@ import feathers.motion.Slide;
 import feathers.system.DeviceCapabilities;
 import starling.core.Starling;
 import starling.events.Event;
+import starling.events.ResizeEvent;
 
 class Main extends Drawers 
 {
@@ -55,7 +57,7 @@ class Main extends Drawers
 	public function new(content:IFeathersControl=null) 
 	{
 		//set up the theme right away!
-		//new MetalWorksDesktopTheme();
+		// new MetalWorksDesktopTheme();
 		new MetalWorksMobileTheme();
 		super(content);
 	}
@@ -246,6 +248,8 @@ class Main extends Drawers
 		
 		this._navigator.pushTransition = Slide.createSlideLeftTransition();
 		this._navigator.popTransition = Slide.createSlideRightTransition();
+		
+		this.stage.addEventListener(Event.RESIZE, stageResizeHandler);
 	}
 	
 	private function mainMenu_phoneChangeHandler(event:Event):Void
@@ -263,6 +267,23 @@ class Main extends Drawers
 		//want to push a new screen onto the stack. we want to start fresh.
 		var screen:MainMenuScreen = cast event.currentTarget;
 		this._navigator.rootScreenID = screen.selectedScreenID;
+	}
+	
+	private function stageResizeHandler(evt:ResizeEvent):Void
+	{
+		updateViewPort(evt.width, evt.height);
+	}
+	
+	private function updateViewPort(width:Int, height:Int):Void
+	{
+		var current:Starling = Starling.current;
+		var scale:Float = current.contentScaleFactor;
+		
+		stage.stageWidth = Std.int(width / scale);
+		stage.stageHeight = Std.int(height / scale);
+		
+		current.viewPort.width = width;//stage.stageWidth * scale;
+		current.viewPort.height = height;//stage.stageHeight * scale;
 	}
 	
 }
