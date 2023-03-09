@@ -2057,7 +2057,14 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 			matrix.scale(globalScaleX, globalScaleY);
 		}
 		var bitmapData:BitmapData = new BitmapData(this._snapshotWidth, this._snapshotHeight, true, 0x00ff00ff);
+		#if !flash
+		var wasVisible:Bool = this.textField.visible;
+		textField.visible = true;
+		#end
 		bitmapData.draw(this.textField, matrix, null, null, this._textFieldSnapshotClipRect);
+		#if !flash
+		textField.visible = wasVisible;
+		#end
 		Pool.putMatrix(matrix);
 		var newTexture:Texture = null;
 		if (this.textSnapshot == null || this._needsNewTexture)
