@@ -7,6 +7,7 @@ accordance with the terms of the accompanying license agreement.
 */
 package feathers.core;
 
+import openfl.Lib;
 import feathers.controls.supportClasses.LayoutViewPort;
 import feathers.events.FeathersEventType;
 import feathers.layout.RelativePosition;
@@ -790,7 +791,7 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 	 */
 	private function stage_mouseFocusChangeHandler(event:FocusEvent):Void
 	{
-		if (event.relatedObject != null)
+		if (event.relatedObject != null #if !flash && event.relatedObject != Lib.current.stage#end)
 		{
 			//we need to allow mouse focus to be passed to native display
 			//objects. for instance, hyperlinks in TextField won't work
@@ -799,6 +800,17 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 			return;
 		}
 		event.preventDefault();
+	}
+
+	private function setFocusNull():Void
+	{
+		this.focus = null;
+	}
+
+	private function matse_focusOut(evt:openfl.events.Event):Void
+	{
+		this.focus = null;
+		Lib.current.removeEventListener(openfl.events.Event.ENTER_FRAME, matse_focusOut);
 	}
 	
 	/**
