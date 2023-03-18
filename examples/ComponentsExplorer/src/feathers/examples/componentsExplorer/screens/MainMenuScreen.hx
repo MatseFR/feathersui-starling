@@ -49,7 +49,7 @@ class MainMenuScreen extends PanelScreen
 			{ label: "Button Group", screen: ScreenID.BUTTON_GROUP },
 			{ label: "Callout", screen: ScreenID.CALLOUT },
 			{ label: "Check", screen: ScreenID.CHECK },
-			//{ label: "Data Grid", screen: ScreenID.DATA_GRID },
+			{ label: "Data Grid", screen: ScreenID.DATA_GRID },
 			//{ label: "Date Time Spinner", screen: ScreenID.DATE_TIME_SPINNER },
 			{ label: "Grouped List", screen: ScreenID.GROUPED_LIST },
 			{ label: "Item Renderer", screen: ScreenID.ITEM_RENDERER },
@@ -69,7 +69,7 @@ class MainMenuScreen extends PanelScreen
 			{ label: "Text Input and Text Area", screen: ScreenID.TEXT_INPUT },
 			{ label: "Toast", screen: ScreenID.TOAST },
 			{ label: "Toggle Switch", screen: ScreenID.TOGGLES },
-			//{ label: "Tree", screen: ScreenID.TREE },
+			{ label: "Tree", screen: ScreenID.TREE },
 		]);
 		//if (Capabilities.playerType == "Desktop") //this means AIR, even for mobile
 		//{

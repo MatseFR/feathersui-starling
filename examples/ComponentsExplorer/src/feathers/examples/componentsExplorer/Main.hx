@@ -1,5 +1,9 @@
 package feathers.examples.componentsExplorer;
 
+import feathers.examples.componentsExplorer.data.DataGridSettings;
+import feathers.examples.componentsExplorer.screens.DataGridScreen;
+import feathers.examples.componentsExplorer.screens.DataGridSettingsScreen;
+import feathers.examples.componentsExplorer.screens.TreeScreen;
 import feathers.themes.MetalWorksDesktopTheme;
 import feathers.controls.Drawers;
 import feathers.controls.StackScreenNavigator;
@@ -98,6 +102,21 @@ class Main extends Drawers
 		var checkItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(CheckScreen);
 		checkItem.addPopEvent(Event.COMPLETE);
 		this._navigator.addScreen(ScreenID.CHECK, checkItem);
+		
+		var dataGridSettings:DataGridSettings = new DataGridSettings();
+		var dataGridItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(DataGridScreen);
+		dataGridItem.setScreenIDForPushEvent(DataGridScreen.SHOW_SETTINGS, ScreenID.DATA_GRID_SETTINGS);
+		dataGridItem.addPopEvent(Event.COMPLETE);
+		dataGridItem.properties.settings = dataGridSettings;
+		this._navigator.addScreen(ScreenID.DATA_GRID, dataGridItem);
+		
+		var dataGridSettingsItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(DataGridSettingsScreen);
+		dataGridSettingsItem.addPopEvent(Event.COMPLETE);
+		dataGridSettingsItem.properties.settings = dataGridSettings;
+		//custom push and pop transitions for this settings screen
+		dataGridSettingsItem.pushTransition = Cover.createCoverUpTransition();
+		dataGridSettingsItem.popTransition = Reveal.createRevealDownTransition();
+		this._navigator.addScreen(ScreenID.DATA_GRID_SETTINGS, dataGridSettingsItem);
 		
 		var groupedListSettings:GroupedListSettings = new GroupedListSettings();
 		var groupedListItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(GroupedListScreen);
@@ -225,6 +244,10 @@ class Main extends Drawers
 		var togglesItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(ToggleSwitchScreen);
 		togglesItem.addPopEvent(Event.COMPLETE);
 		this._navigator.addScreen(ScreenID.TOGGLES, togglesItem);
+		
+		var treeItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(TreeScreen);
+		treeItem.addPopEvent(Event.COMPLETE);
+		this._navigator.addScreen(ScreenID.TREE, treeItem);
 		
 		if (DeviceCapabilities.isTablet(Starling.current.nativeStage))
 		{
