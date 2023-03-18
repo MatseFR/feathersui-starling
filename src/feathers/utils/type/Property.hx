@@ -62,6 +62,12 @@ class Property
 	}
 	
 	// TODO : inline once tested
+	static public function read(object:Dynamic, propertyName:String):Dynamic
+	{
+		return Reflect.getProperty(object, propertyName);
+	}
+	
+	// TODO : inline once tested
 	static public function setPropertyWithCheck(object:Dynamic, propertyName:String, propertyValue:Dynamic):Bool
 	{
 		#if flash
