@@ -2209,6 +2209,7 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 			}
 			this._owner.dispatchEventWith(FeathersEventType.RENDERER_REMOVE, false, itemRenderer);
 			item = itemRenderer.data;
+			if (item == null) continue;
 			// TODO : XML
 			//if (item is XML || item is XMLList)
 			//{
@@ -2244,6 +2245,7 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 			}
 			this._owner.dispatchEventWith(FeathersEventType.RENDERER_REMOVE, false, headerRenderer);
 			headerData = headerRenderer.data;
+			if (headerData == null) continue;
 			// TODO : XML
 			//if (headerData is XML || headerData is XMLList)
 			//{
@@ -2279,6 +2281,7 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 			}
 			this._owner.dispatchEventWith(FeathersEventType.RENDERER_REMOVE, false, footerRenderer);
 			footerData = footerRenderer.data;
+			if (footerData == null) continue;
 			// TODO : XML
 			//if (footerData is XML || footerData is XMLList)
 			//{
