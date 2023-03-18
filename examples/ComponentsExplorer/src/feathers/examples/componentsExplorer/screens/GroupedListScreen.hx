@@ -1,6 +1,5 @@
 package feathers.examples.componentsExplorer.screens;
 
-import feathers.Debug;
 import feathers.controls.Button;
 import feathers.controls.GroupedList;
 import feathers.controls.Header;
@@ -37,8 +36,6 @@ class GroupedListScreen extends PanelScreen
 		this.title = "Grouped List";
 		
 		this.layout = new AnchorLayout();
-		
-		Debug.ready = true;
 		
 		var groups:Array<Dynamic> =
 		[
