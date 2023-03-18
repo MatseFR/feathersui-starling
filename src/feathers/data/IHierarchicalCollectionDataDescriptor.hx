@@ -6,7 +6,6 @@ This program is free software. You can redistribute and/or modify it in
 accordance with the terms of the accompanying license agreement.
 */
 package feathers.data;
-import openfl.Vector;
 
 /**
  * An adapter interface to support any kind of data source in
@@ -35,12 +34,12 @@ interface IHierarchicalCollectionDataDescriptor
 	 * avoid excessive garbage collection from temporary objects created by
 	 * <code>...rest</code> arguments.</p>
 	 */
-	function getLength(data:Dynamic, ...rest:Array<Int>):Int;
+	function getLength(data:Dynamic, indices:Array<Int>):Int;
 
 	/**
 	 * The number of items at the specified location in the data source.
 	 */
-	function getLengthAtLocation(data:Dynamic, location:Vector<Int> = null):Int;
+	function getLengthAtLocation(data:Dynamic, location:Array<Int> = null):Int;
 	
 	/**
 	 * Returns the item at the specified location in the data source.
@@ -52,12 +51,12 @@ interface IHierarchicalCollectionDataDescriptor
 	 * avoid excessive garbage collection from temporary objects created by
 	 * <code>...rest</code> arguments.</p>
 	 */
-	function getItemAt(data:Dynamic, index:Int, ...rest:Array<Int>):Dynamic;
+	function getItemAt(data:Dynamic, indices:Array<Int>):Dynamic;
 	
 	/**
 	 * Returns the item at the specified location in the data source.
 	 */
-	function getItemAtLocation(data:Dynamic, location:Vector<Int>):Dynamic;
+	function getItemAtLocation(data:Dynamic, location:Array<Int>):Dynamic;
 	
 	/**
 	 * Replaces the item at the specified location with a new item.
@@ -69,14 +68,14 @@ interface IHierarchicalCollectionDataDescriptor
 	 * avoid excessive garbage collection from temporary objects created by
 	 * <code>...rest</code> arguments.</p>
 	 */
-	function setItemAt(data:Dynamic, item:Dynamic, index:Int, ...rest:Array<Int>):Void;
+	function setItemAt(data:Dynamic, item:Dynamic, indices:Array<Int>):Void;
 	
 	/**
 	 * Replaces the item at the specified location with a new item.
 	 *
 	 * <p>The rest arguments are the indices that make up the location.</p>
 	 */
-	function setItemAtLocation(data:Dynamic, item:Dynamic, location:Vector<Int>):Void;
+	function setItemAtLocation(data:Dynamic, item:Dynamic, location:Array<Int>):Void;
 	
 	/**
 	 * Adds an item to the data source, at the specified location.
@@ -88,12 +87,12 @@ interface IHierarchicalCollectionDataDescriptor
 	 * avoid excessive garbage collection from temporary objects created by
 	 * <code>...rest</code> arguments.</p>
 	 */
-	function addItemAt(data:Dynamic, item:Dynamic, index:Int, ...rest:Array<Int>):Void;
+	function addItemAt(data:Dynamic, item:Dynamic, indices:Array<Int>):Void;
 	
 	/**
 	 * Adds an item to the data source, at the specified location.
 	 */
-	function addItemAtLocation(data:Dynamic, item:Dynamic, location:Vector<Int>):Void;
+	function addItemAtLocation(data:Dynamic, item:Dynamic, location:Array<Int>):Void;
 	
 	/**
 	 * Removes the item at the specified location from the data source and
@@ -101,7 +100,7 @@ interface IHierarchicalCollectionDataDescriptor
 	 *
 	 * <p>The rest arguments are the indices that make up the location.</p>
 	 */
-	function removeItemAt(data:Dynamic, index:Int, ...rest:Array<Int>):Dynamic;
+	function removeItemAt(data:Dynamic, indices:Array<Int>):Dynamic;
 	
 	/**
 	 * Removes the item at the specified location from the data source and
@@ -114,7 +113,7 @@ interface IHierarchicalCollectionDataDescriptor
 	 * avoid excessive garbage collection from temporary objects created by
 	 * <code>...rest</code> arguments.</p>
 	 */
-	function removeItemAtLocation(data:Dynamic, location:Vector<Int>):Dynamic;
+	function removeItemAtLocation(data:Dynamic, location:Array<Int>):Dynamic;
 	
 	/**
 	 * Removes all items from the data source.
@@ -128,5 +127,5 @@ interface IHierarchicalCollectionDataDescriptor
 	 * <p>The <code>rest</code> arguments are optional indices to narrow
 	 * the search.</p>
 	 */
-	function getItemLocation(data:Dynamic, item:Dynamic, result:Vector<Int> = null, ...rest:Array):Vector.<int>;
+	function getItemLocation(data:Dynamic, item:Dynamic, indices:Array<Int>, result:Array<Int> = null):Array<Int>;
 }

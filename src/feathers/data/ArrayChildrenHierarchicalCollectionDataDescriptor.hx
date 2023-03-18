@@ -56,14 +56,14 @@ class ArrayChildrenHierarchicalCollectionDataDescriptor implements IHierarchical
 	/**
 	 * @inheritDoc
 	 */
-	public function getLength(data:Dynamic, ...rest:Array<Int>):Int
+	public function getLength(data:Dynamic, indices:Array<Int>):Int
 	{
 		var branch:Array<Dynamic> = cast data;
-		var indexCount:Int = rest.length;
+		var indexCount:Int = indices.length;
 		var index:Int;
 		for (i in 0...indexCount)
 		{
-			index = rest[i];
+			index = indices[i];
 			branch = cast Reflect.getProperty(branch[index], childrenField);
 		}
 		
@@ -92,17 +92,16 @@ class ArrayChildrenHierarchicalCollectionDataDescriptor implements IHierarchical
 	/**
 	 * @inheritDoc
 	 */
-	public function getItemAt(data:Dynamic, index:Int, ...rest:Array<Int>):Dynamic
+	public function getItemAt(data:Dynamic, indices:Array<Int>):Dynamic
 	{
-		rest.insert(0, index);
 		var branch:Array<Dynamic> = cast data;
-		var indexCount:Int = rest.length - 1;
+		var indexCount:Int = indices.length - 1;
 		for (i in 0...indexCount)
 		{
-			index = rest[i];
+			index = indices[i];
 			branch = cast Reflect.getProperty(branch[index], childrenField);
 		}
-		var lastIndex:Int = rest[indexCount];
+		var lastIndex:Int = indices[indexCount];
 		return branch[lastIndex];
 	}
 	
@@ -134,17 +133,16 @@ class ArrayChildrenHierarchicalCollectionDataDescriptor implements IHierarchical
 	/**
 	 * @inheritDoc
 	 */
-	public function setItemAt(data:Dynamic, item:Dynamic, index:Int, ...rest:Array<Int>):Void
+	public function setItemAt(data:Dynamic, item:Dynamic, indices:Array<Int>):Void
 	{
-		rest.insert(0, index);
 		var branch:Array<Dynamic> = cast data;
-		var indexCount:Int = rest.length - 1;
+		var indexCount:Int = indices.length - 1;
 		for (i in 0...indexCount)
 		{
-			index = rest[i];
+			index = indices[i];
 			branch = cast Reflect.getProperty(branch[index], childrenField);
 		}
-		var lastIndex:Int = rest[indexCount];
+		var lastIndex:Int = indices[indexCount];
 		branch[lastIndex] = item;
 	}
 	
@@ -176,17 +174,16 @@ class ArrayChildrenHierarchicalCollectionDataDescriptor implements IHierarchical
 	/**
 	 * @inheritDoc
 	 */
-	public function addItemAt(data:Dynamic, item:Dynamic, index:Int, ...rest:Array<Int>):Void
+	public function addItemAt(data:Dynamic, item:Dynamic, indices:Array<Int>):Void
 	{
-		rest.insert(0, index);
 		var branch:Array<Dynamic> = cast data;
-		var indexCount:Int = rest.length - 1;
+		var indexCount:Int = indices.length - 1;
 		for (i in 0...indexCount)
 		{
-			index = rest[i];
+			index = indices[i];
 			branch = cast Reflect.getProperty(branch[index], childrenField);
 		}
-		var lastIndex:Int = rest[indexCount];
+		var lastIndex:Int = indices[indexCount];
 		branch.insert(lastIndex, item);
 	}
 	
@@ -218,17 +215,16 @@ class ArrayChildrenHierarchicalCollectionDataDescriptor implements IHierarchical
 	/**
 	 * @inheritDoc
 	 */
-	public function removeItemAt(data:Dynamic, index:Int, ...rest:Array<Int>):Dynamic
+	public function removeItemAt(data:Dynamic, indices:Array<Int>):Dynamic
 	{
-		rest.insert(0, index);
 		var branch:Array<Dynamic> = cast data;
-		var indexCount:Int = rest.length - 1;
+		var indexCount:Int = indices.length - 1;
 		for (i in 0...indexCount)
 		{
 			index = rest[i];
 			branch = cast Reflect.getProperty(branch[index], childrenField);
 		}
-		var lastIndex:Int = rest[indexCount] as int;
+		var lastIndex:Int = indices[indexCount];
 		return branch.splice(lastIndex, 1);
 	}
 	
@@ -269,7 +265,7 @@ class ArrayChildrenHierarchicalCollectionDataDescriptor implements IHierarchical
 	/**
 	 * @inheritDoc
 	 */
-	public function getItemLocation(data:Dynamic, item:Dynamic, result:Array<Int> = null, ...rest:Array<Int>):Array<Int>
+	public function getItemLocation(data:Dynamic, item:Dynamic, indices:Array<Int>, result:Array<Int> = null):Array<Int>
 	{
 		if (result == null)
 		{
@@ -280,11 +276,11 @@ class ArrayChildrenHierarchicalCollectionDataDescriptor implements IHierarchical
 			result.resize(0);
 		}
 		var branch:Array<Dynamic> = cast data;
-		var restCount:Int = rest.length;
+		var count:Int = indices.length;
 		var index:Int;
 		for (i in 0...restCount)
 		{
-			index = rest[i];
+			index = indices[i];
 			result[i] = index;
 			branch = cast Reflect.getProperty(branch[index], childrenField);
 		}

@@ -105,10 +105,9 @@ class HierarchicalCollection extends EventDispatcher implements IHierarchicalCol
 	 *
 	 * @see #updateAll()
 	 */
-	public function updateItemAt(index:Int, ...rest:Array<Int>):Void
+	public function updateItemAt(indices:Array<Int>):Void
 	{
-		rest.insert(0, index);
-		this.dispatchEventWith(CollectionEventType.UPDATE_ITEM, false, rest);
+		this.dispatchEventWith(CollectionEventType.UPDATE_ITEM, false, indices);
 	}
 	
 	/**
@@ -126,7 +125,7 @@ class HierarchicalCollection extends EventDispatcher implements IHierarchicalCol
 	 *
 	 * @see #getItemAtLocation()
 	 */
-	public function getItemAt(index:Int, ...rest:Array<Dynamic>):Dynamic
+	public function getItemAt(indices:Array<Int>):Dynamic
 	{
 		rest.insert(0, index);
 		rest.insert(0, this._data);
