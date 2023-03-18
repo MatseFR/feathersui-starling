@@ -802,17 +802,6 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 		event.preventDefault();
 	}
 
-	private function setFocusNull():Void
-	{
-		this.focus = null;
-	}
-
-	private function matse_focusOut(evt:openfl.events.Event):Void
-	{
-		this.focus = null;
-		Lib.current.removeEventListener(openfl.events.Event.ENTER_FRAME, matse_focusOut);
-	}
-	
 	/**
 	 * @private
 	 */
