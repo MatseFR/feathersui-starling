@@ -31,6 +31,7 @@ import feathers.controls.ButtonGroup;
 import feathers.controls.ButtonState;
 import feathers.controls.Callout;
 import feathers.controls.Check;
+import feathers.controls.DataGrid;
 import feathers.controls.Drawers;
 import feathers.controls.GroupedList;
 import feathers.controls.Header;
@@ -67,11 +68,15 @@ import feathers.controls.Toast;
 import feathers.controls.ToggleButton;
 import feathers.controls.ToggleSwitch;
 import feathers.controls.TrackLayoutMode;
+import feathers.controls.Tree;
 import feathers.controls.popups.DropDownPopUpContentManager;
 import feathers.controls.renderers.BaseDefaultItemRenderer;
+import feathers.controls.renderers.DefaultDataGridCellRenderer;
+import feathers.controls.renderers.DefaultDataGridHeaderRenderer;
 import feathers.controls.renderers.DefaultGroupedListHeaderOrFooterRenderer;
 import feathers.controls.renderers.DefaultGroupedListItemRenderer;
 import feathers.controls.renderers.DefaultListItemRenderer;
+import feathers.controls.renderers.DefaultTreeItemRenderer;
 import feathers.controls.text.TextFieldTextEditor;
 import feathers.controls.text.TextFieldTextRenderer;
 import feathers.core.FeathersControl;
@@ -893,7 +898,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		this.getStyleProviderForClass(Check).defaultStyleFunction = this.setCheckStyles;
 		
 		//data grid (see also: item renderers)
-		//this.getStyleProviderForClass(DataGrid).defaultStyleFunction = this.setDataGridStyles;
+		this.getStyleProviderForClass(DataGrid).defaultStyleFunction = this.setDataGridStyles;
 		
 		//date time spinner
 		//this.getStyleProviderForClass(DateTimeSpinner).defaultStyleFunction = this.setDateTimeSpinnerStyles;
@@ -913,7 +918,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		this.getStyleProviderForClass(DefaultGroupedListHeaderOrFooterRenderer).setFunctionForStyleName(GroupedList.DEFAULT_CHILD_STYLE_NAME_FOOTER_RENDERER, this.setGroupedListFooterRendererStyles);
 		
 		//header renderers for data grid
-		//this.getStyleProviderForClass(DefaultDataGridHeaderRenderer).defaultStyleFunction = this.setDataGridHeaderRendererStyles;
+		this.getStyleProviderForClass(DefaultDataGridHeaderRenderer).defaultStyleFunction = this.setDataGridHeaderRendererStyles;
 		
 		//item renderers for lists
 		this.getStyleProviderForClass(DefaultGroupedListItemRenderer).defaultStyleFunction = this.setItemRendererStyles;
@@ -922,7 +927,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		this.getStyleProviderForClass(DefaultListItemRenderer).defaultStyleFunction = this.setItemRendererStyles;
 		this.getStyleProviderForClass(DefaultListItemRenderer).setFunctionForStyleName(DefaultListItemRenderer.ALTERNATE_STYLE_NAME_DRILL_DOWN, this.setDrillDownItemRendererStyles);
 		this.getStyleProviderForClass(DefaultListItemRenderer).setFunctionForStyleName(DefaultListItemRenderer.ALTERNATE_STYLE_NAME_CHECK, this.setCheckItemRendererStyles);
-		//this.getStyleProviderForClass(DefaultDataGridCellRenderer).defaultStyleFunction = this.setDataGridCellRendererStyles;
+		this.getStyleProviderForClass(DefaultDataGridCellRenderer).defaultStyleFunction = this.setDataGridCellRendererStyles;
 		
 		//labels
 		this.getStyleProviderForClass(Label).defaultStyleFunction = this.setLabelStyles;
@@ -1040,8 +1045,8 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		//the toggle switch layout uses a single track
 		
 		//tree
-		//this.getStyleProviderForClass(Tree).defaultStyleFunction = this.setTreeStyles;
-		//this.getStyleProviderForClass(DefaultTreeItemRenderer).defaultStyleFunction = this.setTreeItemRendererStyles;
+		this.getStyleProviderForClass(Tree).defaultStyleFunction = this.setTreeStyles;
+		this.getStyleProviderForClass(DefaultTreeItemRenderer).defaultStyleFunction = this.setTreeItemRendererStyles;
 		
 		//media controls
 		//this.getStyleProviderForClass(VideoPlayer).defaultStyleFunction = this.setVideoPlayerStyles;
@@ -1496,107 +1501,107 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	// DataGrid
 	//-------------------------
 	
-	//private function setDataGridStyles(grid:DataGrid):Void
-	//{
-		//this.setScrollerStyles(grid);
-		//
-		//grid.padding = this.borderSize;
-		//
-		//var backgroundSkin:Image = new Image(this.listBackgroundSkinTexture);
-		//backgroundSkin.scale9Grid = DEFAULT_SCALE9_GRID;
-		//backgroundSkin.width = this.controlSize;
-		//backgroundSkin.height = this.controlSize;
-		//grid.backgroundSkin = backgroundSkin;
-		//
-		//var backgroundDisabledSkin:Image = new Image(this.backgroundDisabledSkinTexture);
-		//backgroundDisabledSkin.scale9Grid = DEFAULT_SCALE9_GRID;
-		//backgroundDisabledSkin.width = this.controlSize;
-		//backgroundDisabledSkin.height = this.controlSize;
-		//grid.backgroundDisabledSkin = backgroundDisabledSkin;
-		//
-		//grid.headerBackgroundSkin = new Quad(this.controlSize, this.controlSize, GROUPED_LIST_HEADER_BACKGROUND_COLOR);
-		//
-		//var columnResizeSkin:ImageSkin = new ImageSkin(this.dataGridColumnResizeSkinTexture);
-		//columnResizeSkin.scale9Grid = DATA_GRID_COLUMN_RESIZE_SCALE_9_GRID;
-		//grid.columnResizeSkin = columnResizeSkin;
-		//
-		//var columnDragOverlaySkin:Quad = new Quad(1, 1, DATA_GRID_COLUMN_OVERLAY_COLOR);
-		//columnDragOverlaySkin.alpha = DATA_GRID_COLUMN_OVERLAY_ALPHA;
-		//grid.columnDragOverlaySkin = columnDragOverlaySkin;
-		//
-		//var columnDropIndicatorSkin:ImageSkin = new ImageSkin(this.dataGridColumnDropIndicatorSkinTexture);
-		//columnDropIndicatorSkin.scale9Grid = DATA_GRID_COLUMN_DROP_INDICATOR_SCALE_9_GRID;
-		//grid.columnDropIndicatorSkin = columnDropIndicatorSkin;
-		//grid.extendedColumnDropIndicator = true;
-		//
-		//grid.headerDividerFactory = this.dataGridHeaderDividerFactory;
-		//grid.verticalDividerFactory = this.dataGridVerticalDividerFactory;
-		//
-		//grid.verticalScrollPolicy = ScrollPolicy.AUTO;
-	//}
+	private function setDataGridStyles(grid:DataGrid):Void
+	{
+		this.setScrollerStyles(grid);
+		
+		grid.padding = this.borderSize;
+		
+		var backgroundSkin:Image = new Image(this.listBackgroundSkinTexture);
+		backgroundSkin.scale9Grid = DEFAULT_SCALE9_GRID;
+		backgroundSkin.width = this.controlSize;
+		backgroundSkin.height = this.controlSize;
+		grid.backgroundSkin = backgroundSkin;
+		
+		var backgroundDisabledSkin:Image = new Image(this.backgroundDisabledSkinTexture);
+		backgroundDisabledSkin.scale9Grid = DEFAULT_SCALE9_GRID;
+		backgroundDisabledSkin.width = this.controlSize;
+		backgroundDisabledSkin.height = this.controlSize;
+		grid.backgroundDisabledSkin = backgroundDisabledSkin;
+		
+		grid.headerBackgroundSkin = new Quad(this.controlSize, this.controlSize, GROUPED_LIST_HEADER_BACKGROUND_COLOR);
+		
+		var columnResizeSkin:ImageSkin = new ImageSkin(this.dataGridColumnResizeSkinTexture);
+		columnResizeSkin.scale9Grid = DATA_GRID_COLUMN_RESIZE_SCALE_9_GRID;
+		grid.columnResizeSkin = columnResizeSkin;
+		
+		var columnDragOverlaySkin:Quad = new Quad(1, 1, DATA_GRID_COLUMN_OVERLAY_COLOR);
+		columnDragOverlaySkin.alpha = DATA_GRID_COLUMN_OVERLAY_ALPHA;
+		grid.columnDragOverlaySkin = columnDragOverlaySkin;
+		
+		var columnDropIndicatorSkin:ImageSkin = new ImageSkin(this.dataGridColumnDropIndicatorSkinTexture);
+		columnDropIndicatorSkin.scale9Grid = DATA_GRID_COLUMN_DROP_INDICATOR_SCALE_9_GRID;
+		grid.columnDropIndicatorSkin = columnDropIndicatorSkin;
+		grid.extendedColumnDropIndicator = true;
+		
+		grid.headerDividerFactory = this.dataGridHeaderDividerFactory;
+		grid.verticalDividerFactory = this.dataGridVerticalDividerFactory;
+		
+		grid.verticalScrollPolicy = ScrollPolicy.AUTO;
+	}
 	
-	//private function setDataGridCellRendererStyles(cellRenderer:DefaultDataGridCellRenderer):Void
-	//{
-		//var skin:ImageSkin = new ImageSkin(this.itemRendererUpSkinTexture);
-		//skin.selectedTexture = this.itemRendererSelectedUpSkinTexture;
-		//skin.setTextureForState(ButtonState.HOVER, this.itemRendererHoverSkinTexture);
-		//skin.setTextureForState(ButtonState.DOWN, this.itemRendererSelectedUpSkinTexture);
-		//skin.width = this.controlSize;
-		//skin.height = this.controlSize;
-		//skin.minWidth = this.controlSize;
-		//skin.minHeight = this.controlSize;
-		//cellRenderer.defaultSkin = skin;
-		//
-		//cellRenderer.fontStyles = this.lightFontStyles.clone();
-		//cellRenderer.disabledFontStyles = this.lightDisabledFontStyles.clone();
-		//cellRenderer.selectedFontStyles = this.darkFontStyles.clone();
-		//cellRenderer.setFontStylesForState(ButtonState.DOWN, this.darkFontStyles.clone());
-		//cellRenderer.setFontStylesForState(ButtonState.HOVER, this.darkFontStyles.clone());
-		//
-		//cellRenderer.iconLabelFontStyles = this.lightFontStyles.clone();
-		//cellRenderer.iconLabelDisabledFontStyles = this.lightDisabledFontStyles.clone();
-		//cellRenderer.iconLabelSelectedFontStyles = this.darkFontStyles.clone();
-		//cellRenderer.setIconLabelFontStylesForState(ButtonState.DOWN, this.darkFontStyles.clone());
-		//cellRenderer.setIconLabelFontStylesForState(ButtonState.HOVER, this.darkFontStyles.clone());
-		//
-		//cellRenderer.accessoryLabelFontStyles = this.lightFontStyles.clone();
-		//cellRenderer.accessoryLabelDisabledFontStyles = this.lightDisabledFontStyles.clone();
-		//cellRenderer.accessoryLabelSelectedFontStyles = this.darkFontStyles.clone();
-		//cellRenderer.setAccessoryLabelFontStylesForState(ButtonState.DOWN, this.darkFontStyles.clone());
-		//cellRenderer.setAccessoryLabelFontStylesForState(ButtonState.HOVER, this.darkFontStyles.clone());
-		//
-		//cellRenderer.horizontalAlign = HorizontalAlign.LEFT;
-		//cellRenderer.paddingTop = this.smallGutterSize;
-		//cellRenderer.paddingBottom = this.smallGutterSize;
-		//cellRenderer.paddingLeft = this.gutterSize;
-		//cellRenderer.paddingRight = this.gutterSize;
-		//cellRenderer.gap = this.smallGutterSize;
-		//cellRenderer.minGap = this.smallGutterSize;
-		//cellRenderer.iconPosition = RelativePosition.LEFT;
-		//cellRenderer.accessoryGap = Number.POSITIVE_INFINITY;
-		//cellRenderer.minAccessoryGap = this.smallGutterSize;
-		//cellRenderer.accessoryPosition = RelativePosition.RIGHT;
-		//
-		//cellRenderer.useStateDelayTimer = false;
-	//}
+	private function setDataGridCellRendererStyles(cellRenderer:DefaultDataGridCellRenderer):Void
+	{
+		var skin:ImageSkin = new ImageSkin(this.itemRendererUpSkinTexture);
+		skin.selectedTexture = this.itemRendererSelectedUpSkinTexture;
+		skin.setTextureForState(ButtonState.HOVER, this.itemRendererHoverSkinTexture);
+		skin.setTextureForState(ButtonState.DOWN, this.itemRendererSelectedUpSkinTexture);
+		skin.width = this.controlSize;
+		skin.height = this.controlSize;
+		skin.minWidth = this.controlSize;
+		skin.minHeight = this.controlSize;
+		cellRenderer.defaultSkin = skin;
+		
+		cellRenderer.fontStyles = this.lightFontStyles.clone();
+		cellRenderer.disabledFontStyles = this.lightDisabledFontStyles.clone();
+		cellRenderer.selectedFontStyles = this.darkFontStyles.clone();
+		cellRenderer.setFontStylesForState(ButtonState.DOWN, this.darkFontStyles.clone());
+		cellRenderer.setFontStylesForState(ButtonState.HOVER, this.darkFontStyles.clone());
+		
+		cellRenderer.iconLabelFontStyles = this.lightFontStyles.clone();
+		cellRenderer.iconLabelDisabledFontStyles = this.lightDisabledFontStyles.clone();
+		cellRenderer.iconLabelSelectedFontStyles = this.darkFontStyles.clone();
+		cellRenderer.setIconLabelFontStylesForState(ButtonState.DOWN, this.darkFontStyles.clone());
+		cellRenderer.setIconLabelFontStylesForState(ButtonState.HOVER, this.darkFontStyles.clone());
+		
+		cellRenderer.accessoryLabelFontStyles = this.lightFontStyles.clone();
+		cellRenderer.accessoryLabelDisabledFontStyles = this.lightDisabledFontStyles.clone();
+		cellRenderer.accessoryLabelSelectedFontStyles = this.darkFontStyles.clone();
+		cellRenderer.setAccessoryLabelFontStylesForState(ButtonState.DOWN, this.darkFontStyles.clone());
+		cellRenderer.setAccessoryLabelFontStylesForState(ButtonState.HOVER, this.darkFontStyles.clone());
+		
+		cellRenderer.horizontalAlign = HorizontalAlign.LEFT;
+		cellRenderer.paddingTop = this.smallGutterSize;
+		cellRenderer.paddingBottom = this.smallGutterSize;
+		cellRenderer.paddingLeft = this.gutterSize;
+		cellRenderer.paddingRight = this.gutterSize;
+		cellRenderer.gap = this.smallGutterSize;
+		cellRenderer.minGap = this.smallGutterSize;
+		cellRenderer.iconPosition = RelativePosition.LEFT;
+		cellRenderer.accessoryGap = Math.POSITIVE_INFINITY;
+		cellRenderer.minAccessoryGap = this.smallGutterSize;
+		cellRenderer.accessoryPosition = RelativePosition.RIGHT;
+		
+		cellRenderer.useStateDelayTimer = false;
+	}
 	
-	//private function setDataGridHeaderRendererStyles(headerRenderer:DefaultDataGridHeaderRenderer):Void
-	//{
-		//headerRenderer.backgroundSkin = new Quad(this.controlSize, this.controlSize, GROUPED_LIST_HEADER_BACKGROUND_COLOR);
-		//
-		//headerRenderer.sortAscendingIcon = new ImageSkin(this.dataGridHeaderSortAscendingIconTexture);
-		//headerRenderer.sortDescendingIcon = new ImageSkin(this.dataGridHeaderSortDescendingIconTexture);
-		//
-		//headerRenderer.fontStyles = this.lightUIFontStyles.clone();
-		//headerRenderer.disabledFontStyles = this.lightDisabledUIFontStyles.clone();
-		//
-		//headerRenderer.horizontalAlign = HorizontalAlign.LEFT;
-		//
-		//headerRenderer.paddingTop = this.smallGutterSize;
-		//headerRenderer.paddingBottom = this.smallGutterSize;
-		//headerRenderer.paddingLeft = this.gutterSize;
-		//headerRenderer.paddingRight = this.gutterSize;
-	//}
+	private function setDataGridHeaderRendererStyles(headerRenderer:DefaultDataGridHeaderRenderer):Void
+	{
+		headerRenderer.backgroundSkin = new Quad(this.controlSize, this.controlSize, GROUPED_LIST_HEADER_BACKGROUND_COLOR);
+		
+		headerRenderer.sortAscendingIcon = new ImageSkin(this.dataGridHeaderSortAscendingIconTexture);
+		headerRenderer.sortDescendingIcon = new ImageSkin(this.dataGridHeaderSortDescendingIconTexture);
+		
+		headerRenderer.fontStyles = this.lightUIFontStyles.clone();
+		headerRenderer.disabledFontStyles = this.lightDisabledUIFontStyles.clone();
+		
+		headerRenderer.horizontalAlign = HorizontalAlign.LEFT;
+		
+		headerRenderer.paddingTop = this.smallGutterSize;
+		headerRenderer.paddingBottom = this.smallGutterSize;
+		headerRenderer.paddingLeft = this.gutterSize;
+		headerRenderer.paddingRight = this.gutterSize;
+	}
 	
 	//-------------------------
 	// DateTimeSpinner
@@ -2779,41 +2784,41 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	// Tree
 	//-------------------------
 
-	//private function setTreeStyles(tree:Tree):Void
-	//{
-		//this.setScrollerStyles(tree);
-		//
-		//tree.padding = this.borderSize;
-		//
-		//var backgroundSkin:Image = new Image(this.listBackgroundSkinTexture);
-		//backgroundSkin.scale9Grid = DEFAULT_SCALE9_GRID;
-		//backgroundSkin.width = this.controlSize;
-		//backgroundSkin.height = this.controlSize;
-		//tree.backgroundSkin = backgroundSkin;
-		//
-		//var backgroundDisabledSkin:Image = new Image(this.backgroundDisabledSkinTexture);
-		//backgroundDisabledSkin.scale9Grid = DEFAULT_SCALE9_GRID;
-		//backgroundDisabledSkin.width = this.controlSize;
-		//backgroundDisabledSkin.height = this.controlSize;
-		//tree.backgroundDisabledSkin = backgroundDisabledSkin;
-		//
-		//tree.verticalScrollPolicy = ScrollPolicy.AUTO;
-	//}
+	private function setTreeStyles(tree:Tree):Void
+	{
+		this.setScrollerStyles(tree);
+		
+		tree.padding = this.borderSize;
+		
+		var backgroundSkin:Image = new Image(this.listBackgroundSkinTexture);
+		backgroundSkin.scale9Grid = DEFAULT_SCALE9_GRID;
+		backgroundSkin.width = this.controlSize;
+		backgroundSkin.height = this.controlSize;
+		tree.backgroundSkin = backgroundSkin;
+		
+		var backgroundDisabledSkin:Image = new Image(this.backgroundDisabledSkinTexture);
+		backgroundDisabledSkin.scale9Grid = DEFAULT_SCALE9_GRID;
+		backgroundDisabledSkin.width = this.controlSize;
+		backgroundDisabledSkin.height = this.controlSize;
+		tree.backgroundDisabledSkin = backgroundDisabledSkin;
+		
+		tree.verticalScrollPolicy = ScrollPolicy.AUTO;
+	}
 
-	//private function setTreeItemRendererStyles(itemRenderer:DefaultTreeItemRenderer):Void
-	//{
-		//this.setItemRendererStyles(itemRenderer);
-		//
-		//itemRenderer.indentation = this.treeDisclosureOpenIconTexture.width;
-		//
-		//var disclosureOpenIcon:ImageSkin = new ImageSkin(this.treeDisclosureOpenIconTexture);
-		//disclosureOpenIcon.selectedTexture = this.treeDisclosureOpenSelectedIconTexture;
-		//itemRenderer.disclosureOpenIcon = disclosureOpenIcon;
-		//
-		//var disclosureClosedIcon:ImageSkin = new ImageSkin(this.treeDisclosureClosedIconTexture);
-		//disclosureClosedIcon.selectedTexture = this.treeDisclosureClosedSelectedIconTexture;
-		//itemRenderer.disclosureClosedIcon = disclosureClosedIcon;
-	//}
+	private function setTreeItemRendererStyles(itemRenderer:DefaultTreeItemRenderer):Void
+	{
+		this.setItemRendererStyles(itemRenderer);
+		
+		itemRenderer.indentation = this.treeDisclosureOpenIconTexture.width;
+		
+		var disclosureOpenIcon:ImageSkin = new ImageSkin(this.treeDisclosureOpenIconTexture);
+		disclosureOpenIcon.selectedTexture = this.treeDisclosureOpenSelectedIconTexture;
+		itemRenderer.disclosureOpenIcon = disclosureOpenIcon;
+		
+		var disclosureClosedIcon:ImageSkin = new ImageSkin(this.treeDisclosureClosedIconTexture);
+		disclosureClosedIcon.selectedTexture = this.treeDisclosureClosedSelectedIconTexture;
+		itemRenderer.disclosureClosedIcon = disclosureClosedIcon;
+	}
 	
 	//-------------------------
 	// VideoPlayer
