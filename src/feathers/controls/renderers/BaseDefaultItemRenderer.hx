@@ -4074,11 +4074,14 @@ class BaseDefaultItemRenderer extends ToggleButton implements IFocusContainer
 				//var propertyValue:Object = this._accessoryLabelProperties[propertyName];
 				//displayAccessoryLabel[propertyName] = propertyValue;
 			//}
-			var propertyValue:Dynamic;
-			for (propertyName in this._iconLabelProperties)
+			if (this._iconLabelProperties != null)
 			{
-				propertyValue = this._iconLabelProperties[propertyName];
-				Reflect.setProperty(this.accessoryLabel, propertyName, propertyValue);
+				var propertyValue:Dynamic;
+				for (propertyName in this._iconLabelProperties)
+				{
+					propertyValue = this._iconLabelProperties[propertyName];
+					Reflect.setProperty(this.accessoryLabel, propertyName, propertyValue);
+				}
 			}
 		}
 	}
