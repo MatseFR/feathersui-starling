@@ -312,7 +312,8 @@ abstract class BaseScreenNavigator extends FeathersControl
 	override function draw():Void
 	{
 		var sizeInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_SIZE);
-		var selectionInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_SELECTED);
+		// this is not used
+		//var selectionInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_SELECTED);
 		var stylesInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_STYLES);
 		
 		sizeInvalid = this.autoSizeIfNeeded() || sizeInvalid;

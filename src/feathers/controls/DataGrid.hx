@@ -35,7 +35,6 @@ import feathers.layout.VerticalLayout;
 import feathers.skins.IStyleProvider;
 import feathers.system.DeviceCapabilities;
 import feathers.utils.ReverseIterator;
-import feathers.utils.math.MathUtils;
 import feathers.utils.skins.SkinsUtils;
 import feathers.utils.type.Property;
 import feathers.utils.type.SafeCast;
@@ -2657,7 +2656,7 @@ class DataGrid extends Scroller implements IDragSource implements IDropTarget
 					var column:DataGridColumn = cast this._columns.getItemAt(headerRenderer.columnIndex);
 					var dragData:DragData = new DragData();
 					dragData.setDataForFormat(DATA_GRID_HEADER_DRAG_FORMAT, column);
-					var self:DataGrid = this;
+					//var self:DataGrid = this; // this is not in use
 					var avatar:RenderDelegate = new RenderDelegate(cast headerRenderer);
 					avatar.alpha = this._columnDragAvatarAlpha;
 					DragDropManager.startDrag(this, touch, dragData, avatar);

@@ -565,9 +565,9 @@ class DataGridRowRenderer extends LayoutGroup implements IToggle
 	 */
 	private function freeInactiveCellRenderers(storage:CellRendererFactoryStorage):Void
 	{
-		var activeCellRenderers:Array<IDataGridCellRenderer> = storage.activeCellRenderers;
+		//var activeCellRenderers:Array<IDataGridCellRenderer> = storage.activeCellRenderers; // this is not in use
 		var inactiveCellRenderers:Array<IDataGridCellRenderer> = storage.inactiveCellRenderers;
-		var activeCellRenderersCount:Int = activeCellRenderers.length;
+		//var activeCellRenderersCount:Int = activeCellRenderers.length; // this is not in use
 		var itemCount:Int = inactiveCellRenderers.length;
 		var cellRenderer:IDataGridCellRenderer;
 		for (i in 0...itemCount)
