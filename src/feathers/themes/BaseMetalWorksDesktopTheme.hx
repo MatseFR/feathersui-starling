@@ -32,6 +32,7 @@ import feathers.controls.ButtonState;
 import feathers.controls.Callout;
 import feathers.controls.Check;
 import feathers.controls.DataGrid;
+import feathers.controls.DateTimeSpinner;
 import feathers.controls.Drawers;
 import feathers.controls.GroupedList;
 import feathers.controls.Header;
@@ -901,7 +902,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		this.getStyleProviderForClass(DataGrid).defaultStyleFunction = this.setDataGridStyles;
 		
 		//date time spinner
-		//this.getStyleProviderForClass(DateTimeSpinner).defaultStyleFunction = this.setDateTimeSpinnerStyles;
+		this.getStyleProviderForClass(DateTimeSpinner).defaultStyleFunction = this.setDateTimeSpinnerStyles;
 		this.getStyleProviderForClass(DefaultListItemRenderer).setFunctionForStyleName(THEME_STYLE_NAME_DATE_TIME_SPINNER_LIST_ITEM_RENDERER, this.setDateTimeSpinnerListItemRendererStyles);
 		
 		//drawers
@@ -1607,10 +1608,10 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	// DateTimeSpinner
 	//-------------------------
 	
-	//private function setDateTimeSpinnerStyles(spinner:DateTimeSpinner):Void
-	//{
-		//spinner.customItemRendererStyleName = THEME_STYLE_NAME_DATE_TIME_SPINNER_LIST_ITEM_RENDERER;
-	//}
+	private function setDateTimeSpinnerStyles(spinner:DateTimeSpinner):Void
+	{
+		spinner.customItemRendererStyleName = THEME_STYLE_NAME_DATE_TIME_SPINNER_LIST_ITEM_RENDERER;
+	}
 
 	private function setDateTimeSpinnerListItemRendererStyles(itemRenderer:DefaultListItemRenderer):Void
 	{
