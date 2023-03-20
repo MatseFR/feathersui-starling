@@ -50,7 +50,7 @@ class MainMenuScreen extends PanelScreen
 			{ label: "Callout", screen: ScreenID.CALLOUT },
 			{ label: "Check", screen: ScreenID.CHECK },
 			{ label: "Data Grid", screen: ScreenID.DATA_GRID },
-			//{ label: "Date Time Spinner", screen: ScreenID.DATE_TIME_SPINNER },
+			{ label: "Date Time Spinner", screen: ScreenID.DATE_TIME_SPINNER },
 			{ label: "Grouped List", screen: ScreenID.GROUPED_LIST },
 			{ label: "Item Renderer", screen: ScreenID.ITEM_RENDERER },
 			{ label: "Label", screen: ScreenID.LABEL },

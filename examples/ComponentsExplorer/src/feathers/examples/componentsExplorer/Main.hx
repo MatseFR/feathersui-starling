@@ -1,8 +1,11 @@
 package feathers.examples.componentsExplorer;
 
 import feathers.examples.componentsExplorer.data.DataGridSettings;
+import feathers.examples.componentsExplorer.data.DateTimeSpinnerSettings;
 import feathers.examples.componentsExplorer.screens.DataGridScreen;
 import feathers.examples.componentsExplorer.screens.DataGridSettingsScreen;
+import feathers.examples.componentsExplorer.screens.DateTimeSpinnerScreen;
+import feathers.examples.componentsExplorer.screens.DateTimeSpinnerSettingsScreen;
 import feathers.examples.componentsExplorer.screens.TreeScreen;
 import feathers.themes.MetalWorksDesktopTheme;
 import feathers.controls.Drawers;
@@ -61,7 +64,7 @@ class Main extends Drawers
 	public function new(content:IFeathersControl=null) 
 	{
 		//set up the theme right away!
-		// new MetalWorksDesktopTheme();
+		//new MetalWorksDesktopTheme();
 		new MetalWorksMobileTheme();
 		super(content);
 	}
@@ -117,6 +120,21 @@ class Main extends Drawers
 		dataGridSettingsItem.pushTransition = Cover.createCoverUpTransition();
 		dataGridSettingsItem.popTransition = Reveal.createRevealDownTransition();
 		this._navigator.addScreen(ScreenID.DATA_GRID_SETTINGS, dataGridSettingsItem);
+		
+		var dateTimeSpinnerSettings:DateTimeSpinnerSettings = new DateTimeSpinnerSettings();
+		var dateTimeSpinnerItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(DateTimeSpinnerScreen);
+		dateTimeSpinnerItem.setScreenIDForPushEvent(DateTimeSpinnerScreen.SHOW_SETTINGS, ScreenID.DATE_TIME_SPINNER_SETTINGS);
+		dateTimeSpinnerItem.addPopEvent(Event.COMPLETE);
+		dateTimeSpinnerItem.properties.settings = dateTimeSpinnerSettings;
+		this._navigator.addScreen(ScreenID.DATE_TIME_SPINNER, dateTimeSpinnerItem);
+
+		var dateTimeSpinnerSettingsItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(DateTimeSpinnerSettingsScreen);
+		dateTimeSpinnerSettingsItem.addPopEvent(Event.COMPLETE);
+		dateTimeSpinnerSettingsItem.properties.settings = dateTimeSpinnerSettings;
+		//custom push and pop transitions for this settings screen
+		dateTimeSpinnerSettingsItem.pushTransition = Cover.createCoverUpTransition();
+		dateTimeSpinnerSettingsItem.popTransition = Reveal.createRevealDownTransition();
+		this._navigator.addScreen(ScreenID.DATE_TIME_SPINNER_SETTINGS, dateTimeSpinnerSettingsItem);
 		
 		var groupedListSettings:GroupedListSettings = new GroupedListSettings();
 		var groupedListItem:StackScreenNavigatorItem = new StackScreenNavigatorItem(GroupedListScreen);
