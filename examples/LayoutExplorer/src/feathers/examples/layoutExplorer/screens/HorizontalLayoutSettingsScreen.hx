@@ -146,17 +146,17 @@ class HorizontalLayoutSettingsScreen extends PanelScreen
 	}
 	
 	private function customHeaderFactory():Header
-		{
-			var header:Header = new Header();
-			var doneButton:Button = new Button();
-			doneButton.label = "Done";
-			doneButton.addEventListener(Event.TRIGGERED, doneButton_triggeredHandler);
-			header.rightItems = 
-			[
-				doneButton
-			];
-			return header;
-		}
+	{
+		var header:Header = new Header();
+		var doneButton:Button = new Button();
+		doneButton.label = "Done";
+		doneButton.addEventListener(Event.TRIGGERED, doneButton_triggeredHandler);
+		header.rightItems = 
+		[
+			doneButton
+		];
+		return header;
+	}
 
 	private function disposeItemAccessory(item:Dynamic):Void
 	{
