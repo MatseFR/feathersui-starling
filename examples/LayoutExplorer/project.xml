@@ -11,6 +11,7 @@
 	<window background="#000000" fps="60" />
 	<window width="800" height="480" unless="mobile || html5" />
 	<window orientation="landscape" vsync="false" antialiasing="0" if="cpp" />
+	<window allow-high-dpi="true"/>
 	
 	<!-- classpath, haxe libs -->
 	<source path="src" />

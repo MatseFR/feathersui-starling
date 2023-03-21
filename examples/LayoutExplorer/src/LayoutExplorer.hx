@@ -39,7 +39,7 @@ class LayoutExplorer extends Sprite
 		_starling.showStats = false;//Capabilities.isDebugger;
 		_starling.skipUnchangedFrames = true;
 		_starling.supportBrowserZoom = true;
-		_starling.supportHighResolutions = false;
+		_starling.supportHighResolutions = true;
 		_starling.simulateMultitouch = true;
 		_starling.addEventListener(Event.ROOT_CREATED, function():Void
 		{
