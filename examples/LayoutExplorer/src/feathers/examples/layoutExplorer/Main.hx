@@ -34,6 +34,7 @@ import feathers.system.DeviceCapabilities;
 import feathers.themes.MetalWorksMobileTheme;
 import starling.core.Starling;
 import starling.events.Event;
+import starling.events.ResizeEvent;
 
 class Main extends Drawers 
 {
@@ -215,6 +216,8 @@ class Main extends Drawers
 		
 		this._navigator.pushTransition = Slide.createSlideLeftTransition();
 		this._navigator.popTransition = Slide.createSlideRightTransition();
+		
+		this.stage.addEventListener(Event.RESIZE, stageResizeHandler);
 	}
 	
 	private function mainMenuEventHandler(event:Event):Void
@@ -223,6 +226,23 @@ class Main extends Drawers
 		//since this navigation is triggered by an external menu, we don't
 		//want to push a new screen onto the stack. we want to start fresh.
 		this._navigator.rootScreenID = screenName;
+	}
+	
+	private function stageResizeHandler(evt:ResizeEvent):Void
+	{
+		updateViewPort(evt.width, evt.height);
+	}
+	
+	private function updateViewPort(width:Int, height:Int):Void
+	{
+		var current:Starling = Starling.current;
+		var scale:Float = current.contentScaleFactor;
+		
+		stage.stageWidth = Std.int(width / scale);
+		stage.stageHeight = Std.int(height / scale);
+		
+		current.viewPort.width = width;//stage.stageWidth * scale;
+		current.viewPort.height = height;//stage.stageHeight * scale;
 	}
 	
 }
