@@ -115,12 +115,7 @@ class BaseMetalWorksMobileTheme extends StyleNameFunctionTheme
 	 * The name of the embedded font used by controls in this theme. Comes
 	 * in normal and bold weights.
 	 */
-	public static inline var FONT_NAME:String = "SourceSansPro";
-
-	/**
-	 * The stack of fonts to use for controls that don't use embedded fonts.
-	 */
-	public static inline var FONT_NAME_STACK:String = "Source Sans Pro,Helvetica,_sans";
+	public static inline var FONT_NAME:String = "Source Sans Pro";
 	
 	private static inline var PRIMARY_BACKGROUND_COLOR:Int = 0x4a4137;
 	private static inline var LIGHT_TEXT_COLOR:Int = 0xe5e5e5;
@@ -724,11 +719,11 @@ class BaseMetalWorksMobileTheme extends StyleNameFunctionTheme
 		this.xlargeLightUIDisabledFontStyles = new TextFormat(FONT_NAME, this.extraLargeFontSize, LIGHT_DISABLED_TEXT_COLOR, HorizontalAlign.LEFT, VerticalAlign.TOP);
 		this.xlargeLightUIDisabledFontStyles.bold = true;
 		
-		this.lightInputFontStyles = new TextFormat(FONT_NAME_STACK, this.regularFontSize, LIGHT_TEXT_COLOR, HorizontalAlign.LEFT, VerticalAlign.TOP);
-		this.lightDisabledInputFontStyles = new TextFormat(FONT_NAME_STACK, this.regularFontSize, LIGHT_DISABLED_TEXT_COLOR, HorizontalAlign.LEFT, VerticalAlign.TOP);
+		this.lightInputFontStyles = new TextFormat(FONT_NAME, this.regularFontSize, LIGHT_TEXT_COLOR, HorizontalAlign.LEFT, VerticalAlign.TOP);
+		this.lightDisabledInputFontStyles = new TextFormat(FONT_NAME, this.regularFontSize, LIGHT_DISABLED_TEXT_COLOR, HorizontalAlign.LEFT, VerticalAlign.TOP);
 		
-		this.lightScrollTextFontStyles = new TextFormat(FONT_NAME_STACK, this.regularFontSize, LIGHT_TEXT_COLOR, HorizontalAlign.LEFT, VerticalAlign.TOP);
-		this.lightDisabledScrollTextFontStyles = new TextFormat(FONT_NAME_STACK, this.regularFontSize, LIGHT_DISABLED_TEXT_COLOR, HorizontalAlign.LEFT, VerticalAlign.TOP);
+		this.lightScrollTextFontStyles = new TextFormat(FONT_NAME, this.regularFontSize, LIGHT_TEXT_COLOR, HorizontalAlign.LEFT, VerticalAlign.TOP);
+		this.lightDisabledScrollTextFontStyles = new TextFormat(FONT_NAME, this.regularFontSize, LIGHT_DISABLED_TEXT_COLOR, HorizontalAlign.LEFT, VerticalAlign.TOP);
 	}
 	
 	/**

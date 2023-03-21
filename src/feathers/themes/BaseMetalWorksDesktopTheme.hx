@@ -114,13 +114,8 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	 * The name of the embedded font used by controls in this theme. Comes
 	 * in normal and bold weights.
 	 */
-	public static inline var FONT_NAME:String = "SourceSansPro";
+	public static inline var FONT_NAME:String = "Source Sans Pro";
 	
-	/**
-	 * The stack of fonts to use for controls that don't use embedded fonts.
-	 */
-	public static inline var FONT_NAME_STACK:String = "Source Sans Pro,Helvetica,_sans";
-
 	private static inline var PRIMARY_BACKGROUND_COLOR:Int = 0x4a4137;
 	private static inline var LIGHT_TEXT_COLOR:Int = 0xe5e5e5;
 	private static inline var DARK_TEXT_COLOR:Int = 0x1a1816;
@@ -716,8 +711,8 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		this.lightCenteredDisabledUIFontStyles = new TextFormat(FONT_NAME, this.regularFontSize, LIGHT_DISABLED_TEXT_COLOR, HorizontalAlign.CENTER, VerticalAlign.TOP);
 		this.lightCenteredDisabledUIFontStyles.bold = true;
 
-		this.lightScrollTextFontStyles = new TextFormat(FONT_NAME_STACK, this.regularFontSize, LIGHT_TEXT_COLOR, HorizontalAlign.LEFT, VerticalAlign.TOP);
-		this.lightDisabledScrollTextFontStyles = new TextFormat(FONT_NAME_STACK, this.regularFontSize, LIGHT_DISABLED_TEXT_COLOR, HorizontalAlign.LEFT, VerticalAlign.TOP);
+		this.lightScrollTextFontStyles = new TextFormat(FONT_NAME, this.regularFontSize, LIGHT_TEXT_COLOR, HorizontalAlign.LEFT, VerticalAlign.TOP);
+		this.lightDisabledScrollTextFontStyles = new TextFormat(FONT_NAME, this.regularFontSize, LIGHT_DISABLED_TEXT_COLOR, HorizontalAlign.LEFT, VerticalAlign.TOP);
 	}
 
 	/**
