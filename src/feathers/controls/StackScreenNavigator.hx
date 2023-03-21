@@ -1469,7 +1469,7 @@ class StackScreenNavigator extends BaseScreenNavigator
 
 @:final class StackItem
 {
-	public function new(id:String, properties:Map<String, Dynamic>)
+	public function new(id:String, properties:Dynamic)
 	{
 		this.id = id;
 		this.properties = properties;
@@ -1485,5 +1485,5 @@ class StackScreenNavigator extends BaseScreenNavigator
 	}
 
 	public var id:String;
-	public var properties:Map<String, Dynamic>;
+	public var properties:Dynamic;
 }

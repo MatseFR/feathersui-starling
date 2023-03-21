@@ -25,7 +25,7 @@ import starling.events.Event;
  *
  * @productversion Feathers 2.2.0
  */
-class WaterfallLayout extends BaseVariableVirtualLayout 
+class WaterfallLayout extends BaseVariableVirtualLayout implements IVariableVirtualLayout
 {
 	/**
 	 * Constructor.
@@ -147,7 +147,7 @@ class WaterfallLayout extends BaseVariableVirtualLayout
 	{
 		if (this._paddingRight == value)
 		{
-			return;
+			return value;
 		}
 		this._paddingRight = value;
 		this.dispatchEventWith(Event.CHANGE);
@@ -272,6 +272,8 @@ class WaterfallLayout extends BaseVariableVirtualLayout
 		var needsWidth:Bool = explicitWidth != explicitWidth; //isNaN
 		var needsHeight:Bool = explicitHeight != explicitHeight; //isNaN
 		
+		var calculatedTypicalItemWidth:Float = 0;
+		var calculatedTypicalItemHeight:Float = 0;
 		if (this._useVirtualLayout)
 		{
 			//if the layout is virtualized, we'll need the dimensions of the
@@ -280,8 +282,8 @@ class WaterfallLayout extends BaseVariableVirtualLayout
 			{
 				cast(this._typicalItem, IValidating).validate();
 			}
-			var calculatedTypicalItemWidth:Float = this._typicalItem != null ? this._typicalItem.width : 0;
-			var calculatedTypicalItemHeight:Float = this._typicalItem != null ? this._typicalItem.height : 0;
+			calculatedTypicalItemWidth = this._typicalItem != null ? this._typicalItem.width : 0;
+			calculatedTypicalItemHeight = this._typicalItem != null ? this._typicalItem.height : 0;
 		}
 		
 		var columnWidth:Float = 0;
@@ -338,7 +340,7 @@ class WaterfallLayout extends BaseVariableVirtualLayout
 		{
 			columnHeights[i] = this._paddingTop;
 		}
-		columnHeights.fixed = true;
+		//columnHeights.fixed = true;
 		
 		var horizontalAlignOffset:Float = 0;
 		if (this._horizontalAlign == HorizontalAlign.RIGHT)
@@ -353,7 +355,7 @@ class WaterfallLayout extends BaseVariableVirtualLayout
 		var itemCount:Int = items.length;
 		var targetColumnIndex:Int = 0;
 		var targetColumnHeight:Float = columnHeights[targetColumnIndex];
-		var cachedHeight:Float;
+		var cachedHeight:Float = Math.NaN;
 		var itemHeight:Float;
 		var layoutItem:ILayoutDisplayObject;
 		var scaleFactor:Float;
@@ -365,7 +367,7 @@ class WaterfallLayout extends BaseVariableVirtualLayout
 			{
 				cachedHeight = this._heightCache[i];
 			}
-			if (this._useVirtualLayout && !item)
+			if (this._useVirtualLayout && item == null)
 			{
 				if (!this._hasVariableItemDimensions ||
 					cachedHeight != cachedHeight) //isNaN
@@ -591,7 +593,7 @@ class WaterfallLayout extends BaseVariableVirtualLayout
 				{
 					columnHeights[i] = this._paddingTop;
 				}
-				columnHeights.fixed = true;
+				//columnHeights.fixed = true;
 				
 				var targetColumnIndex:Int = 0;
 				var targetColumnHeight:Float = columnHeights[targetColumnIndex];
@@ -670,7 +672,7 @@ class WaterfallLayout extends BaseVariableVirtualLayout
 	 */
 	public function getVisibleIndicesAtScrollPosition(scrollX:Float, scrollY:Float, width:Float, height:Float, itemCount:Int, result:Array<Int> = null):Array<Int>
 	{
-		if (result)
+		if (result != null)
 		{
 			result.resize(0);
 		}
@@ -708,7 +710,7 @@ class WaterfallLayout extends BaseVariableVirtualLayout
 			{
 				columnHeights[i] = this._paddingTop;
 			}
-			columnHeights.fixed = true;
+			//columnHeights.fixed = true;
 			
 			var maxPositionY:Float = scrollY + height;
 			var targetColumnIndex:Int = 0;
@@ -809,11 +811,12 @@ class WaterfallLayout extends BaseVariableVirtualLayout
 	{
 		var maxScrollY:Float = this.calculateMaxScrollYOfIndex(index, items, x, y, width, height);
 		
+		var itemHeight:Float;
 		if (this._useVirtualLayout)
 		{
 			if (this._hasVariableItemDimensions)
 			{
-				var itemHeight:Float = this._heightCache[index];
+				itemHeight = this._heightCache[index];
 				if (itemHeight != itemHeight) //isNaN
 				{
 					itemHeight = this._typicalItem.height;
@@ -902,11 +905,12 @@ class WaterfallLayout extends BaseVariableVirtualLayout
 	{
 		var maxScrollY:Float = this.calculateMaxScrollYOfIndex(index, items, x, y, width, height);
 		
+		var itemHeight:Float;
 		if (this._useVirtualLayout)
 		{
 			if (this._hasVariableItemDimensions)
 			{
-				var itemHeight:Float = this._heightCache[index];
+				itemHeight = this._heightCache[index];
 				if (itemHeight != itemHeight) //isNaN
 				{
 					itemHeight = this._typicalItem.height;
@@ -985,7 +989,7 @@ class WaterfallLayout extends BaseVariableVirtualLayout
 		{
 			columnHeights[i] = this._paddingTop;
 		}
-		columnHeights.fixed = true;
+		//columnHeights.fixed = true;
 		
 		var itemCount:Int = items.length;
 		var targetColumnIndex:Int = 0;

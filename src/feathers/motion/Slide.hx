@@ -277,8 +277,9 @@ class SlideTween extends Tween
 	
 	private function cleanupTween():Void
 	{
-		this.target.x = 0;
-		this.target.y = 0;
+		var displayTarget:DisplayObject = cast this.target;
+		displayTarget.x = 0;
+		displayTarget.y = 0;
 		if (this._otherTarget != null)
 		{
 			this._otherTarget.x = 0;

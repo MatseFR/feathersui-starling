@@ -361,13 +361,13 @@ class SlideShowLayout extends EventDispatcher implements IVirtualLayout implemen
 				explicitHeight - this._paddingTop - this._paddingBottom);
 		}
 		
+		var item:DisplayObject;
 		//if the layout isn't virtual and the view port dimensions aren't
 		//explicit, we need to calculate them
 		if (!this._useVirtualLayout && (needsExplicitWidth || needsExplicitHeight))
 		{
 			var maxItemWidth:Float = this._useVirtualLayout ? calculatedTypicalItemWidth : 0;
 			var maxItemHeight:Float = this._useVirtualLayout ? calculatedTypicalItemHeight : 0;
-			var item:DisplayObject;
 			for (i in 0...itemCount)
 			{
 				item = items[i];
@@ -628,12 +628,12 @@ class SlideShowLayout extends EventDispatcher implements IVirtualLayout implemen
 		var isBetweenPages:Bool;
 		if (this._direction == Direction.VERTICAL)
 		{
-			baseIndex = scrollY / height;
+			baseIndex = Std.int(scrollY / height);
 			isBetweenPages = ((scrollY / height) - baseIndex) > FUZZY_PAGE_DETECTION;
 		}
 		else //horizontal
 		{
-			baseIndex = scrollX / width;
+			baseIndex = Std.int(scrollX / width);
 			isBetweenPages = ((scrollX / width) - baseIndex) > FUZZY_PAGE_DETECTION;
 		}
 		var extraBeforeCount:Int = Std.int(this._minimumItemCount / 2);
