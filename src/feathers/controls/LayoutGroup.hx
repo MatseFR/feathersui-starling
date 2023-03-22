@@ -828,10 +828,13 @@ class LayoutGroup extends FeathersControl
 		var oldIgnoreChildChanges:Bool = this._ignoreChildChanges;
 		this._ignoreChildChanges = true;
 		var itemCount:Int = this.items.length;
+		var item:DisplayObject;
+		var itemMaxX:Float;
+		var itemMaxY:Float;
 		for (i in 0...itemCount)
 		{
-			var item:DisplayObject = this.items[i];
-			if (Std.isOfType(item, ILayoutDisplayObject) && cast(item, ILayoutDisplayObject).includeInLayout)
+			item = this.items[i];
+			if (Std.isOfType(item, ILayoutDisplayObject) && !cast(item, ILayoutDisplayObject).includeInLayout)
 			{
 				continue;
 			}
@@ -839,8 +842,8 @@ class LayoutGroup extends FeathersControl
 			{
 				cast(item, IValidating).validate();
 			}
-			var itemMaxX:Float = item.x - item.pivotX + item.width;
-			var itemMaxY:Float = item.y - item.pivotY + item.height;
+			itemMaxX = item.x - item.pivotX + item.width;
+			itemMaxY = item.y - item.pivotY + item.height;
 			if (itemMaxX == itemMaxX && //!isNaN
 				itemMaxX > maxX)
 			{
@@ -907,9 +910,10 @@ class LayoutGroup extends FeathersControl
 			cast(this.currentBackgroundSkin, IValidating).validate();
 		}
 		var itemCount:Int = this.items.length;
+		var item:DisplayObject;
 		for (i in 0...itemCount)
 		{
-			var item:DisplayObject = this.items[i];
+			item = this.items[i];
 			if (Std.isOfType(item, IValidating))
 			{
 				cast(item, IValidating).validate();
