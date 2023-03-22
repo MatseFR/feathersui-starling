@@ -13,6 +13,7 @@ import feathers.core.IMeasureDisplayObject;
 import feathers.core.IValidating;
 import feathers.events.FeathersEventType;
 import feathers.utils.skins.SkinsUtils;
+import feathers.utils.type.SafeCast;
 import haxe.Constraints.Function;
 import openfl.errors.ArgumentError;
 import openfl.errors.IllegalOperationError;
@@ -354,7 +355,7 @@ abstract class BaseScreenNavigator extends FeathersControl
 		}
 		
 		var needsToMeasureContent:Bool = this._autoSizeMode == AutoSizeMode.CONTENT || this.stage == null;
-		var measureScreen:IMeasureDisplayObject = cast this._activeScreen;
+		var measureScreen:IMeasureDisplayObject = SafeCast.safe_cast(this._activeScreen, IMeasureDisplayObject);
 		if (needsToMeasureContent)
 		{
 			if (this._activeScreen != null)
@@ -591,7 +592,7 @@ abstract class BaseScreenNavigator extends FeathersControl
 		{
 			cast(this._activeScreen, IFeathersControl).initializeNow();
 		}
-		var measureScreen:IMeasureDisplayObject = cast this._activeScreen;
+		var measureScreen:IMeasureDisplayObject = SafeCast.safe_cast(this._activeScreen, IMeasureDisplayObject);
 		if (measureScreen != null)
 		{
 			this._activeScreenExplicitWidth = measureScreen.explicitWidth;
@@ -801,7 +802,7 @@ abstract class BaseScreenNavigator extends FeathersControl
 				{
 					this._activeScreen.width = this._activeScreenExplicitWidth;
 					this._activeScreen.height = this._activeScreenExplicitHeight;
-					var measureScreen:IMeasureDisplayObject = cast this._activeScreen;
+					var measureScreen:IMeasureDisplayObject = SafeCast.safe_cast(this._activeScreen, IMeasureDisplayObject);
 					if (measureScreen != null)
 					{
 						measureScreen.minWidth = this._activeScreenExplicitMinWidth;
