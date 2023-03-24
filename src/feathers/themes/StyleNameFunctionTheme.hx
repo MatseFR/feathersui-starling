@@ -126,14 +126,20 @@ class StyleNameFunctionTheme extends EventDispatcher
 	{
 		var classes:Array<Class<Dynamic>> = this._conditionalRegistry.getRegisteredClasses();
 		var classCount:Int = classes.length;
+		var forClass:Class<Dynamic>;
+		var globalStyleProvider:IStyleProvider;
+		var styleProviderInRegistry:ConditionalStyleProvider;
+		var currentStyleProvider:ConditionalStyleProvider;
+		var previousStyleProvider:ConditionalStyleProvider;
+		var nextStyleProvider:IStyleProvider;
 		for (i in 0...classCount)
 		{
-			var forClass:Class<Dynamic> = classes[i];
-			var globalStyleProvider:IStyleProvider = Reflect.field(forClass, GLOBAL_STYLE_PROVIDER_PROPERTY_NAME);
-			var styleProviderInRegistry:ConditionalStyleProvider = cast this._conditionalRegistry.clearStyleProvider(forClass);
+			forClass = classes[i];
+			globalStyleProvider = Reflect.field(forClass, GLOBAL_STYLE_PROVIDER_PROPERTY_NAME);
+			styleProviderInRegistry = cast this._conditionalRegistry.clearStyleProvider(forClass);
 			
-			var currentStyleProvider:ConditionalStyleProvider = cast globalStyleProvider;
-			var previousStyleProvider:ConditionalStyleProvider = null;
+			currentStyleProvider = cast globalStyleProvider;
+			previousStyleProvider = null;
 			do
 			{
 				if (currentStyleProvider == null)
@@ -145,7 +151,7 @@ class StyleNameFunctionTheme extends EventDispatcher
 					styleProviderInRegistry.trueStyleProvider = null;
 					break;
 				}
-				var nextStyleProvider:IStyleProvider = currentStyleProvider.falseStyleProvider;
+				nextStyleProvider = currentStyleProvider.falseStyleProvider;
 				if (currentStyleProvider == styleProviderInRegistry)
 				{
 					if (previousStyleProvider != null)
@@ -161,7 +167,7 @@ class StyleNameFunctionTheme extends EventDispatcher
 				previousStyleProvider = currentStyleProvider;
 				currentStyleProvider = cast nextStyleProvider;
 			}
-			while(true);
+			while (true);
 		}
 		this._conditionalRegistry = null;
 	}

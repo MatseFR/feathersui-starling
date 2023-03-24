@@ -472,7 +472,7 @@ class SpinnerList extends List
 		{
 			pageIndex = this._verticalPageIndex % itemCount;
 		}
-		else if(this._maxHorizontalPageIndex != this._minHorizontalPageIndex)
+		else if (this._maxHorizontalPageIndex != this._minHorizontalPageIndex)
 		{
 			pageIndex = this._horizontalPageIndex % itemCount;
 		}
@@ -603,7 +603,7 @@ class SpinnerList extends List
 					pageIndex = this.calculateNearestPageIndexForItem(newIndex, this._verticalPageIndex, this._maxVerticalPageIndex);
 					this.throwToPage(this._horizontalPageIndex, pageIndex, this._pageThrowDuration);
 				}
-				else if(this._maxHorizontalPageIndex != this._minHorizontalPageIndex)
+				else if (this._maxHorizontalPageIndex != this._minHorizontalPageIndex)
 				{
 					event.preventDefault();
 					pageIndex = this.calculateNearestPageIndexForItem(newIndex, this._horizontalPageIndex, this._maxHorizontalPageIndex);

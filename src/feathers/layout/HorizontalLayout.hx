@@ -187,7 +187,7 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 		
 		//since viewPortBounds can be null, we may need to provide some defaults
 		var scrollX:Float = viewPortBounds != null ? viewPortBounds.scrollX : 0;
-		var scrollY:Float = viewPortBounds != null ? viewPortBounds.scrollY : 0;
+		//var scrollY:Float = viewPortBounds != null ? viewPortBounds.scrollY : 0;
 		var boundsX:Float = viewPortBounds != null ? viewPortBounds.x : 0;
 		var boundsY:Float = viewPortBounds != null ? viewPortBounds.y : 0;
 		var minWidth:Float = viewPortBounds != null ? viewPortBounds.minWidth : 0;
@@ -550,6 +550,12 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 		}
 		
 		var availableHeightMinusPadding:Float = availableHeight - this._paddingTop - this._paddingBottom;
+		var layoutData:HorizontalLayoutData;
+		var percentHeight:Float;
+		var feathersItem:IFeathersControl;
+		var itemMinHeight:Float;
+		var itemMaxHeight:Float;
+		var verticalAlignHeight:Float;
 		for (i in 0...discoveredItemCount)
 		{
 			item = discoveredItems[i];
@@ -577,12 +583,12 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 			{
 				if (layoutItem != null)
 				{
-					var layoutData:HorizontalLayoutData = cast layoutItem.layoutData;
+					layoutData = SafeCast.safe_cast(layoutItem.layoutData, HorizontalLayoutData);
 					if (layoutData != null)
 					{
 						//in this section, we handle percentage width if
 						//VerticalLayoutData is available.
-						var percentHeight:Float = layoutData.percentHeight;
+						percentHeight = layoutData.percentHeight;
 						if (percentHeight == percentHeight) //!isNaN
 						{
 							if (percentHeight < 0)
@@ -596,8 +602,8 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 							itemHeight = percentHeight * availableHeightMinusPadding / 100;
 							if (Std.isOfType(item, IFeathersControl))
 							{
-								var feathersItem:IFeathersControl = cast item;
-								var itemMinHeight:Float = feathersItem.explicitMinHeight;
+								feathersItem = cast item;
+								itemMinHeight = feathersItem.explicitMinHeight;
 								//we try to respect the minWidth, but not
 								//when it's larger than 100%
 								if (itemMinHeight > availableHeightMinusPadding)
@@ -610,7 +616,7 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 								}
 								else
 								{
-									var itemMaxHeight:Float = feathersItem.explicitMaxHeight;
+									itemMaxHeight = feathersItem.explicitMaxHeight;
 									if (itemHeight > itemMaxHeight)
 									{
 										itemHeight = itemMaxHeight;
@@ -623,7 +629,7 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 				}
 				//handle all other vertical alignment values (we handled
 				//justify already). the y position of all items is set here.
-				var verticalAlignHeight:Float = availableHeight;
+				verticalAlignHeight = availableHeight;
 				if (totalHeight > verticalAlignHeight)
 				{
 					verticalAlignHeight = totalHeight;
@@ -813,7 +819,7 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 		
 		this.prepareTypicalItem(height - this._paddingTop - this._paddingBottom);
 		var calculatedTypicalItemWidth:Float = this._typicalItem != null ? this._typicalItem.width : 0;
-		var calculatedTypicalItemHeight:Float = this._typicalItem != null ? this._typicalItem.height : 0;
+		//var calculatedTypicalItemHeight:Float = this._typicalItem != null ? this._typicalItem.height : 0;
 		
 		var hasFirstGap:Bool = this._firstGap == this._firstGap; //!isNaN
 		var hasLastGap:Bool = this._lastGap == this._lastGap; //!isNaN
@@ -956,7 +962,6 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 			{
 				endIndex = itemCount;
 			}
-			//for (i = startIndex; i < endIndex; i++)
 			for (i in startIndex...endIndex)
 			{
 				result[resultLastIndex] = i;
@@ -1067,7 +1072,6 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 				indexOffset = -this._beforeVirtualizedItemCount;
 			}
 			
-			//for(var i:int = index; i >= 0; i--)
 			for (i in new ReverseIterator(index, 0))
 			{
 				iNormalized = i + indexOffset;
@@ -1382,7 +1386,7 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 		explicitWidth:Float, minWidth:Float, maxWidth:Float, distributedWidth:Float):Void
 	{
 		var needsWidth:Bool = explicitWidth != explicitWidth; //isNaN
-		var needsHeight:Bool = explicitHeight != explicitHeight; //isNaN
+		//var needsHeight:Bool = explicitHeight != explicitHeight; //isNaN
 		var containerWidth:Float = explicitWidth;
 		if (needsWidth)
 		{
@@ -1395,9 +1399,19 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 		var isJustified:Bool = this._verticalAlign == VerticalAlign.JUSTIFY;
 		var itemCount:Int = items.length;
 		var measureItem:IMeasureDisplayObject;
+		var item:DisplayObject;
+		var feathersItem:IFeathersControl;
+		var layoutItem:ILayoutDisplayObject;
+		var layoutData:HorizontalLayoutData;
+		var percentWidth:Float;
+		var percentHeight:Float;
+		var itemWidth:Float;
+		var itemExplicitMinWidth:Float;
+		var itemHeight:Float;
+		var itemExplicitMinHeight:Float;
 		for (i in 0...itemCount)
 		{
-			var item:DisplayObject = items[i];
+			item = items[i];
 			if (item == null || (Std.isOfType(item, ILayoutDisplayObject) && !cast(item, ILayoutDisplayObject).includeInLayout))
 			{
 				continue;
@@ -1415,19 +1429,19 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 				item.height = explicitHeight;
 				if (Std.isOfType(item, IFeathersControl))
 				{
-					var feathersItem:IFeathersControl = cast item;
+					feathersItem = cast item;
 					feathersItem.minHeight = minHeight;
 					feathersItem.maxHeight = maxHeight;
 				}
 			}
 			else if (Std.isOfType(item, ILayoutDisplayObject))
 			{
-				var layoutItem:ILayoutDisplayObject = cast item;
-				var layoutData:HorizontalLayoutData = cast layoutItem.layoutData;
+				layoutItem = cast item;
+				layoutData = SafeCast.safe_cast(layoutItem.layoutData, HorizontalLayoutData);
 				if (layoutData != null)
 				{
-					var percentWidth:Float = layoutData.percentWidth;
-					var percentHeight:Float = layoutData.percentHeight;
+					percentWidth = layoutData.percentWidth;
+					percentHeight = layoutData.percentHeight;
 					if (percentWidth == percentWidth) //!isNaN
 					{
 						if (percentWidth < 0)
@@ -1438,9 +1452,9 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 						{
 							percentWidth = 100;
 						}
-						var itemWidth:Float = containerWidth * percentWidth / 100;
+						itemWidth = containerWidth * percentWidth / 100;
 						measureItem = cast item;
-						var itemExplicitMinWidth:Float = measureItem.explicitMinWidth;
+						itemExplicitMinWidth = measureItem.explicitMinWidth;
 						if (measureItem.explicitMinWidth == measureItem.explicitMinWidth && //!isNaN
 							itemWidth < itemExplicitMinWidth)
 						{
@@ -1471,12 +1485,12 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 						{
 							percentHeight = 100;
 						}
-						var itemHeight:Float = explicitHeight * percentHeight / 100;
+						itemHeight = explicitHeight * percentHeight / 100;
 						measureItem = cast item;
 						//we use the explicitMinHeight to make an accurate
 						//measurement, and we'll use the component's
 						//measured minHeight later, after we validate it.
-						var itemExplicitMinHeight:Float = measureItem.explicitMinHeight;
+						itemExplicitMinHeight = measureItem.explicitMinHeight;
 						if (measureItem.explicitMinHeight == measureItem.explicitMinHeight && //!isNaN
 							itemHeight < itemExplicitMinHeight)
 						{
@@ -1572,15 +1586,17 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 		var maxItemWidth:Float = 0;
 		var includedItemCount:Int = 0;
 		var itemCount:Int = items.length;
+		var item:DisplayObject;
+		var itemWidth:Float;
 		for (i in 0...itemCount)
 		{
-			var item:DisplayObject = items[i];
+			item = items[i];
 			if (Std.isOfType(item, ILayoutDisplayObject) && !cast(item, ILayoutDisplayObject).includeInLayout)
 			{
 				continue;
 			}
 			includedItemCount++;
-			var itemWidth:Float = item.width;
+			itemWidth = item.width;
 			if (itemWidth > maxItemWidth)
 			{
 				maxItemWidth = itemWidth;
@@ -1762,7 +1778,7 @@ class HorizontalLayout extends BaseLinearLayout implements IVariableVirtualLayou
 				}
 			}
 		}
-		while(needsAnotherPass);
+		while (needsAnotherPass);
 		this._discoveredItemsCache.resize(0);
 	}
 	

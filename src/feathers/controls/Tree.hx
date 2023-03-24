@@ -369,7 +369,7 @@ class Tree extends Scroller
 			this._layout.removeEventListener(Event.SCROLL, layout_scrollHandler);
 		}
 		this._layout = value;
-		if(this._layout is IVariableVirtualLayout)
+		if (Std.isOfType(this._layout, IVariableVirtualLayout))
 		{
 			this._layout.addEventListener(Event.SCROLL, layout_scrollHandler);
 		}

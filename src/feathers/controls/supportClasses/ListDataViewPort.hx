@@ -1289,12 +1289,6 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 	
 	private function refreshOneItemRendererStyles(renderer:IListItemRenderer):Void
 	{
-		//var displayRenderer:DisplayObject = cast renderer;
-		//for(var propertyName:String in this._itemRendererProperties)
-		//{
-			//var propertyValue:Object = this._itemRendererProperties[propertyName];
-			//displayRenderer[propertyName] = propertyValue;
-		//}
 		if (this._itemRendererProperties != null)
 		{
 			var propertyValue:Dynamic;
@@ -1803,7 +1797,6 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 				}
 				else
 				{
-					//itemRenderer = IListItemRenderer(new this._itemRendererType());
 					itemRenderer = cast Type.createInstance(this._itemRendererType, []);
 				}
 				if (this._customItemRendererStyleName != null && this._customItemRendererStyleName.length != 0)
@@ -1821,7 +1814,7 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 			//storing null values instead of calling splice() to improve
 			//performance.
 		}
-		while(itemRenderer == null);
+		while (itemRenderer == null);
 		itemRenderer.data = item;
 		itemRenderer.index = index;
 		itemRenderer.owner = this._owner;

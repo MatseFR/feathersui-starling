@@ -228,7 +228,7 @@ class TreeDataViewPort extends FeathersControl implements IViewPort
 			return value;
 		}
 		this._explicitVisibleHeight = value;
-		if(this._actualVisibleHeight != value)
+		if (this._actualVisibleHeight != value)
 		{
 			this.invalidate(FeathersControl.INVALIDATION_FLAG_SIZE);
 		}
@@ -548,7 +548,7 @@ class TreeDataViewPort extends FeathersControl implements IViewPort
 		{
 			return value;
 		}
-		if(this._openBranches != null)
+		if (this._openBranches != null)
 		{
 			this._openBranches.removeEventListener(Event.CHANGE, openBranches_changeHandler);
 		}
@@ -807,7 +807,7 @@ class TreeDataViewPort extends FeathersControl implements IViewPort
 							break;
 						}
 					}
-					if(every)
+					if (every)
 					{
 						return child;
 					}
@@ -1439,7 +1439,7 @@ class TreeDataViewPort extends FeathersControl implements IViewPort
 			//storing null values instead of calling splice() to improve
 			//performance.
 		}
-		while(itemRenderer == null);
+		while (itemRenderer == null);
 		itemRenderer.data = item;
 		itemRenderer.owner = this._owner;
 		itemRenderer.factoryID = factoryID;

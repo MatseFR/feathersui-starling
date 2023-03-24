@@ -416,8 +416,6 @@ class StackScreenNavigator extends BaseScreenNavigator
 	 */
 	public function removeScreen(id:String):StackScreenNavigatorItem
 	{
-		//var stackCount:int = this._stack.length;
-		//for(var i:int = stackCount - 1; i >= 0; i--)
 		var item:StackItem;
 		for (i in new ReverseIterator(this._stack.length - 1, 0))
 		{
@@ -562,12 +560,6 @@ class StackScreenNavigator extends BaseScreenNavigator
 				transition = this.popTransition;
 			}
 		}
-		//var item:StackItem = this._stack[0];
-		//var count:Int = this._stack.length;
-		//for (i in 1...count)
-		//{
-			//this._stack[i].dispose();
-		//}
 		var item:StackItem = this._stack.shift();
 		for (item in this._stack)
 		{
@@ -913,7 +905,6 @@ class StackScreenNavigator extends BaseScreenNavigator
 		//creating a copy because this array could change before the screen
 		//is removed.
 		var popEvents:Array<String> = item.popEvents.copy();
-		var eventName:String;
 		var signal:Dynamic;
 		for (eventName in popEvents)
 		{
@@ -939,8 +930,6 @@ class StackScreenNavigator extends BaseScreenNavigator
 		{
 			return;
 		}
-		//var eventCount:Int = this._popScreenEvents.length;
-		var eventName:String;
 		var signal:Dynamic;
 		for (eventName in this._popScreenEvents)
 		{

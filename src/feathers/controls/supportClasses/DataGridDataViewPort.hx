@@ -95,7 +95,7 @@ class DataGridDataViewPort extends FeathersControl implements IViewPort
 		else
 		{
 			this._actualMinVisibleWidth = value;
-			if(this._explicitVisibleWidth != this._explicitVisibleWidth && //isNaN
+			if (this._explicitVisibleWidth != this._explicitVisibleWidth && //isNaN
 				(this._actualVisibleWidth < value || this._actualVisibleWidth == oldValue))
 			{
 				//only invalidate if this change might affect the visibleWidth
@@ -228,7 +228,7 @@ class DataGridDataViewPort extends FeathersControl implements IViewPort
 	private function get_visibleHeight():Float { return this._actualVisibleHeight; }
 	private function set_visibleHeight(value:Float):Float
 	{
-		if(this._explicitVisibleHeight == value ||
+		if (this._explicitVisibleHeight == value ||
 			(value != value && this._explicitVisibleHeight != this._explicitVisibleHeight)) //isNaN
 		{
 			return value;

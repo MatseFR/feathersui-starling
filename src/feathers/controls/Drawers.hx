@@ -2414,7 +2414,7 @@ class Drawers extends FeathersControl
 				this._content.validate();
 			}
 		}
-
+		
 		if (this._topDrawer != null)
 		{
 			var topDrawerX:Float = 0;

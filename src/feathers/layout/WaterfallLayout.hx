@@ -340,7 +340,6 @@ class WaterfallLayout extends BaseVariableVirtualLayout implements IVariableVirt
 		{
 			columnHeights[i] = this._paddingTop;
 		}
-		//columnHeights.fixed = true;
 		
 		var horizontalAlignOffset:Float = 0;
 		if (this._horizontalAlign == HorizontalAlign.RIGHT)

@@ -1455,12 +1455,6 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 	
 	private function refreshOneItemRendererStyles(renderer:IGroupedListItemRenderer):Void
 	{
-		//var displayRenderer:DisplayObject = cast renderer;
-		//for(var propertyName:String in this._itemRendererProperties)
-		//{
-			//var propertyValue:Object = this._itemRendererProperties[propertyName];
-			//displayRenderer[propertyName] = propertyValue;
-		//}
 		if (this._itemRendererProperties != null)
 		{
 			var propertyValue:Dynamic;
@@ -1474,12 +1468,6 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 	
 	private function refreshOneHeaderRendererStyles(renderer:IGroupedListHeaderRenderer):Void
 	{
-		//var displayRenderer:DisplayObject = DisplayObject(renderer);
-		//for(var propertyName:String in this._headerRendererProperties)
-		//{
-			//var propertyValue:Object = this._headerRendererProperties[propertyName];
-			//displayRenderer[propertyName] = propertyValue;
-		//}
 		if (this._headerRendererProperties != null)
 		{
 			var propertyValue:Dynamic;
@@ -1493,12 +1481,6 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 	
 	private function refreshOneFooterRendererStyles(renderer:IGroupedListFooterRenderer):Void
 	{
-		//var displayRenderer:DisplayObject = DisplayObject(renderer);
-		//for(var propertyName:String in this._footerRendererProperties)
-		//{
-			//var propertyValue:Object = this._footerRendererProperties[propertyName];
-			//displayRenderer[propertyName] = propertyValue;
-		//}
 		if (this._footerRendererProperties != null)
 		{
 			var propertyValue:Dynamic;
@@ -2662,10 +2644,6 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 				displayIndex++;
 			}
 			groupLength = this._dataProvider.getLengthAtLocation(LOCATION_HELPER_VECTOR);
-			//for (j in 0...groupLength)
-			//{
-				//displayIndex++;
-			//}
 			displayIndex += groupLength;
 			footer = this._owner.groupToFooterData(group);
 			if (footer != null)
@@ -2703,10 +2681,6 @@ class GroupedListDataViewPort extends FeathersControl implements IViewPort
 				displayIndex++;
 			}
 			groupLength = this._dataProvider.getLengthAtLocation(LOCATION_HELPER_VECTOR);
-			//for (j in 0...groupLength)
-			//{
-				//displayIndex++;
-			//}
 			displayIndex += groupLength;
 			footer = this._owner.groupToFooterData(group);
 			if (footer != null)

@@ -765,7 +765,7 @@ class NumericStepper extends FeathersControl implements IRange implements IAdvan
 		{
 			return value;
 		}
-		if(this._customIncrementButtonStyleName == value)
+		if (this._customIncrementButtonStyleName == value)
 		{
 			return value;
 		}

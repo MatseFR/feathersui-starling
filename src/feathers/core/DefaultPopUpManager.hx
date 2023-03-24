@@ -203,10 +203,11 @@ class DefaultPopUpManager implements IPopUpManager
 		//and we don't want to remove the new ones or miss old ones, so
 		//create a copy of the _popUps Vector to be safe.
 		var popUps:Array<DisplayObject> = this._popUps.copy();
+		var popUp:DisplayObject;
 		var popUpCount:Int = popUps.length;
-		for(i in 0...popUpCount)
+		for (i in 0...popUpCount)
 		{
-			var popUp:DisplayObject = popUps[i];
+			popUp = popUps[i];
 			//we check if this is still a pop-up because it might have been
 			//removed in an Event.REMOVED or Event.REMOVED_FROM_STAGE
 			//listener for another pop-up earlier in the loop
@@ -233,7 +234,6 @@ class DefaultPopUpManager implements IPopUpManager
 		var lastIndex:Int = this._popUps.length - 1;
 		var otherPopUp:DisplayObject;
 		var overlay:DisplayObject;
-		//for(var i:int = lastIndex; i >= 0; i--)
 		for (i in new ReverseIterator(lastIndex, 0))
 		{
 			otherPopUp = this._popUps[i];
@@ -275,7 +275,7 @@ class DefaultPopUpManager implements IPopUpManager
 	{
 		var popUp:DisplayObject = cast event.currentTarget;
 		var index:Int = this._centeredPopUps.indexOf(popUp);
-		if (index < 0)
+		if (index == -1)
 		{
 			return;
 		}
@@ -308,7 +308,7 @@ class DefaultPopUpManager implements IPopUpManager
 			FocusManager.removeFocusManager(focusManager);
 		}
 		index = this._centeredPopUps.indexOf(popUp);
-		if (index >= 0)
+		if (index != -1)
 		{
 			if (Std.isOfType(popUp, IFeathersControl))
 			{

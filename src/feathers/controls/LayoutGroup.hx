@@ -926,7 +926,7 @@ class LayoutGroup extends FeathersControl
 	 */
 	private function refreshClipRect():Void
 	{
-		if (this.clipContent)
+		if (!this.clipContent)
 		{
 			return;
 		}

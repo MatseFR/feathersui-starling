@@ -816,21 +816,25 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 		var currentX:Float = 0;
 		var previousCharID:Float = Math.NaN;
 		var charCount:Int = this._text.length;
+		var charID:Int;
+		var charData:BitmapChar;
+		var currentKerning:Float;
+		var charWidth:Float;
 		for (i in 0...charCount)
 		{
-			var charID:Int = this._text.charCodeAt(i);
-			var charData:BitmapChar = font.getChar(charID);
-			if (!charData)
+			charID = this._text.charCodeAt(i);
+			charData = font.getChar(charID);
+			if (charData == null)
 			{
 				continue;
 			}
-			var currentKerning:Float = 0;
+			currentKerning = 0;
 			if (isKerningEnabled &&
 				previousCharID == previousCharID) //!isNaN
 			{
 				currentKerning = charData.getKerning(previousCharID) * scale;
 			}
-			var charWidth:Float = customLetterSpacing + currentKerning + charData.xAdvance * scale;
+			charWidth = customLetterSpacing + currentKerning + charData.xAdvance * scale;
 			if (pointX >= currentX && pointX < (currentX + charWidth))
 			{
 				if (pointX > (currentX + charWidth / 2))
@@ -892,15 +896,18 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 		{
 			charCount = index;
 		}
+		var charID:Int;
+		var charData:BitmapChar;
+		var currentKerning:Float;
 		for (i in 0...charCount)
 		{
-			var charID:Int = this._text.charCodeAt(i);
-			var charData:BitmapChar = font.getChar(charID);
+			charID = this._text.charCodeAt(i);
+			charData = font.getChar(charID);
 			if (charData == null)
 			{
 				continue;
 			}
-			var currentKerning:Float = 0;
+			currentKerning = 0;
 			if (isKerningEnabled &&
 				previousCharID == previousCharID) //!isNaN
 			{
@@ -1050,7 +1057,7 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 			}
 			target = target.parent;
 		}
-		while(target != null);
+		while (target != null);
 	}
 	
 	/**

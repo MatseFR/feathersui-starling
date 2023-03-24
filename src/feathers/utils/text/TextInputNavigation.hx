@@ -35,10 +35,10 @@ class TextInputNavigation
 			return 0;
 		}
 		var nextCharIsWord:Bool = IS_WORD.match(text.charAt(selectionStartIndex - 1));
-		//for(var i:int = selectionStartIndex - 2; i >= 0; i--)
+		var charIsWord:Bool;
 		for (i in new ReverseIterator(selectionStartIndex - 2, 0))
 		{
-			var charIsWord:Bool = IS_WORD.match(text.charAt(i));
+			charIsWord = IS_WORD.match(text.charAt(i));
 			if (!charIsWord && nextCharIsWord)
 			{
 				return i + 1;
@@ -60,10 +60,10 @@ class TextInputNavigation
 			return 0;
 		}
 		var nextCharIsWord:Bool = IS_WORD.match(text.charAt(selectionStartIndex + 1));
-		//for(var i:int = selectionStartIndex; i >= 0; i--)
+		var charIsWord:Bool;
 		for (i in new ReverseIterator(selectionStartIndex, 0))
 		{
-			var charIsWord:Bool = IS_WORD.match(text.charAt(i));
+			charIsWord = IS_WORD.match(text.charAt(i));
 			if (!charIsWord && i == selectionStartIndex)
 			{
 				//this is whitespace between words
@@ -90,10 +90,10 @@ class TextInputNavigation
 		{
 			return textLength;
 		}
-		//for(var i:int = selectionEndIndex; i < textLength; i++)
+		var charIsWord:Bool;
 		for (i in selectionEndIndex...textLength)
 		{
-			var charIsWord:Bool = IS_WORD.match(text.charAt(i));
+			charIsWord = IS_WORD.match(text.charAt(i));
 			if (!charIsWord && i == selectionEndIndex)
 			{
 				//this is whitespace between words
@@ -122,10 +122,10 @@ class TextInputNavigation
 		//the first character is a special case. any non-whitespace is
 		//considered part of the word.
 		var prevCharIsWord:Bool = !IS_WHITESPACE.match(text.charAt(selectionEndIndex));
-		//for(var i:int = selectionEndIndex + 1; i < textLength; i++)
+		var charIsWord:Bool;
 		for (i in selectionEndIndex + 1...textLength)
 		{
-			var charIsWord:Bool = IS_WORD.match(text.charAt(i));
+			charIsWord = IS_WORD.match(text.charAt(i));
 			if (charIsWord && !prevCharIsWord)
 			{
 				return i;

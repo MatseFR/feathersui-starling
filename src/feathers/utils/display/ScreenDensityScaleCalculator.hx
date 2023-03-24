@@ -43,9 +43,10 @@ class ScreenDensityScaleCalculator
 	{
 		var bucketCount:Int = this._buckets.length;
 		var index:Int = -1;
+		var bucket:ScreenDensityBucket;
 		for (i in 0...bucketCount)
 		{
-			var bucket:ScreenDensityBucket = this._buckets[i];
+			bucket = this._buckets[i];
 			if (bucket.density > density)
 			{
 				index = i;
@@ -70,9 +71,10 @@ class ScreenDensityScaleCalculator
 	public function removeScaleForDensity(density:Int):Void
 	{
 		var bucketCount:Int = this._buckets.length;
+		var bucket:ScreenDensityBucket;
 		for (i in 0...bucketCount)
 		{
-			var bucket:ScreenDensityBucket = this._buckets[i];
+			bucket = this._buckets[i];
 			if (bucket.density == density)
 			{
 				this._buckets.splice(i, 1);
@@ -98,7 +100,8 @@ class ScreenDensityScaleCalculator
 		}
 		var previousBucket:ScreenDensityBucket = bucket;
 		var bucketCount:Int = this._buckets.length;
-		for(i in 1...bucketCount)
+		var midDPI:Float;
+		for (i in 1...bucketCount)
 		{
 			bucket = this._buckets[i];
 			if (density > bucket.density)
@@ -106,7 +109,7 @@ class ScreenDensityScaleCalculator
 				previousBucket = bucket;
 				continue;
 			}
-			var midDPI:Float = (bucket.density + previousBucket.density) / 2;
+			midDPI = (bucket.density + previousBucket.density) / 2;
 			if (density < midDPI)
 			{
 				return previousBucket.scale;

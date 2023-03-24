@@ -183,7 +183,7 @@ class HierarchicalCollection extends EventDispatcher implements IHierarchicalCol
 			//result[i] = location[i];
 		//}
 		//var result:Array<Int> = location.copy();
-		this.dispatchEventWith(CollectionEventType.ADD_ITEM, false, location);
+		this.dispatchEventWith(CollectionEventType.ADD_ITEM, false, location.copy());
 	}
 	
 	/**

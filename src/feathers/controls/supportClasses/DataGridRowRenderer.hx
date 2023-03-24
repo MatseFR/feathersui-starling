@@ -172,7 +172,7 @@ class DataGridRowRenderer extends LayoutGroup implements IToggle
 			this._columns.removeEventListener(CollectionEventType.UPDATE_ALL, columns_updateAllHandler);
 		}
 		this._columns = value;
-		if(this._columns != null)
+		if (this._columns != null)
 		{
 			this._columns.addEventListener(Event.CHANGE, columns_changeHandler);
 			this._columns.addEventListener(CollectionEventType.RESET, columns_resetHandler);
@@ -395,7 +395,7 @@ class DataGridRowRenderer extends LayoutGroup implements IToggle
 			//storing null values instead of calling splice() to improve
 			//performance.
 		}
-		while(cellRenderer == null);
+		while (cellRenderer == null);
 		this.refreshCellRendererProperties(cellRenderer, columnIndex, column);
 		
 		column.addEventListener(Event.CHANGE, column_changeHandler);

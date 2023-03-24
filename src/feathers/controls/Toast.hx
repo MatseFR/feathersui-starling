@@ -337,7 +337,7 @@ class Toast extends FeathersControl
 			toast = _queue.shift();
 		}
 		//keep skipping toasts that have a timeout
-		while(_queueMode == ToastQueueMode.CANCEL_TIMEOUT &&
+		while (_queueMode == ToastQueueMode.CANCEL_TIMEOUT &&
 			_queue.length != 0 &&
 			toast.timeout < Math.POSITIVE_INFINITY);
 		showToast(toast, toast.timeout);
@@ -1420,7 +1420,7 @@ class Toast extends FeathersControl
 		var dataInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_DATA);
 		var sizeInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_SIZE);
 		var stylesInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_STYLES);
-		var stateInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_STATE);
+		//var stateInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_STATE);
 		var textRendererInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_TEXT_RENDERER);
 		var actionsInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_ACTIONS_FACTORY);
 		

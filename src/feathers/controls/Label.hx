@@ -1012,14 +1012,12 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 	{
 		this.textRenderer.fontStyles = this._fontStylesSet;
 		this.textRenderer.wordWrap = this._wordWrap;
-		//for(var propertyName:String in this._textRendererProperties)
 		if (this._textRendererProperties != null)
 		{
+			var propertyValue:Dynamic;
 			for (propertyName in this._textRendererProperties)
 			{
-				var propertyValue:Dynamic = this._textRendererProperties[propertyName];
-				//var propertyValue:Object = this._textRendererProperties[propertyName];
-				//this.textRenderer[propertyName] = propertyValue;
+				propertyValue = this._textRendererProperties[propertyName];
 				Reflect.setProperty(this.textRenderer, propertyName, propertyValue);
 			}
 		}

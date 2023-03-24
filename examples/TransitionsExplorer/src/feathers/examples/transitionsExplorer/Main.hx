@@ -24,7 +24,6 @@ import feathers.themes.MetalWorksMobileTheme;
 import haxe.Constraints.Function;
 import openfl.utils.Assets;
 import starling.core.Starling;
-import starling.display.DisplayObject;
 import starling.display.Quad;
 import starling.events.Event;
 import starling.events.ResizeEvent;

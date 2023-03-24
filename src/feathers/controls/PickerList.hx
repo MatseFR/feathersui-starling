@@ -349,7 +349,7 @@ class PickerList extends FeathersControl implements IFocusDisplayObject implemen
 	
 	private function set_selectedItem(value:Dynamic):Dynamic
 	{
-		if(this._dataProvider == null)
+		if (this._dataProvider == null)
 		{
 			this.selectedIndex = -1;
 			return value;

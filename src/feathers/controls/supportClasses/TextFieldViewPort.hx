@@ -913,7 +913,7 @@ class TextFieldViewPort extends FeathersControl implements IViewPort
 			}
 			target = target.parent;
 		}
-		while(target != null);
+		while (target != null);
 		this._textFieldContainer.visible = true;
 	}
 	

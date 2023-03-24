@@ -2162,7 +2162,7 @@ class TextFieldTextEditor extends BaseTextEditor implements ITextEditor implemen
 				}
 				target = target.parent;
 			}
-			while(target != null);
+			while (target != null);
 		}
 		else
 		{

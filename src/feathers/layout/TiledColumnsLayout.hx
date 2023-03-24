@@ -171,8 +171,8 @@ class TiledColumnsLayout extends BaseTiledLayout implements IVirtualLayout imple
 			return result;
 		}
 		
-		var scrollX:Float = viewPortBounds != null ? viewPortBounds.scrollX : 0;
-		var scrollY:Float = viewPortBounds != null ? viewPortBounds.scrollY : 0;
+		//var scrollX:Float = viewPortBounds != null ? viewPortBounds.scrollX : 0;
+		//var scrollY:Float = viewPortBounds != null ? viewPortBounds.scrollY : 0;
 		var boundsX:Float = viewPortBounds != null ? viewPortBounds.x : 0;
 		var boundsY:Float = viewPortBounds != null ? viewPortBounds.y : 0;
 		var minWidth:Float = viewPortBounds != null ? viewPortBounds.minWidth : 0;
@@ -420,7 +420,7 @@ class TiledColumnsLayout extends BaseTiledLayout implements IVirtualLayout imple
 		{
 			totalWidth = availableWidth;
 		}
-		else if(this._paging == Direction.HORIZONTAL)
+		else if (this._paging == Direction.HORIZONTAL)
 		{
 			totalWidth = Math.fceil(itemCount / perPage) * availableWidth;
 		}
@@ -490,7 +490,7 @@ class TiledColumnsLayout extends BaseTiledLayout implements IVirtualLayout imple
 			return result;
 		}
 		var boundsX:Float = viewPortBounds != null ? viewPortBounds.x : 0;
-		var boundsY:Float = viewPortBounds != null ? viewPortBounds.y : 0;
+		//var boundsY:Float = viewPortBounds != null ? viewPortBounds.y : 0;
 		var minWidth:Float = viewPortBounds != null ? viewPortBounds.minWidth : 0;
 		var minHeight:Float = viewPortBounds != null ? viewPortBounds.minHeight : 0;
 		var maxWidth:Float = viewPortBounds != null ? viewPortBounds.maxWidth : Math.POSITIVE_INFINITY;
@@ -603,7 +603,7 @@ class TiledColumnsLayout extends BaseTiledLayout implements IVirtualLayout imple
 		{
 			totalWidth = availableWidth;
 		}
-		else if(this._paging == Direction.HORIZONTAL)
+		else if (this._paging == Direction.HORIZONTAL)
 		{
 			totalWidth = Math.fceil(itemCount / perPage) * availableWidth;
 		}
@@ -1441,11 +1441,11 @@ class TiledColumnsLayout extends BaseTiledLayout implements IVirtualLayout imple
 					resultLength++;
 				}
 				columnIndex++;
-				if(columnIndex == horizontalTileCount)
+				if (columnIndex == horizontalTileCount)
 				{
 					columnIndex = 0;
 					rowIndex++;
-					if(rowIndex == verticalTileCount)
+					if (rowIndex == verticalTileCount)
 					{
 						rowIndex = 0;
 						pageStart += perPage;
@@ -1454,7 +1454,7 @@ class TiledColumnsLayout extends BaseTiledLayout implements IVirtualLayout imple
 				}
 				i += verticalTileCount;
 			}
-			while(resultLength < minimumItemCount && pageStart < itemCount);
+			while (resultLength < minimumItemCount && pageStart < itemCount);
 		}
 	}
 	

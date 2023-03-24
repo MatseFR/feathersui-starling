@@ -4010,17 +4010,14 @@ class BaseDefaultItemRenderer extends ToggleButton implements IFocusContainer
 		if (this.iconLabel != null)
 		{
 			this.iconLabel.fontStyles = this._iconLabelFontStylesSet;
-			//var displayIconLabel:DisplayObject = DisplayObject(this.iconLabel);
-			//for(var propertyName:String in this._iconLabelProperties)
-			//{
-				//var propertyValue:Object = this._iconLabelProperties[propertyName];
-				//displayIconLabel[propertyName] = propertyValue;
-			//}
-			var propertyValue:Dynamic;
-			for (propertyName in this._iconLabelProperties)
+			if (this._iconLabelProperties != null)
 			{
-				propertyValue = this._iconLabelProperties[propertyName];
-				Reflect.setProperty(this.iconLabel, propertyName, propertyValue);
+				var propertyValue:Dynamic;
+				for (propertyName in this._iconLabelProperties)
+				{
+					propertyValue = this._iconLabelProperties[propertyName];
+					Reflect.setProperty(this.iconLabel, propertyName, propertyValue);
+				}
 			}
 		}
 	}
@@ -4068,13 +4065,7 @@ class BaseDefaultItemRenderer extends ToggleButton implements IFocusContainer
 		if (this.accessoryLabel != null)
 		{
 			this.accessoryLabel.fontStyles = this._accessoryLabelFontStylesSet;
-			//var displayAccessoryLabel:DisplayObject = cast this.accessoryLabel;
-			//for(var propertyName:String in this._accessoryLabelProperties)
-			//{
-				//var propertyValue:Object = this._accessoryLabelProperties[propertyName];
-				//displayAccessoryLabel[propertyName] = propertyValue;
-			//}
-			if (this._iconLabelProperties != null)
+			if (this._accessoryLabelProperties != null)
 			{
 				var propertyValue:Dynamic;
 				for (propertyName in this._iconLabelProperties)

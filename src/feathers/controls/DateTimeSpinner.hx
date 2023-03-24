@@ -1164,7 +1164,7 @@ class DateTimeSpinner extends FeathersControl
 		if (this.currentBackgroundSkin != oldBackgroundSkin)
 		{
 			this.removeCurrentBackgroundSkin(oldBackgroundSkin);
-			if(this.currentBackgroundSkin != null)
+			if (this.currentBackgroundSkin != null)
 			{
 				if (Std.isOfType(this.currentBackgroundSkin, IFeathersControl))
 				{
@@ -2169,7 +2169,7 @@ class DateTimeSpinner extends FeathersControl
 		if (this.hoursList != null)
 		{
 			var hours:Int = pendingDate.getHours();
-			if(this._showMeridiem)
+			if (this._showMeridiem)
 			{
 				hours %= 12;
 			}

@@ -271,7 +271,7 @@ class TabBar extends FeathersControl implements IFocusDisplayObject implements I
 	private function get_dataProvider():IListCollection { return this._dataProvider; }
 	private function set_dataProvider(value:IListCollection):IListCollection
 	{
-		if(this._dataProvider == value)
+		if (this._dataProvider == value)
 		{
 			return value;
 		}

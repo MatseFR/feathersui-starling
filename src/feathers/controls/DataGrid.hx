@@ -1677,7 +1677,7 @@ class DataGrid extends Scroller implements IDragSource implements IDropTarget
 				percent = columnWidth / totalWidthOfIndices;
 				offset = widthToDistribute * percent;
 				newWidth = this._customColumnSizes[index] + offset;
-				if(newWidth < column.minWidth)
+				if (newWidth < column.minWidth)
 				{
 					offset += (column.minWidth - newWidth);
 					newWidth = column.minWidth;
@@ -2095,7 +2095,7 @@ class DataGrid extends Scroller implements IDragSource implements IDropTarget
 				headerRenderer = inactiveHeaderRenderers.shift();
 			}
 		}
-		while(headerRenderer == null);
+		while (headerRenderer == null);
 		headerRenderer.data = column;
 		headerRenderer.columnIndex = columnIndex;
 		headerRenderer.owner = this;
@@ -2664,10 +2664,10 @@ class DataGrid extends Scroller implements IDragSource implements IDropTarget
 					{
 						this._currentColumnDropIndicatorSkin = new Quad(1, 1, 0x000000);
 					}
-					//if(this._columnDropIndicatorSkin != null)
-					//{
+					if (this._columnDropIndicatorSkin != null)
+					{
 						this._currentColumnDropIndicatorSkin = this._columnDropIndicatorSkin;
-					//}
+					}
 					//start out invisible and TouchPhase.MOVED will reveal it, if necessary
 					this._currentColumnDropIndicatorSkin.visible = false;
 					this.addChild(this._currentColumnDropIndicatorSkin);
@@ -2884,7 +2884,7 @@ class DataGrid extends Scroller implements IDragSource implements IDropTarget
 				this._currentColumnResizeSkin.height = this.actualHeight - this._bottomViewPortOffset - this._currentColumnResizeSkin.y;
 			}
 		}
-		else if(this._resizableColumns)
+		else if (this._resizableColumns)
 		{
 			//we aren't tracking another touch, so let's look for a new one.
 			touch = event.getTouch(divider, TouchPhase.BEGAN);

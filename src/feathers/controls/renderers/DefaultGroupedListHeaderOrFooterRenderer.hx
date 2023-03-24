@@ -1003,12 +1003,12 @@ class DefaultGroupedListHeaderOrFooterRenderer extends FeathersControl implement
 	{
 		//we don't dispose it if the renderer is the parent because it'll
 		//already get disposed in super.dispose()
-		if(this._backgroundSkin != null &&
+		if (this._backgroundSkin != null &&
 			this._backgroundSkin.parent != this)
 		{
 			this._backgroundSkin.dispose();
 		}
-		if(this._backgroundDisabledSkin != null &&
+		if (this._backgroundDisabledSkin != null &&
 			this._backgroundDisabledSkin.parent != this)
 		{
 			this._backgroundDisabledSkin.dispose();

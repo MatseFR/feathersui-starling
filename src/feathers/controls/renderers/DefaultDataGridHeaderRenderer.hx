@@ -535,7 +535,7 @@ class DefaultDataGridHeaderRenderer extends FeathersControl implements IDataGrid
 		{
 			return value;
 		}
-		if(this._sortDescendingIcon != null &&
+		if (this._sortDescendingIcon != null &&
 			this.currentSortIcon == this._sortDescendingIcon)
 		{
 			this.removeCurrentSortIcon(this._sortDescendingIcon);

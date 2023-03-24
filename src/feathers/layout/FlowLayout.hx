@@ -871,7 +871,7 @@ class FlowLayout extends BaseVariableVirtualLayout implements IVariableVirtualLa
 				maxRowWidth = totalRowWidth;
 			}
 		}
-		while(i < itemCount);
+		while (i < itemCount);
 		
 		if (supportsMultipleRows)
 		{
@@ -995,7 +995,7 @@ class FlowLayout extends BaseVariableVirtualLayout implements IVariableVirtualLa
 	{
 		result = this.calculateMaxScrollYAndRowHeightOfIndex(index, items, x, y, width, height, result);
 		var maxScrollY:Float = result.x;
-		var rowHeight:Float = result.y;
+		//var rowHeight:Float = result.y;
 		
 		var itemHeight:Float;
 		if (this._useVirtualLayout)
@@ -1178,7 +1178,7 @@ class FlowLayout extends BaseVariableVirtualLayout implements IVariableVirtualLa
 				i++;
 			}
 		}
-		while(i < itemCount);
+		while (i < itemCount);
 		return itemCount;
 	}
 	
@@ -1256,7 +1256,7 @@ class FlowLayout extends BaseVariableVirtualLayout implements IVariableVirtualLa
 				i++;
 			}
 		}
-		while(i < itemCount);
+		while (i < itemCount);
 		var lastItem:DisplayObject = items[itemCount - 1];
 		dropIndicator.x = lastItem.x + lastItem.width - dropIndicator.width / 2;
 		dropIndicator.y = lastItem.y;
@@ -1432,7 +1432,7 @@ class FlowLayout extends BaseVariableVirtualLayout implements IVariableVirtualLa
 				i++;
 			}
 		}
-		while(i < itemCount);
+		while (i < itemCount);
 		return result;
 	}
 	
@@ -1488,7 +1488,7 @@ class FlowLayout extends BaseVariableVirtualLayout implements IVariableVirtualLa
 			maxItemHeight = this._useVirtualLayout ? calculatedTypicalItemHeight : 0;
 			positionX = x + this._paddingLeft;
 			rowItemCount = 0;
-			while(i < itemCount)
+			while (i < itemCount)
 			{
 				item = items[i];
 				
@@ -1595,7 +1595,7 @@ class FlowLayout extends BaseVariableVirtualLayout implements IVariableVirtualLa
 				i++;
 			}
 		}
-		while(i < itemCount);
+		while (i < itemCount);
 		result.setTo(positionY, maxItemHeight);
 		return result;
 	}

@@ -313,8 +313,8 @@ class SlideShowLayout extends EventDispatcher implements IVirtualLayout implemen
 	public function layout(items:Array<DisplayObject>, viewPortBounds:ViewPortBounds = null, result:LayoutBoundsResult = null):LayoutBoundsResult
 	{
 		//since viewPortBounds can be null, we may need to provide some defaults
-		var scrollX:Float = viewPortBounds != null ? viewPortBounds.scrollX : 0;
-		var scrollY:Float = viewPortBounds != null ? viewPortBounds.scrollY : 0;
+		//var scrollX:Float = viewPortBounds != null ? viewPortBounds.scrollX : 0;
+		//var scrollY:Float = viewPortBounds != null ? viewPortBounds.scrollY : 0;
 		var boundsX:Float = viewPortBounds != null ? viewPortBounds.x : 0;
 		var boundsY:Float = viewPortBounds != null ? viewPortBounds.y : 0;
 		var minWidth:Float = viewPortBounds != null ? viewPortBounds.minWidth : 0;

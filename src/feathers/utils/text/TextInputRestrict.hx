@@ -90,9 +90,11 @@ class TextInputRestrict
 				var startIndex:Int = 0;
 				var isExcluding:Bool = value.indexOf("^") == 0;
 				this._restrictStartsWithExclude = isExcluding;
+				var nextStartIndex:Int;
+				var partialRestrict:String;
 				do
 				{
-					var nextStartIndex:Int = value.indexOf("^", startIndex + 1);
+					nextStartIndex = value.indexOf("^", startIndex + 1);
 					while (nextStartIndex != -1 && value.charAt(nextStartIndex - 1) == "\\")
 					{
 						//this is an escaped caret, so skip it
@@ -100,7 +102,7 @@ class TextInputRestrict
 					}
 					if (nextStartIndex >= 0)
 					{
-						var partialRestrict:String = value.substr(startIndex, nextStartIndex - startIndex);
+						partialRestrict = value.substr(startIndex, nextStartIndex - startIndex);
 						this._restricts.push(this.createRestrictRegExp(partialRestrict, isExcluding));
 					}
 					else
@@ -112,7 +114,7 @@ class TextInputRestrict
 					startIndex = nextStartIndex;
 					isExcluding = !isExcluding;
 				}
-				while(true);
+				while (true);
 			}
 		}
 		else
@@ -134,9 +136,10 @@ class TextInputRestrict
 		var isExcluding:Bool = this._restrictStartsWithExclude;
 		var isIncluded:Bool = isExcluding;
 		var restrictCount:Int = this._restricts.length;
+		var restrict:EReg;
 		for (i in 0...restrictCount)
 		{
-			var restrict:EReg = this._restricts[i];
+			restrict = this._restricts[i];
 			if (isExcluding)
 			{
 				isIncluded = isIncluded && restrict.match(character);
@@ -163,14 +166,18 @@ class TextInputRestrict
 		var textLength:Int = value.length;
 		var restrictCount:Int = this._restricts.length;
 		var i:Int = 0;
+		var character:String;
+		var isExcluding:Bool;
+		var isIncluded:Bool;
+		var restrict:EReg;
 		while (i < textLength)
 		{
-			var character:String = value.charAt(i);
-			var isExcluding:Bool = this._restrictStartsWithExclude;
-			var isIncluded:Bool = isExcluding;
+			character = value.charAt(i);
+			isExcluding = this._restrictStartsWithExclude;
+			isIncluded = isExcluding;
 			for (j in 0...restrictCount)
 			{
-				var restrict:EReg = this._restricts[j];
+				restrict = this._restricts[j];
 				if (isExcluding)
 				{
 					isIncluded = isIncluded && restrict.test(character);

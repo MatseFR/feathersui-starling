@@ -508,7 +508,7 @@ class HorizontalSpinnerLayout extends EventDispatcher implements ISpinnerLayout 
 		}
 		
 		if (!this._useVirtualLayout || this._verticalAlign != VerticalAlign.JUSTIFY ||
-			explicitHeight !== explicitHeight) //isNaN
+			explicitHeight != explicitHeight) //isNaN
 		{
 			//in some cases, we may need to validate all of the items so
 			//that we can use their dimensions below.
@@ -540,7 +540,7 @@ class HorizontalSpinnerLayout extends EventDispatcher implements ISpinnerLayout 
 		//this cache is used to save non-null items in virtual layouts. by
 		//using a smaller array, we can improve performance by spending less
 		//time in the upcoming loops.
-		this._discoveredItemsCache.length = 0;
+		this._discoveredItemsCache.resize(0);
 		var discoveredItemsCacheLastIndex:Int = 0;
 		
 		//this first loop sets the x position of items, and it calculates
@@ -751,7 +751,7 @@ class HorizontalSpinnerLayout extends EventDispatcher implements ISpinnerLayout 
 		}
 		//we don't want to keep a reference to any of the items, so clear
 		//this cache
-		this._discoveredItemsCache.length = 0;
+		this._discoveredItemsCache.resize(0);
 		
 		//calculate the bounds of the selection rectangle
 		this._selectionBounds.x = horizontalAlignOffsetX;
@@ -813,8 +813,8 @@ class HorizontalSpinnerLayout extends EventDispatcher implements ISpinnerLayout 
 		var maxHeight:Float = viewPortBounds != null ? viewPortBounds.maxHeight : Math.POSITIVE_INFINITY;
 		
 		this.prepareTypicalItem(explicitHeight - this._paddingTop - this._paddingBottom);
-		var calculatedTypicalItemWidth:Float = this._typicalItem ? this._typicalItem.width : 0;
-		var calculatedTypicalItemHeight:Float = this._typicalItem ? this._typicalItem.height : 0;
+		var calculatedTypicalItemWidth:Float = this._typicalItem != null ? this._typicalItem.width : 0;
+		var calculatedTypicalItemHeight:Float = this._typicalItem != null ? this._typicalItem.height : 0;
 		
 		var gap:Float = this._gap;
 		var positionX:Float = 0;
@@ -889,7 +889,7 @@ class HorizontalSpinnerLayout extends EventDispatcher implements ISpinnerLayout 
 		}
 		
 		this.prepareTypicalItem(height - this._paddingTop - this._paddingBottom);
-		var calculatedTypicalItemWidth:Float = this._typicalItem ? this._typicalItem.width : 0;
+		var calculatedTypicalItemWidth:Float = this._typicalItem != null ? this._typicalItem.width : 0;
 		var gap:Float = this._gap;
 		
 		var resultLastIndex:Int = 0;
@@ -928,12 +928,12 @@ class HorizontalSpinnerLayout extends EventDispatcher implements ISpinnerLayout 
 			{
 				scrollX += totalItemWidth;
 			}
-			minimum = scrollX / (calculatedTypicalItemWidth + gap);
+			minimum = Std.int(scrollX / (calculatedTypicalItemWidth + gap));
 			maximum = minimum + maxVisibleTypicalItemCount;
 		}
 		else
 		{
-			minimum = scrollX / (calculatedTypicalItemWidth + gap);
+			minimum = Std.int(scrollX / (calculatedTypicalItemWidth + gap));
 			if (minimum < 0)
 			{
 				minimum = 0;
@@ -991,6 +991,7 @@ class HorizontalSpinnerLayout extends EventDispatcher implements ISpinnerLayout 
 		}
 		
 		var result:Int = index;
+		var xPosition:Float;
 		if (keyCode == Keyboard.HOME)
 		{
 			if (itemCount > 0)
@@ -1004,8 +1005,7 @@ class HorizontalSpinnerLayout extends EventDispatcher implements ISpinnerLayout 
 		}
 		else if (keyCode == Keyboard.PAGE_UP)
 		{
-			var xPosition:Float = 0;
-			//for (var i:int = index; i >= 0; i--)
+			xPosition = 0;
 			for (i in new ReverseIterator(index, 0))
 			{
 				xPosition += this.snapInterval;
@@ -1121,7 +1121,7 @@ class HorizontalSpinnerLayout extends EventDispatcher implements ISpinnerLayout 
 				//may be wrong now!
 				item.height = Math.NaN;
 			}
-			if(Std.isOfType(item, IValidating))
+			if (Std.isOfType(item, IValidating))
 			{
 				cast(item, IValidating).validate();
 			}
