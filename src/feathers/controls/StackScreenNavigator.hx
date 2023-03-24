@@ -913,18 +913,10 @@ class StackScreenNavigator extends BaseScreenNavigator
 		//creating a copy because this array could change before the screen
 		//is removed.
 		var popEvents:Array<String> = item.popEvents.copy();
-		//var eventCount:Int = popEvents.length;
 		var eventName:String;
 		var signal:Dynamic;
 		for (eventName in popEvents)
 		{
-			//eventName = popEvents[i];
-			//signal = null;
-			//if (BaseScreenNavigator.SIGNAL_TYPE !== null &&
-				//this._activeScreen.hasOwnProperty(eventName))
-			//{
-				//signal = this._activeScreen[eventName] as BaseScreenNavigator.SIGNAL_TYPE;
-			//}
 			signal = Reflect.getProperty(this._activeScreen, eventName);
 			if (signal != null)
 			{
@@ -952,13 +944,6 @@ class StackScreenNavigator extends BaseScreenNavigator
 		var signal:Dynamic;
 		for (eventName in this._popScreenEvents)
 		{
-			//eventName = this._popScreenEvents[i];
-			//signal = null;
-			//if (BaseScreenNavigator.SIGNAL_TYPE !== null &&
-				//this._activeScreen.hasOwnProperty(eventName))
-			//{
-				//signal = this._activeScreen[eventName] as BaseScreenNavigator.SIGNAL_TYPE;
-			//}
 			signal = Reflect.getProperty(this._activeScreen, eventName);
 			if (signal)
 			{
@@ -981,17 +966,10 @@ class StackScreenNavigator extends BaseScreenNavigator
 		{
 			return;
 		}
-		//var eventCount:int = this._popToRootScreenEvents.length;
+		
 		var signal:Dynamic;
 		for (eventName in this._popToRootScreenEvents)
 		{
-			//var eventName:String = this._popToRootScreenEvents[i];
-			//signal = null;
-			//if(BaseScreenNavigator.SIGNAL_TYPE !== null &&
-				//this._activeScreen.hasOwnProperty(eventName))
-			//{
-				//signal = this._activeScreen[eventName] as BaseScreenNavigator.SIGNAL_TYPE;
-			//}
 			signal = Reflect.getProperty(this._activeScreen, eventName);
 			if (signal != null)
 			{

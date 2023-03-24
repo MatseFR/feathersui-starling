@@ -77,10 +77,10 @@ class ScreenNavigator extends BaseScreenNavigator
 	/**
 	 * @private
 	 */
-	public var transition(get, set):DisplayObject->DisplayObject->(?Bool->Void)->Void;
-	private var _transition:DisplayObject->DisplayObject->(?Bool->Void)->Void;
-	private function get_transition():DisplayObject->DisplayObject->(?Bool->Void)->Void { return this._transition; }
-	private function set_transition(value:DisplayObject->DisplayObject->(?Bool->Void)->Void):DisplayObject->DisplayObject->(?Bool->Void)->Void
+	public var transition(get, set):Function;
+	private var _transition:Function;
+	private function get_transition():Function { return this._transition; }
+	private function set_transition(value:Function):Function
 	{
 		if (this.processStyleRestriction("transition"))
 		{
@@ -138,7 +138,7 @@ class ScreenNavigator extends BaseScreenNavigator
 	 *
 	 * @see #style:transition
 	 */
-	public function showScreen(id:String, transition:DisplayObject->DisplayObject->(?Bool->Void)->Void = null):DisplayObject
+	public function showScreen(id:String, transition:Function = null):DisplayObject
 	{
 		if (this._activeScreenID == id)
 		{
@@ -160,7 +160,7 @@ class ScreenNavigator extends BaseScreenNavigator
 	 *
 	 * @see #style:transition
 	 */
-	public function clearScreen(transition:DisplayObject->DisplayObject->(?Bool->Void)->Void = null):Void
+	public function clearScreen(transition:Function = null):Void
 	{
 		if (transition == null)
 		{
@@ -184,57 +184,60 @@ class ScreenNavigator extends BaseScreenNavigator
 		var signal:Dynamic;
 		var eventAction:Dynamic;
 		var eventListener:Dynamic;
-		for (eventName in events.keys())
+		if (events != null)
 		{
-			//signal = null;
-			////if (BaseScreenNavigator.SIGNAL_TYPE != null &&
-				////this._activeScreen.hasOwnProperty(eventName))
-			//#if html5
-			//// TODO : find a better way of checking that a property exists in JS
-			//if (BaseScreenNavigator.SIGNAL_TYPE != null &&
-				//Type.getClassFields(this._activeScreen).contains(eventName))
-			//#else
-			//if (BaseScreenNavigator.SIGNAL_TYPE != null &&
-				//Reflect.hasField(this._activeScreen, eventName))
-			//#end
-			//{
-				////signal = this._activeScreen[eventName] as BaseScreenNavigator.SIGNAL_TYPE;
-				//signal = Reflect.getProperty(this._activeScreen, eventName);
-			//}
-			signal = Reflect.getProperty(this._activeScreen, eventName);
-			eventAction = events[eventName];
-			//eventAction = Reflect.field(events, eventName);
-			if (Reflect.isFunction(eventAction))
+			for (eventName in events.keys())
 			{
-				if (signal != null)
+				//signal = null;
+				////if (BaseScreenNavigator.SIGNAL_TYPE != null &&
+					////this._activeScreen.hasOwnProperty(eventName))
+				//#if html5
+				//// TODO : find a better way of checking that a property exists in JS
+				//if (BaseScreenNavigator.SIGNAL_TYPE != null &&
+					//Type.getClassFields(this._activeScreen).contains(eventName))
+				//#else
+				//if (BaseScreenNavigator.SIGNAL_TYPE != null &&
+					//Reflect.hasField(this._activeScreen, eventName))
+				//#end
+				//{
+					////signal = this._activeScreen[eventName] as BaseScreenNavigator.SIGNAL_TYPE;
+					//signal = Reflect.getProperty(this._activeScreen, eventName);
+				//}
+				signal = Reflect.getProperty(this._activeScreen, eventName);
+				eventAction = events[eventName];
+				//eventAction = Reflect.field(events, eventName);
+				if (Reflect.isFunction(eventAction))
 				{
-					//signal.add(eventAction as Function);
-					//Reflect.callMethod(signal, Reflect.field(signal, "add"), [cast(eventAction, Function)]);
-					signal.add(eventAction);
+					if (signal != null)
+					{
+						//signal.add(eventAction as Function);
+						//Reflect.callMethod(signal, Reflect.field(signal, "add"), [cast(eventAction, Function)]);
+						signal.add(eventAction);
+					}
+					else
+					{
+						this._activeScreen.addEventListener(eventName, cast eventAction);
+					}
+				}
+				else if (Std.isOfType(eventAction, String))
+				{
+					if (signal != null)
+					{
+						eventListener = this.createShowScreenSignalListener(cast eventAction, signal);
+						signal.add(eventListener);
+					}
+					else
+					{
+						eventListener = this.createShowScreenEventListener(cast eventAction);
+						this._activeScreen.addEventListener(eventName, eventListener);
+					}
+					savedScreenEvents[eventName] = eventListener;
+					//Reflect.setField(savedScreenEvents, eventName, eventListener);
 				}
 				else
 				{
-					this._activeScreen.addEventListener(eventName, cast eventAction);
+					throw new TypeError("Unknown event action defined for screen: " + eventAction.toString());
 				}
-			}
-			else if (Std.isOfType(eventAction, String))
-			{
-				if (signal != null)
-				{
-					eventListener = this.createShowScreenSignalListener(cast eventAction, signal);
-					signal.add(eventListener);
-				}
-				else
-				{
-					eventListener = this.createShowScreenEventListener(cast eventAction);
-					this._activeScreen.addEventListener(eventName, eventListener);
-				}
-				savedScreenEvents[eventName] = eventListener;
-				//Reflect.setField(savedScreenEvents, eventName, eventListener);
-			}
-			else
-			{
-				throw new TypeError("Unknown event action defined for screen: " + eventAction.toString());
 			}
 		}
 		this._screenEvents[this._activeScreenID] = savedScreenEvents;
@@ -256,48 +259,51 @@ class ScreenNavigator extends BaseScreenNavigator
 		var signal:Dynamic;
 		var eventAction:Dynamic;
 		var eventListener:Dynamic->Void;
-		for (eventName in events.keys())
+		if (events != null)
 		{
-			//signal = null;
-			////if (BaseScreenNavigator.SIGNAL_TYPE !== null &&
-				////this._activeScreen.hasOwnProperty(eventName))
-			//#if html5
-			//// TODO : find a better way of checking that a property exists in JS
-			//if (BaseScreenNavigator.SIGNAL_TYPE != null &&
-				//Type.getClassFields(this._activeScreen).contains(eventName))
-			//#else
-			//if (BaseScreenNavigator.SIGNAL_TYPE != null &&
-				//Reflect.hasField(this._activeScreen, eventName))
-			//#end
-			//{
-				////signal = this._activeScreen[eventName] as BaseScreenNavigator.SIGNAL_TYPE;
-				//signal = Reflect.getProperty(this._activeScreen, eventName);
-			//}
-			signal = Reflect.getProperty(this._activeScreen, eventName);
-			eventAction = events[eventName];
-			//eventAction = Reflect.field(events, eventName);
-			if (Reflect.isFunction(eventAction))
+			for (eventName in events.keys())
 			{
-				if (signal != null)
+				//signal = null;
+				////if (BaseScreenNavigator.SIGNAL_TYPE !== null &&
+					////this._activeScreen.hasOwnProperty(eventName))
+				//#if html5
+				//// TODO : find a better way of checking that a property exists in JS
+				//if (BaseScreenNavigator.SIGNAL_TYPE != null &&
+					//Type.getClassFields(this._activeScreen).contains(eventName))
+				//#else
+				//if (BaseScreenNavigator.SIGNAL_TYPE != null &&
+					//Reflect.hasField(this._activeScreen, eventName))
+				//#end
+				//{
+					////signal = this._activeScreen[eventName] as BaseScreenNavigator.SIGNAL_TYPE;
+					//signal = Reflect.getProperty(this._activeScreen, eventName);
+				//}
+				signal = Reflect.getProperty(this._activeScreen, eventName);
+				eventAction = events[eventName];
+				//eventAction = Reflect.field(events, eventName);
+				if (Reflect.isFunction(eventAction))
 				{
-					signal.remove(eventAction);
+					if (signal != null)
+					{
+						signal.remove(eventAction);
+					}
+					else
+					{
+						this._activeScreen.removeEventListener(eventName, cast eventAction);
+					}
 				}
-				else
+				else if (Std.isOfType(eventAction, String))
 				{
-					this._activeScreen.removeEventListener(eventName, cast eventAction);
-				}
-			}
-			else if (Std.isOfType(eventAction, String))
-			{
-				eventListener = savedScreenEvents[eventName];
-				//eventListener = cast Reflect.field(savedScreenEvents, eventName);
-				if (signal != null)
-				{
-					signal.remove(eventListener);
-				}
-				else
-				{
-					this._activeScreen.removeEventListener(eventName, eventListener);
+					eventListener = savedScreenEvents[eventName];
+					//eventListener = cast Reflect.field(savedScreenEvents, eventName);
+					if (signal != null)
+					{
+						signal.remove(eventListener);
+					}
+					else
+					{
+						this._activeScreen.removeEventListener(eventName, eventListener);
+					}
 				}
 			}
 		}

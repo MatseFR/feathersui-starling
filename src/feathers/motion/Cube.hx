@@ -162,6 +162,7 @@ class CubeTween extends Tween
 		tweenProperties:Dynamic)
 	{
 		var cube:CulledSprite3D = new CulledSprite3D();
+		var delegate:RenderDelegate;
 		if (newScreen != null)
 		{
 			this._navigator = newScreen.parent;
@@ -186,7 +187,7 @@ class CubeTween extends Tween
 				this._newScreenParent.z = this._navigator.height;
 				this._newScreenParent.rotationX = -rotationXOffset;
 			}
-			var delegate:RenderDelegate = new RenderDelegate(newScreen);
+			delegate = new RenderDelegate(newScreen);
 			delegate.alpha = newScreen.alpha;
 			delegate.blendMode = newScreen.blendMode;
 			delegate.rotation = newScreen.rotation;
@@ -257,7 +258,7 @@ class CubeTween extends Tween
 
 	private function cleanupTween():Void
 	{
-		var cube:Sprite3D = Sprite3D(this.target);
+		var cube:Sprite3D = cast this.target;
 		cube.removeFromParent(true);
 		if (this._savedNewScreen != null)
 		{

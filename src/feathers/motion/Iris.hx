@@ -55,7 +55,7 @@ class Iris
 	 *
 	 * @productversion Feathers 3.5.0
 	 */
-	public static function createIrisOpenEffect(duration:Float = 0.5, ease:dynamic = Transitions.EASE_OUT, interruptBehavior:String = EffectInterruptBehavior.END):Function
+	public static function createIrisOpenEffect(duration:Float = 0.5, ease:Dynamic = Transitions.EASE_OUT, interruptBehavior:String = EffectInterruptBehavior.END):Function
 	{
 		return createIrisOpenEffectAtRatio(0.5, 0.5, duration, ease, interruptBehavior);
 	}
@@ -458,7 +458,7 @@ class Iris
 	 * @see feathers.controls.StackScreenNavigator#popTransition
 	 * @see feathers.controls.ScreenNavigator#transition
 	 */
-	public static function createIrisCloseTransitionAt(x:Float, y:Float, duration:Float = 0.5, ease:Object = Transitions.EASE_OUT, tweenProperties:Dynamic = null):Function
+	public static function createIrisCloseTransitionAt(x:Float, y:Float, duration:Float = 0.5, ease:Dynamic = Transitions.EASE_OUT, tweenProperties:Dynamic = null):Function
 	{
 		return function(oldScreen:DisplayObject, newScreen:DisplayObject, onComplete:Function, managed:Bool = false):IEffectContext
 		{
@@ -513,7 +513,7 @@ class IrisTween extends Tween
 		}
 		Pool.putPoint(p1);
 		Pool.putPoint(p2);
-		var maskTarget:Canvas;
+		var maskTarget:Canvas = null;
 		var mask:Canvas;
 		if (newScreen != null && openIris)
 		{

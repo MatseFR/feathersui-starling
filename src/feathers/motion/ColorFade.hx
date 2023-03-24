@@ -92,14 +92,15 @@ class ColorFade
 			{
 				throw new ArgumentError(SCREEN_REQUIRED_ERROR);
 			}
+			var tween:ColorFadeTween;
 			if (newScreen != null)
 			{
 				newScreen.alpha = 0;
-				if (oldScreen) //oldScreen can be null, that's okay
+				if (oldScreen != null) //oldScreen can be null, that's okay
 				{
 					oldScreen.alpha = 1;
 				}
-				var tween:ColorFadeTween = new ColorFadeTween(newScreen, oldScreen, color, duration, ease, onComplete, tweenProperties);
+				tween = new ColorFadeTween(newScreen, oldScreen, color, duration, ease, onComplete, tweenProperties);
 			}
 			else //we only have the old screen
 			{
@@ -120,10 +121,11 @@ class ColorFade
 class ColorFadeTween extends Tween
 {
 	public function new(target:DisplayObject, otherTarget:DisplayObject,
-		color:uint, duration:Float, ease:Dynamic, onCompleteCallback:Function,
+		color:Int, duration:Float, ease:Dynamic, onCompleteCallback:Function,
 		tweenProperties:Dynamic)
 	{
 		super(target, duration, ease);
+		_displayTarget = target;
 		if (target.alpha == 0)
 		{
 			this.fadeTo(1);
@@ -157,6 +159,7 @@ class ColorFadeTween extends Tween
 		navigator.addChild(this._overlay);
 	}
 	
+	private var _displayTarget:DisplayObject;
 	private var _otherTarget:DisplayObject;
 	private var _overlay:Quad;
 	private var _onCompleteCallback:Function;
@@ -166,7 +169,7 @@ class ColorFadeTween extends Tween
 		var progress:Float = this.progress;
 		if (progress < 0.5)
 		{
-			target.visible = false;
+			this._displayTarget.visible = false;
 			if (this._otherTarget != null)
 			{
 				this._otherTarget.visible = true;
@@ -175,7 +178,7 @@ class ColorFadeTween extends Tween
 		}
 		else
 		{
-			target.visible = true;
+			this._displayTarget.visible = true;
 			if (this._otherTarget != null)
 			{
 				this._otherTarget.visible = false;
@@ -187,7 +190,7 @@ class ColorFadeTween extends Tween
 	private function cleanupTween():Void
 	{
 		this._overlay.removeFromParent(true);
-		this.target.visible = true;
+		this._displayTarget.visible = true;
 		if (this._otherTarget != null)
 		{
 			this._otherTarget.visible = true;

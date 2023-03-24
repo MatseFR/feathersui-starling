@@ -165,12 +165,14 @@ class FlipTween extends Tween
 		duration:Float, ease:Dynamic, onCompleteCallback:Function,
 		tweenProperties:Dynamic)
 	{
-		
+		var delegate:RenderDelegate;
+		var newScreenParent:Sprite3D = null;
+		var targetParent:Sprite3D = null;
 		if (newScreen != null)
 		{
 			this._navigator = newScreen.parent;
-			var newScreenParent:Sprite3D = new Sprite3D();
-			var delegate:RenderDelegate = new RenderDelegate(newScreen);
+			newScreenParent = new Sprite3D();
+			delegate = new RenderDelegate(newScreen);
 			delegate.alpha = newScreen.alpha;
 			delegate.blendMode = newScreen.blendMode;
 			delegate.rotation = newScreen.rotation;
@@ -240,7 +242,6 @@ class FlipTween extends Tween
 		
 		super(targetParent, duration, ease);
 		
-		var targetParent:Sprite3D;
 		if (newScreenParent != null)
 		{
 			if (rotationYOffset != 0)

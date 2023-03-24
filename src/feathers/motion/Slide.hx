@@ -142,7 +142,7 @@ class Slide
 				throw new ArgumentError(SCREEN_REQUIRED_ERROR);
 			}
 			var tween:SlideTween;
-			if (newScreen == null)
+			if (newScreen != null)
 			{
 				if (oldScreen == null)
 				{

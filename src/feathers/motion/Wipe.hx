@@ -345,7 +345,7 @@ class Wipe
 			{
 				throw new ArgumentError(SCREEN_REQUIRED_ERROR);
 			}
-			var xOffset:Float = oldScreen ? -oldScreen.width : -newScreen.width;
+			var xOffset:Float = oldScreen != null ? -oldScreen.width : -newScreen.width;
 			var tween:WipeTween = new WipeTween(newScreen, oldScreen, xOffset, 0, duration, ease, onComplete, tweenProperties);
 			if (managed)
 			{
@@ -375,7 +375,7 @@ class Wipe
 			{
 				throw new ArgumentError(SCREEN_REQUIRED_ERROR);
 			}
-			var xOffset:Float = oldScreen ? oldScreen.width : newScreen.width;
+			var xOffset:Float = oldScreen != null ? oldScreen.width : newScreen.width;
 			var tween:WipeTween = new WipeTween(newScreen, oldScreen, xOffset, 0, duration, ease, onComplete, tweenProperties);
 			if (managed)
 			{
@@ -405,7 +405,7 @@ class Wipe
 			{
 				throw new ArgumentError(SCREEN_REQUIRED_ERROR);
 			}
-			var yOffset:Float = oldScreen ? -oldScreen.height : -newScreen.height;
+			var yOffset:Float = oldScreen != null ? -oldScreen.height : -newScreen.height;
 			var tween:WipeTween = new WipeTween(newScreen, oldScreen, 0, yOffset, duration, ease, onComplete, tweenProperties);
 			if (managed)
 			{
@@ -435,7 +435,7 @@ class Wipe
 			{
 				throw new ArgumentError(SCREEN_REQUIRED_ERROR);
 			}
-			var yOffset:Float = oldScreen ? oldScreen.height : newScreen.height;
+			var yOffset:Float = oldScreen != null ? oldScreen.height : newScreen.height;
 			var tween:WipeTween = new WipeTween(newScreen, oldScreen, 0, yOffset, duration, ease, onComplete, tweenProperties);
 			if (managed)
 			{
@@ -453,7 +453,7 @@ class WipeTween extends Tween
 		xOffset:Float, yOffset:Float, duration:Float, ease:Dynamic, onCompleteCallback:Function,
 		tweenProperties:Dynamic)
 	{
-		var mask:Quad;
+		var mask:Quad = null;
 		if (newScreen != null)
 		{
 			mask = new Quad(1, 1, 0xff00ff);
