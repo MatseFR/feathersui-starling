@@ -41,6 +41,11 @@ interface IScreenNavigatorItem
 	public var canDispose(get, never):Bool;
 	
 	/**
+	 * Disposes this item
+	 */
+	function dispose():Void;
+	
+	/**
 	 * Returns a display object instance of this screen.
 	 */
 	function getScreen():DisplayObject;
