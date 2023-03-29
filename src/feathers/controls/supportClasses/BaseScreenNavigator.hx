@@ -54,7 +54,14 @@ abstract class BaseScreenNavigator extends FeathersControl
 		
 		if (SIGNAL_TYPE == null)
 		{
-			
+			try
+			{
+				SIGNAL_TYPE = Type.resolveClass("msignal.Signal");
+			}
+			catch (error)
+			{
+				//signals not being used
+			}
 		}
 		
 		this.screenContainer = this;

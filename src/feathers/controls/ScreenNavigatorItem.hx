@@ -49,7 +49,7 @@ class ScreenNavigatorItem implements IScreenNavigatorItem
 	}
 	
 	/**
-	 * 
+	 * @inheritDoc
 	 */
 	public function dispose():Void
 	{
@@ -259,11 +259,6 @@ class ScreenNavigatorItem implements IScreenNavigatorItem
 		
 		if (this._properties != null)
 		{
-			//var fields:Array<String> = Reflect.fields(this._properties);
-			//for (propertyName in fields)
-			//{
-				//Reflect.setProperty(screenInstance, propertyName, Reflect.field(this._properties, propertyName));
-			//}
 			for (propertyName in this._properties.keys())
 			{
 				Reflect.setProperty(screenInstance, propertyName, this._properties[propertyName]);
