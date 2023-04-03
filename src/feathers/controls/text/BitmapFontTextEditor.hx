@@ -7,15 +7,20 @@ This program is free software. You can redistribute and/or modify it in
 accordance with the terms of the accompanying license agreement.
 */
 package feathers.controls.text;
+import feathers.core.FeathersControl;
 import feathers.core.FocusManager;
+import feathers.core.INativeFocusOwner;
+import feathers.core.ITextEditor;
 import feathers.events.FeathersEventType;
 import feathers.skins.IStyleProvider;
 import feathers.utils.math.MathUtils;
 import feathers.utils.text.TextInputNavigation;
 import feathers.utils.text.TextInputRestrict;
+import feathers.utils.type.SafeCast;
 import openfl.desktop.Clipboard;
 import openfl.desktop.ClipboardFormats;
 import openfl.display.Sprite;
+import openfl.display.Stage;
 import openfl.events.TextEvent;
 import openfl.geom.Point;
 import openfl.text.TextFormatAlign;
@@ -58,7 +63,7 @@ import starling.utils.Pool;
  *
  * @productversion Feathers 2.0.0
  */
-class BitmapFontTextEditor extends BitmapFontTextRenderer 
+class BitmapFontTextEditor extends BitmapFontTextRenderer implements ITextEditor implements INativeFocusOwner
 {
 	/**
 	 * @private
@@ -107,7 +112,7 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 	private function get_selectionSkin():DisplayObject { return this._selectionSkin; }
 	private function set_selectionSkin(value:DisplayObject):DisplayObject
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction("selectionSkin"))
 		{
 			return value;
 		}
@@ -115,17 +120,17 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 		{
 			return value;
 		}
-		if (this._selectionSkin && this._selectionSkin.parent == this)
+		if (this._selectionSkin != null && this._selectionSkin.parent == this)
 		{
 			this._selectionSkin.removeFromParent();
 		}
 		this._selectionSkin = value;
-		if (this._selectionSkin)
+		if (this._selectionSkin != null)
 		{
 			this._selectionSkin.visible = false;
 			this.addChildAt(this._selectionSkin, 0);
 		}
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._selectionSkin;
 	}
 	
@@ -145,10 +150,10 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 	 */
 	public var cursorSkin(get, set):DisplayObject;
 	private var _cursorSkin:DisplayObject;
-	private function get_cursorSkin():DisplayObject { this._cursorSkin; }
+	private function get_cursorSkin():DisplayObject { return this._cursorSkin; }
 	private function set_cursorSkin(value:DisplayObject):DisplayObject
 	{
-		if (this.processStyleRestriction(arguments.callee))
+		if (this.processStyleRestriction("cursorSkin"))
 		{
 			return value;
 		}
@@ -166,7 +171,7 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 			this._cursorSkin.visible = false;
 			this.addChild(this._cursorSkin);
 		}
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._cursorSkin;
 	}
 	
@@ -203,7 +208,7 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 			this._text = this._unmaskedText;
 			this._unmaskedText = null;
 		}
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._displayAsPassword;
 	}
 	
@@ -235,7 +240,7 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 		{
 			this.refreshMaskedText();
 		}
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._passwordCharCode;
 	}
 	
@@ -256,7 +261,7 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 			return value;
 		}
 		this._isEditable = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._isEditable;
 	}
 	
@@ -277,7 +282,7 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 			return value;
 		}
 		this._isSelectable = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._isSelectable;
 	}
 	
@@ -315,7 +320,7 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 		}
 		if (currentValue == value)
 		{
-			return;
+			return value;
 		}
 		if (this._displayAsPassword)
 		{
@@ -326,7 +331,7 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 		{
 			this._text = value;
 		}
-		this.invalidate(INVALIDATION_FLAG_DATA);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_DATA);
 		var textLength:Int = this._text.length;
 		//we need to account for the possibility that the text is in the
 		//middle of being selected when it changes
@@ -364,7 +369,7 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 			return value;
 		}
 		this._maxChars = value;
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._maxChars;
 	}
 	
@@ -375,7 +380,7 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 	 *
 	 * @see feathers.controls.TextInput#restrict
 	 */
-	public var restrict(get, set):TextInputRestrict;
+	public var restrict(get, set):String;
 	@:native("_restrict1")
 	private var _restrict:TextInputRestrict;
 	private function get_restrict():String
@@ -412,7 +417,7 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 				this._restrict = new TextInputRestrict(value);
 			}
 		}
-		this.invalidate(INVALIDATION_FLAG_STYLES);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return value;
 	}
 	
@@ -566,7 +571,7 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 			this._selectionSkin.visible = true;
 		}
 		this.refreshCursorBlink();
-		this.invalidate(INVALIDATION_FLAG_SELECTED);
+		this.invalidate(FeathersControl.INVALIDATION_FLAG_SELECTED);
 	}
 	
 	/**
@@ -635,8 +640,8 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 	 */
 	override private function draw():Void
 	{
-		var dataInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_DATA);
-		var selectionInvalid:Bool = this.isInvalid(INVALIDATION_FLAG_SELECTED);
+		var dataInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_DATA);
+		var selectionInvalid:Bool = this.isInvalid(FeathersControl.INVALIDATION_FLAG_SELECTED);
 		
 		super.draw();
 		
@@ -699,6 +704,20 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 				scale = 1;
 			}
 			this._cursorSkin.height = font.lineHeight * scale;
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	private function refreshMaskedText():Void
+	{
+		this._text = "";
+		var textLength:Int = this._unmaskedText.length;
+		var maskChar:String = String.fromCharCode(this._passwordCharCode);
+		for (i in 0...textLength)
+		{
+			this._text += maskChar;
 		}
 	}
 	
@@ -814,7 +833,7 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 			}
 		}
 		var currentX:Float = 0;
-		var previousCharID:Float = Math.NaN;
+		var previousCharID:Int = -1;
 		var charCount:Int = this._text.length;
 		var charID:Int;
 		var charData:BitmapChar;
@@ -830,7 +849,7 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 			}
 			currentKerning = 0;
 			if (isKerningEnabled &&
-				previousCharID == previousCharID) //!isNaN
+				previousCharID == -1)
 			{
 				currentKerning = charData.getKerning(previousCharID) * scale;
 			}
@@ -890,7 +909,7 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 			}
 		}
 		var currentX:Float = 0;
-		var previousCharID:Float = Math.NaN;
+		var previousCharID:Int = -1;
 		var charCount:Int = this._text.length;
 		if (index < charCount)
 		{
@@ -909,7 +928,7 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 			}
 			currentKerning = 0;
 			if (isKerningEnabled &&
-				previousCharID == previousCharID) //!isNaN
+				previousCharID == -1)
 			{
 				currentKerning = charData.getKerning(previousCharID) * scale;
 			}
@@ -1070,10 +1089,12 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 			this.touchPointID = -1;
 			return;
 		}
+		var touch:Touch;
+		var point:Point;
 		if (this.touchPointID >= 0)
 		{
-			var touch:Touch = event.getTouch(this, null, this.touchPointID);
-			var point:Point = Pool.getPoint();
+			touch = event.getTouch(this, null, this.touchPointID);
+			point = Pool.getPoint();
 			touch.getLocation(this, point);
 			point.x += this._scrollX;
 			this.selectRange(this._selectionAnchorIndex, this.getSelectionIndexAtPoint(point.x, point.y));
@@ -1133,7 +1154,7 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 			return;
 		}
 		var touch:Touch = event.getTouch(this.stage, TouchPhase.BEGAN);
-		if (!touch) //we only care about began touches
+		if (touch == null) //we only care about began touches
 		{
 			return;
 		}
@@ -1345,7 +1366,7 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 			return;
 		}
 		var charCode:Int = text.charCodeAt(0);
-		if (!this._restrict || this._restrict.isCharacterAllowed(charCode))
+		if (this._restrict == null || this._restrict.isCharacterAllowed(charCode))
 		{
 			this.replaceSelectedText(text);
 		}
@@ -1404,7 +1425,7 @@ class BitmapFontTextEditor extends BitmapFontTextRenderer
 		{
 			return;
 		}
-		var pastedText:String = Clipboard.generalClipboard.getData(ClipboardFormats.TEXT_FORMAT) as String;
+		var pastedText:String = SafeCast.safe_cast(Clipboard.generalClipboard.getData(ClipboardFormats.TEXT_FORMAT), String);
 		if (pastedText == null)
 		{
 			//the clipboard doesn't contain any text to paste
