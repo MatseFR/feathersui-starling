@@ -94,8 +94,8 @@ class DataGrid extends Scroller implements IDragSource implements IDropTarget
 	 */
 	private static function defaultSortCompareFunction(a:Dynamic, b:Dynamic):Int
 	{
-		var aString:String = a.toString().toLowerCase();
-		var bString:String = b.toString().toLowerCase();
+		var aString:String = Std.string(a).toLowerCase();
+		var bString:String = Std.string(b).toLowerCase();
 		if (aString < bString)
 		{
 			return -1;
