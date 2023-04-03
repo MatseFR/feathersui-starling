@@ -166,7 +166,7 @@ abstract class FeathersControl extends Sprite implements IFeathersControl implem
 		if (Std.isOfType(this, IFocusDisplayObject))
 		{
 			this.addEventListener(FeathersEventType.FOCUS_IN, focusInHandler);
-			this.removeEventListener(FeathersEventType.FOCUS_OUT, focusOutHandler);
+			this.addEventListener(FeathersEventType.FOCUS_OUT, focusOutHandler);
 		}
 	}
 	
