@@ -1392,7 +1392,8 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 		
 		var starling:Starling = this.stage != null ? this.stage.starling : Starling.current;
 		var scaleFactor:Float = starling.contentScaleFactor;
-		var gutterDimensionsOffset:Float = 4;
+		// MATSE : gutter dimensions offset start with 0 when wordWrap is true
+		var gutterDimensionsOffset:Float = this._wordWrap ? 0 : 4;
 		if (this._useGutter || this._border)
 		{
 			gutterDimensionsOffset = 0;
@@ -1426,6 +1427,18 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 		{
 			this.textField.width = newWidth + gutterDimensionsOffset;
 			this.textField.wordWrap = this._wordWrap;
+			
+			// MATSE : if we are autosizing and wordwrap is true, we don't want extra space
+			if (needsWidth && this._wordWrap)
+			{
+				newWidth = this.textField.textWidth / scaleFactor;
+			}
+			//\MATSE
+		}
+		else if (needsWidth && this._wordWrap)
+		{
+			gutterDimensionsOffset = 4;
+			newWidth -= 3.5;
 		}
 		
 		if (needsHeight)
