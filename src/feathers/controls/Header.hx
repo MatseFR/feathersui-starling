@@ -24,6 +24,7 @@ import feathers.system.DeviceCapabilities;
 import feathers.text.FontStylesSet;
 import feathers.utils.display.ScreenDensityScaleCalculator;
 import feathers.utils.skins.SkinsUtils;
+import feathers.utils.type.SafeCast;
 import openfl.display.Stage;
 import openfl.display.StageDisplayState;
 import openfl.events.FullScreenEvent;
@@ -1196,7 +1197,7 @@ class Header extends FeathersControl
 			this._explicitBackgroundWidth, this._explicitBackgroundHeight,
 			this._explicitBackgroundMinWidth, this._explicitBackgroundMinHeight,
 			this._explicitBackgroundMaxWidth, this._explicitBackgroundMaxHeight);
-		var measureSkin:IMeasureDisplayObject = cast this.currentBackgroundSkin;
+		var measureSkin:IMeasureDisplayObject = SafeCast.safe_cast(this.currentBackgroundSkin, IMeasureDisplayObject);
 		if (Std.isOfType(this.currentBackgroundSkin, IValidating))
 		{
 			cast(this.currentBackgroundSkin, IValidating).validate();

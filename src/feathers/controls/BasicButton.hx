@@ -17,6 +17,7 @@ import feathers.skins.IStyleProvider;
 import feathers.utils.skins.SkinsUtils;
 import feathers.utils.touch.TapToTrigger;
 import feathers.utils.touch.TouchToState;
+import feathers.utils.type.SafeCast;
 import openfl.geom.Point;
 import feathers.core.IFeathersControl;
 import starling.display.DisplayObject;
@@ -399,7 +400,7 @@ class BasicButton extends FeathersControl implements IStateContext
 			this._explicitSkinWidth, this._explicitSkinHeight,
 			this._explicitSkinMinWidth, this._explicitSkinMinHeight,
 			this._explicitSkinMaxWidth, this._explicitSkinMaxHeight);
-		var measureSkin:IMeasureDisplayObject = cast this.currentSkin;
+		var measureSkin:IMeasureDisplayObject = SafeCast.safe_cast(this.currentSkin, IMeasureDisplayObject);
 		
 		if (Std.isOfType(this.currentSkin, IValidating))
 		{
