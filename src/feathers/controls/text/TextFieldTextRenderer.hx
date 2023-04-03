@@ -1407,7 +1407,9 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 			//in AIR for iOS where getting the value for textField.width the
 			//first time results in an incorrect value, but if you query it
 			//again, for some reason, it reports the correct width value.
+			#if flash
 			var hackWorkaround:Float = this.textField.width;
+			#end
 			newWidth = (this.textField.width / scaleFactor) - gutterDimensionsOffset;
 			if (newWidth < this._explicitMinWidth)
 			{
@@ -1435,11 +1437,13 @@ class TextFieldTextRenderer extends BaseTextRenderer implements ITextRenderer
 			}
 			//\MATSE
 		}
+		// MATSE : avoid unnecessary added space
 		else if (needsWidth && this._wordWrap)
 		{
 			gutterDimensionsOffset = 4;
 			newWidth -= 3.5;
 		}
+		//\MATSE
 		
 		if (needsHeight)
 		{
