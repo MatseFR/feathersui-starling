@@ -15,25 +15,26 @@ package feathers.utils.text;
  */
 class TextInputRestrict 
 {
-	private static var REQUIRES_ESCAPE:Map<EReg, String> = new Map<EReg, String>();
-	REQUIRES_ESCAPE[~/\[/g] = "\\[";
-	REQUIRES_ESCAPE[~/\]/g] = "\\]";
-	REQUIRES_ESCAPE[~/\{/g] = "\\{";
-	REQUIRES_ESCAPE[~/\}/g] = "\\}";
-	REQUIRES_ESCAPE[~/\(/g] = "\\(";
-	REQUIRES_ESCAPE[~/\)/g] = "\\)";
-	REQUIRES_ESCAPE[~/\|/g] = "\\|";
-	REQUIRES_ESCAPE[~/\//g] = "\\/";
-	REQUIRES_ESCAPE[~/\./g] = "\\.";
-	REQUIRES_ESCAPE[~/\+/g] = "\\+";
-	REQUIRES_ESCAPE[~/\*/g] = "\\*";
-	REQUIRES_ESCAPE[~/\?/g] = "\\?";
-	REQUIRES_ESCAPE[~/\$/g] = "\\$";
+	private static var REQUIRES_ESCAPE:Map<EReg, String> = [//new Map<EReg, String>();
+		~/\[/g => "\\[",
+		~/\]/g => "\\]",
+		~/\{/g => "\\{",
+		~/\}/g => "\\}",
+		~/\(/g => "\\(",
+		~/\)/g => "\\)",
+		~/\|/g => "\\|",
+		~/\//g => "\\/",
+		~/\./g => "\\.",
+		~/\+/g => "\\+",
+		~/\*/g => "\\*",
+		~/\?/g => "\\?",
+		~/\$/g => "\\$"
+	];
 	
 	/**
 	 * @private
 	 */
-	public function new(restrict:String = nul) 
+	public function new(restrict:String = null) 
 	{
 		this.restrict = restrict;
 	}
@@ -68,14 +69,14 @@ class TextInputRestrict
 	{
 		if (this._restrict == value)
 		{
-			return;
+			return value;
 		}
 		this._restrict = value;
 		if (value != null)
 		{
-			if (this._restricts.length != 0)
+			if (this._restricts != null)
 			{
-				this._restricts.length = 0;
+				this._restricts.resize(0);
 			}
 			else
 			{
@@ -121,6 +122,7 @@ class TextInputRestrict
 		{
 			this._restricts = null;
 		}
+		return value;
 	}
 	
 	/**
@@ -128,7 +130,7 @@ class TextInputRestrict
 	 */
 	public function isCharacterAllowed(charCode:Int):Bool
 	{
-		if (!this._restricts)
+		if (this._restricts == null)
 		{
 			return true;
 		}
@@ -180,11 +182,11 @@ class TextInputRestrict
 				restrict = this._restricts[j];
 				if (isExcluding)
 				{
-					isIncluded = isIncluded && restrict.test(character);
+					isIncluded = isIncluded && restrict.match(character);
 				}
 				else
 				{
-					isIncluded = isIncluded || restrict.test(character);
+					isIncluded = isIncluded || restrict.match(character);
 				}
 				isExcluding = !isExcluding;
 			}
@@ -221,10 +223,10 @@ class TextInputRestrict
 			//var keyRegExp:RegExp = key as RegExp;
 			//var value:String = REQUIRES_ESCAPE[keyRegExp] as String;
 			//restrict = restrict.replace(keyRegExp, value);
-			restrict = key.replace(restrict, REQUIRES_ESCAPE[key];
+			restrict = key.replace(restrict, REQUIRES_ESCAPE[key]);
 		}
 		//return new RegExp("[" + restrict + "]");
-		return new EReg("[" + restrict + "]");
+		return new EReg("[" + restrict + "]", "");
 	}
 	
 }
