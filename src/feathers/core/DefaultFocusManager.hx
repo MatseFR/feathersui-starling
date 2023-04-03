@@ -282,6 +282,11 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 			this._savedFocus = value;
 		}
 		this.dispatchEventWith(Event.CHANGE);
+		
+		// DEBUG
+		//trace("Focus change for " + this._root + " from " + oldFocus + " to " + this._focus);
+		//\DEBUG
+		
 		return this._focus;
 	}
 	
@@ -810,9 +815,9 @@ class DefaultFocusManager extends EventDispatcher implements IFocusManager
 		// TODO : openfl.ui.KeyLocation has no D_PAD property
 		//if (event.keyLocation != KeyLocation.D_PAD && !DeviceCapabilities.simulateDPad)
 		//{
-			////focus is controlled only with a d-pad and not the regular
-			////keyboard arrow keys
-			//return;
+			//focus is controlled only with a d-pad and not the regular
+			//keyboard arrow keys
+			return;
 		//}
 		if (event.keyCode != Keyboard.UP && event.keyCode != Keyboard.DOWN &&
 			event.keyCode != Keyboard.LEFT && event.keyCode != Keyboard.RIGHT)
