@@ -21,6 +21,7 @@ import feathers.skins.IStyleProvider;
 import feathers.text.FontStylesSet;
 import feathers.utils.display.DisplayUtils;
 import feathers.utils.skins.SkinsUtils;
+import feathers.utils.type.Property;
 import feathers.utils.type.SafeCast;
 import haxe.Constraints.Function;
 import openfl.events.KeyboardEvent;
@@ -1036,8 +1037,7 @@ class Alert extends Panel
 			for (propertyName in this._messageProperties)
 			{
 				propertyValue = this._messageProperties[propertyName];
-				//this.messageTextRenderer[propertyName] = propertyValue;
-				Reflect.setProperty(this.messageTextRenderer, propertyName, propertyValue);
+				Property.write(this.messageTextRenderer, propertyName, propertyValue);
 			}
 		}
 	}

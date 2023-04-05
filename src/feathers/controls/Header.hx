@@ -24,6 +24,7 @@ import feathers.system.DeviceCapabilities;
 import feathers.text.FontStylesSet;
 import feathers.utils.display.ScreenDensityScaleCalculator;
 import feathers.utils.skins.SkinsUtils;
+import feathers.utils.type.Property;
 import feathers.utils.type.SafeCast;
 import openfl.display.Stage;
 import openfl.display.StageDisplayState;
@@ -1585,8 +1586,7 @@ class Header extends FeathersControl
 			for (propertyName in this._titleProperties)
 			{
 				propertyValue = this._titleProperties[propertyName];
-				//this.titleTextRenderer[propertyName] = propertyValue;
-				Reflect.setProperty(this.titleTextRenderer, propertyName, propertyValue);
+				Property.write(this.titleTextRenderer, propertyName, propertyValue);
 			}
 		}
 	}

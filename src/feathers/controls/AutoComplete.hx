@@ -16,6 +16,7 @@ import feathers.data.IListCollection;
 import feathers.events.FeathersEventType;
 import feathers.skins.IStyleProvider;
 import feathers.utils.display.DisplayUtils;
+import feathers.utils.type.Property;
 import openfl.Lib;
 import openfl.ui.Keyboard;
 import starling.events.Event;
@@ -567,7 +568,7 @@ class AutoComplete extends TextInput
 			for (propertyName in this._listProperties)
 			{
 				propertyValue = this._listProperties[propertyName];
-				Reflect.setProperty(this.list, propertyName, propertyValue);
+				Property.write(this.list, propertyName, propertyValue);
 			}
 		}
 	}
@@ -734,7 +735,7 @@ class AutoComplete extends TextInput
 		}
 		var oldIgnoreAutoCompleteChanges:Bool = this._ignoreAutoCompleteChanges;
 		this._ignoreAutoCompleteChanges = true;
-		this.text = this.list.selectedItem.toString();
+		this.text = Std.string(this.list.selectedItem);
 		this.selectRange(this.text.length, this.text.length);
 		this._ignoreAutoCompleteChanges = oldIgnoreAutoCompleteChanges;
 	}

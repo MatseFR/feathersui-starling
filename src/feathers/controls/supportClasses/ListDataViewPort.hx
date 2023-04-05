@@ -35,9 +35,12 @@ import feathers.layout.ViewPortBounds;
 import feathers.motion.effectClasses.IEffectContext;
 import feathers.system.DeviceCapabilities;
 import feathers.utils.type.ArgumentsCount;
+import feathers.utils.type.Property;
 import feathers.utils.type.SafeCast;
 import haxe.Constraints.Function;
+import haxe.ds.IntMap;
 import haxe.ds.ObjectMap;
+import haxe.ds.StringMap;
 import openfl.errors.ArgumentError;
 import openfl.errors.Error;
 import openfl.errors.IllegalOperationError;
@@ -269,7 +272,8 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 	private var _defaultStorage:ItemRendererFactoryStorage = new ItemRendererFactoryStorage();
 	private var _storageMap:Map<String, ItemRendererFactoryStorage> = new Map<String, ItemRendererFactoryStorage>();
 	private var _objectRendererMap:ObjectMap<Dynamic, IListItemRenderer> = new ObjectMap<Dynamic, IListItemRenderer>();
-	private var _simpleRendererMap:Map<Dynamic, IListItemRenderer> = new Map<Dynamic, IListItemRenderer>();
+	private var _intRendererMap:IntMap<IListItemRenderer> = new IntMap<IListItemRenderer>();
+	private var _stringRendererMap:StringMap<IListItemRenderer> = new StringMap<IListItemRenderer>();
 	private var _minimumItemCount:Int;
 	
 	private var _layoutIndexOffset:Int = 0;
@@ -636,10 +640,23 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 	
 	private var _removeItemEffectContexts:Array<IEffectContext> = null;
 	
-	public var addedItems(get, set):Map<Dynamic, Function>;
-	private var _addedItems:Map<Dynamic, Function>;
-	private function get_addedItems():Map<Dynamic, Function> { return this._addedItems; }
-	private function set_addedItems(value:Map<Dynamic, Function>):Map<Dynamic, Function>
+	//public var addedItems(get, set):Map<Dynamic, Function>;
+	//private var _addedItems:Map<Dynamic, Function>;
+	//private function get_addedItems():Map<Dynamic, Function> { return this._addedItems; }
+	//private function set_addedItems(value:Map<Dynamic, Function>):Map<Dynamic, Function>
+	//{
+		//if (this._addedItems == value)
+		//{
+			//return value;
+		//}
+		//this._addedItems = value;
+		//this.invalidate(FeathersControl.INVALIDATION_FLAG_DATA);
+		//return this._addedItems;
+	//}
+	public var addedItems(get, set):Array<Dynamic>;
+	private var _addedItems:Array<Dynamic>;
+	private function get_addedItems():Array<Dynamic> { return this._addedItems; }
+	private function set_addedItems(value:Array<Dynamic>):Array<Dynamic>
 	{
 		if (this._addedItems == value)
 		{
@@ -650,10 +667,36 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 		return this._addedItems;
 	}
 	
-	public var removedItems(get, set):Map<Dynamic, Function>;
-	private var _removedItems:Map<Dynamic, Function>;
-	private function get_removedItems():Map<Dynamic, Function> { return this._removedItems; }
-	private function set_removedItems(value:Map<Dynamic, Function>):Map<Dynamic, Function>
+	public var addedItemsEffects(get, set):Array<Function>;
+	private var _addedItemsEffects:Array<Function>;
+	private function get_addedItemsEffects():Array<Function> { return this._addedItemsEffects; }
+	private function set_addedItemsEffects(value:Array<Function>):Array<Function>
+	{
+		if (this._addedItemsEffects == value)
+		{
+			return value;
+		}
+		return this._addedItemsEffects = value;
+	}
+	
+	//public var removedItems(get, set):Map<Dynamic, Function>;
+	//private var _removedItems:Map<Dynamic, Function>;
+	//private function get_removedItems():Map<Dynamic, Function> { return this._removedItems; }
+	//private function set_removedItems(value:Map<Dynamic, Function>):Map<Dynamic, Function>
+	//{
+		//if (this._removedItems == value)
+		//{
+			//return value;
+		//}
+		//this._removedItems = value;
+		//this.invalidate(FeathersControl.INVALIDATION_FLAG_DATA);
+		//return this._removedItems;
+	//}
+	
+	public var removedItems(get, set):Array<Dynamic>;
+	private var _removedItems:Array<Dynamic>;
+	private function get_removedItems():Array<Dynamic> { return this._removedItems; }
+	private function set_removedItems(value:Array<Dynamic>):Array<Dynamic>
 	{
 		if (this._removedItems == value)
 		{
@@ -662,6 +705,18 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 		this._removedItems = value;
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_DATA);
 		return this._removedItems;
+	}
+	
+	public var removedItemsEffects(get, set):Array<Function>;
+	private var _removedItemsEffects:Array<Function>;
+	private function get_removedItemsEffects():Array<Function> { return this._removedItemsEffects; }
+	private function set_removedItemsEffects(value:Array<Function>):Array<Function>
+	{
+		if (this._removedItemsEffects == value)
+		{
+			return value;
+		}
+		return this._removedItemsEffects = value;
 	}
 	
 	private var _dragTouchPointID:Int = -1;
@@ -786,10 +841,13 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 	
 	public function itemToItemRenderer(item:Dynamic):IListItemRenderer
 	{
-		// return this._rendererMap.get(item);
-		if (Std.isOfType(item, String) || Std.isOfType(item, Int) || Std.isOfType(item, Float))
+		if (Std.isOfType(item, String))
 		{
-			return this._simpleRendererMap[item];
+			return this._stringRendererMap.get(item);
+		}
+		else if (Std.isOfType(item, Int))
+		{
+			return this._intRendererMap.get(item);
 		}
 		else 
 		{
@@ -815,20 +873,20 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 			this._storageMap.clear();
 			this._storageMap = null;
 		}
-		// if (this._rendererMap != null)
-		// {
-		// 	this._rendererMap.clear();
-		// 	this._rendererMap = null;
-		// }
 		if (this._objectRendererMap != null)
 		{
 			this._objectRendererMap.clear();
 			this._objectRendererMap = null;
 		}
-		if (this._simpleRendererMap != null)
+		if (this._intRendererMap != null)
 		{
-			this._simpleRendererMap.clear();
-			this._simpleRendererMap = null;
+			this._intRendererMap.clear();
+			this._intRendererMap = null;
+		}
+		if (this._stringRendererMap != null)
+		{
+			this._stringRendererMap.clear();
+			this._stringRendererMap = null;
 		}
 		if (this._itemRendererFactories != null)
 		{
@@ -842,13 +900,15 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 		}
 		if (this._addedItems != null)
 		{
-			this._addedItems.clear();
+			//this._addedItems.clear();
 			this._addedItems = null;
+			this._addedItemsEffects = null;
 		}
 		if (this._removedItems != null)
 		{
-			this._removedItems.clear();
+			//this._removedItems.clear();
 			this._removedItems = null;
+			this._removedItemsEffects = null;
 		}
 		this.owner = null;
 		this.layout = null;
@@ -969,6 +1029,8 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 		var itemRenderer:IListItemRenderer;
 		var effect:Function;
 		var context:IEffectContext;
+		var item:Dynamic;
+		var count:Int;
 		if (this._addedItems != null)
 		{
 			if (this._addItemEffectContexts == null)
@@ -976,12 +1038,18 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 				this._addItemEffectContexts = new Array<IEffectContext>();
 			}
 			
-			for (item in this._addedItems.keys())
+			count = this._addedItems.length;
+			//for (item in this._addedItems.keys())
+			for (i in 0...count)
 			{
-				// itemRenderer = this._rendererMap.get(item);
-				if (Std.isOfType(item, String) || Std.isOfType(item, Int) || Std.isOfType(item, Float))
+				item = this._addedItems[i];
+				if (Std.isOfType(item, String))
 				{
-					itemRenderer = this._simpleRendererMap[item];
+					itemRenderer = this._stringRendererMap.get(item);
+				}
+				else if (Std.isOfType(item, Int))
+				{
+					itemRenderer = this._intRendererMap.get(item);
 				}
 				else
 				{
@@ -990,7 +1058,8 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 				if (itemRenderer != null)
 				{
 					this.interruptRemoveItemEffects(itemRenderer, false);
-					effect = this._addedItems[item];
+					//effect = this._addedItems[item];
+					effect = this._addedItemsEffects[i];
 					context = effect(itemRenderer);
 					context.addEventListener(Event.COMPLETE, addedItemEffectContext_completeHandler);
 					this._addItemEffectContexts[this._addItemEffectContexts.length] = context;
@@ -998,6 +1067,7 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 				}
 			}
 			this._addedItems = null;
+			this._addedItemsEffects = null;
 		}
 		if (this._removedItems != null)
 		{
@@ -1005,12 +1075,19 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 			{
 				this._removeItemEffectContexts = new Array<IEffectContext>();
 			}
-			for (item in this._removedItems.keys())
+			
+			count = this._removedItems.length;
+			//for (item in this._removedItems.keys())
+			for (i in 0...count)
 			{
-				// itemRenderer = this._rendererMap.get(item);
-				if (Std.isOfType(item, String) || Std.isOfType(item, Int) || Std.isOfType(item, Float))
+				item = this._removedItems[i];
+				if (Std.isOfType(item, String))
 				{
-					itemRenderer = this._simpleRendererMap[item];
+					itemRenderer = this._stringRendererMap.get(item);
+				}
+				else if (Std.isOfType(item, Int))
+				{
+					itemRenderer = this._intRendererMap.get(item);
 				}
 				else
 				{
@@ -1020,7 +1097,8 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 				{
 					this.interruptRemoveItemEffects(itemRenderer, true);
 					this.interruptAddItemEffects(itemRenderer);
-					effect = this._removedItems[item];
+					//effect = this._removedItems[item];
+					effect = this._removedItemsEffects[i];
 					context = effect(itemRenderer);
 					context.addEventListener(Event.COMPLETE, removedItemEffectContext_completeHandler);
 					this._removeItemEffectContexts[this._removeItemEffectContexts.length] = context;
@@ -1028,6 +1106,7 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 				}
 			}
 			this._removedItems = null;
+			this._removedItemsEffects = null;
 		}
 	}
 	
@@ -1152,10 +1231,13 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 		//a null value at index 0. this is the only time we allow null.
 		if (typicalItem != null || newTypicalItemIsInDataProvider)
 		{
-			// typicalRenderer = this._rendererMap.get(typicalItem);
-			if (Std.isOfType(typicalItem, String) || Std.isOfType(typicalItem, Int) || Std.isOfType(typicalItem, Float))
+			if (Std.isOfType(typicalItem, String))
 			{
-				typicalRenderer = this._simpleRendererMap[typicalItem];
+				typicalRenderer = this._stringRendererMap.get(typicalItem);
+			}
+			else if (Std.isOfType(typicalItem, Int))
+			{
+				typicalRenderer = this._intRendererMap.get(typicalItem);
 			}
 			else
 			{
@@ -1216,10 +1298,13 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 					//remove it from the renderer map.
 					if (this._typicalItemIsInDataProvider)
 					{
-						// this._rendererMap.remove(this._typicalItemRenderer.data);
-						if (Std.isOfType(this._typicalItemRenderer.data, String) || Std.isOfType(this._typicalItemRenderer.data, Int) || Std.isOfType(this._typicalItemRenderer.data, Float))
+						if (Std.isOfType(this._typicalItemRenderer.data, String))
 						{
-							this._simpleRendererMap.remove(this._typicalItemRenderer.data);
+							this._stringRendererMap.remove(this._typicalItemRenderer.data);
+						}
+						else if (Std.isOfType(this._typicalItemRenderer.data, Int))
+						{
+							this._intRendererMap.remove(this._typicalItemRenderer.data);
 						}
 						else 
 						{
@@ -1233,10 +1318,13 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 					//to the renderer map.
 					if (newTypicalItemIsInDataProvider)
 					{
-						// this._rendererMap.set(typicalItem, typicalRenderer);
-						if (Std.isOfType(typicalItem, String) || Std.isOfType(typicalItem, Int) || Std.isOfType(typicalItem, Float))
+						if (Std.isOfType(typicalItem, String))
 						{
-							this._simpleRendererMap[typicalItem] = typicalRenderer;
+							this._stringRendererMap.set(typicalItem, typicalRenderer);
+						}
+						else if (Std.isOfType(typicalItem, Int))
+						{
+							this._intRendererMap.set(typicalItem, typicalRenderer);
 						}
 						else 
 						{
@@ -1295,7 +1383,7 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 			for (propertyName in this._itemRendererProperties)
 			{
 				propertyValue = this._itemRendererProperties[propertyName];
-				Reflect.setProperty(renderer, propertyName, propertyValue);
+				Property.write(renderer, propertyName, propertyValue);
 			}
 		}
 	}
@@ -1382,10 +1470,13 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 			{
 				if (this._typicalItemIsInDataProvider && this._typicalItemRenderer.data != null)
 				{
-					// this._rendererMap.remove(this._typicalItemRenderer.data);
-					if (Std.isOfType(this._typicalItemRenderer.data, String) || Std.isOfType(this._typicalItemRenderer.data, Int) || Std.isOfType(this._typicalItemRenderer.data, Float))
+					if (Std.isOfType(this._typicalItemRenderer.data, String))
 					{
-						this._simpleRendererMap.remove(this._typicalItemRenderer.data);
+						this._stringRendererMap.remove(this._typicalItemRenderer.data);
+					}
+					else if (Std.isOfType(this._typicalItemRenderer.data, Int))
+					{
+						this._intRendererMap.remove(this._typicalItemRenderer.data);
 					}
 					else
 					{
@@ -1557,18 +1648,29 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 				continue;
 			}
 			item = this._dataProvider.getItemAt(index);
-			// itemRenderer = this._rendererMap.get(item);
-			if (Std.isOfType(item, String) || Std.isOfType(item, Int) || Std.isOfType(item, Float))
+			if (Std.isOfType(item, String))
 			{
-				itemRenderer = this._simpleRendererMap[item];
+				itemRenderer = this._stringRendererMap.get(item);
 				if (this._factoryIDFunction != null && itemRenderer != null)
 				{
 					newFactoryID = this.getFactoryID(itemRenderer.data, index);
 					if (newFactoryID != itemRenderer.factoryID)
 					{
 						itemRenderer = null;
-						// this._rendererMap.remove(item);
-						this._simpleRendererMap.remove(item);
+						this._stringRendererMap.remove(item);
+					}
+				}
+			}
+			else if (Std.isOfType(item, Int))
+			{
+				itemRenderer = this._intRendererMap.get(item);
+				if (this._factoryIDFunction != null && itemRenderer != null)
+				{
+					newFactoryID = this.getFactoryID(itemRenderer.data, index);
+					if (newFactoryID != itemRenderer.factoryID)
+					{
+						itemRenderer = null;
+						this._intRendererMap.remove(item);
 					}
 				}
 			}
@@ -1581,7 +1683,6 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 					if (newFactoryID != itemRenderer.factoryID)
 					{
 						itemRenderer = null;
-						// this._rendererMap.remove(item);
 						this._objectRendererMap.remove(item);
 					}
 				}
@@ -1707,6 +1808,7 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 		var inactiveItemRenderers:Array<IListItemRenderer> = storage.inactiveItemRenderers;
 		var itemRenderer:IListItemRenderer;
 		var itemCount:Int = inactiveItemRenderers.length;
+		var data:Dynamic;
 		for (i in 0...itemCount)
 		{
 			itemRenderer = inactiveItemRenderers[i];
@@ -1715,10 +1817,14 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 				continue;
 			}
 			this._owner.dispatchEventWith(FeathersEventType.RENDERER_REMOVE, false, itemRenderer);
-			// this._rendererMap.remove(itemRenderer.data);
-			if (Std.isOfType(itemRenderer.data, String) || Std.isOfType(itemRenderer.data, Int) || Std.isOfType(itemRenderer.data, Float))
+			data = itemRenderer.data;
+			if (Std.isOfType(itemRenderer.data, String))
 			{
-				this._simpleRendererMap.remove(itemRenderer.data);
+				this._stringRendererMap.remove(itemRenderer.data);
+			}
+			else if (Std.isOfType(itemRenderer.data, Int))
+			{
+				this._intRendererMap.remove(itemRenderer.data);
 			}
 			else
 			{
@@ -1826,10 +1932,13 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 		
 		if (!isTemporary)
 		{
-			// this._rendererMap.set(item, itemRenderer);
-			if (Std.isOfType(item, String) || Std.isOfType(item, Int) || Std.isOfType(item, Float))
+			if (Std.isOfType(item, String))
 			{
-				this._simpleRendererMap[item] = itemRenderer;
+				this._stringRendererMap.set(item, itemRenderer);
+			}
+			else if (Std.isOfType(item, Int))
+			{
+				this._intRendererMap.set(item, itemRenderer);
 			}
 			else
 			{
@@ -1989,10 +2098,14 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 	private function dataProvider_updateItemHandler(event:Event, index:Int):Void
 	{
 		var item:Dynamic = this._dataProvider.getItemAt(index);
-		var renderer:IListItemRenderer; // = this._rendererMap.get(item);
-		if (Std.isOfType(item, String) || Std.isOfType(item, Int) || Std.isOfType(item, Float))
+		var renderer:IListItemRenderer;
+		if (Std.isOfType(item, String))
 		{
-			renderer = this._simpleRendererMap[item];
+			renderer = this._stringRendererMap.get(item);
+		}
+		else if (Std.isOfType(item, Int))
+		{
+			renderer = this._intRendererMap.get(item);
 		}
 		else
 		{
@@ -2146,10 +2259,13 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 		
 		//recover
 		this._owner.dispatchEventWith(FeathersEventType.RENDERER_REMOVE, false, itemRenderer);
-		// this._rendererMap.remove(itemRenderer.data);
-		if (Std.isOfType(itemRenderer.data, String) || Std.isOfType(itemRenderer.data, Int) || Std.isOfType(itemRenderer.data, Float))
+		if (Std.isOfType(itemRenderer.data, String))
 		{
-			this._simpleRendererMap.remove(itemRenderer.data);
+			this._stringRendererMap.remove(itemRenderer.data);
+		}
+		else if (Std.isOfType(itemRenderer.data, Int))
+		{
+			this._intRendererMap.remove(itemRenderer.data);
 		}
 		else
 		{

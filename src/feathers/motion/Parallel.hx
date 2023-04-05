@@ -26,14 +26,11 @@ class Parallel
 	 *
 	 * @productversion Feathers 3.5.0
 	 */
-	public static function createParallelEffect(effect1:Function, effect2:Function, ...rest:Array<Function>):Function
+	public static function createParallelEffect(effects:Array<Function>):Function
 	{
-		//the order doesn't matter, so just add them at the end
-		rest[rest.length] = effect1;
-		rest[rest.length] = effect2;
 		return function(target:DisplayObject):IEffectContext
 		{
-			return new ParallelEffectContext(target, rest);
+			return new ParallelEffectContext(target, effects);
 		};
 	}
 	

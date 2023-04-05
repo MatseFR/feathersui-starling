@@ -26,6 +26,7 @@ import feathers.layout.VerticalLayout;
 import feathers.layout.ViewPortBounds;
 import feathers.skins.IStyleProvider;
 import feathers.utils.type.ArgumentsCount;
+import feathers.utils.type.Property;
 import feathers.utils.type.SafeCast;
 import haxe.Constraints.Function;
 import starling.display.DisplayObject;
@@ -994,8 +995,7 @@ class ButtonGroup extends FeathersControl implements ITextBaselineControl
 				propertyValue = this._buttonProperties[propertyName];
 				for (button in this.activeButtons)
 				{
-					//button[propertyName] = propertyValue;
-					Reflect.setProperty(button, propertyName, propertyValue);
+					Property.write(button, propertyName, propertyValue);
 				}
 			}
 		}
@@ -1081,7 +1081,7 @@ class ButtonGroup extends FeathersControl implements ITextBaselineControl
 			}
 			else
 			{
-				button.label = item.toString();
+				button.label = Std.string(item);
 			}
 			if (item.isEnabled != null)
 			{
@@ -1093,9 +1093,9 @@ class ButtonGroup extends FeathersControl implements ITextBaselineControl
 			}
 			for (field in DEFAULT_BUTTON_FIELDS)
 			{
-				if (Reflect.hasField(item, field))
+				if (Property.existsRead(item, field))
 				{
-					Reflect.setProperty(button, field, Reflect.field(item, field));
+					Property.write(button, field, Property.read(item, field));
 				}
 			}
 			var removeListener:Bool;
@@ -1103,9 +1103,9 @@ class ButtonGroup extends FeathersControl implements ITextBaselineControl
 			for (field in DEFAULT_BUTTON_EVENTS)
 			{
 				removeListener = true;
-				if (Reflect.hasField(item, field))
+				if (Property.existsRead(item, field))
 				{
-					listener = Reflect.field(item, field);
+					listener = Property.read(item, field);
 					if (listener == null || !Reflect.isFunction(listener))
 					{
 						continue;
@@ -1139,9 +1139,9 @@ class ButtonGroup extends FeathersControl implements ITextBaselineControl
 		button.label = null;
 		for (field in DEFAULT_BUTTON_FIELDS)
 		{
-			if (Reflect.hasField(oldItem, field))
+			if (Property.existsRead(oldItem, field))
 			{
-				Reflect.setProperty(button, field, null);
+				Property.write(button, field, null);
 			}
 		}
 		var removeListener:Bool;
@@ -1149,9 +1149,9 @@ class ButtonGroup extends FeathersControl implements ITextBaselineControl
 		for (field in DEFAULT_BUTTON_EVENTS)
 		{
 			removeListener = true;
-			if (Reflect.hasField(oldItem, field))
+			if (Property.existsRead(oldItem, field))
 			{
-				listener = Reflect.field(oldItem, field);
+				listener = Property.read(oldItem, field);
 				if (listener == null || !Reflect.isFunction(listener))
 				{
 					continue;
@@ -1486,9 +1486,9 @@ class ButtonGroup extends FeathersControl implements ITextBaselineControl
 		var index:Int = this.activeButtons.indexOf(button);
 		var item:Dynamic = this._dataProvider.getItemAt(index);
 		var field:String = event.type;
-		if (Reflect.hasField(item, field))
+		if (Property.existsRead(item, field))
 		{
-			var listener:Function = Reflect.field(item, field);
+			var listener:Function = Property.read(item, field);
 			if (listener == null)
 			{
 				return;

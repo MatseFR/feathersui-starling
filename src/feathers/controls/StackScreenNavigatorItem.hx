@@ -8,6 +8,7 @@ accordance with the terms of the accompanying license agreement.
 package feathers.controls;
 import feathers.controls.supportClasses.IScreenNavigatorItem;
 import feathers.core.PropertyProxy;
+import feathers.utils.type.Property;
 import haxe.Constraints.Function;
 import haxe.ds.Map;
 import openfl.errors.ArgumentError;
@@ -623,15 +624,11 @@ class StackScreenNavigatorItem implements IScreenNavigatorItem
 		}
 		if (this._properties != null)
 		{
-			//for (propertyName in this._properties.keys())
-			//{
-				//Reflect.setProperty(screenInstance, propertyName, this._properties[propertyName]);
-			//}
 			var propertyValue:Dynamic;
 			for (propertyName in this._properties)
 			{
 				propertyValue = this._properties[propertyName];
-				Reflect.setProperty(screenInstance, propertyName, propertyValue);
+				Property.write(screenInstance, propertyName, propertyValue);
 			}
 		}
 		

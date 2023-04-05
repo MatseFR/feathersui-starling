@@ -898,19 +898,19 @@ class PickerList extends FeathersControl implements IFocusDisplayObject implemen
 			}
 			else if (labelResult != null)
 			{
-				return labelResult.toString();
+				return Std.string(labelResult);
 			}
 		}
 		else if (this._labelField != null && item != null && Property.existsRead(item, this._labelField))
 		{
-			labelResult = Reflect.getProperty(item, this._labelField);
+			labelResult = Property.read(item, this._labelField);
 			if (Std.isOfType(labelResult, String))
 			{
 				return cast labelResult;
 			}
 			else if (labelResult != null)
 			{
-				return labelResult.toString();
+				return Std.string(labelResult);
 			}
 		}
 		else if (Std.isOfType(item, String))
@@ -921,7 +921,7 @@ class PickerList extends FeathersControl implements IFocusDisplayObject implemen
 		{
 			//we need to use strict equality here because the data can be
 			//non-strictly equal to null
-			return item.toString();
+			return Std.string(item);
 		}
 		return null;
 	}
@@ -1373,7 +1373,7 @@ class PickerList extends FeathersControl implements IFocusDisplayObject implemen
 			for (propertyName in this._buttonProperties)
 			{
 				propertyValue = this._buttonProperties[propertyName];
-				Reflect.setProperty(this.button, propertyName, propertyValue);
+				Property.write(this.button, propertyName, propertyValue);
 			}
 		}
 	}
@@ -1389,7 +1389,7 @@ class PickerList extends FeathersControl implements IFocusDisplayObject implemen
 			for (propertyName in this._listProperties)
 			{
 				propertyValue = this._listProperties[propertyName];
-				Reflect.setProperty(this.list, propertyName, propertyValue);
+				Property.write(this.list, propertyName, propertyValue);
 			}
 		}
 	}

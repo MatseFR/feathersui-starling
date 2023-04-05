@@ -7,6 +7,7 @@ accordance with the terms of the accompanying license agreement.
 */
 package feathers.controls;
 import feathers.controls.supportClasses.IScreenNavigatorItem;
+import feathers.utils.type.Property;
 import haxe.Constraints.Function;
 import openfl.errors.ArgumentError;
 import starling.display.DisplayObject;
@@ -297,7 +298,7 @@ class TabNavigatorItem implements IScreenNavigatorItem
 		{
 			for (propertyName in this._properties.keys())
 			{
-				Reflect.setProperty(viewInstance, propertyName, this._properties[propertyName]);
+				Property.write(viewInstance, propertyName, this._properties[propertyName]);
 			}
 		}
 		

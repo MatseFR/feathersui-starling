@@ -6,6 +6,7 @@ This program is free software. You can redistribute and/or modify it in
 accordance with the terms of the accompanying license agreement.
 */
 package feathers.data;
+import feathers.utils.type.Property;
 import openfl.errors.RangeError;
 
 /**
@@ -64,7 +65,7 @@ class ArrayChildrenHierarchicalCollectionDataDescriptor implements IHierarchical
 		for (i in 0...indexCount)
 		{
 			index = indices[i];
-			branch = cast Reflect.getProperty(branch[index], childrenField);
+			branch = cast Property.read(branch[index], childrenField);
 		}
 		
 		return branch.length;
@@ -83,7 +84,7 @@ class ArrayChildrenHierarchicalCollectionDataDescriptor implements IHierarchical
 			for (i in 0...indexCount)
 			{
 				index = location[i];
-				branch = cast Reflect.getProperty(branch[index], childrenField);
+				branch = cast Property.read(branch[index], childrenField);
 			}
 		}
 		return branch.length;
@@ -99,7 +100,7 @@ class ArrayChildrenHierarchicalCollectionDataDescriptor implements IHierarchical
 		for (i in 0...indexCount)
 		{
 			index = indices[i];
-			branch = cast Reflect.getProperty(branch[index], childrenField);
+			branch = cast Property.read(branch[index], childrenField);
 		}
 		var lastIndex:Int = indices[indexCount];
 		return branch[lastIndex];
@@ -120,7 +121,7 @@ class ArrayChildrenHierarchicalCollectionDataDescriptor implements IHierarchical
 		for (i in 0...indexCount)
 		{
 			index = location[i];
-			branch = cast Reflect.getProperty(branch[index], childrenField);
+			branch = cast Property.read(branch[index], childrenField);
 			if (branch == null)
 			{
 				throw new RangeError("Branch not found at location: " + location);
@@ -140,7 +141,7 @@ class ArrayChildrenHierarchicalCollectionDataDescriptor implements IHierarchical
 		for (i in 0...indexCount)
 		{
 			index = indices[i];
-			branch = cast Reflect.getProperty(branch[index], childrenField);
+			branch = cast Property.read(branch[index], childrenField);
 		}
 		var lastIndex:Int = indices[indexCount];
 		branch[lastIndex] = item;
@@ -161,7 +162,7 @@ class ArrayChildrenHierarchicalCollectionDataDescriptor implements IHierarchical
 		for (i in 0...indexCount)
 		{
 			index = location[i];
-			branch = cast Reflect.getProperty(branch[index], childrenField);
+			branch = cast Property.read(branch[index], childrenField);
 			if (branch == null)
 			{
 				throw new RangeError("Branch not found at location: " + location);
@@ -181,7 +182,7 @@ class ArrayChildrenHierarchicalCollectionDataDescriptor implements IHierarchical
 		for (i in 0...indexCount)
 		{
 			index = indices[i];
-			branch = cast Reflect.getProperty(branch[index], childrenField);
+			branch = cast Property.read(branch[index], childrenField);
 		}
 		var lastIndex:Int = indices[indexCount];
 		branch.insert(lastIndex, item);
@@ -202,7 +203,7 @@ class ArrayChildrenHierarchicalCollectionDataDescriptor implements IHierarchical
 		for (i in 0...indexCount)
 		{
 			index = location[i];
-			branch = cast Reflect.getProperty(branch[index], childrenField);
+			branch = cast Property.read(branch[index], childrenField);
 			if (branch == null)
 			{
 				throw new RangeError("Branch not found at location: " + location);
@@ -222,7 +223,7 @@ class ArrayChildrenHierarchicalCollectionDataDescriptor implements IHierarchical
 		for (i in 0...indexCount)
 		{
 			index = rest[i];
-			branch = cast Reflect.getProperty(branch[index], childrenField);
+			branch = cast Property.read(branch[index], childrenField);
 		}
 		var lastIndex:Int = indices[indexCount];
 		return branch.splice(lastIndex, 1);
@@ -243,7 +244,7 @@ class ArrayChildrenHierarchicalCollectionDataDescriptor implements IHierarchical
 		for (i in 0...indexCount)
 		{
 			index = location[i];
-			branch = cast Reflect.getProperty(branch[index], childrenField);
+			branch = cast Property.read(branch[index], childrenField);
 			if (branch == null)
 			{
 				throw new RangeError("Branch not found at location: " + location);
@@ -282,7 +283,7 @@ class ArrayChildrenHierarchicalCollectionDataDescriptor implements IHierarchical
 		{
 			index = indices[i];
 			result[i] = index;
-			branch = cast Reflect.getProperty(branch[index], childrenField);
+			branch = cast Property.read(branch[index], childrenField);
 		}
 		
 		var isFound:Bool = this.findItemInBranch(branch, item, result);
@@ -302,7 +303,7 @@ class ArrayChildrenHierarchicalCollectionDataDescriptor implements IHierarchical
 		{
 			return false;
 		}
-		return Reflect.hasField(node, this.childrenField) && Std.isOfType(Reflect.getProperty(node, this.childrenField), Array<Dynamic>);
+		return Property.existsRead(node, this.childrenField) && Std.isOfType(Property.read(node, this.childrenField), Array<Dynamic>);
 	}
 	
 	/**
@@ -326,7 +327,7 @@ class ArrayChildrenHierarchicalCollectionDataDescriptor implements IHierarchical
 			if (this.isBranch(branchItem))
 			{
 				result.push(i);
-				isFound:Bool = this.findItemInBranch(cast Reflect.getProperty(branchItem, childrenField), item, result);
+				isFound:Bool = this.findItemInBranch(cast Property.read(branchItem, childrenField), item, result);
 				if (isFound)
 				{
 					return true;

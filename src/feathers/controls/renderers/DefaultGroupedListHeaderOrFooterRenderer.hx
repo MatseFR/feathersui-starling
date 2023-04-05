@@ -19,6 +19,7 @@ import feathers.layout.VerticalAlign;
 import feathers.skins.IStyleProvider;
 import feathers.text.FontStylesSet;
 import feathers.utils.skins.SkinsUtils;
+import feathers.utils.type.Property;
 import feathers.utils.type.SafeCast;
 import haxe.Constraints.Function;
 import openfl.geom.Point;
@@ -1071,9 +1072,9 @@ class DefaultGroupedListHeaderOrFooterRenderer extends FeathersControl implement
 			this.refreshContentSource(source);
 			return this.contentImage;
 		}
-		else if (this._contentSourceField != null && item != null && Reflect.hasField(item, this._contentSourceField))
+		else if (this._contentSourceField != null && item != null && Property.existsRead(item, this._contentSourceField))
 		{
-			source = Reflect.getProperty(item, this._contentSourceField);
+			source = Property.read(item, this._contentSourceField);
 			this.refreshContentSource(source);
 			return this.contentImage;
 		}
@@ -1086,7 +1087,7 @@ class DefaultGroupedListHeaderOrFooterRenderer extends FeathersControl implement
 			}
 			else if (labelResult != null)
 			{
-				this.refreshContentLabel(labelResult.toString());
+				this.refreshContentLabel(Std.string(labelResult));
 			}
 			else
 			{
@@ -1094,16 +1095,16 @@ class DefaultGroupedListHeaderOrFooterRenderer extends FeathersControl implement
 			}
 			return cast this.contentLabel;
 		}
-		else if (this._contentLabelField != null && item && Reflect.hasField(item, this._contentLabelField))
+		else if (this._contentLabelField != null && item && Property.existsRead(item, this._contentLabelField))
 		{
-			labelResult = Reflect.getProperty(item, this._contentLabelField);
+			labelResult = Property.read(item, this._contentLabelField);
 			if (Std.isOfType(labelResult, String))
 			{
 				this.refreshContentLabel(cast labelResult);
 			}
 			else if (labelResult != null)
 			{
-				this.refreshContentLabel(labelResult.toString());
+				this.refreshContentLabel(Std.string(labelResult));
 			}
 			else
 			{
@@ -1115,9 +1116,9 @@ class DefaultGroupedListHeaderOrFooterRenderer extends FeathersControl implement
 		{
 			return cast this._contentFunction(item);
 		}
-		else if (this._contentField != null && item != null && Reflect.hasField(item, this._contentField))
+		else if (this._contentField != null && item != null && Property.existsRead(item, this._contentField))
 		{
-			return cast Reflect.getProperty(item, this._contentField);
+			return cast Property.read(item, this._contentField);
 		}
 		else if (Std.isOfType(item, String))
 		{
@@ -1126,7 +1127,7 @@ class DefaultGroupedListHeaderOrFooterRenderer extends FeathersControl implement
 		}
 		else if (item != null)
 		{
-			this.refreshContentLabel(item.toString());
+			this.refreshContentLabel(Std.string(item));
 			return cast this.contentLabel;
 		}
 		else
@@ -1554,7 +1555,7 @@ class DefaultGroupedListHeaderOrFooterRenderer extends FeathersControl implement
 			for (propertyName in this._contentLabelProperties)
 			{
 				propertyValue = this._contentLabelProperties[propertyName];
-				Reflect.setProperty(this.contentLabel, propertyName, propertyValue);
+				Property.write(this.contentLabel, propertyName, propertyValue);
 			}
 		}
 	}

@@ -27,8 +27,7 @@ class LocalAutoCompleteSource extends EventDispatcher implements IAutoCompleteSo
 	 */
 	private static function defaultCompareFunction(item:Dynamic, textToMatch:String):Bool
 	{
-		//return item.toString().toLowerCase().indexOf(textToMatch.toLowerCase()) >= 0;
-		return cast(item.toString(), String).toLowerCase().indexOf(textToMatch.toLowerCase()) >= 0;
+		return Std.string(item).toLowerCase().indexOf(textToMatch.toLowerCase()) != -1;
 	}
 	
 	/**

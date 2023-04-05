@@ -22,6 +22,7 @@ import feathers.system.DeviceCapabilities;
 import feathers.utils.display.DisplayUtils;
 import feathers.utils.math.MathUtils;
 import feathers.utils.skins.SkinsUtils;
+import feathers.utils.type.Property;
 import feathers.utils.type.SafeCast;
 import openfl.Lib.getTimer;
 import openfl.errors.ArgumentError;
@@ -3246,8 +3247,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 				for (propertyName in this._horizontalScrollBarProperties)
 				{
 					propertyValue = this._horizontalScrollBarProperties[propertyName];
-					//this.horizontalScrollBar[propertyName] = propertyValue;
-					Reflect.setProperty(this.horizontalScrollBar, propertyName, propertyValue);
+					Property.write(this.horizontalScrollBar, propertyName, propertyValue);
 				}
 			}
 			if (this._horizontalScrollBarHideTween != null)
@@ -3264,8 +3264,7 @@ class Scroller extends FeathersControl implements IFocusDisplayObject
 				for (propertyName in this._verticalScrollBarProperties)
 				{
 					propertyValue = this._verticalScrollBarProperties[propertyName];
-					//this.verticalScrollBar[propertyName] = propertyValue;
-					Reflect.setProperty(this.verticalScrollBar, propertyName, propertyValue);
+					Property.write(this.verticalScrollBar, propertyName, propertyValue);
 				}
 			}
 			if (this._verticalScrollBarHideTween != null)

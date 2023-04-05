@@ -26,13 +26,11 @@ class Sequence
 	 *
 	 * @productversion Feathers 3.5.0
 	 */
-	public static function createSequenceEffect(effect1:Function, effect2:Function, ...rest:Array<Function>):Function
+	public static function createSequenceEffect(effects:Array<Function>):Function
 	{
-		rest.unshift(effect2);
-		rest.unshift(effect1);
 		return function(target:DisplayObject):IEffectContext
 		{
-			return new SequenceEffectContext(target, rest);
+			return new SequenceEffectContext(target, effects);
 		};
 	}
 }

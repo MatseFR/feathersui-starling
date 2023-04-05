@@ -26,8 +26,8 @@ class FunctionApply
             var maxNumArgs:Int = -1;
             #end
 			
-            for (i in args.length...maxNumArgs)
-                args[i] = null;
+            //for (i in args.length...maxNumArgs)
+                //args[i] = null;
 			
             // In theory, the 'default' case would always work,
             // but we want to avoid the 'slice' allocations.

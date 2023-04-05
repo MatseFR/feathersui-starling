@@ -9,6 +9,7 @@ package feathers.motion;
 import feathers.display.RenderDelegate;
 import feathers.motion.effectClasses.IEffectContext;
 import feathers.motion.effectClasses.TweenEffectContext;
+import feathers.utils.type.Property;
 import haxe.Constraints.Function;
 import openfl.errors.ArgumentError;
 import starling.animation.Transitions;
@@ -218,7 +219,7 @@ class Reveal
 		{
 			for (propertyName in Reflect.fields(tweenProperties))
 			{
-				Reflect.setProperty(tween, propertyName, Reflect.field(tweenProperties, propertyName));
+				Property.write(tween, propertyName, Reflect.field(tweenProperties, propertyName));
 			}
 		}
 		tween.onComplete = onComplete;
@@ -297,7 +298,7 @@ class RevealTween extends Tween
 		{
 			for (propertyName in Reflect.fields(tweenProperties))
 			{
-				Reflect.setProperty(this, propertyName, Reflect.field(tweenProperties, propertyName));
+				Property.write(this, propertyName, Reflect.field(tweenProperties, propertyName));
 			}
 		}
 		this._onCompleteCallback = onCompleteCallback;
@@ -353,7 +354,11 @@ class RevealTween extends Tween
 		}
 		if (this._onCompleteCallback != null)
 		{
+			#if neko
+			Reflect.callMethod(this._onCompleteCallback, this._onCompleteCallback, []);
+			#else
 			this._onCompleteCallback();
+			#end
 		}
 	}
 	

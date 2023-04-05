@@ -9,6 +9,7 @@ package feathers.motion;
 import feathers.display.RenderDelegate;
 import feathers.motion.effectClasses.IEffectContext;
 import feathers.motion.effectClasses.TweenEffectContext;
+import feathers.utils.type.Property;
 import haxe.Constraints.Function;
 import openfl.display3D.Context3DTriangleFace;
 import openfl.errors.ArgumentError;
@@ -242,7 +243,7 @@ class CubeTween extends Tween
 		{
 			for (propertyName in Reflect.fields(tweenProperties))
 			{
-				Reflect.setProperty(this, propertyName, Reflect.field(tweenProperties, propertyName));
+				Property.write(this, propertyName, Reflect.field(tweenProperties, propertyName));
 			}
 		}
 		
@@ -272,7 +273,11 @@ class CubeTween extends Tween
 		}
 		if (this._onCompleteCallback != null)
 		{
+			#if neko
+			Reflect.callMethod(this._onCompleteCallback, this._onCompleteCallback, []);
+			#else
 			this._onCompleteCallback();
+			#end
 		}
 	}
 }

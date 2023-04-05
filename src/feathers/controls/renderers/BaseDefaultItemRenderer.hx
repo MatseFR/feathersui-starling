@@ -2773,19 +2773,19 @@ class BaseDefaultItemRenderer extends ToggleButton implements IFocusContainer
 			}
 			else if (labelResult != null)
 			{
-				return labelResult.toString();
+				return Std.string(labelResult);
 			}
 		}
 		else if (this._labelField != null && item != null && Property.existsRead(item, this._labelField))
 		{
-			labelResult = Reflect.getProperty(item, this._labelField);
+			labelResult = Property.read(item, this._labelField);
 			if (Std.isOfType(labelResult, String))
 			{
 				return cast labelResult;
 			}
 			else if (labelResult != null)
 			{
-				return labelResult.toString();
+				return Std.string(labelResult);
 			}
 		}
 		else if (Std.isOfType(item, String))
@@ -2796,7 +2796,7 @@ class BaseDefaultItemRenderer extends ToggleButton implements IFocusContainer
 		{
 			//we need to use strict equality here because the data can be
 			//non-strictly equal to null
-			return item.toString();
+			return Std.string(item);
 		}
 		return null;
 	}
@@ -2840,7 +2840,7 @@ class BaseDefaultItemRenderer extends ToggleButton implements IFocusContainer
 		}
 		else if (this._iconSourceField != null && item != null && Property.existsRead(item, this._iconSourceField))
 		{
-			source = Reflect.getProperty(item, this._iconSourceField);
+			source = Property.read(item, this._iconSourceField);
 			this.refreshIconSource(source);
 			return this.iconLoader;
 		}
@@ -2865,20 +2865,20 @@ class BaseDefaultItemRenderer extends ToggleButton implements IFocusContainer
 			}
 			else
 			{
-				this.refreshIconLabel(labelResult.toString());
+				this.refreshIconLabel(Std.string(labelResult));
 			}
 			return cast this.iconLabel;
 		}
 		else if (this._iconLabelField != null && item != null && Property.existsRead(item, this._iconLabelField))
 		{
-			labelResult = Reflect.getProperty(item, this._iconLabelField);
+			labelResult = Property.read(item, this._iconLabelField);
 			if (Std.isOfType(labelResult, String))
 			{
 				this.refreshIconLabel(cast labelResult);
 			}
 			else
 			{
-				this.refreshIconLabel(labelResult.toString());
+				this.refreshIconLabel(Std.string(labelResult));
 			}
 			return cast this.iconLabel;
 		}
@@ -2897,7 +2897,7 @@ class BaseDefaultItemRenderer extends ToggleButton implements IFocusContainer
 		}
 		else if (this._iconField != null && item != null && Property.existsRead(item, this._iconField))
 		{
-			return cast Reflect.getProperty(item, this._iconField);
+			return cast Property.read(item, this._iconField);
 		}
 		
 		return null;
@@ -2940,9 +2940,9 @@ class BaseDefaultItemRenderer extends ToggleButton implements IFocusContainer
 			this.refreshAccessorySource(source);
 			return this.accessoryLoader;
 		}
-		else if (this._accessorySourceField != null && item != null && Reflect.hasField(item, this._accessorySourceField))
+		else if (this._accessorySourceField != null && item != null && Property.existsRead(item, this._accessorySourceField))
 		{
-			source = Reflect.getProperty(item, this._accessorySourceField);
+			source = Property.read(item, this._accessorySourceField);
 			this.refreshAccessorySource(source);
 			return this.accessoryLoader;
 		}
@@ -2967,20 +2967,20 @@ class BaseDefaultItemRenderer extends ToggleButton implements IFocusContainer
 			}
 			else
 			{
-				this.refreshAccessoryLabel(labelResult.toString());
+				this.refreshAccessoryLabel(Std.string(labelResult));
 			}
 			return cast this.accessoryLabel;
 		}
-		else if (this._accessoryLabelField != null && item != null && Reflect.hasField(item, this._accessoryLabelField))
+		else if (this._accessoryLabelField != null && item != null && Property.existsRead(item, this._accessoryLabelField))
 		{
-			labelResult = Reflect.getProperty(item, this._accessoryLabelField);
+			labelResult = Property.read(item, this._accessoryLabelField);
 			if (Std.isOfType(labelResult, String))
 			{
 				this.refreshAccessoryLabel(cast labelResult);
 			}
 			else
 			{
-				this.refreshAccessoryLabel(labelResult.toString());
+				this.refreshAccessoryLabel(Std.string(labelResult));
 			}
 			return cast this.accessoryLabel;
 		}
@@ -2997,9 +2997,9 @@ class BaseDefaultItemRenderer extends ToggleButton implements IFocusContainer
 			}
 			return cast this._accessoryFunction(item);
 		}
-		else if (this._accessoryField != null && item != null && Reflect.hasField(item, this._accessoryField))
+		else if (this._accessoryField != null && item != null && Property.existsRead(item, this._accessoryField))
 		{
-			return cast Reflect.getProperty(item, this._accessoryField);
+			return cast Property.read(item, this._accessoryField);
 		}
 		
 		return null;
@@ -3039,9 +3039,9 @@ class BaseDefaultItemRenderer extends ToggleButton implements IFocusContainer
 			this.refreshSkinSource(source);
 			return this.skinLoader;
 		}
-		else if (this._skinSourceField != null && item != null && Reflect.hasField(item, this._skinSourceField))
+		else if (this._skinSourceField != null && item != null && Property.existsRead(item, this._skinSourceField))
 		{
-			source = Reflect.getProperty(item, this._skinSourceField);
+			source = Property.read(item, this._skinSourceField);
 			this.refreshSkinSource(source);
 			return this.skinLoader;
 		}
@@ -3058,9 +3058,9 @@ class BaseDefaultItemRenderer extends ToggleButton implements IFocusContainer
 			}
 			return cast this._skinFunction(item);
 		}
-		else if (this._skinField != null && item != null && Reflect.hasField(item, this._skinField))
+		else if (this._skinField != null && item != null && Property.existsRead(item, this._skinField))
 		{
-			return cast Reflect.getProperty(item, this._skinField);
+			return cast Property.read(item, this._skinField);
 		}
 		
 		return null;
@@ -3091,9 +3091,9 @@ class BaseDefaultItemRenderer extends ToggleButton implements IFocusContainer
 			}
 			return cast this._selectableFunction(item);
 		}
-		else if (this._selectableField != null && item != null && Reflect.hasField(item, this._selectableField))
+		else if (this._selectableField != null && item != null && Property.existsRead(item, this._selectableField))
 		{
-			return cast Reflect.getProperty(item, this._selectableField);
+			return cast Property.read(item, this._selectableField);
 		}
 		return true;
 	}
@@ -3123,9 +3123,9 @@ class BaseDefaultItemRenderer extends ToggleButton implements IFocusContainer
 			}
 			return cast this._enabledFunction(item);
 		}
-		else if (this._enabledField != null && item != null && Reflect.hasField(item, this._enabledField))
+		else if (this._enabledField != null && item != null && Property.existsRead(item, this._enabledField))
 		{
-			return cast Reflect.getProperty(item, this._enabledField);
+			return cast Property.read(item, this._enabledField);
 		}
 		
 		return true;
@@ -4016,7 +4016,7 @@ class BaseDefaultItemRenderer extends ToggleButton implements IFocusContainer
 				for (propertyName in this._iconLabelProperties)
 				{
 					propertyValue = this._iconLabelProperties[propertyName];
-					Reflect.setProperty(this.iconLabel, propertyName, propertyValue);
+					Property.write(this.iconLabel, propertyName, propertyValue);
 				}
 			}
 		}
@@ -4071,7 +4071,7 @@ class BaseDefaultItemRenderer extends ToggleButton implements IFocusContainer
 				for (propertyName in this._iconLabelProperties)
 				{
 					propertyValue = this._iconLabelProperties[propertyName];
-					Reflect.setProperty(this.accessoryLabel, propertyName, propertyValue);
+					Property.write(this.accessoryLabel, propertyName, propertyValue);
 				}
 			}
 		}

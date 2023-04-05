@@ -18,6 +18,7 @@ import feathers.core.PropertyProxy;
 import feathers.skins.IStyleProvider;
 import feathers.text.FontStylesSet;
 import feathers.utils.skins.SkinsUtils;
+import feathers.utils.type.Property;
 import openfl.geom.Point;
 import starling.display.DisplayObject;
 import starling.events.Event;
@@ -1018,7 +1019,7 @@ class Label extends FeathersControl implements ITextBaselineControl implements I
 			for (propertyName in this._textRendererProperties)
 			{
 				propertyValue = this._textRendererProperties[propertyName];
-				Reflect.setProperty(this.textRenderer, propertyName, propertyValue);
+				Property.write(this.textRenderer, propertyName, propertyValue);
 			}
 		}
 	}

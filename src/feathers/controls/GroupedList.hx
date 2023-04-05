@@ -24,6 +24,7 @@ import feathers.layout.VerticalAlign;
 import feathers.layout.VerticalLayout;
 import feathers.skins.IStyleProvider;
 import feathers.system.DeviceCapabilities;
+import feathers.utils.type.Property;
 import haxe.Constraints.Function;
 import openfl.errors.ArgumentError;
 import openfl.events.KeyboardEvent;
@@ -2072,9 +2073,9 @@ class GroupedList extends Scroller implements IFocusContainer
 		{
 			return this._headerFunction(group);
 		}
-		else if (this._headerField != null && group != null && Reflect.hasField(group, this._headerField))
+		else if (this._headerField != null && group != null && Property.existsRead(group, this._headerField))
 		{
-			return Reflect.getProperty(group, this._headerField);
+			return Property.read(group, this._headerField);
 		}
 		
 		return null;
@@ -2089,9 +2090,9 @@ class GroupedList extends Scroller implements IFocusContainer
 		{
 			return this._footerFunction(group);
 		}
-		else if (this._footerField != null && group != null && Reflect.hasField(group, this._footerField))
+		else if (this._footerField != null && group != null && Property.existsRead(group, this._footerField))
 		{
-			return Reflect.getProperty(group, this._footerField);
+			return Property.read(group, this._footerField);
 		}
 		
 		return null;

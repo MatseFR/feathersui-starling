@@ -21,7 +21,7 @@ import starling.display.DisplayObject;
  *
  * @productversion Feathers 3.5.0
  */
-class TweenMoveEffectContext extends TweenEffectContext 
+class TweenMoveEffectContext extends TweenEffectContext implements IMoveEffectContext
 {
 	/**
 	 * Constructor.

@@ -28,6 +28,7 @@ import feathers.layout.VerticalAlign;
 import feathers.skins.IStyleProvider;
 import feathers.text.FontStylesSet;
 import feathers.utils.skins.SkinsUtils;
+import feathers.utils.type.Property;
 import feathers.utils.type.SafeCast;
 import haxe.ds.Map;
 import openfl.errors.RangeError;
@@ -2214,8 +2215,7 @@ class TextInput extends FeathersControl implements ITextBaselineControl implemen
 			for (propertyName in this._textEditorProperties)
 			{
 				propertyValue = this._textEditorProperties[propertyName];
-				//this.textEditor[propertyName] = propertyValue;
-				Reflect.setProperty(this.textEditor, propertyName, propertyValue);
+				Property.write(this.textEditor, propertyName, propertyValue);
 			}
 		}
 	}
@@ -2238,8 +2238,7 @@ class TextInput extends FeathersControl implements ITextBaselineControl implemen
 			for (propertyName in this._promptProperties)
 			{
 				propertyValue = this._promptProperties[propertyName];
-				//this.promptTextRenderer[propertyName] = propertyValue;
-				Reflect.setProperty(this.promptTextRenderer, propertyName, propertyValue);
+				Property.write(this.promptTextRenderer, propertyName, propertyValue);
 			}
 		}
 	}

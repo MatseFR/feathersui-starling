@@ -2058,7 +2058,11 @@ class DateTimeSpinner extends FeathersControl
 			//for 2015, this would give us 1900
 			//for 2065, this would give us 1950
 			//this._listMinYear = roundDownToNearest(HELPER_DATE.fullYear - 100, 50);
+			#if neko
+			this._listMinYear = 1971;
+			#else
 			this._listMinYear = Std.int(MathUtils.roundDownToNearest(this._value.getFullYear() - 100, 50));
+			#end
 			this._minimum = new Date(this._listMinYear, MIN_MONTH_VALUE, MIN_DATE_VALUE,
 				MIN_HOURS_VALUE, MIN_MINUTES_VALUE, 0);
 		}
@@ -2091,7 +2095,11 @@ class DateTimeSpinner extends FeathersControl
 			//for 2065, this would give us 2200
 			//HELPER_DATE.time = this._value.time;
 			//this._listMaxYear = roundUpToNearest(HELPER_DATE.fullYear + 100, 50);
+			#if neko
+			this._listMaxYear = 2037;
+			#else
 			this._listMaxYear = Std.int(MathUtils.roundUpToNearest(this._value.getFullYear() + 100, 50));
+			#end
 			this._maximum = new Date(this._listMaxYear, MAX_MONTH_VALUE,
 				DAYS_IN_MONTH[MAX_MONTH_VALUE], MAX_HOURS_VALUE_24HOURS,
 				MAX_MINUTES_VALUE, 0);

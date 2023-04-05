@@ -19,6 +19,7 @@ import feathers.skins.IStyleProvider;
 import feathers.system.DeviceCapabilities;
 import feathers.utils.display.DisplayUtils;
 import feathers.utils.math.MathUtils;
+import feathers.utils.type.Property;
 import feathers.utils.type.SafeCast;
 import haxe.Constraints.Function;
 import openfl.events.KeyboardEvent;
@@ -2968,9 +2969,9 @@ class Drawers extends FeathersControl
 		{
 			return cast this._contentEventDispatcherFunction(this._content);
 		}
-		else if (this._contentEventDispatcherField != null && this._content != null && Reflect.hasField(this._content, this._contentEventDispatcherField))
+		else if (this._contentEventDispatcherField != null && this._content != null && Property.existsRead(this._content, this._contentEventDispatcherField))
 		{
-			return cast Reflect.getProperty(this._content, this._contentEventDispatcherField);
+			return cast Property.read(this._content, this._contentEventDispatcherField);
 		}
 		//return SafeCast.safe_cast(this._content, EventDispatcher);
 		return cast this._content;

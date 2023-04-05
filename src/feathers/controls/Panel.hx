@@ -956,17 +956,14 @@ class Panel extends ScrollContainer implements IFocusExtras
 	 */
 	private function refreshHeaderStyles():Void
 	{
-		if (Property.existsWrite(this.header, this._headerTitleField))
-		{
-			Reflect.setProperty(this.header, this._headerTitleField, this._title);
-		}
+		Property.writeWithCheck(this.header, this._headerTitleField, this._title);
 		if (this._headerProperties != null)
 		{
 			var propertyValue:Dynamic;
 			for (propertyName in this._headerProperties)
 			{
 				propertyValue = this._headerProperties[propertyName];
-				Reflect.setProperty(this.header, propertyName, propertyValue);
+				Property.write(this.header, propertyName, propertyValue);
 			}
 		}
 	}
@@ -982,8 +979,7 @@ class Panel extends ScrollContainer implements IFocusExtras
 			for (propertyName in this._footerProperties)
 			{
 				propertyValue = this._footerProperties[propertyName];
-				//this.footer[propertyName] = propertyValue;
-				Reflect.setProperty(this.footer, propertyName, propertyValue);
+				Property.write(this.footer, propertyName, propertyValue);
 			}
 		}
 	}

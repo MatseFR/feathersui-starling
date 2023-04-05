@@ -25,6 +25,7 @@ import feathers.utils.keyboard.KeyToState;
 import feathers.utils.keyboard.KeyToTrigger;
 import feathers.utils.skins.SkinsUtils;
 import feathers.utils.touch.LongPress;
+import feathers.utils.type.Property;
 import feathers.utils.type.SafeCast;
 import openfl.geom.Matrix;
 import openfl.geom.Point;
@@ -1800,8 +1801,7 @@ class Button extends BasicButton implements IFocusDisplayObject implements IText
 			for (propertyName in this._defaultLabelProperties)
 			{
 				propertyValue = this._defaultLabelProperties[propertyName];
-				//this.labelTextRenderer[propertyName] = propertyValue;
-				Reflect.setProperty(this.labelTextRenderer, propertyName, propertyValue);
+				Property.write(this.labelTextRenderer, propertyName, propertyValue);
 			}
 		}
 	}

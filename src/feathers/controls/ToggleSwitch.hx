@@ -23,6 +23,7 @@ import feathers.skins.IStyleProvider;
 import feathers.system.DeviceCapabilities;
 import feathers.text.FontStylesSet;
 import feathers.utils.math.MathUtils;
+import feathers.utils.type.Property;
 import haxe.Constraints.Function;
 import openfl.geom.Point;
 import openfl.ui.KeyLocation;
@@ -2450,12 +2451,11 @@ class ToggleSwitch extends FeathersControl implements IToggle implements IFocusD
 		this.onTextRenderer.text = this._onText;
 		if (properties != null)
 		{
-			//var displayRenderer:DisplayObject = cast this.onTextRenderer;
 			var propertyValue:Dynamic;
 			for (propertyName in properties)
 			{
 				propertyValue = properties[propertyName];
-				Reflect.setProperty(this.onTextRenderer, propertyName, propertyValue);
+				Property.write(this.onTextRenderer, propertyName, propertyValue);
 			}
 		}
 		this.onTextRenderer.validate();
@@ -2496,7 +2496,7 @@ class ToggleSwitch extends FeathersControl implements IToggle implements IFocusD
 			for (propertyName in properties)
 			{
 				propertyValue = properties[propertyName];
-				Reflect.setProperty(this.offTextRenderer, propertyName, propertyValue);
+				Property.write(this.offTextRenderer, propertyName, propertyValue);
 			}
 		}
 		this.offTextRenderer.validate();
@@ -2514,7 +2514,7 @@ class ToggleSwitch extends FeathersControl implements IToggle implements IFocusD
 			for (propertyName in this._thumbProperties)
 			{
 				propertyValue = this._thumbProperties[propertyName];
-				Reflect.setProperty(this.thumb, propertyName, propertyValue);
+				Property.write(this.thumb, propertyName, propertyValue);
 			}
 		}
 		this.thumb.visible = this._showThumb;
@@ -2531,7 +2531,7 @@ class ToggleSwitch extends FeathersControl implements IToggle implements IFocusD
 			for (propertyName in this._onTrackProperties)
 			{
 				propertyValue = this._onTrackProperties[propertyName];
-				Reflect.setProperty(this.onTrack, propertyName, propertyValue);
+				Property.write(this.onTrack, propertyName, propertyValue);
 			}
 		}
 	}
@@ -2551,7 +2551,7 @@ class ToggleSwitch extends FeathersControl implements IToggle implements IFocusD
 			for (propertyName in this._offTrackProperties)
 			{
 				propertyValue = this._offTrackProperties[propertyName];
-				Reflect.setProperty(this.offTrack, propertyName, propertyValue);
+				Property.write(this.offTrack, propertyName, propertyValue);
 			}
 		}
 	}

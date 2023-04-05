@@ -6,6 +6,7 @@ This program is free software. You can redistribute and/or modify it in
 accordance with the terms of the accompanying license agreement.
 */
 package feathers.core;
+import feathers.utils.type.Property;
 
 /**
  * Detects when its own properties have changed and dispatches an event
@@ -39,7 +40,7 @@ abstract PropertyProxy(PropertyProxyReal) from PropertyProxyReal to PropertyProx
 		
 		for (field in fields)
 		{
-			newValue.setProp(field, Reflect.getProperty(source, field));
+			newValue.setProp(field, Property.read(source, field));
 		}
 		
 		return newValue;
@@ -52,14 +53,6 @@ abstract PropertyProxy(PropertyProxyReal) from PropertyProxyReal to PropertyProx
 	{
 		this = new PropertyProxyReal(onChangeCallback);
 	}
-	
-	/**
-	 * 
-	 */
-	//inline public function iterator():ArrayIterator<String>
-	//{
-		//return this.namesIterator();
-	//}
 	
 	@:op([])
 	@:op(a.b)

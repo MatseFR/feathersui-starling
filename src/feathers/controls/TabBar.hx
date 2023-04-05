@@ -1700,7 +1700,7 @@ class TabBar extends FeathersControl implements IFocusDisplayObject implements I
 				propertyValue = this._tabProperties[propertyName];
 				for (tab in this.activeTabs)
 				{
-					Reflect.setProperty(tab, propertyName, propertyValue);
+					Property.write(tab, propertyName, propertyValue);
 				}
 			}
 		}
@@ -1770,7 +1770,7 @@ class TabBar extends FeathersControl implements IFocusDisplayObject implements I
 			}
 			else if (this._labelField != null && item != null && Property.existsRead(item, this._labelField))
 			{
-				tab.label = Reflect.getProperty(item, this._labelField);
+				tab.label = Property.read(item, this._labelField);
 			}
 			else if (Std.isOfType(item, String))
 			{
@@ -1778,7 +1778,7 @@ class TabBar extends FeathersControl implements IFocusDisplayObject implements I
 			}
 			else
 			{
-				tab.label = item.toString();
+				tab.label = Std.string(item);
 			}
 			if (this._iconFunction != null)
 			{
@@ -1786,7 +1786,7 @@ class TabBar extends FeathersControl implements IFocusDisplayObject implements I
 			}
 			else if (this._iconField != null && item != null && Property.existsRead(item, this._iconField))
 			{
-				tab.defaultIcon = cast Reflect.getProperty(item, this._iconField);
+				tab.defaultIcon = cast Property.read(item, this._iconField);
 			}
 			if (this._enabledFunction != null)
 			{
@@ -1796,7 +1796,7 @@ class TabBar extends FeathersControl implements IFocusDisplayObject implements I
 			else if (this._enabledField != null && item != null && Property.existsRead(item, this._enabledField))
 			{
 				//we account for this._isEnabled later
-				tab.isEnabled = Reflect.getProperty(item, this._enabledField);
+				tab.isEnabled = Property.read(item, this._enabledField);
 			}
 			else
 			{
@@ -1825,7 +1825,7 @@ class TabBar extends FeathersControl implements IFocusDisplayObject implements I
 			{
 				if (Property.existsRead(item, field))
 				{
-					Reflect.setProperty(tab, field, Reflect.getProperty(item, field));
+					Property.write(tab, field, Property.read(item, field));
 				}
 			}
 		}
@@ -1840,7 +1840,7 @@ class TabBar extends FeathersControl implements IFocusDisplayObject implements I
 		{
 			if (Property.existsRead(oldItem, field))
 			{
-				Reflect.setProperty(tab, field, null);
+				Property.write(tab, field, null);
 			}
 		}
 	}

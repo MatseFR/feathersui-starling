@@ -13,6 +13,7 @@ import feathers.core.IMeasureDisplayObject;
 import feathers.core.IValidating;
 import feathers.events.FeathersEventType;
 import feathers.utils.skins.SkinsUtils;
+import feathers.utils.type.Property;
 import feathers.utils.type.SafeCast;
 import haxe.Constraints.Function;
 import openfl.errors.ArgumentError;
@@ -579,7 +580,7 @@ abstract class BaseScreenNavigator extends FeathersControl
 			var fields:Array<String> = Reflect.fields(properties);
 			for (propertyName in fields)
 			{
-				Reflect.setProperty(this._activeScreen, propertyName, Reflect.field(properties, propertyName));
+				Property.write(this._activeScreen, propertyName, Reflect.field(properties, propertyName));
 			}
 		}
 		if (Std.isOfType(this._activeScreen, IScreen))
@@ -785,7 +786,11 @@ abstract class BaseScreenNavigator extends FeathersControl
 		
 		var transition:Function = this._waitingTransition;
 		this._waitingTransition = null;
+		#if neko
+		Reflect.callMethod(transition, transition, [this._previousScreenInTransition, this._activeScreen, transitionComplete]);
+		#else
 		transition(this._previousScreenInTransition, this._activeScreen, transitionComplete);
+		#end
 	}
 	
 	/**

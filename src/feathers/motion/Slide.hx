@@ -8,6 +8,7 @@ accordance with the terms of the accompanying license agreement.
 package feathers.motion;
 import feathers.motion.effectClasses.IEffectContext;
 import feathers.motion.effectClasses.TweenEffectContext;
+import feathers.utils.type.Property;
 import haxe.Constraints.Function;
 import openfl.errors.ArgumentError;
 import starling.animation.Transitions;
@@ -235,7 +236,7 @@ class SlideTween extends Tween
 		{
 			for (propertyName in Reflect.fields(tweenProperties))
 			{
-				Reflect.setProperty(this, propertyName, Reflect.field(tweenProperties, propertyName));
+				Property.write(this, propertyName, Reflect.field(tweenProperties, propertyName));
 			}
 		}
 		this._navigator = target.parent;
@@ -287,7 +288,11 @@ class SlideTween extends Tween
 		}
 		if (this._onCompleteCallback != null)
 		{
+			#if neko
+			Reflect.callMethod(this._onCompleteCallback, this._onCompleteCallback, []);
+			#else
 			this._onCompleteCallback();
+			#end
 		}
 	}
 }

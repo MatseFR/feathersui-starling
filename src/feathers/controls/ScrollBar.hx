@@ -17,6 +17,7 @@ import feathers.events.FeathersEventType;
 import feathers.layout.Direction;
 import feathers.skins.IStyleProvider;
 import feathers.utils.math.MathUtils;
+import feathers.utils.type.Property;
 import openfl.events.TimerEvent;
 import openfl.geom.Point;
 import openfl.utils.Timer;
@@ -2140,8 +2141,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 			for (propertyName in this._thumbProperties)
 			{
 				propertyValue = this._thumbProperties[propertyName];
-				//this.thumb[propertyName] = propertyValue;
-				Reflect.setProperty(this.thumb, propertyName, propertyValue);
+				Property.write(this.thumb, propertyName, propertyValue);
 			}
 		}
 	}
@@ -2157,8 +2157,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 			for (propertyName in this._minimumTrackProperties)
 			{
 				propertyValue = this._minimumTrackProperties[propertyName];
-				//this.minimumTrack[propertyName] = propertyValue;
-				Reflect.setProperty(this.minimumTrack, propertyName, propertyValue);
+				Property.write(this.minimumTrack, propertyName, propertyValue);
 			}
 		}
 	}
@@ -2178,8 +2177,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 			for (propertyName in this._maximumTrackProperties)
 			{
 				propertyValue = this._maximumTrackProperties[propertyName];
-				//this.maximumTrack[propertyName] = propertyValue;
-				Reflect.setProperty(this.maximumTrack, propertyName, propertyValue);
+				Property.write(this.maximumTrack, propertyName, propertyValue);
 			}
 		}
 	}
@@ -2195,8 +2193,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 			for (propertyName in this._decrementButtonProperties)
 			{
 				propertyValue = this._decrementButtonProperties[propertyName];
-				//this.decrementButton[propertyName] = propertyValue;
-				Reflect.setProperty(this.decrementButton, propertyName, propertyValue);
+				Property.write(this.decrementButton, propertyName, propertyValue);
 			}
 		}
 	}
@@ -2211,8 +2208,7 @@ class ScrollBar extends FeathersControl implements IDirectionalScrollBar
 			for (propertyName in this._incrementButtonProperties)
 			{
 				var propertyValue:Dynamic = this._incrementButtonProperties[propertyName];
-				//this.incrementButton[propertyName] = propertyValue;
-				Reflect.setProperty(this.incrementButton, propertyName, propertyValue);
+				Property.write(this.incrementButton, propertyName, propertyValue);
 			}
 		}
 	}

@@ -21,6 +21,7 @@ import feathers.core.PropertyProxy;
 import feathers.events.FeathersEventType;
 import feathers.skins.IStyleProvider;
 import feathers.text.FontStylesSet;
+import feathers.utils.type.Property;
 import feathers.utils.type.SafeCast;
 import openfl.errors.RangeError;
 import openfl.events.KeyboardEvent;
@@ -1481,7 +1482,7 @@ class TextArea extends Scroller implements IAdvancedNativeFocusOwner implements 
 			for (propertyName in this._textEditorProperties)
 			{
 				propertyValue = this._textEditorProperties[propertyName];
-				Reflect.setProperty(this.textEditorViewPort, propertyName, propertyValue);
+				Property.write(this.textEditorViewPort, propertyName, propertyValue);
 			}
 		}
 	}

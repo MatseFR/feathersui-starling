@@ -18,6 +18,7 @@ import feathers.events.FeathersEventType;
 import feathers.layout.Direction;
 import feathers.skins.IStyleProvider;
 import feathers.utils.math.MathUtils;
+import feathers.utils.type.Property;
 import openfl.events.TimerEvent;
 import openfl.geom.Point;
 import openfl.ui.Keyboard;
@@ -1674,8 +1675,7 @@ class Slider extends FeathersControl implements IDirectionalScrollBar implements
 			for (propertyName in this._thumbProperties)
 			{
 				propertyValue = this._thumbProperties[propertyName];
-				//this.thumb[propertyName] = propertyValue;
-				Reflect.setProperty(this.thumb, propertyName, propertyValue);
+				Property.write(this.thumb, propertyName, propertyValue);
 			}
 		}
 		this.thumb.visible = this._showThumb;
@@ -1692,8 +1692,7 @@ class Slider extends FeathersControl implements IDirectionalScrollBar implements
 			for (propertyName in this._minimumTrackProperties)
 			{
 				propertyValue = this._minimumTrackProperties[propertyName];
-				//this.minimumTrack[propertyName] = propertyValue;
-				Reflect.setProperty(minimumTrack, propertyName, propertyValue);
+				Property.write(minimumTrack, propertyName, propertyValue);
 			}
 		}
 	}
@@ -1713,8 +1712,7 @@ class Slider extends FeathersControl implements IDirectionalScrollBar implements
 			for (propertyName in this._maximumTrackProperties)
 			{
 				propertyValue = this._maximumTrackProperties[propertyName];
-				//this.maximumTrack[propertyName] = propertyValue;
-				Reflect.setProperty(maximumTrack, propertyName, propertyValue);
+				Property.write(maximumTrack, propertyName, propertyValue);
 			}
 		}
 	}

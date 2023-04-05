@@ -14,6 +14,7 @@ import feathers.motion.effectClasses.IEffectContext;
 import feathers.skins.IStyleProvider;
 import feathers.system.DeviceCapabilities;
 import feathers.utils.ReverseIterator;
+import feathers.utils.type.Property;
 import haxe.Constraints.Function;
 import haxe.ds.Map;
 import openfl.Lib.getTimer;
@@ -711,13 +712,7 @@ class StackScreenNavigator extends BaseScreenNavigator
 		var eventListener:Dynamic;
 		for (eventName in events.keys())
 		{
-			//signal = null;
-			//if (BaseScreenNavigator.SIGNAL_TYPE !== null &&
-				//this._activeScreen.hasOwnProperty(eventName))
-			//{
-				//signal = this._activeScreen[eventName] as BaseScreenNavigator.SIGNAL_TYPE;
-			//}
-			signal = Reflect.getProperty(this._activeScreen, eventName);
+			signal = Property.read(this._activeScreen, eventName);
 			eventAction = events[eventName];
 			if (Reflect.isFunction(eventAction))
 			{
@@ -746,7 +741,7 @@ class StackScreenNavigator extends BaseScreenNavigator
 			}
 			else
 			{
-				throw new TypeError("Unknown push event action defined for screen: " + eventAction.toString());
+				throw new TypeError("Unknown push event action defined for screen: " + Std.string(eventAction));
 			}
 		}
 		this._pushScreenEvents[this._activeScreenID] = savedScreenEvents;
@@ -764,13 +759,7 @@ class StackScreenNavigator extends BaseScreenNavigator
 		var eventListener:Dynamic;
 		for (eventName in pushEvents.keys())
 		{
-			//signal = null;
-			//if(BaseScreenNavigator.SIGNAL_TYPE !== null &&
-				//this._activeScreen.hasOwnProperty(eventName))
-			//{
-				//signal = this._activeScreen[eventName] as BaseScreenNavigator.SIGNAL_TYPE;
-			//}
-			signal = Reflect.getProperty(this._activeScreen, eventName);
+			signal = Property.read(this._activeScreen, eventName);
 			eventAction = pushEvents[eventName];
 			if (Reflect.isFunction(eventAction))
 			{
@@ -796,7 +785,6 @@ class StackScreenNavigator extends BaseScreenNavigator
 				}
 			}
 		}
-		//this._pushScreenEvents[this._activeScreenID] = null;
 		savedScreenEvents.clear();
 		this._pushScreenEvents.remove(this._activeScreenID);
 	}
@@ -817,13 +805,7 @@ class StackScreenNavigator extends BaseScreenNavigator
 		var eventListener:Function;
 		for (eventName in events.keys())
 		{
-			//signal = null;
-			//if(BaseScreenNavigator.SIGNAL_TYPE !== null &&
-				//this._activeScreen.hasOwnProperty(eventName))
-			//{
-				//signal = this._activeScreen[eventName] as BaseScreenNavigator.SIGNAL_TYPE;
-			//}
-			signal = Reflect.getProperty(this._activeScreen, eventName);
+			signal = Property.read(this._activeScreen, eventName);
 			eventAction = events[eventName];
 			//if(eventAction is String)
 			//{
@@ -841,7 +823,7 @@ class StackScreenNavigator extends BaseScreenNavigator
 			//}
 			//else
 			//{
-				//throw new TypeError("Unknown replace event action defined for screen:", eventAction.toString());
+				//throw new TypeError("Unknown replace event action defined for screen:", Std.string(eventAction));
 			//}
 		}
 		if (this._replaceScreenEvents == null)
@@ -867,13 +849,7 @@ class StackScreenNavigator extends BaseScreenNavigator
 		var eventListener:Dynamic->Void;
 		for (eventName in replaceEvents)
 		{
-			//signal:Dynamic;
-			//if(BaseScreenNavigator.SIGNAL_TYPE !== null &&
-				//this._activeScreen.hasOwnProperty(eventName))
-			//{
-				//signal = this._activeScreen[eventName] as BaseScreenNavigator.SIGNAL_TYPE;
-			//}
-			signal = Reflect.getProperty(this._activeScreen, eventName);
+			signal = Property.read(this._activeScreen, eventName);
 			eventAction = replaceEvents[eventName];
 			//if (eventAction is String)
 			//{
@@ -888,7 +864,6 @@ class StackScreenNavigator extends BaseScreenNavigator
 				}
 			//}
 		}
-		//this._replaceScreenEvents[this._activeScreenID] = null;
 		savedScreenEvents.clear();
 		this._replaceScreenEvents.remove(this._activeScreenID);
 	}
@@ -908,7 +883,7 @@ class StackScreenNavigator extends BaseScreenNavigator
 		var signal:Dynamic;
 		for (eventName in popEvents)
 		{
-			signal = Reflect.getProperty(this._activeScreen, eventName);
+			signal = Property.read(this._activeScreen, eventName);
 			if (signal != null)
 			{
 				signal.add(popSignalListener);
@@ -933,7 +908,7 @@ class StackScreenNavigator extends BaseScreenNavigator
 		var signal:Dynamic;
 		for (eventName in this._popScreenEvents)
 		{
-			signal = Reflect.getProperty(this._activeScreen, eventName);
+			signal = Property.read(this._activeScreen, eventName);
 			if (signal)
 			{
 				signal.remove(popSignalListener);
@@ -959,7 +934,7 @@ class StackScreenNavigator extends BaseScreenNavigator
 		var signal:Dynamic;
 		for (eventName in this._popToRootScreenEvents)
 		{
-			signal = Reflect.getProperty(this._activeScreen, eventName);
+			signal = Property.read(this._activeScreen, eventName);
 			if (signal != null)
 			{
 				signal.remove(popToRootSignalListener);
@@ -984,18 +959,10 @@ class StackScreenNavigator extends BaseScreenNavigator
 		//creating a copy because this array could change before the screen
 		//is removed.
 		var popToRootEvents:Array<String> = item.popToRootEvents.copy();
-		//var eventCount:int = popToRootEvents.length;
 		var signal:Dynamic;
 		for (eventName in popToRootEvents)
 		{
-			//var eventName:String = popToRootEvents[i];
-			//signal = null;
-			//if(BaseScreenNavigator.SIGNAL_TYPE !== null &&
-				//this._activeScreen.hasOwnProperty(eventName))
-			//{
-				//signal = this._activeScreen[eventName] as BaseScreenNavigator.SIGNAL_TYPE;
-			//}
-			signal = Reflect.getProperty(this._activeScreen, eventName);
+			signal = Property.read(this._activeScreen, eventName);
 			if (signal != null)
 			{
 				signal.add(popToRootSignalListener);

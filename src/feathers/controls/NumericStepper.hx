@@ -15,6 +15,7 @@ import feathers.events.ExclusiveTouch;
 import feathers.events.FeathersEventType;
 import feathers.skins.IStyleProvider;
 import feathers.utils.math.MathUtils;
+import feathers.utils.type.Property;
 import haxe.Constraints.Function;
 import openfl.events.TimerEvent;
 import openfl.ui.Keyboard;
@@ -1500,7 +1501,7 @@ class NumericStepper extends FeathersControl implements IRange implements IAdvan
 			for (propertyName in this._decrementButtonProperties)
 			{
 				propertyValue = this._decrementButtonProperties[propertyName];
-				Reflect.setProperty(this.decrementButton, propertyName, propertyValue);
+				Property.write(this.decrementButton, propertyName, propertyValue);
 			}
 		}
 		this.decrementButton.label = this._decrementButtonLabel;
@@ -1517,7 +1518,7 @@ class NumericStepper extends FeathersControl implements IRange implements IAdvan
 			for (propertyName in this._incrementButtonProperties)
 			{
 				propertyValue = this._incrementButtonProperties[propertyName];
-				Reflect.setProperty(this.incrementButton, propertyName, propertyValue);
+				Property.write(this.incrementButton, propertyName, propertyValue);
 			}
 		}
 		this.incrementButton.label = this._incrementButtonLabel;
@@ -1534,7 +1535,7 @@ class NumericStepper extends FeathersControl implements IRange implements IAdvan
 			for (propertyName in this._textInputProperties)
 			{
 				propertyValue = this._textInputProperties[propertyName];
-				Reflect.setProperty(this.textInput, propertyName, propertyValue);
+				Property.write(this.textInput, propertyName, propertyValue);
 			}
 		}
 	}

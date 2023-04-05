@@ -7,6 +7,7 @@ accordance with the terms of the accompanying license agreement.
 */
 package feathers.data;
 import feathers.events.CollectionEventType;
+import feathers.utils.type.Property;
 import haxe.Constraints.Function;
 import openfl.errors.RangeError;
 import starling.events.Event;
@@ -72,8 +73,7 @@ class ArrayHierarchicalCollection extends EventDispatcher implements IHierarchic
 		{
 			return false;
 		}
-		//return node.hasOwnProperty(this._childrenField) && node[this._childrenField] is Array;
-		return Reflect.hasField(node, this._childrenField) && Std.isOfType(Reflect.getProperty(node, this._childrenField), Array);
+		return Property.existsRead(node, this._childrenField) && Std.isOfType(Property.read(node, this._childrenField), Array);
 	}
 	
 	/**
@@ -91,7 +91,7 @@ class ArrayHierarchicalCollection extends EventDispatcher implements IHierarchic
 		//for (i in 0...indexCount)
 		//{
 			//index = indices[i];
-			//branch = cast Reflect.getProperty(branch[index], this._childrenField);
+			//branch = cast Property.read(branch[index], this._childrenField);
 			//if (branch == null)
 			//{
 				//throw new RangeError("Branch not found at location: " + rest);
@@ -115,7 +115,7 @@ class ArrayHierarchicalCollection extends EventDispatcher implements IHierarchic
 			for (i in 0...indexCount)
 			{
 				index = location[i];
-				branch = cast Reflect.getProperty(branch[index], this._childrenField);
+				branch = cast Property.read(branch[index], this._childrenField);
 				if (branch == null)
 				{
 					throw new RangeError("Branch not found at location: " + location);
@@ -158,7 +158,7 @@ class ArrayHierarchicalCollection extends EventDispatcher implements IHierarchic
 		for (i in 0...indexCount)
 		{
 			index = indices[i];
-			branch = cast Reflect.getProperty(branch[index], this._childrenField);
+			branch = cast Property.read(branch[index], this._childrenField);
 			if (branch == null)
 			{
 				return null;
@@ -183,7 +183,7 @@ class ArrayHierarchicalCollection extends EventDispatcher implements IHierarchic
 		for (i in 0...indexCount)
 		{
 			index = location[i];
-			branch = cast Reflect.getProperty(branch[index], this._childrenField);
+			branch = cast Property.read(branch[index], this._childrenField);
 			if (branch == null)
 			{
 				return null;
@@ -225,7 +225,7 @@ class ArrayHierarchicalCollection extends EventDispatcher implements IHierarchic
 		for (i in 0...indexCount)
 		{
 			index = indices[i];
-			branch = cast Reflect.getProperty(branch[index], this._childrenField);
+			branch = cast Property.read(branch[index], this._childrenField);
 			if (branch == null)
 			{
 				throw new RangeError("Branch not found at location: " + indices);
@@ -255,7 +255,7 @@ class ArrayHierarchicalCollection extends EventDispatcher implements IHierarchic
 		for (i in 0...indexCount)
 		{
 			index = location[i];
-			branch = cast Reflect.getProperty(branch[index], this._childrenField);
+			branch = cast Property.read(branch[index], this._childrenField);
 			if (branch == null)
 			{
 				throw new RangeError("Branch not found at location: " + location);
@@ -284,7 +284,7 @@ class ArrayHierarchicalCollection extends EventDispatcher implements IHierarchic
 		for (i in 0...indexCount)
 		{
 			index = indices[i];
-			branch = cast Reflect.getProperty(branch[index], this._childrenField);
+			branch = cast Property.read(branch[index], this._childrenField);
 			if (branch == null)
 			{
 				throw new RangeError("Branch not found at location: " + indices);
@@ -315,7 +315,7 @@ class ArrayHierarchicalCollection extends EventDispatcher implements IHierarchic
 		for (i in 0...indexCount)
 		{
 			index = location[i];
-			branch = cast Reflect.getProperty(branch[index], this._childrenField);
+			branch = cast Property.read(branch[index], this._childrenField);
 			if (branch == null)
 			{
 				throw new RangeError("Branch not found at location: " + location);
@@ -372,7 +372,7 @@ class ArrayHierarchicalCollection extends EventDispatcher implements IHierarchic
 		for (i in 0...indexCount)
 		{
 			index = indices[i];
-			branch = cast Reflect.getProperty(branch[index], this._childrenField);
+			branch = cast Property.read(branch[index], this._childrenField);
 			if (branch == null)
 			{
 				throw new RangeError("Branch not found at location: " + indices);
@@ -402,7 +402,7 @@ class ArrayHierarchicalCollection extends EventDispatcher implements IHierarchic
 		for (i in 0...indexCount)
 		{
 			index = location[i];
-			branch = cast Reflect.getProperty(branch[index], this._childrenField);
+			branch = cast Property.read(branch[index], this._childrenField);
 			if (branch == null)
 			{
 				throw new RangeError("Branch not found at location: " + location);
@@ -485,7 +485,7 @@ class ArrayHierarchicalCollection extends EventDispatcher implements IHierarchic
 			if (this.isBranch(branchItem))
 			{
 				result[insertIndex] = i;
-				children = cast Reflect.getProperty(branchItem, this._childrenField);
+				children = cast Property.read(branchItem, this._childrenField);
 				isFound = this.findItemInBranch(children, item, result);
 				if (isFound)
 				{

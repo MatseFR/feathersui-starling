@@ -17,6 +17,7 @@ import feathers.events.FeathersEventType;
 import feathers.layout.Direction;
 import feathers.skins.IStyleProvider;
 import feathers.utils.math.MathUtils;
+import feathers.utils.type.Property;
 import openfl.events.TimerEvent;
 import openfl.geom.Point;
 import openfl.utils.Timer;
@@ -867,8 +868,7 @@ class SimpleScrollBar extends FeathersControl implements IDirectionalScrollBar
 			for (propertyName in this._thumbProperties)
 			{
 				propertyValue = this._thumbProperties[propertyName];
-				//this.thumb[propertyName] = propertyValue;
-				Reflect.setProperty(this.thumb, propertyName, propertyValue);
+				Property.write(this.thumb, propertyName, propertyValue);
 			}
 		}
 	}

@@ -10,6 +10,7 @@ package feathers.controls;
 import feathers.controls.supportClasses.BaseScreenNavigator;
 import feathers.events.FeathersEventType;
 import feathers.skins.IStyleProvider;
+import feathers.utils.type.Property;
 import haxe.Constraints.Function;
 import haxe.ds.Map;
 import openfl.errors.TypeError;
@@ -125,7 +126,6 @@ class ScreenNavigator extends BaseScreenNavigator
 	public function getScreen(id:String):ScreenNavigatorItem
 	{
 		return cast this._screens[id];
-		//return cast Reflect.field(this._screens, id);
 	}
 	
 	/**
@@ -175,12 +175,10 @@ class ScreenNavigator extends BaseScreenNavigator
 	 */
 	override private function prepareActiveScreen():Void
 	{
-		//var item:ScreenNavigatorItem = cast Reflect.field(this._screens, this._activeScreenID);
 		var item:ScreenNavigatorItem = cast this._screens[this._activeScreenID];
 		var events:Map<String, Dynamic> = item.events;
 		var savedScreenEvents:Map<String, Dynamic->Void> = new Map();
 		
-		//var fields:Array<String> = Reflect.fields(events);
 		var signal:Dynamic;
 		var eventAction:Dynamic;
 		var eventListener:Dynamic;
@@ -188,30 +186,12 @@ class ScreenNavigator extends BaseScreenNavigator
 		{
 			for (eventName in events.keys())
 			{
-				//signal = null;
-				////if (BaseScreenNavigator.SIGNAL_TYPE != null &&
-					////this._activeScreen.hasOwnProperty(eventName))
-				//#if html5
-				//// TODO : find a better way of checking that a property exists in JS
-				//if (BaseScreenNavigator.SIGNAL_TYPE != null &&
-					//Type.getClassFields(this._activeScreen).contains(eventName))
-				//#else
-				//if (BaseScreenNavigator.SIGNAL_TYPE != null &&
-					//Reflect.hasField(this._activeScreen, eventName))
-				//#end
-				//{
-					////signal = this._activeScreen[eventName] as BaseScreenNavigator.SIGNAL_TYPE;
-					//signal = Reflect.getProperty(this._activeScreen, eventName);
-				//}
-				signal = Reflect.getProperty(this._activeScreen, eventName);
+				signal = Property.read(this._activeScreen, eventName);
 				eventAction = events[eventName];
-				//eventAction = Reflect.field(events, eventName);
 				if (Reflect.isFunction(eventAction))
 				{
 					if (signal != null)
 					{
-						//signal.add(eventAction as Function);
-						//Reflect.callMethod(signal, Reflect.field(signal, "add"), [cast(eventAction, Function)]);
 						signal.add(eventAction);
 					}
 					else
@@ -232,16 +212,14 @@ class ScreenNavigator extends BaseScreenNavigator
 						this._activeScreen.addEventListener(eventName, eventListener);
 					}
 					savedScreenEvents[eventName] = eventListener;
-					//Reflect.setField(savedScreenEvents, eventName, eventListener);
 				}
 				else
 				{
-					throw new TypeError("Unknown event action defined for screen: " + eventAction.toString());
+					throw new TypeError("Unknown event action defined for screen: " + Std.string(eventAction));
 				}
 			}
 		}
 		this._screenEvents[this._activeScreenID] = savedScreenEvents;
-		//Reflect.setField(this._screenEvents, this._activeScreenID, savedScreenEvents);
 	}
 	
 	/**
@@ -249,13 +227,10 @@ class ScreenNavigator extends BaseScreenNavigator
 	 */
 	override function cleanupActiveScreen():Void
 	{
-		//var item:ScreenNavigatorItem = cast Reflect.field(this._screens, this._activeScreenID);
 		var item:ScreenNavigatorItem = cast this._screens[this._activeScreenID];
 		var events:Map<String, Dynamic> = item.events;
 		var savedScreenEvents:Map<String, Dynamic->Void> = this._screenEvents[this._activeScreenID];
-		//var savedScreenEvents:Dynamic = Reflect.field(this._screenEvents, this._activeScreenID);
 		
-		//var fields:Array<String> = Reflect.fields(events);
 		var signal:Dynamic;
 		var eventAction:Dynamic;
 		var eventListener:Dynamic->Void;
@@ -263,24 +238,8 @@ class ScreenNavigator extends BaseScreenNavigator
 		{
 			for (eventName in events.keys())
 			{
-				//signal = null;
-				////if (BaseScreenNavigator.SIGNAL_TYPE !== null &&
-					////this._activeScreen.hasOwnProperty(eventName))
-				//#if html5
-				//// TODO : find a better way of checking that a property exists in JS
-				//if (BaseScreenNavigator.SIGNAL_TYPE != null &&
-					//Type.getClassFields(this._activeScreen).contains(eventName))
-				//#else
-				//if (BaseScreenNavigator.SIGNAL_TYPE != null &&
-					//Reflect.hasField(this._activeScreen, eventName))
-				//#end
-				//{
-					////signal = this._activeScreen[eventName] as BaseScreenNavigator.SIGNAL_TYPE;
-					//signal = Reflect.getProperty(this._activeScreen, eventName);
-				//}
-				signal = Reflect.getProperty(this._activeScreen, eventName);
+				signal = Property.read(this._activeScreen, eventName);
 				eventAction = events[eventName];
-				//eventAction = Reflect.field(events, eventName);
 				if (Reflect.isFunction(eventAction))
 				{
 					if (signal != null)
@@ -295,7 +254,6 @@ class ScreenNavigator extends BaseScreenNavigator
 				else if (Std.isOfType(eventAction, String))
 				{
 					eventListener = savedScreenEvents[eventName];
-					//eventListener = cast Reflect.field(savedScreenEvents, eventName);
 					if (signal != null)
 					{
 						signal.remove(eventListener);
@@ -307,8 +265,6 @@ class ScreenNavigator extends BaseScreenNavigator
 				}
 			}
 		}
-		//this._screenEvents[this._activeScreenID] = null;
-		//Reflect.setField(this._screenEvents, this._activeScreenID, null);
 		savedScreenEvents.clear();
 		this._screenEvents.remove(this._activeScreenID);
 	}

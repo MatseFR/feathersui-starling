@@ -7,6 +7,7 @@ This program is free software. You can redistribute and/or modify it in
 accordance with the terms of the accompanying license agreement.
 */
 import feathers.controls.supportClasses.IScreenNavigatorItem;
+import feathers.utils.type.Property;
 import haxe.Constraints.Function;
 import openfl.errors.ArgumentError;
 import starling.display.DisplayObject;
@@ -195,7 +196,6 @@ class ScreenNavigatorItem implements IScreenNavigatorItem
 	public function setFunctionForEvent(eventType:String, action:Function):Void
 	{
 		this._events[eventType] = action;
-		//Reflect.setField(this._events, eventType, action);
 	}
 	
 	/**
@@ -216,7 +216,6 @@ class ScreenNavigatorItem implements IScreenNavigatorItem
 	public function setScreenIDForEvent(eventType:String, screenID:String):Void
 	{
 		this._events[eventType] = screenID;
-		//Reflect.setField(this._events, eventType, screenID);
 	}
 	
 	/**
@@ -228,7 +227,6 @@ class ScreenNavigatorItem implements IScreenNavigatorItem
 	public function clearEvent(eventType:String):Void
 	{
 		this._events.remove(eventType);
-		//Reflect.deleteField(this._events, eventType);
 	}
 	
 	/**
@@ -244,7 +242,6 @@ class ScreenNavigatorItem implements IScreenNavigatorItem
 		}
 		else if (Reflect.isFunction(this._screen))
 		{
-			//screenInstance = cast cast(this._screen, Function)();
 			screenInstance = cast this._screen();
 		}
 		else
@@ -261,7 +258,7 @@ class ScreenNavigatorItem implements IScreenNavigatorItem
 		{
 			for (propertyName in this._properties.keys())
 			{
-				Reflect.setProperty(screenInstance, propertyName, this._properties[propertyName]);
+				Property.write(screenInstance, propertyName, this._properties[propertyName]);
 			}
 		}
 		

@@ -24,7 +24,7 @@ class Property
 			case Type.ValueType.TNull, Type.ValueType.TInt, Type.ValueType.TFloat, Type.ValueType.TBool, Type.ValueType.TFunction, Type.ValueType.TUnknown :
 				// trace("trash");
 				return false;
-
+			
 			case Type.ValueType.TObject :
 				// trace("object");
 				return Reflect.hasField(object, propertyName);
@@ -37,9 +37,6 @@ class Property
 				}
 				return Reflect.getProperty(object, propertyName) != null;
 		}
-		// if (Std.isOfType(object, String) || Std.isOfType(object, Int) || Std.isOfType(object, Float) || Std)
-		// if (Reflect.hasField(object, propertyName)) return true;
-		// return untyped propertyName + " in object";
 		#else
 		// TODO : find a better way to check that a property exists on cpp target
 		if (Reflect.hasField(object, propertyName)) return true;
@@ -57,7 +54,7 @@ class Property
 		return untyped propertyName + " in object";
 		#else
 		if (Reflect.hasField(object, propertyName)) return true;
-		return false;
+		return Reflect.getProperty(object, propertyName) != null;
 		#end
 	}
 	
@@ -68,7 +65,13 @@ class Property
 	}
 	
 	// TODO : inline once tested
-	static public function setPropertyWithCheck(object:Dynamic, propertyName:String, propertyValue:Dynamic):Bool
+	static public function write(object:Dynamic, propertyName:String, propertyValue:Dynamic):Void
+	{
+		Reflect.setProperty(object, propertyName, propertyValue);
+	}
+	
+	// TODO : inline once tested
+	static public function writeWithCheck(object:Dynamic, propertyName:String, propertyValue:Dynamic):Bool
 	{
 		#if flash
 		if (Reflect.hasField(object, propertyName) || Reflect.hasField(object, "set_" + propertyName))
@@ -77,13 +80,13 @@ class Property
 			return true;
 		}
 		return false;
-		#elseif html5
-		if (untyped propertyName + " in object")
-		{
-			Reflect.setProperty(object, propertyName, propertyValue);
-			return true;
-		}
-		return false;
+		//#elseif html5
+		//if (untyped propertyName + " in object")
+		//{
+			//Reflect.setProperty(object, propertyName, propertyValue);
+			//return true;
+		//}
+		//return false;
 		#else
 		try
 		{
