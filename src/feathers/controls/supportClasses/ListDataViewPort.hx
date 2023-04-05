@@ -640,19 +640,6 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 	
 	private var _removeItemEffectContexts:Array<IEffectContext> = null;
 	
-	//public var addedItems(get, set):Map<Dynamic, Function>;
-	//private var _addedItems:Map<Dynamic, Function>;
-	//private function get_addedItems():Map<Dynamic, Function> { return this._addedItems; }
-	//private function set_addedItems(value:Map<Dynamic, Function>):Map<Dynamic, Function>
-	//{
-		//if (this._addedItems == value)
-		//{
-			//return value;
-		//}
-		//this._addedItems = value;
-		//this.invalidate(FeathersControl.INVALIDATION_FLAG_DATA);
-		//return this._addedItems;
-	//}
 	public var addedItems(get, set):Array<Dynamic>;
 	private var _addedItems:Array<Dynamic>;
 	private function get_addedItems():Array<Dynamic> { return this._addedItems; }
@@ -678,20 +665,6 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 		}
 		return this._addedItemsEffects = value;
 	}
-	
-	//public var removedItems(get, set):Map<Dynamic, Function>;
-	//private var _removedItems:Map<Dynamic, Function>;
-	//private function get_removedItems():Map<Dynamic, Function> { return this._removedItems; }
-	//private function set_removedItems(value:Map<Dynamic, Function>):Map<Dynamic, Function>
-	//{
-		//if (this._removedItems == value)
-		//{
-			//return value;
-		//}
-		//this._removedItems = value;
-		//this.invalidate(FeathersControl.INVALIDATION_FLAG_DATA);
-		//return this._removedItems;
-	//}
 	
 	public var removedItems(get, set):Array<Dynamic>;
 	private var _removedItems:Array<Dynamic>;
@@ -1039,7 +1012,6 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 			}
 			
 			count = this._addedItems.length;
-			//for (item in this._addedItems.keys())
 			for (i in 0...count)
 			{
 				item = this._addedItems[i];
@@ -1058,7 +1030,6 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 				if (itemRenderer != null)
 				{
 					this.interruptRemoveItemEffects(itemRenderer, false);
-					//effect = this._addedItems[item];
 					effect = this._addedItemsEffects[i];
 					context = effect(itemRenderer);
 					context.addEventListener(Event.COMPLETE, addedItemEffectContext_completeHandler);
@@ -1077,7 +1048,6 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 			}
 			
 			count = this._removedItems.length;
-			//for (item in this._removedItems.keys())
 			for (i in 0...count)
 			{
 				item = this._removedItems[i];
@@ -1097,7 +1067,6 @@ class ListDataViewPort extends FeathersControl implements IViewPort
 				{
 					this.interruptRemoveItemEffects(itemRenderer, true);
 					this.interruptAddItemEffects(itemRenderer);
-					//effect = this._removedItems[item];
 					effect = this._removedItemsEffects[i];
 					context = effect(itemRenderer);
 					context.addEventListener(Event.COMPLETE, removedItemEffectContext_completeHandler);

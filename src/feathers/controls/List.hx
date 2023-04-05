@@ -177,14 +177,12 @@ class List extends Scroller implements IFocusContainer implements IDragSource im
 	/**
 	 * @private
 	 */
-	//private var _addedItems:Map<Dynamic, Function>;
 	private var _addedItems:Array<Dynamic>;
 	private var _addedItemsEffects:Array<Function>;
 
 	/**
 	 * @private
 	 */
-	//private var _removedItems:Map<Dynamic, Function>;
 	private var _removedItems:Array<Dynamic>;
 	private var _removedItemsEffects:Array<Function>;
 	
@@ -1196,11 +1194,9 @@ class List extends Scroller implements IFocusContainer implements IDragSource im
 		this._dataProvider.addItemAt(item, index);
 		if (this._addedItems == null)
 		{
-			//this._addedItems = new Map<Dynamic, Function>();
 			this._addedItems = new Array<Dynamic>();
 			this._addedItemsEffects = new Array<Function>();
 		}
-		//this._addedItems[item] = effect;
 		this._addedItems.push(item);
 		this._addedItemsEffects.push(effect);
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_DATA);
@@ -1256,11 +1252,9 @@ class List extends Scroller implements IFocusContainer implements IDragSource im
 		//finishes instead.
 		if (this._removedItems == null)
 		{
-			//this._removedItems = new Map<Dynamic, Function>();
 			this._removedItems = new Array<Dynamic>();
 			this._removedItemsEffects = new Array<Function>();
 		}
-		//this._removedItems[item] = effect;
 		this._removedItems.push(item);
 		this._removedItemsEffects.push(effect);
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_DATA);
@@ -1289,13 +1283,11 @@ class List extends Scroller implements IFocusContainer implements IDragSource im
 		}
 		if (this._addedItems != null)
 		{
-			//this._addedItems.clear();
 			this._addedItems = null;
 			this._addedItemsEffects = null;
 		}
 		if (this._removedItems != null)
 		{
-			//this._removedItems.clear();
 			this._removedItems = null;
 			this._removedItemsEffects = null;
 		}
