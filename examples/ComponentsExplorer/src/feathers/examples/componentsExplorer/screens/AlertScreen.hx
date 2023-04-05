@@ -94,7 +94,7 @@ class AlertScreen extends PanelScreen
 
 	private function alert_closeHandler(event:Event, data:Dynamic):Void
 	{
-		if (data)
+		if (data != null)
 		{
 			trace("alert closed with item:", data.label);
 		}
