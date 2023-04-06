@@ -2060,6 +2060,8 @@ class DateTimeSpinner extends FeathersControl
 			//this._listMinYear = roundDownToNearest(HELPER_DATE.fullYear - 100, 50);
 			#if neko
 			this._listMinYear = 1971;
+			#elseif cpp
+			this._listMinYear = 1970;
 			#else
 			this._listMinYear = Std.int(MathUtils.roundDownToNearest(this._value.getFullYear() - 100, 50));
 			#end
