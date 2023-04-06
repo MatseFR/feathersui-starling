@@ -20,14 +20,24 @@ class IrisTransitionScreen extends PanelScreen
 	{
 		var randomX:Float = Math.random() * (oldScreen != null ? oldScreen.width : newScreen.width);
 		var randomY:Float = Math.random() * (oldScreen != null ? oldScreen.height : newScreen.height);
+		#if neko
+		var func:Function = Iris.createIrisCloseTransitionAt(randomX, randomY);
+		Reflect.callMethod(func, func, [oldScreen, newScreen, completeCallback]);
+		#else
 		Iris.createIrisCloseTransitionAt(randomX, randomY)(oldScreen, newScreen, completeCallback);
+		#end
 	}
 	
 	private static function irisOpenAtRandomPosition(oldScreen:DisplayObject, newScreen:DisplayObject, completeCallback:Function):Void
 	{
 		var randomX:Float = Math.random() * (oldScreen != null ? oldScreen.width : newScreen.width);
 		var randomY:Float = Math.random() * (oldScreen != null ? oldScreen.height : newScreen.height);
+		#if neko
+		var func:Function = Iris.createIrisOpenTransitionAt(randomX, randomY);
+		Reflect.callMethod(func, func, [oldScreen, newScreen, completeCallback]);
+		#else
 		Iris.createIrisOpenTransitionAt(randomX, randomY)(oldScreen, newScreen, completeCallback);
+		#end
 	}
 	
 	public static inline var TRANSITION:String = "transition";
