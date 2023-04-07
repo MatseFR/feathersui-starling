@@ -8,10 +8,6 @@ accordance with the terms of the accompanying license agreement.
 package feathers.utils.math;
 import openfl.errors.ArgumentError;
 
-/**
- * ...
- * @author Matse
- */
 class MathUtils 
 {
 	public static inline var FLOAT_MAX:Float = 999999999;
@@ -101,7 +97,7 @@ class MathUtils
 	 *
 	 * @productversion Feathers 1.0.0
 	 */
-	public static function roundToPrecision(number:Float, precision:Int = 0):Float
+	public static inline function roundToPrecision(number:Float, precision:Int = 0):Float
 	{
 		var decimalPlaces:Float = Math.pow(10, precision);
 		return Math.fround(decimalPlaces * number) / decimalPlaces;
@@ -119,7 +115,7 @@ class MathUtils
 	 *
 	 * @productversion Feathers 1.0.0
 	 */
-	public static function roundUpToNearest(number:Float, nearest:Float = 1):Float
+	public static inline function roundUpToNearest(number:Float, nearest:Float = 1):Float
 	{
 		if (nearest == 0)
 		{

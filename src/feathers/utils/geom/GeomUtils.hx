@@ -8,10 +8,6 @@ accordance with the terms of the accompanying license agreement.
 package feathers.utils.geom;
 import openfl.geom.Matrix;
 
-/**
- * ...
- * @author Matse
- */
 class GeomUtils 
 {
 	

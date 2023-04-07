@@ -6,8 +6,7 @@ package feathers.utils.type;
  */
 class Property 
 {
-	// TODO : inline once tested
-	static public function existsRead(object:Dynamic, propertyName:String):Bool
+	inline static public function existsRead(object:Dynamic, propertyName:String):Bool
 	{
 		#if flash
 		// TODO : use untyped hasOwnProperty ?
@@ -44,8 +43,7 @@ class Property
 		#end
 	}
 
-	// TODO : inline once tested
-	static public function existsWrite(object:Dynamic, propertyName:String):Bool
+	inline static public function existsWrite(object:Dynamic, propertyName:String):Bool
 	{
 		#if flash
 		return Reflect.hasField(object, propertyName) || Reflect.hasField(object, "set_" + propertyName);
@@ -58,20 +56,17 @@ class Property
 		#end
 	}
 	
-	// TODO : inline once tested
-	static public function read(object:Dynamic, propertyName:String):Dynamic
+	inline static public function read(object:Dynamic, propertyName:String):Dynamic
 	{
 		return Reflect.getProperty(object, propertyName);
 	}
 	
-	// TODO : inline once tested
-	static public function write(object:Dynamic, propertyName:String, propertyValue:Dynamic):Void
+	inline static public function write(object:Dynamic, propertyName:String, propertyValue:Dynamic):Void
 	{
 		Reflect.setProperty(object, propertyName, propertyValue);
 	}
 	
-	// TODO : inline once tested
-	static public function writeWithCheck(object:Dynamic, propertyName:String, propertyValue:Dynamic):Bool
+	inline static public function writeWithCheck(object:Dynamic, propertyName:String, propertyValue:Dynamic):Bool
 	{
 		#if flash
 		if (Reflect.hasField(object, propertyName) || Reflect.hasField(object, "set_" + propertyName))

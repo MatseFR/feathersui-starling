@@ -1,14 +1,9 @@
 package feathers.utils.type;
 
-/**
- * ...
- * @author Matse
- */
 class TypeUtil 
 {
 
-	// TODO : inline when tested
-	static public function isObject(object:Dynamic):Bool
+	inline static public function isObject(object:Dynamic):Bool
 	{
 		if (Std.isOfType(object, String)) 
 		{
