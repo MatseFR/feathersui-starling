@@ -66,7 +66,7 @@ class Property
 		Reflect.setProperty(object, propertyName, propertyValue);
 	}
 	
-	inline static public function writeWithCheck(object:Dynamic, propertyName:String, propertyValue:Dynamic):Bool
+	static public function writeWithCheck(object:Dynamic, propertyName:String, propertyValue:Dynamic):Bool
 	{
 		#if flash
 		if (Reflect.hasField(object, propertyName) || Reflect.hasField(object, "set_" + propertyName))
