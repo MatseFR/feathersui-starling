@@ -135,7 +135,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	private static inline var VIDEO_OVERLAY_ALPHA:Float = 0.2;
 	private static inline var DATA_GRID_COLUMN_OVERLAY_COLOR:Int = 0x383430;
 	private static inline var DATA_GRID_COLUMN_OVERLAY_ALPHA:Float = 0.4;
-
+	
 	private static var DEFAULT_SCALE9_GRID:Rectangle = new Rectangle(3, 3, 1, 1);
 	private static var SIMPLE_SCALE9_GRID:Rectangle = new Rectangle(2, 2, 1, 1);
 	private static var BUTTON_SCALE9_GRID:Rectangle = new Rectangle(3, 3, 1, 16);
@@ -152,133 +152,133 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	private static var DATA_GRID_VERTICAL_DIVIDER_SCALE_9_GRID:Rectangle = new Rectangle(0, 1, 1, 4);
 	private static var DATA_GRID_COLUMN_RESIZE_SCALE_9_GRID:Rectangle = new Rectangle(0, 1, 3, 28);
 	private static var DATA_GRID_COLUMN_DROP_INDICATOR_SCALE_9_GRID:Rectangle = new Rectangle(0, 1, 3, 3);
-
+	
 	private static var ITEM_RENDERER_SKIN_TEXTURE_REGION:Rectangle = new Rectangle(1, 1, 1, 1);
 	private static var ITEM_RENDERER_SELECTED_SKIN_TEXTURE_REGION:Rectangle = new Rectangle(1, 1, 1, 22);
 	private static var HEADER_SKIN_TEXTURE_REGION:Rectangle = new Rectangle(1, 1, 128, 64);
-
+	
 	/**
 	 * @private
 	 * The theme's custom style name for the increment button of a horizontal ScrollBar.
 	 */
 	private static inline var THEME_STYLE_NAME_HORIZONTAL_SCROLL_BAR_INCREMENT_BUTTON:String = "metalworks-desktop-horizontal-scroll-bar-increment-button";
-
+	
 	/**
 	 * @private
 	 * The theme's custom style name for the decrement button of a horizontal ScrollBar.
 	 */
 	private static inline var THEME_STYLE_NAME_HORIZONTAL_SCROLL_BAR_DECREMENT_BUTTON:String = "metalworks-desktop-horizontal-scroll-bar-decrement-button";
-
+	
 	/**
 	 * @private
 	 * The theme's custom style name for the thumb of a horizontal ScrollBar.
 	 */
 	private static inline var THEME_STYLE_NAME_HORIZONTAL_SCROLL_BAR_THUMB:String = "metalworks-desktop-horizontal-scroll-bar-thumb";
-
+	
 	/**
 	 * @private
 	 * The theme's custom style name for the minimum track of a horizontal ScrollBar.
 	 */
 	private static inline var THEME_STYLE_NAME_HORIZONTAL_SCROLL_BAR_MINIMUM_TRACK:String = "metalworks-desktop-horizontal-scroll-bar-minimum-track";
-
+	
 	/**
 	 * @private
 	 * The theme's custom style name for the maximum track of a horizontal ScrollBar.
 	 */
 	private static inline var THEME_STYLE_NAME_HORIZONTAL_SCROLL_BAR_MAXIMUM_TRACK:String = "metalworks-desktop-horizontal-scroll-bar-maximum-track";
-
+	
 	/**
 	 * @private
 	 * The theme's custom style name for the increment button of a vertical ScrollBar.
 	 */
 	private static inline var THEME_STYLE_NAME_VERTICAL_SCROLL_BAR_INCREMENT_BUTTON:String = "metalworks-desktop-vertical-scroll-bar-increment-button";
-
+	
 	/**
 	 * @private
 	 * The theme's custom style name for the decrement button of a vertical ScrollBar.
 	 */
 	private static inline var THEME_STYLE_NAME_VERTICAL_SCROLL_BAR_DECREMENT_BUTTON:String = "metalworks-desktop-vertical-scroll-bar-decrement-button";
-
+	
 	/**
 	 * @private
 	 * The theme's custom style name for the thumb of a vertical ScrollBar.
 	 */
 	private static inline var THEME_STYLE_NAME_VERTICAL_SCROLL_BAR_THUMB:String = "metalworks-desktop-vertical-scroll-bar-thumb";
-
+	
 	/**
 	 * @private
 	 * The theme's custom style name for the minimum track of a vertical ScrollBar.
 	 */
 	private static inline var THEME_STYLE_NAME_VERTICAL_SCROLL_BAR_MINIMUM_TRACK:String = "metalworks-desktop-vertical-scroll-bar-minimum-track";
-
+	
 	/**
 	 * @private
 	 * The theme's custom style name for the maximum track of a vertical ScrollBar.
 	 */
 	private static inline var THEME_STYLE_NAME_VERTICAL_SCROLL_BAR_MAXIMUM_TRACK:String = "metalworks-desktop-vertical-scroll-bar-maximum-track";
-
+	
 	/**
 	 * @private
 	 * The theme's custom style name for the thumb of a horizontal SimpleScrollBar.
 	 */
 	private static inline var THEME_STYLE_NAME_HORIZONTAL_SIMPLE_SCROLL_BAR_THUMB:String = "metalworks-desktop-horizontal-simple-scroll-bar-thumb";
-
+	
 	/**
 	 * @private
 	 * The theme's custom style name for the thumb of a vertical SimpleScrollBar.
 	 */
 	private static inline var THEME_STYLE_NAME_VERTICAL_SIMPLE_SCROLL_BAR_THUMB:String = "metalworks-desktop-vertical-simple-scroll-bar-thumb";
-
+	
 	/**
 	 * @private
 	 * The theme's custom style name for the minimum track of a horizontal slider.
 	 */
 	private static inline var THEME_STYLE_NAME_HORIZONTAL_SLIDER_MINIMUM_TRACK:String = "metalworks-desktop-horizontal-slider-minimum-track";
-
+	
 	/**
 	 * @private
 	 * The theme's custom style name for the maximum track of a horizontal slider.
 	 */
 	private static inline var THEME_STYLE_NAME_HORIZONTAL_SLIDER_MAXIMUM_TRACK:String = "metalworks-desktop-horizontal-slider-maximum-track";
-
+	
 	/**
 	 * @private
 	 * The theme's custom style name for the minimum track of a vertical slider.
 	 */
 	private static inline var THEME_STYLE_NAME_VERTICAL_SLIDER_MINIMUM_TRACK:String = "metalworks-desktop-vertical-slider-minimum-track";
-
+	
 	/**
 	 * @private
 	 * The theme's custom style name for the maximum track of a vertical slider.
 	 */
 	private static inline var THEME_STYLE_NAME_VERTICAL_SLIDER_MAXIMUM_TRACK:String = "metalworks-desktop-vertical-slider-maximum-track";
-
+	
 	/**
 	 * @private
 	 */
 	private static inline var THEME_STYLE_NAME_POP_UP_VOLUME_SLIDER_THUMB:String = "metalworks-desktop-pop-up-volume-slider-thumb";
-
+	
 	/**
 	 * @private
 	 */
 	private static inline var THEME_STYLE_NAME_POP_UP_VOLUME_SLIDER_MINIMUM_TRACK:String = "metalworks-desktop-pop-up-volume-slider-minimum-track";
-
+	
 	/**
 	 * @private
 	 */
 	private static inline var THEME_STYLE_NAME_DATE_TIME_SPINNER_LIST_ITEM_RENDERER:String = "metalworks-desktop-date-time-spinner-list-item-renderer";
-
+	
 	/**
 	 * @private
 	 */
 	private static inline var THEME_STYLE_NAME_ALERT_BUTTON_GROUP_BUTTON:String = "metalworks-desktop-alert-button-group-button";
-
+	
 	/**
 	 * @private
 	 * The theme's custom style name for the action buttons of a toast.
 	 */
 	private static inline var THEME_STYLE_NAME_TOAST_ACTIONS_BUTTON:String = "metal-works-mobile-toast-actions-button";
-
+	
 	/**
 	 * The default global text renderer factory for this theme creates a
 	 * TextBlockTextRenderer.
@@ -287,7 +287,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	{
 		return new TextFieldTextRenderer();
 	}
-
+	
 	/**
 	 * The default global text editor factory for this theme creates a
 	 * TextBlockTextEditor.
@@ -296,7 +296,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	{
 		return new TextFieldTextEditor();
 	}
-
+	
 	/**
 	 * This theme's scroll bar type is ScrollBar.
 	 */
@@ -304,119 +304,119 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	{
 		return new ScrollBar();
 	}
-
+	
 	private static function popUpOverlayFactory():DisplayObject
 	{
 		var quad:Quad = new Quad(100, 100, MODAL_OVERLAY_COLOR);
 		quad.alpha = MODAL_OVERLAY_ALPHA;
 		return quad;
 	}
-
+	
 	private static function pickerListButtonFactory():ToggleButton
 	{
 		return new ToggleButton();
 	}
-
+	
 	public function new()
 	{
 		super();
 	}
-
+	
 	/**
 	 * A smaller font size for details.
 	 */
 	private var smallFontSize:Int = 11;
-
+	
 	/**
 	 * A normal font size.
 	 */
 	private var regularFontSize:Int = 14;
-
+	
 	/**
 	 * A larger font size for headers.
 	 */
 	private var largeFontSize:Int = 18;
-
+	
 	/**
 	 * The size, in pixels, of major regions in the grid. Used for sizing
 	 * containers and larger UI controls.
 	 */
 	private var gridSize:Int = 32;
-
+	
 	/**
 	 * The size, in pixels, of minor regions in the grid. Used for larger
 	 * padding and gaps.
 	 */
 	private var gutterSize:Int = 8;
-
+	
 	/**
 	 * The size, in pixels, of smaller padding and gaps within the major
 	 * regions in the grid.
 	 */
 	private var smallGutterSize:Int = 4;
-
+	
 	/**
 	 * The size, in pixels, of very smaller padding and gaps.
 	 */
 	private var extraSmallGutterSize:Int = 2;
-
+	
 	/**
 	 * The minimum width, in pixels, of some types of buttons.
 	 */
 	private var buttonMinWidth:Int = 68;
-
+	
 	/**
 	 * The width, in pixels, of UI controls that span across multiple grid regions.
 	 */
 	private var wideControlSize:Int = 144;
-
+	
 	/**
 	 * The width, in pixels, of very large UI controls.
 	 */
 	private var extraWideControlSize:Int = 210;
-
+	
 	/**
 	 * The size, in pixels, of a typical UI control.
 	 */
 	private var controlSize:Int = 26;
-
+	
 	/**
 	 * The size, in pixels, of smaller UI controls.
 	 */
 	private var smallControlSize:Int = 12;
-
+	
 	/**
 	 * The size, in pixels, of a border around any control.
 	 */
 	private var borderSize:Int = 1;
-
+	
 	/**
 	 * The size, in pixels, of the focus indicator skin's padding.
 	 */
 	private var focusPaddingSize:Int = -2;
-
+	
 	private var calloutArrowOverlapGap:Int = -2;
 	private var calloutBackgroundMinSize:Int = 5;
 	private var progressBarFillMinSize:Int = 7;
 	private var scrollBarGutterSize:Int = 4;
 	private var popUpSize:Int = 336;
 	private var popUpVolumeSliderPaddingSize:Int = 10;
-
+	
 	/**
 	 * The font styles for standard-sized, light text.
 	 */
 	private var lightFontStyles:TextFormat;
-
+	
 	/**
 	 * The font styles for standard-sized, dark text.
 	 */
 	private var darkFontStyles:TextFormat;
-
+	
 	/**
 	 * The font styles for standard-sized, selected text.
 	 */
 	private var selectedFontStyles:TextFormat;
-
+	
 	/**
 	 * The font styles for standard-sized, light, disabled text.
 	 */
@@ -426,72 +426,72 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	 * The font styles for light UI text.
 	 */
 	private var lightUIFontStyles:TextFormat;
-
+	
 	/**
 	 * The font styles for dark UI text.
 	 */
 	private var darkUIFontStyles:TextFormat;
-
+	
 	/**
 	 * The font styles for selected UI text.
 	 */
 	private var selectedUIFontStyles:TextFormat;
-
+	
 	/**
 	 * The font styles for light disabled UI text.
 	 */
 	private var lightDisabledUIFontStyles:TextFormat;
-
+	
 	/**
 	 * The font styles for light, centered UI text.
 	 */
 	private var lightCenteredUIFontStyles:TextFormat;
-
+	
 	/**
 	 * The font styles for light, centered, disabled UI text.
 	 */
 	private var lightCenteredDisabledUIFontStyles:TextFormat;
-
+	
 	/**
 	 * The font styles for small, light text.
 	 */
 	private var smallLightFontStyles:TextFormat;
-
+	
 	/**
 	 * The font styles for small, light, disabled text.
 	 */
 	private var smallLightDisabledFontStyles:TextFormat;
-
+	
 	/**
 	 * The font styles for large, light text.
 	 */
 	private var largeLightFontStyles:TextFormat;
-
+	
 	/**
 	 * The font styles for large, dark text.
 	 */
 	private var largeDarkFontStyles:TextFormat;
-
+	
 	/**
 	 * The font styles for large, light, disabled text.
 	 */
 	private var largeLightDisabledFontStyles:TextFormat;
-
+	
 	/**
 	 * The font styles for dark, disabled UI text.
 	 */
 	private var darkDisabledUIFontStyles:TextFormat;
-
+	
 	/**
 	 * ScrollText uses TextField instead of FTE, so it has a separate TextFormat.
 	 */
 	private var lightScrollTextFontStyles:TextFormat;
-
+	
 	/**
 	 * ScrollText uses TextField instead of FTE, so it has a separate disabled TextFormat.
 	 */
 	private var lightDisabledScrollTextFontStyles:TextFormat;
-
+	
 	/**
 	 * The texture atlas that contains skins for this theme. This base class
 	 * does not initialize this member variable. Subclasses are expected to
@@ -499,7 +499,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	 * variable before calling <code>initialize()</code>.
 	 */
 	private var atlas:TextureAtlas;
-
+	
 	private var focusIndicatorSkinTexture:Texture;
 	private var headerBackgroundSkinTexture:Texture;
 	private var headerPopupBackgroundSkinTexture:Texture;
@@ -595,7 +595,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	private var dataGridVerticalDividerSkinTexture:Texture;
 	private var dataGridColumnResizeSkinTexture:Texture;
 	private var dataGridColumnDropIndicatorSkinTexture:Texture;
-
+	
 	//media textures
 	private var playPauseButtonPlayUpIconTexture:Texture;
 	private var playPauseButtonPlayDownIconTexture:Texture;
@@ -615,7 +615,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	private var volumeSliderMaximumTrackSkinTexture:Texture;
 	private var popUpVolumeSliderTrackSkinTexture:Texture;
 	private var seekSliderProgressSkinTexture:Texture;
-
+	
 	/**
 	 * Disposes the texture atlas before calling super.dispose()
 	 */
@@ -626,19 +626,19 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 			//if anything is keeping a reference to the texture, we don't
 			//want it to keep a reference to the theme too.
 			this.atlas.texture.root.onRestore = null;
-
+			
 			this.atlas.dispose();
 			this.atlas = null;
 		}
-
+		
 		var stage:Stage = this.starling.stage;
 		FocusManager.setEnabledForStage(stage, false);
 		ToolTipManager.setEnabledForStage(stage, false);
-
+		
 		//don't forget to call super.dispose()!
 		super.dispose();
 	}
-
+	
 	/**
 	 * Initializes the theme. Expected to be called by subclasses after the
 	 * assets have been loaded and the skin texture atlas has been created.
@@ -651,7 +651,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		this.initializeStage();
 		this.initializeStyleProviders();
 	}
-
+	
 	/**
 	 * Sets the stage background color.
 	 */
@@ -660,25 +660,24 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		this.starling.stage.color = PRIMARY_BACKGROUND_COLOR;
 		this.starling.nativeStage.color = PRIMARY_BACKGROUND_COLOR;
 	}
-
+	
 	/**
 	 * Initializes global variables (not including global style providers).
 	 */
 	private function initializeGlobals():Void
 	{
-		// TODO : restore when ready
 		FeathersControl.defaultTextRendererFactory = textRendererFactory;
 		FeathersControl.defaultTextEditorFactory = textEditorFactory;
-
+		
 		PopUpManager.overlayFactory = popUpOverlayFactory;
 		Callout.stagePadding = this.smallGutterSize;
 		Toast.containerFactory = toastContainerFactory;
-
+		
 		var stage:Stage = this.starling.stage;
 		FocusManager.setEnabledForStage(stage, true);
 		ToolTipManager.setEnabledForStage(stage, true);
 	}
-
+	
 	/**
 	 * Initializes font sizes and formats.
 	 */
@@ -688,14 +687,14 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		this.darkFontStyles = new TextFormat(FONT_NAME, this.regularFontSize, DARK_TEXT_COLOR, HorizontalAlign.LEFT, VerticalAlign.TOP);
 		this.selectedFontStyles = new TextFormat(FONT_NAME, this.regularFontSize, SELECTED_TEXT_COLOR, HorizontalAlign.LEFT, VerticalAlign.TOP);
 		this.lightDisabledFontStyles = new TextFormat(FONT_NAME, this.regularFontSize, LIGHT_DISABLED_TEXT_COLOR, HorizontalAlign.LEFT, VerticalAlign.TOP);
-
+		
 		this.smallLightFontStyles = new TextFormat(FONT_NAME, this.smallFontSize, LIGHT_TEXT_COLOR, HorizontalAlign.LEFT, VerticalAlign.TOP);
 		this.smallLightDisabledFontStyles = new TextFormat(FONT_NAME, this.smallFontSize, LIGHT_DISABLED_TEXT_COLOR, HorizontalAlign.LEFT, VerticalAlign.TOP);
-
+		
 		this.largeLightFontStyles = new TextFormat(FONT_NAME, this.largeFontSize, LIGHT_TEXT_COLOR, HorizontalAlign.LEFT, VerticalAlign.TOP);
 		this.largeDarkFontStyles = new TextFormat(FONT_NAME, this.largeFontSize, DARK_TEXT_COLOR, HorizontalAlign.LEFT, VerticalAlign.TOP);
 		this.largeLightDisabledFontStyles = new TextFormat(FONT_NAME, this.largeFontSize, LIGHT_DISABLED_TEXT_COLOR, HorizontalAlign.LEFT, VerticalAlign.TOP);
-
+		
 		this.lightUIFontStyles = new TextFormat(FONT_NAME, this.regularFontSize, LIGHT_TEXT_COLOR, HorizontalAlign.LEFT, VerticalAlign.TOP);
 		this.lightUIFontStyles.bold = true;
 		this.darkUIFontStyles = new TextFormat(FONT_NAME, this.regularFontSize, DARK_TEXT_COLOR, HorizontalAlign.LEFT, VerticalAlign.TOP);
@@ -710,11 +709,11 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		this.lightCenteredUIFontStyles.bold = true;
 		this.lightCenteredDisabledUIFontStyles = new TextFormat(FONT_NAME, this.regularFontSize, LIGHT_DISABLED_TEXT_COLOR, HorizontalAlign.CENTER, VerticalAlign.TOP);
 		this.lightCenteredDisabledUIFontStyles.bold = true;
-
+		
 		this.lightScrollTextFontStyles = new TextFormat(FONT_NAME, this.regularFontSize, LIGHT_TEXT_COLOR, HorizontalAlign.LEFT, VerticalAlign.TOP);
 		this.lightDisabledScrollTextFontStyles = new TextFormat(FONT_NAME, this.regularFontSize, LIGHT_DISABLED_TEXT_COLOR, HorizontalAlign.LEFT, VerticalAlign.TOP);
 	}
-
+	
 	/**
 	 * Initializes the textures by extracting them from the atlas and
 	 * setting up any scaling grids that are needed.
@@ -724,9 +723,9 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		var checkUpIconTexture:Texture = this.atlas.getTexture("check-up-icon0000");
 		var checkDownIconTexture:Texture = this.atlas.getTexture("check-down-icon0000");
 		var checkDisabledIconTexture:Texture = this.atlas.getTexture("check-disabled-icon0000");
-
+		
 		this.focusIndicatorSkinTexture = this.atlas.getTexture("focus-indicator-skin0000");
-
+		
 		this.backgroundSkinTexture = this.atlas.getTexture("background-skin0000");
 		this.backgroundDisabledSkinTexture = this.atlas.getTexture("background-disabled-skin0000");
 		this.backgroundFocusedSkinTexture = this.atlas.getTexture("background-focused-skin0000");
@@ -734,7 +733,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		this.backgroundPopUpSkinTexture = this.atlas.getTexture("background-popup-skin0000");
 		this.backgroundDangerPopUpSkinTexture = this.atlas.getTexture("background-danger-popup-skin0000");
 		this.listBackgroundSkinTexture = this.atlas.getTexture("list-background-skin0000");
-
+		
 		this.buttonUpSkinTexture = this.atlas.getTexture("button-up-skin0000");
 		this.buttonDownSkinTexture = this.atlas.getTexture("button-down-skin0000");
 		this.buttonDisabledSkinTexture = this.atlas.getTexture("button-disabled-skin0000");
@@ -751,46 +750,46 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		this.buttonForwardUpSkinTexture = this.atlas.getTexture("forward-button-up-skin0000");
 		this.buttonForwardDownSkinTexture = this.atlas.getTexture("forward-button-down-skin0000");
 		this.buttonForwardDisabledSkinTexture = this.atlas.getTexture("forward-button-disabled-skin0000");
-
+		
 		this.tabUpSkinTexture = this.atlas.getTexture("tab-up-skin0000");
 		this.tabDownSkinTexture = this.atlas.getTexture("tab-down-skin0000");
 		this.tabDisabledSkinTexture = this.atlas.getTexture("tab-disabled-skin0000");
 		this.tabSelectedSkinTexture = this.atlas.getTexture("tab-selected-up-skin0000");
 		this.tabSelectedDisabledSkinTexture = this.atlas.getTexture("tab-selected-disabled-skin0000");
-
+		
 		this.pickerListButtonIconTexture = this.atlas.getTexture("picker-list-icon0000");
 		this.pickerListButtonIconSelectedTexture = this.atlas.getTexture("picker-list-selected-icon0000");
 		this.pickerListButtonIconDisabledTexture = this.atlas.getTexture("picker-list-disabled-icon0000");
-
+		
 		this.radioUpIconTexture = checkUpIconTexture;
 		this.radioDownIconTexture = checkDownIconTexture;
 		this.radioDisabledIconTexture = checkDisabledIconTexture;
 		this.radioSelectedUpIconTexture = this.atlas.getTexture("radio-selected-up-icon0000");
 		this.radioSelectedDownIconTexture = this.atlas.getTexture("radio-selected-down-icon0000");
 		this.radioSelectedDisabledIconTexture = this.atlas.getTexture("radio-selected-disabled-icon0000");
-
+		
 		this.checkUpIconTexture = checkUpIconTexture;
 		this.checkDownIconTexture = checkDownIconTexture;
 		this.checkDisabledIconTexture = checkDisabledIconTexture;
 		this.checkSelectedUpIconTexture = this.atlas.getTexture("check-selected-up-icon0000");
 		this.checkSelectedDownIconTexture = this.atlas.getTexture("check-selected-down-icon0000");
 		this.checkSelectedDisabledIconTexture = this.atlas.getTexture("check-selected-disabled-icon0000");
-
+		
 		this.pageIndicatorSelectedSkinTexture = this.atlas.getTexture("page-indicator-selected-symbol0000");
 		this.pageIndicatorNormalSkinTexture = this.atlas.getTexture("page-indicator-symbol0000");
-
+		
 		this.searchIconTexture = this.atlas.getTexture("search-icon0000");
 		this.searchIconDisabledTexture = this.atlas.getTexture("search-disabled-icon0000");
-
+		
 		this.itemRendererUpSkinTexture = Texture.fromTexture(this.atlas.getTexture("item-renderer-up-skin0000"), ITEM_RENDERER_SKIN_TEXTURE_REGION);
 		this.itemRendererHoverSkinTexture = Texture.fromTexture(this.atlas.getTexture("item-renderer-hover-skin0000"), ITEM_RENDERER_SKIN_TEXTURE_REGION);
 		this.itemRendererSelectedUpSkinTexture = Texture.fromTexture(this.atlas.getTexture("item-renderer-selected-up-skin0000"), ITEM_RENDERER_SELECTED_SKIN_TEXTURE_REGION);
-
+		
 		this.headerBackgroundSkinTexture = this.atlas.getTexture("header-background-skin0000");
 		this.headerPopupBackgroundSkinTexture = this.atlas.getTexture("header-popup-background-skin0000");
 		this.headerBackgroundSkinTexture = Texture.fromTexture(headerBackgroundSkinTexture, HEADER_SKIN_TEXTURE_REGION);
 		this.headerPopupBackgroundSkinTexture = Texture.fromTexture(headerPopupBackgroundSkinTexture, HEADER_SKIN_TEXTURE_REGION);
-
+		
 		this.calloutTopArrowSkinTexture = this.atlas.getTexture("callout-arrow-top-skin0000");
 		this.calloutRightArrowSkinTexture = this.atlas.getTexture("callout-arrow-right-skin0000");
 		this.calloutBottomArrowSkinTexture = this.atlas.getTexture("callout-arrow-bottom-skin0000");
@@ -799,7 +798,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		this.dangerCalloutRightArrowSkinTexture = this.atlas.getTexture("danger-callout-arrow-right-skin0000");
 		this.dangerCalloutBottomArrowSkinTexture = this.atlas.getTexture("danger-callout-arrow-bottom-skin0000");
 		this.dangerCalloutLeftArrowSkinTexture = this.atlas.getTexture("danger-callout-arrow-left-skin0000");
-
+		
 		this.horizontalSimpleScrollBarThumbSkinTexture = this.atlas.getTexture("horizontal-simple-scroll-bar-thumb-skin0000");
 		this.horizontalScrollBarDecrementButtonIconTexture = this.atlas.getTexture("horizontal-scroll-bar-decrement-button-icon0000");
 		this.horizontalScrollBarDecrementButtonDisabledIconTexture = this.atlas.getTexture("horizontal-scroll-bar-decrement-button-disabled-icon0000");
@@ -811,7 +810,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		this.horizontalScrollBarIncrementButtonUpSkinTexture = this.atlas.getTexture("horizontal-scroll-bar-increment-button-up-skin0000");
 		this.horizontalScrollBarIncrementButtonDownSkinTexture = this.atlas.getTexture("horizontal-scroll-bar-increment-button-down-skin0000");
 		this.horizontalScrollBarIncrementButtonDisabledSkinTexture = this.atlas.getTexture("horizontal-scroll-bar-increment-button-disabled-skin0000");
-
+		
 		this.verticalSimpleScrollBarThumbSkinTexture = this.atlas.getTexture("vertical-simple-scroll-bar-thumb-skin0000");
 		this.verticalScrollBarDecrementButtonIconTexture = this.atlas.getTexture("vertical-scroll-bar-decrement-button-icon0000");
 		this.verticalScrollBarDecrementButtonDisabledIconTexture = this.atlas.getTexture("vertical-scroll-bar-decrement-button-disabled-icon0000");
@@ -823,22 +822,22 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		this.verticalScrollBarIncrementButtonUpSkinTexture = this.atlas.getTexture("vertical-scroll-bar-increment-button-up-skin0000");
 		this.verticalScrollBarIncrementButtonDownSkinTexture = this.atlas.getTexture("vertical-scroll-bar-increment-button-down-skin0000");
 		this.verticalScrollBarIncrementButtonDisabledSkinTexture = this.atlas.getTexture("vertical-scroll-bar-increment-button-disabled-skin0000");
-
+		
 		this.listDrillDownAccessoryTexture = this.atlas.getTexture("item-renderer-drill-down-accessory-icon0000");
 		this.listDrillDownAccessorySelectedTexture = this.atlas.getTexture("item-renderer-drill-down-accessory-selected-icon0000");
-
+		
 		this.treeDisclosureOpenIconTexture = this.atlas.getTexture("tree-disclosure-open-icon0000");
 		this.treeDisclosureOpenSelectedIconTexture = this.atlas.getTexture("tree-disclosure-open-selected-icon0000");
 		this.treeDisclosureClosedIconTexture = this.atlas.getTexture("tree-disclosure-closed-icon0000");
 		this.treeDisclosureClosedSelectedIconTexture = this.atlas.getTexture("tree-disclosure-closed-selected-icon0000");
-
+		
 		this.dataGridHeaderSortAscendingIconTexture = this.atlas.getTexture("data-grid-header-sort-ascending-icon0000");
 		this.dataGridHeaderSortDescendingIconTexture = this.atlas.getTexture("data-grid-header-sort-descending-icon0000");
 		this.dataGridHeaderDividerSkinTexture = this.atlas.getTexture("data-grid-header-divider-skin0000");
 		this.dataGridVerticalDividerSkinTexture = this.atlas.getTexture("data-grid-vertical-divider-skin0000");
 		this.dataGridColumnResizeSkinTexture = this.atlas.getTexture("data-grid-column-resize-skin0000");
 		this.dataGridColumnDropIndicatorSkinTexture = this.atlas.getTexture("data-grid-column-drop-indicator-skin0000");
-
+		
 		this.playPauseButtonPlayUpIconTexture = this.atlas.getTexture("play-pause-toggle-button-play-up-icon0000");
 		this.playPauseButtonPlayDownIconTexture = this.atlas.getTexture("play-pause-toggle-button-play-down-icon0000");
 		this.playPauseButtonPauseUpIconTexture = this.atlas.getTexture("play-pause-toggle-button-pause-up-icon0000");
@@ -858,13 +857,12 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		this.volumeSliderMaximumTrackSkinTexture = this.atlas.getTexture("volume-slider-maximum-track-skin0000");
 		this.seekSliderProgressSkinTexture = this.atlas.getTexture("seek-slider-progress-skin0000");
 	}
-
+	
 	/**
 	 * Sets global style providers for all components.
 	 */
 	private function initializeStyleProviders():Void
 	{
-		// TODO : restore when ready
 		//alert
 		this.getStyleProviderForClass(Alert).defaultStyleFunction = this.setAlertStyles;
 		this.getStyleProviderForClass(Header).setFunctionForStyleName(Alert.DEFAULT_CHILD_STYLE_NAME_HEADER, this.setPopupHeaderStyles);
@@ -1100,7 +1098,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		skin.scale9Grid = DATA_GRID_VERTICAL_DIVIDER_SCALE_9_GRID;
 		return skin;
 	}
-
+	
 	private function toastContainerFactory():DisplayObjectContainer
 	{
 		var container:LayoutGroup = new LayoutGroup();
@@ -1370,11 +1368,12 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	//-------------------------
 	// ButtonGroup
 	//-------------------------
+	
 	private function setButtonGroupStyles(group:ButtonGroup):Void
 	{
 		group.gap = this.smallGutterSize;
 	}
-
+	
 	private function setButtonGroupButtonStyles(button:Button):Void
 	{
 		var skin:ImageSkin = new ImageSkin(this.buttonUpSkinTexture);
@@ -1434,7 +1433,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		
 		callout.padding = this.gutterSize;
 	}
-
+	
 	private function setDangerCalloutStyles(callout:Callout):Void
 	{
 		var backgroundSkin:Image = new Image(this.backgroundDangerPopUpSkinTexture);
@@ -1607,7 +1606,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	{
 		spinner.customItemRendererStyleName = THEME_STYLE_NAME_DATE_TIME_SPINNER_LIST_ITEM_RENDERER;
 	}
-
+	
 	private function setDateTimeSpinnerListItemRendererStyles(itemRenderer:DefaultListItemRenderer):Void
 	{
 		this.setItemRendererStyles(itemRenderer);
@@ -1630,7 +1629,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	//-------------------------
 	// GroupedList
 	//-------------------------
-
+	
 	private function setGroupedListStyles(list:GroupedList):Void
 	{
 		this.setScrollerStyles(list);
@@ -1836,7 +1835,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		
 		itemRenderer.useStateDelayTimer = false;
 	}
-
+	
 	private function setDrillDownItemRendererStyles(itemRenderer:BaseDefaultItemRenderer):Void
 	{
 		this.setItemRendererStyles(itemRenderer);
@@ -1849,7 +1848,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		defaultAccessory.setTextureForState(ButtonState.DOWN, this.listDrillDownAccessorySelectedTexture);
 		itemRenderer.defaultAccessory = defaultAccessory;
 	}
-
+	
 	private function setCheckItemRendererStyles(itemRenderer:BaseDefaultItemRenderer):Void
 	{
 		var skin:ImageSkin = new ImageSkin(this.itemRendererUpSkinTexture);
@@ -2083,7 +2082,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	//-------------------------
 	// ProgressBar
 	//-------------------------
-
+	
 	private function setProgressBarStyles(progress:ProgressBar):Void
 	{
 		var backgroundSkin:Image = new Image(this.backgroundSkinTexture);
@@ -2458,7 +2457,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		slider.focusIndicatorSkin = focusIndicatorSkin;
 		slider.focusPadding = this.focusPaddingSize;
 	}
-
+	
 	private function setSliderThumbStyles(thumb:Button):Void
 	{
 		var skin:ImageSkin = new ImageSkin(this.buttonUpSkinTexture);
@@ -2473,7 +2472,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		
 		thumb.hasLabelTextRenderer = false;
 	}
-
+	
 	private function setHorizontalSliderMinimumTrackStyles(track:Button):Void
 	{
 		var skin:ImageSkin = new ImageSkin(this.backgroundSkinTexture);
@@ -2542,14 +2541,14 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	//-------------------------
 	// TabBar
 	//-------------------------
-
+	
 	private function setTabBarStyles(tabBar:TabBar):Void
 	{
 		tabBar.distributeTabSizes = false;
 		tabBar.horizontalAlign = HorizontalAlign.LEFT;
 		tabBar.verticalAlign = VerticalAlign.JUSTIFY;
 	}
-
+	
 	private function setTabStyles(tab:ToggleButton):Void
 	{
 		var skin:ImageSkin = new ImageSkin(this.tabUpSkinTexture);
@@ -2563,18 +2562,18 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		skin.minWidth = this.controlSize;
 		skin.minHeight = this.controlSize;
 		tab.defaultSkin = skin;
-
+		
 		tab.fontStyles = this.lightUIFontStyles.clone();
 		tab.selectedFontStyles = this.darkUIFontStyles.clone();
 		tab.setFontStylesForState(ButtonState.DOWN, this.darkUIFontStyles.clone());
 		tab.setFontStylesForState(ButtonState.DISABLED, this.lightDisabledUIFontStyles.clone());
 		tab.setFontStylesForState(ButtonState.DISABLED_AND_SELECTED, this.darkDisabledUIFontStyles.clone());
-
+		
 		var focusIndicatorSkin:Image = new Image(this.focusIndicatorSkinTexture);
 		focusIndicatorSkin.scale9Grid = FOCUS_INDICATOR_SCALE_9_GRID;
 		tab.focusIndicatorSkin = focusIndicatorSkin;
 		tab.focusPadding = this.focusPaddingSize;
-
+		
 		tab.paddingTop = this.smallGutterSize;
 		tab.paddingBottom = this.smallGutterSize;
 		tab.paddingLeft = this.gutterSize;
@@ -2672,7 +2671,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		//textEditor.cursorSkin = new Quad(1, 1, LIGHT_TEXT_COLOR);
 		//textEditor.selectionSkin = new Quad(1, 1, TEXT_SELECTION_BACKGROUND_COLOR);
 	//}
-
+	
 	private function setTextInputErrorCalloutStyles(callout:TextCallout):Void
 	{
 		this.setDangerCalloutStyles(callout);
@@ -2683,7 +2682,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		callout.horizontalAlign = HorizontalAlign.LEFT;
 		callout.verticalAlign = VerticalAlign.TOP;
 	}
-
+	
 	private function setSearchTextInputStyles(input:TextInput):Void
 	{
 		this.setBaseTextInputStyles(input);
@@ -2732,7 +2731,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	//-------------------------
 	// ToggleSwitch
 	//-------------------------
-
+	
 	private function setToggleSwitchStyles(toggle:ToggleSwitch):Void
 	{
 		toggle.trackLayoutMode = TrackLayoutMode.SINGLE;
@@ -2779,7 +2778,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 	//-------------------------
 	// Tree
 	//-------------------------
-
+	
 	private function setTreeStyles(tree:Tree):Void
 	{
 		this.setScrollerStyles(tree);
@@ -2800,7 +2799,7 @@ class BaseMetalWorksDesktopTheme extends StyleNameFunctionTheme
 		
 		tree.verticalScrollPolicy = ScrollPolicy.AUTO;
 	}
-
+	
 	private function setTreeItemRendererStyles(itemRenderer:DefaultTreeItemRenderer):Void
 	{
 		this.setItemRendererStyles(itemRenderer);
