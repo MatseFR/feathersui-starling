@@ -1,29 +1,29 @@
 package;
 
-import feathers.controls.AutoSizeMode;
-import feathers.controls.Button;
-import feathers.controls.ButtonGroup;
-import feathers.controls.Check;
-import feathers.controls.ImageLoader;
-import feathers.controls.Label;
-import feathers.controls.LayoutGroup;
-import feathers.controls.ProgressBar;
-import feathers.controls.Radio;
-import feathers.controls.ScreenNavigator;
-import feathers.controls.ScrollContainer;
-import feathers.controls.Slider;
-import feathers.controls.StackScreenNavigator;
-import feathers.controls.TextInput;
-import feathers.controls.ToggleButton;
-import feathers.core.PropertyProxy;
-import feathers.core.PropertyProxyReal;
-import feathers.layout.HorizontalAlign;
-import feathers.layout.HorizontalLayout;
-import feathers.layout.VerticalAlign;
-import feathers.layout.VerticalLayout;
-import feathers.themes.MetalWorksDesktopTheme;
-import feathers.utils.math.MathUtils;
-import feathers.utils.type.ArgumentsCount;
+import feathers.starling.controls.AutoSizeMode;
+import feathers.starling.controls.Button;
+import feathers.starling.controls.ButtonGroup;
+import feathers.starling.controls.Check;
+import feathers.starling.controls.ImageLoader;
+import feathers.starling.controls.Label;
+import feathers.starling.controls.LayoutGroup;
+import feathers.starling.controls.ProgressBar;
+import feathers.starling.controls.Radio;
+import feathers.starling.controls.ScreenNavigator;
+import feathers.starling.controls.ScrollContainer;
+import feathers.starling.controls.Slider;
+import feathers.starling.controls.StackScreenNavigator;
+import feathers.starling.controls.TextInput;
+import feathers.starling.controls.ToggleButton;
+import feathers.starling.core.PropertyProxy;
+import feathers.starling.core.PropertyProxyReal;
+import feathers.starling.layout.HorizontalAlign;
+import feathers.starling.layout.HorizontalLayout;
+import feathers.starling.layout.VerticalAlign;
+import feathers.starling.layout.VerticalLayout;
+import feathers.starling.themes.MetalWorksDesktopTheme;
+import feathers.starling.utils.math.MathUtils;
+import feathers.starling.utils.type.ArgumentsCount;
 import openfl.utils.Assets;
 import starling.assets.AssetManager;
 import starling.display.Image;
@@ -65,90 +65,90 @@ class Testing extends Sprite
 	{
 		var theme:MetalWorksDesktopTheme = new MetalWorksDesktopTheme();
 		
-		var navigator:ScreenNavigator = new ScreenNavigator();
-		var stackNavigator:StackScreenNavigator = new StackScreenNavigator();
-		var grp:ButtonGroup = new ButtonGroup();
-		var imgLoader:ImageLoader;
-		
-		var group:LayoutGroup = new LayoutGroup();
-		group.autoSizeMode = AutoSizeMode.STAGE;
-		addChild(group);
-		group.validate();
-		
-		//var hLayout:HorizontalLayout = new HorizontalLayout();
-		//hLayout.horizontalAlign = HorizontalAlign.CENTER;
-		//hLayout.verticalAlign = VerticalAlign.MIDDLE;
-		//group.layout = hLayout;
-		
-		var vLayout:VerticalLayout = new VerticalLayout();
-		vLayout.horizontalAlign = HorizontalAlign.CENTER;
-		vLayout.verticalAlign = VerticalAlign.MIDDLE;
-		vLayout.gap = 8;
-		group.layout = vLayout;
-		
-		var container:ScrollContainer = new ScrollContainer();
-		vLayout = new VerticalLayout();
-		vLayout.horizontalAlign = HorizontalAlign.CENTER;
-		vLayout.verticalAlign = VerticalAlign.MIDDLE;
-		vLayout.paddingLeft = vLayout.paddingRight = 8;
-		vLayout.gap = 24;
-		container.layout = vLayout;
-		//var hLayout:HorizontalLayout = new HorizontalLayout();
-		//hLayout.horizontalAlign = HorizontalAlign.CENTER;
-		//hLayout.verticalAlign = VerticalAlign.MIDDLE;
-		//hLayout.gap = 8;
-		//container.layout = hLayout;
-		container.height = 100;
-		container.width = 180;
-		group.addChild(container);
-		
-		var label:Label = new Label();
-		label.text = "Hello World !";
-		//label.height = 20;
-		//label.width = 100;
-		//label.x = 200;
-		//label.y = 200;
-		//addChild(label);
-		//label.validate();
-		container.addChild(label);
-		
-		var quad:Quad = new Quad(50, 50);
-		container.addChild(quad);
-		
-		var btn:Button = new Button();
-		var test = btn.defaultLabelProperties;
-		trace(test);
-		btn.label = "yep";
-		container.addChild(btn);
-		
-		var toggle:ToggleButton = new ToggleButton();
-		toggle.label = "toggle";
-		container.addChild(toggle);
-		
-		var check:Check = new Check();
-		check.label = "check";
-		container.addChild(check);
-		
-		var radio:Radio = new Radio();
-		radio.label = "cool!";
-		container.addChild(radio);
-		
-		radio = new Radio();
-		radio.label = "nice!";
-		container.addChild(radio);
-		
-		var slider:Slider = new Slider();
-		slider.minimum = 0;
-		slider.maximum = 10;
-		//slider.step = 1;
-		container.addChild(slider);
-		
-		var progress:ProgressBar = new ProgressBar();
-		progress.value = 0.5;
-		container.addChild(progress);
-		
-		var input:TextInput = new TextInput();
-		container.addChild(input);
+		//var navigator:ScreenNavigator = new ScreenNavigator();
+		//var stackNavigator:StackScreenNavigator = new StackScreenNavigator();
+		//var grp:ButtonGroup = new ButtonGroup();
+		//var imgLoader:ImageLoader;
+		//
+		//var group:LayoutGroup = new LayoutGroup();
+		//group.autoSizeMode = AutoSizeMode.STAGE;
+		//addChild(group);
+		//group.validate();
+		//
+		////var hLayout:HorizontalLayout = new HorizontalLayout();
+		////hLayout.horizontalAlign = HorizontalAlign.CENTER;
+		////hLayout.verticalAlign = VerticalAlign.MIDDLE;
+		////group.layout = hLayout;
+		//
+		//var vLayout:VerticalLayout = new VerticalLayout();
+		//vLayout.horizontalAlign = HorizontalAlign.CENTER;
+		//vLayout.verticalAlign = VerticalAlign.MIDDLE;
+		//vLayout.gap = 8;
+		//group.layout = vLayout;
+		//
+		//var container:ScrollContainer = new ScrollContainer();
+		//vLayout = new VerticalLayout();
+		//vLayout.horizontalAlign = HorizontalAlign.CENTER;
+		//vLayout.verticalAlign = VerticalAlign.MIDDLE;
+		//vLayout.paddingLeft = vLayout.paddingRight = 8;
+		//vLayout.gap = 24;
+		//container.layout = vLayout;
+		////var hLayout:HorizontalLayout = new HorizontalLayout();
+		////hLayout.horizontalAlign = HorizontalAlign.CENTER;
+		////hLayout.verticalAlign = VerticalAlign.MIDDLE;
+		////hLayout.gap = 8;
+		////container.layout = hLayout;
+		//container.height = 100;
+		//container.width = 180;
+		//group.addChild(container);
+		//
+		//var label:Label = new Label();
+		//label.text = "Hello World !";
+		////label.height = 20;
+		////label.width = 100;
+		////label.x = 200;
+		////label.y = 200;
+		////addChild(label);
+		////label.validate();
+		//container.addChild(label);
+		//
+		//var quad:Quad = new Quad(50, 50);
+		//container.addChild(quad);
+		//
+		//var btn:Button = new Button();
+		//var test = btn.defaultLabelProperties;
+		//trace(test);
+		//btn.label = "yep";
+		//container.addChild(btn);
+		//
+		//var toggle:ToggleButton = new ToggleButton();
+		//toggle.label = "toggle";
+		//container.addChild(toggle);
+		//
+		//var check:Check = new Check();
+		//check.label = "check";
+		//container.addChild(check);
+		//
+		//var radio:Radio = new Radio();
+		//radio.label = "cool!";
+		//container.addChild(radio);
+		//
+		//radio = new Radio();
+		//radio.label = "nice!";
+		//container.addChild(radio);
+		//
+		//var slider:Slider = new Slider();
+		//slider.minimum = 0;
+		//slider.maximum = 10;
+		////slider.step = 1;
+		//container.addChild(slider);
+		//
+		//var progress:ProgressBar = new ProgressBar();
+		//progress.value = 0.5;
+		//container.addChild(progress);
+		//
+		//var input:TextInput = new TextInput();
+		//container.addChild(input);
 	}
 	
 	private var assetManager:AssetManager;
