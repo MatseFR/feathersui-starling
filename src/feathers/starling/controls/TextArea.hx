@@ -102,6 +102,11 @@ class TextArea extends Scroller implements IAdvancedNativeFocusOwner implements 
 	 */
 	public static var globalStyleProvider:IStyleProvider;
 	
+	private static function defaultTextCalloutFactory():TextCallout
+	{
+		return new TextCallout();
+	}
+	
 	/**
 	 * Constructor.
 	 */
@@ -830,6 +835,46 @@ class TextArea extends Scroller implements IAdvancedNativeFocusOwner implements 
 	}
 	
 	/**
+	 * A function used to instantiate the error text callout. If null,
+	 * <code>new TextCallout()</code> is used instead.
+	 * The error text callout must be an instance of
+	 * <code>TextCallout</code>. This factory can be used to change
+	 * properties on the callout when it is first created. For instance, if
+	 * you are skinning Feathers components without a theme, you might use
+	 * this factory to set styles on the callout.
+	 *
+	 * <p>The factory should have the following function signature:</p>
+	 * <pre>function():TextCallout</pre>
+	 *
+	 * <p>In the following example, a custom error callout factory is passed to the
+	 * text input:</p>
+	 *
+	 * <listing version="3.0">
+	 * input.errorCalloutFactory = function():TextCallout
+	 * {
+	 *     return new TextCallout();
+	 * };</listing>
+	 *
+	 * @default null
+	 *
+	 * @see #errorString
+	 * @see feathers.controls.TextCallout
+	 */
+	public var errorCalloutFactory(get, set):Void->TextCallout;
+	private var _errorCalloutFactory:Void->TextCallout;
+	private function get_errorCalloutFactory():Void->TextCallout { return this._errorCalloutFactory; }
+	private function set_errorCalloutFactory(value:Void->TextCallout):Void->TextCallout
+	{
+		if (this._errorCalloutFactory == value)
+		{
+			return value;
+		}
+		this._errorCalloutFactory = value;
+		this.invalidate(INVALIDATION_FLAG_ERROR_CALLOUT_FACTORY);
+		return this._errorCalloutFactory;
+	}
+	
+	/**
 	 * @private
 	 */
 	public var customErrorCalloutStyleName(get, set):String;
@@ -1416,7 +1461,8 @@ class TextArea extends Scroller implements IAdvancedNativeFocusOwner implements 
 		{
 			return;
 		}
-		this.callout = new TextCallout();
+		var factory:Void->TextCallout = this._errorCalloutFactory != null ? this._errorCalloutFactory : defaultTextCalloutFactory;
+		this.callout = factory();
 		var errorCalloutStyleName:String = this._customErrorCalloutStyleName != null ? this._customErrorCalloutStyleName : this.errorCalloutStyleName;
 		this.callout.styleNameList.add(errorCalloutStyleName);
 		this.callout.closeOnKeys = null;
