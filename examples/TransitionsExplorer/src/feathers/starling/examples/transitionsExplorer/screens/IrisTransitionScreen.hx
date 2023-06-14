@@ -1,15 +1,15 @@
-package feathers.examples.transitionsExplorer.screens;
+package feathers.starling.examples.transitionsExplorer.screens;
 
-import feathers.controls.Button;
-import feathers.controls.Header;
-import feathers.controls.List;
-import feathers.controls.PanelScreen;
-import feathers.controls.renderers.DefaultListItemRenderer;
-import feathers.controls.renderers.IListItemRenderer;
-import feathers.data.ArrayCollection;
-import feathers.layout.AnchorLayout;
-import feathers.layout.AnchorLayoutData;
-import feathers.motion.Iris;
+import feathers.starling.controls.Button;
+import feathers.starling.controls.Header;
+import feathers.starling.controls.List;
+import feathers.starling.controls.PanelScreen;
+import feathers.starling.controls.renderers.DefaultListItemRenderer;
+import feathers.starling.controls.renderers.IListItemRenderer;
+import feathers.starling.data.ArrayCollection;
+import feathers.starling.layout.AnchorLayout;
+import feathers.starling.layout.AnchorLayoutData;
+import feathers.starling.motion.Iris;
 import haxe.Constraints.Function;
 import starling.display.DisplayObject;
 import starling.events.Event;

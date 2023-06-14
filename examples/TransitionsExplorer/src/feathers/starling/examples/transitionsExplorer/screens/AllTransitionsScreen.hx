@@ -1,13 +1,13 @@
-package feathers.examples.transitionsExplorer.screens;
+package feathers.starling.examples.transitionsExplorer.screens;
 
-import feathers.controls.List;
-import feathers.controls.PanelScreen;
-import feathers.controls.renderers.DefaultListItemRenderer;
-import feathers.controls.renderers.IListItemRenderer;
-import feathers.data.ArrayCollection;
-import feathers.events.FeathersEventType;
-import feathers.layout.AnchorLayout;
-import feathers.layout.AnchorLayoutData;
+import feathers.starling.controls.List;
+import feathers.starling.controls.PanelScreen;
+import feathers.starling.controls.renderers.DefaultListItemRenderer;
+import feathers.starling.controls.renderers.IListItemRenderer;
+import feathers.starling.data.ArrayCollection;
+import feathers.starling.events.FeathersEventType;
+import feathers.starling.layout.AnchorLayout;
+import feathers.starling.layout.AnchorLayoutData;
 import starling.events.Event;
 
 class AllTransitionsScreen extends PanelScreen 
