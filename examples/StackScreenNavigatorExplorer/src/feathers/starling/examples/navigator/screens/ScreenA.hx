@@ -1,11 +1,11 @@
-package feathers.examples.navigator.screens;
+package feathers.starling.examples.navigator.screens;
 
-import feathers.controls.Button;
-import feathers.controls.PanelScreen;
-import feathers.layout.HorizontalAlign;
-import feathers.layout.VerticalAlign;
-import feathers.layout.VerticalLayout;
-import feathers.layout.VerticalLayoutData;
+import feathers.starling.controls.Button;
+import feathers.starling.controls.PanelScreen;
+import feathers.starling.layout.HorizontalAlign;
+import feathers.starling.layout.VerticalAlign;
+import feathers.starling.layout.VerticalLayout;
+import feathers.starling.layout.VerticalLayoutData;
 import starling.events.Event;
 
 class ScreenA extends PanelScreen 
