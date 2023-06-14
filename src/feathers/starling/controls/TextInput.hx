@@ -133,6 +133,11 @@ class TextInput extends FeathersControl implements ITextBaselineControl implemen
 	 */
 	public static var globalStyleProvider:IStyleProvider;
 	
+	private static function defaultTextCalloutFactory():TextCallout
+	{
+		return new TextCallout();
+	}
+	
 	/**
 	 * Constructor.
 	 */
@@ -897,6 +902,20 @@ class TextInput extends FeathersControl implements ITextBaselineControl implemen
 		}
 		this.invalidate(FeathersControl.INVALIDATION_FLAG_STYLES);
 		return this._promptProperties;
+	}
+	
+	public var errorCalloutFactory(get, set):Void->TextCallout;
+	private var _errorCalloutFactory:Void->TextCallout;
+	private function get_errorCalloutFactory():Void->TextCallout { return this._errorCalloutFactory; }
+	private function set_errorCalloutFactory(value:Void->TextCallout):Void->TextCallout
+	{
+		if (this._errorCalloutFactory == value)
+		{
+			return value;
+		}
+		this._errorCalloutFactory = value;
+		this.invalidate(INVALIDATION_FLAG_ERROR_CALLOUT_FACTORY);
+		return this._errorCalloutFactory;
 	}
 	
 	/**
@@ -2136,7 +2155,8 @@ class TextInput extends FeathersControl implements ITextBaselineControl implemen
 		{
 			return;
 		}
-		this.callout = new TextCallout();
+		var factory:Void->TextCallout = this._errorCalloutFactory != null ? this._errorCalloutFactory : defaultTextCalloutFactory;
+		this.callout = factory();
 		var errorCalloutStyleName:String = this._customErrorCalloutStyleName != null ? this._customErrorCalloutStyleName : this.errorCalloutStyleName;
 		this.callout.styleNameList.add(errorCalloutStyleName);
 		this.callout.closeOnKeys = null;
