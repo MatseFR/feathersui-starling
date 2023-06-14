@@ -1,6 +1,6 @@
 package;
 
-import feathers.examples.pullToRefresh.Main;
+import feathers.starling.examples.pullToRefresh.Main;
 import openfl.display.Sprite;
 import openfl.display.StageScaleMode;
 import openfl.display3D.Context3DRenderMode;
