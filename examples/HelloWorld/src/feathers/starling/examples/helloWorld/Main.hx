@@ -1,8 +1,8 @@
-package feathers.examples.helloWorld;
+package feathers.starling.examples.helloWorld;
 
-import feathers.controls.Button;
-import feathers.controls.TextCallout;
-import feathers.themes.MetalWorksMobileTheme;
+import feathers.starling.controls.Button;
+import feathers.starling.controls.TextCallout;
+import feathers.starling.themes.MetalWorksMobileTheme;
 import starling.display.Sprite;
 import starling.events.Event;
 
