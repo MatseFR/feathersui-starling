@@ -1,13 +1,13 @@
-package feathers.examples.dragDrop;
+package feathers.starling.examples.dragDrop;
 
-import feathers.controls.Button;
-import feathers.controls.Label;
-import feathers.controls.LayoutGroup;
-import feathers.dragDrop.IDragSource;
-import feathers.dragDrop.IDropTarget;
-import feathers.layout.AnchorLayout;
-import feathers.layout.AnchorLayoutData;
-import feathers.themes.MetalWorksDesktopTheme;
+import feathers.starling.controls.Button;
+import feathers.starling.controls.Label;
+import feathers.starling.controls.LayoutGroup;
+import feathers.starling.dragDrop.IDragSource;
+import feathers.starling.dragDrop.IDropTarget;
+import feathers.starling.layout.AnchorLayout;
+import feathers.starling.layout.AnchorLayoutData;
+import feathers.starling.themes.MetalWorksDesktopTheme;
 import openfl.Lib;
 import starling.core.Starling;
 import starling.display.Quad;

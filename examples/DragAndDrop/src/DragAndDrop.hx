@@ -1,7 +1,7 @@
 package;
 
-import feathers.examples.dragDrop.Main;
-import feathers.system.DeviceCapabilities;
+import feathers.starling.examples.dragDrop.Main;
+import feathers.starling.system.DeviceCapabilities;
 import openfl.display.Sprite;
 import openfl.display.StageScaleMode;
 import openfl.display3D.Context3DRenderMode;

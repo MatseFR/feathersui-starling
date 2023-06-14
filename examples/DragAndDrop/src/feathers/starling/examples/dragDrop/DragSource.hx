@@ -1,10 +1,10 @@
-package feathers.examples.dragDrop;
+package feathers.starling.examples.dragDrop;
 
-import feathers.controls.LayoutGroup;
-import feathers.dragDrop.DragData;
-import feathers.dragDrop.DragDropManager;
-import feathers.dragDrop.IDragSource;
-import feathers.events.DragDropEvent;
+import feathers.starling.controls.LayoutGroup;
+import feathers.starling.dragDrop.DragData;
+import feathers.starling.dragDrop.DragDropManager;
+import feathers.starling.dragDrop.IDragSource;
+import feathers.starling.events.DragDropEvent;
 import starling.display.DisplayObject;
 import starling.display.Quad;
 import starling.events.Touch;
