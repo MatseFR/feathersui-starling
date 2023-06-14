@@ -1,7 +1,7 @@
 package;
 
-import feathers.examples.transitionsExplorer.Main;
-import feathers.system.DeviceCapabilities;
+import feathers.starling.examples.transitionsExplorer.Main;
+import feathers.starling.system.DeviceCapabilities;
 import openfl.display.Sprite;
 import openfl.display.StageScaleMode;
 import openfl.display3D.Context3DRenderMode;
