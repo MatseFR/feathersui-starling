@@ -1,0 +1,75 @@
+/*
+Feathers
+Copyright 2012-2021 Bowler Hat LLC. All Rights Reserved.
+
+This program is free software. You can redistribute and/or modify it in
+accordance with the terms of the accompanying license agreement.
+*/
+package feathers.starling.controls.renderers;
+import feathers.starling.controls.DataGrid;
+import feathers.starling.controls.DataGridColumn;
+import feathers.starling.core.IToggle;
+import feathers.starling.layout.ILayoutDisplayObject;
+
+/**
+ * Interface to implement a renderer for a data grid cell.
+ *
+ * @productversion Feathers 3.4.0
+ */
+interface IDataGridCellRenderer extends IToggle extends ILayoutDisplayObject
+{
+	/**
+	 * An item from the data grid's data provider. The data may change if this
+	 * item renderer is reused for a new item because it's no longer needed
+	 * for the original item.
+	 *
+	 * <p>This property is set by the data grid, and should not be set manually.</p>
+	 *
+	 * @see #dataField
+	 */
+	public var data(get, set):Dynamic;
+	
+	/**
+	 * The column where the cell is rendered in the data grid.
+	 *
+	 * <p>This property is set by the data grid, and should not be set manually.</p>
+	 */
+	public var column(get, set):DataGridColumn;
+	
+	/**
+	 * The index (numeric position, starting from zero) of the item within
+	 * the data grid's columns.
+	 *
+	 * <p>This property is set by the data grid, and should not be set manually.</p>
+	 */
+	public var columnIndex(get, set):Int;
+	
+	/**
+	 * The index (numeric position, starting from zero) of the item within
+	 * the data grid's data provider. Like the <code>data</code> property,
+	 * this value may change if this item renderer is reused by the list
+	 * for a different item.
+	 *
+	 * <p>This property is set by the data grid, and should not be set manually.</p>
+	 */
+	public var rowIndex(get, set):Int;
+	
+	/**
+	 * The field used to access this column's data from the item within the
+	 * data grid's data provider. Like the <code>data</code> property, this
+	 * value may change if this item renderer is reused by the data grid
+	 * for a different item.
+	 *
+	 * <p>This property is set by the data grid, and should not be set manually.</p>
+	 *
+	 * @see #data
+	 */
+	public var dataField(get, set):String;
+	
+	/**
+	 * The data grid that contains this cell renderer.
+	 *
+	 * <p>This property is set by the data grid, and should not be set manually.</p>
+	 */
+	public var owner(get, set):DataGrid;
+}
