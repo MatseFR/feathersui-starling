@@ -1,12 +1,12 @@
-package feathers.examples.tabs.themes;
+package feathers.starling.examples.tabs.themes;
 
-import feathers.controls.ImageLoader;
-import feathers.controls.ItemRendererLayoutOrder;
-import feathers.controls.renderers.BaseDefaultItemRenderer;
-import feathers.controls.renderers.DefaultGroupedListItemRenderer;
-import feathers.controls.renderers.DefaultListItemRenderer;
-import feathers.layout.RelativePosition;
-import feathers.themes.MetalWorksMobileTheme;
+import feathers.starling.controls.ImageLoader;
+import feathers.starling.controls.ItemRendererLayoutOrder;
+import feathers.starling.controls.renderers.BaseDefaultItemRenderer;
+import feathers.starling.controls.renderers.DefaultGroupedListItemRenderer;
+import feathers.starling.controls.renderers.DefaultListItemRenderer;
+import feathers.starling.layout.RelativePosition;
+import feathers.starling.themes.MetalWorksMobileTheme;
 import starling.display.Canvas;
 
 class TabsTheme extends MetalWorksMobileTheme 

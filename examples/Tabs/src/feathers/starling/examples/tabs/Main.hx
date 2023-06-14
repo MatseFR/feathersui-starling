@@ -1,11 +1,11 @@
-package feathers.examples.tabs;
+package feathers.starling.examples.tabs;
 
-import feathers.controls.TabNavigator;
-import feathers.controls.TabNavigatorItem;
-import feathers.examples.tabs.screens.ContactsScreen;
-import feathers.examples.tabs.screens.MessagesScreen;
-import feathers.examples.tabs.screens.ProfileScreen;
-import feathers.examples.tabs.themes.TabsTheme;
+import feathers.starling.controls.TabNavigator;
+import feathers.starling.controls.TabNavigatorItem;
+import feathers.starling.examples.tabs.screens.ContactsScreen;
+import feathers.starling.examples.tabs.screens.MessagesScreen;
+import feathers.starling.examples.tabs.screens.ProfileScreen;
+import feathers.starling.examples.tabs.themes.TabsTheme;
 import starling.display.Sprite;
 import starling.events.Event;
 

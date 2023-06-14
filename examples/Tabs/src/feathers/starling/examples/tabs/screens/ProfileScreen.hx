@@ -1,13 +1,13 @@
-package feathers.examples.tabs.screens;
+package feathers.starling.examples.tabs.screens;
 
-import feathers.controls.ImageLoader;
-import feathers.controls.Label;
-import feathers.controls.LayoutGroup;
-import feathers.controls.Screen;
-import feathers.examples.tabs.themes.StyleNames;
-import feathers.layout.HorizontalAlign;
-import feathers.layout.VerticalAlign;
-import feathers.layout.VerticalLayout;
+import feathers.starling.controls.ImageLoader;
+import feathers.starling.controls.Label;
+import feathers.starling.controls.LayoutGroup;
+import feathers.starling.controls.Screen;
+import feathers.starling.examples.tabs.themes.StyleNames;
+import feathers.starling.layout.HorizontalAlign;
+import feathers.starling.layout.VerticalAlign;
+import feathers.starling.layout.VerticalLayout;
 
 class ProfileScreen extends Screen 
 {

@@ -1,15 +1,15 @@
-package feathers.examples.tabs.screens;
+package feathers.starling.examples.tabs.screens;
 
-import feathers.controls.ImageLoader;
-import feathers.controls.List;
-import feathers.controls.PanelScreen;
-import feathers.controls.renderers.DefaultListItemRenderer;
-import feathers.controls.renderers.IListItemRenderer;
-import feathers.data.ArrayCollection;
-import feathers.examples.tabs.themes.StyleNames;
-import feathers.layout.AnchorLayout;
-import feathers.layout.AnchorLayoutData;
-import feathers.utils.texture.TextureCache;
+import feathers.starling.controls.ImageLoader;
+import feathers.starling.controls.List;
+import feathers.starling.controls.PanelScreen;
+import feathers.starling.controls.renderers.DefaultListItemRenderer;
+import feathers.starling.controls.renderers.IListItemRenderer;
+import feathers.starling.data.ArrayCollection;
+import feathers.starling.examples.tabs.themes.StyleNames;
+import feathers.starling.layout.AnchorLayout;
+import feathers.starling.layout.AnchorLayoutData;
+import feathers.starling.utils.texture.TextureCache;
 
 class MessagesScreen extends PanelScreen 
 {

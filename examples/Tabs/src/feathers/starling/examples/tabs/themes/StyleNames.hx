@@ -1,4 +1,4 @@
-package feathers.examples.tabs.themes;
+package feathers.starling.examples.tabs.themes;
 
 class StyleNames 
 {

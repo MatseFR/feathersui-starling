@@ -1,15 +1,15 @@
-package feathers.examples.tabs.screens;
+package feathers.starling.examples.tabs.screens;
 
-import feathers.controls.GroupedList;
-import feathers.controls.ImageLoader;
-import feathers.controls.PanelScreen;
-import feathers.controls.renderers.DefaultGroupedListItemRenderer;
-import feathers.controls.renderers.IGroupedListItemRenderer;
-import feathers.data.ArrayHierarchicalCollection;
-import feathers.examples.tabs.themes.StyleNames;
-import feathers.layout.AnchorLayout;
-import feathers.layout.AnchorLayoutData;
-import feathers.utils.texture.TextureCache;
+import feathers.starling.controls.GroupedList;
+import feathers.starling.controls.ImageLoader;
+import feathers.starling.controls.PanelScreen;
+import feathers.starling.controls.renderers.DefaultGroupedListItemRenderer;
+import feathers.starling.controls.renderers.IGroupedListItemRenderer;
+import feathers.starling.data.ArrayHierarchicalCollection;
+import feathers.starling.examples.tabs.themes.StyleNames;
+import feathers.starling.layout.AnchorLayout;
+import feathers.starling.layout.AnchorLayoutData;
+import feathers.starling.utils.texture.TextureCache;
 
 class ContactsScreen extends PanelScreen 
 {
