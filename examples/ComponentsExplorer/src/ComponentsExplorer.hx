@@ -1,6 +1,6 @@
 package;
 
-import feathers.examples.componentsExplorer.Main;
+import feathers.starling.examples.componentsExplorer.Main;
 import openfl.display.Sprite;
 import openfl.display.StageScaleMode;
 import openfl.display3D.Context3DRenderMode;
