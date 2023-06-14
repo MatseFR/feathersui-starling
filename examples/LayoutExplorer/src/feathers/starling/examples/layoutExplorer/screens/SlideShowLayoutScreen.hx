@@ -1,18 +1,17 @@
-package feathers.examples.layoutExplorer.screens;
+package feathers.starling.examples.layoutExplorer.screens;
 
-import feathers.controls.Button;
-import feathers.controls.Header;
-import feathers.controls.PanelScreen;
-import feathers.controls.ScrollPolicy;
-import feathers.events.FeathersEventType;
-import feathers.examples.layoutExplorer.data.VerticalLayoutSettings;
-import feathers.layout.VerticalLayout;
-import feathers.system.DeviceCapabilities;
+import feathers.starling.controls.Button;
+import feathers.starling.controls.Header;
+import feathers.starling.controls.PanelScreen;
+import feathers.starling.events.FeathersEventType;
+import feathers.starling.examples.layoutExplorer.data.SlideShowLayoutSettings;
+import feathers.starling.layout.SlideShowLayout;
+import feathers.starling.system.DeviceCapabilities;
 import starling.core.Starling;
 import starling.display.Quad;
 import starling.events.Event;
 
-class VerticalLayoutScreen extends PanelScreen 
+class SlideShowLayoutScreen extends PanelScreen 
 {
 	public static inline var SHOW_SETTINGS:String = "showSettings";
 	
@@ -21,17 +20,20 @@ class VerticalLayoutScreen extends PanelScreen
 		super();
 	}
 	
-	public var settings:VerticalLayoutSettings;
+	public var settings:SlideShowLayoutSettings;
 	
 	override function initialize():Void
 	{
 		//never forget to call super.initialize()
 		super.initialize();
 		
-		this.title = "Vertical Layout";
+		this.title = "Slide Show Layout";
 		
-		var layout:VerticalLayout = new VerticalLayout();
-		layout.gap = this.settings.gap;
+		this.layout = new SlideShowLayout();
+		//with this layout, you should always snap to pages
+		this.snapToPages = true;
+		
+		var layout:SlideShowLayout = new SlideShowLayout();
 		layout.paddingTop = this.settings.paddingTop;
 		layout.paddingRight = this.settings.paddingRight;
 		layout.paddingBottom = this.settings.paddingBottom;
@@ -39,21 +41,17 @@ class VerticalLayoutScreen extends PanelScreen
 		layout.horizontalAlign = this.settings.horizontalAlign;
 		layout.verticalAlign = this.settings.verticalAlign;
 		
-		this.layout = layout;
-		//when the scroll policy is set to on, the "elastic" edges will be
-		//active even when the max scroll position is zero
-		this.verticalScrollPolicy = ScrollPolicy.ON;
-		this.snapScrollPositionsToPixels = true;
-		
-		var minQuadSize:Float = Math.min(Starling.current.stage.stageWidth, Starling.current.stage.stageHeight) / 15;
+		var minQuadSize:Float = Math.min(Starling.current.stage.stageWidth, Starling.current.stage.stageHeight) / 2;
 		var size:Float;
 		var quad:Quad;
 		for (i in 0...this.settings.itemCount)
 		{
-			size = (minQuadSize + minQuadSize * 2 * Math.random());
+			size = (minQuadSize + minQuadSize * 0.5 * Math.random());
 			quad = new Quad(size, size, 0xff8800);
 			this.addChild(quad);
 		}
+		
+		this.layout = layout;
 		
 		this.headerFactory = this.customHeaderFactory;
 		

@@ -1,5 +1,5 @@
-package feathers.examples.layoutExplorer.data;
-import feathers.layout.HorizontalAlign;
+package feathers.starling.examples.layoutExplorer.data;
+import feathers.starling.layout.HorizontalAlign;
 
 class WaterfallLayoutSettings 
 {

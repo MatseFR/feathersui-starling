@@ -1,6 +1,6 @@
-package feathers.examples.layoutExplorer.data;
-import feathers.layout.HorizontalAlign;
-import feathers.layout.VerticalAlign;
+package feathers.starling.examples.layoutExplorer.data;
+import feathers.starling.layout.HorizontalAlign;
+import feathers.starling.layout.VerticalAlign;
 
 class HorizontalLayoutSettings 
 {

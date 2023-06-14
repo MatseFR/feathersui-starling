@@ -1,18 +1,18 @@
-package feathers.examples.layoutExplorer.screens;
+package feathers.starling.examples.layoutExplorer.screens;
 
-import feathers.controls.Button;
-import feathers.controls.Header;
-import feathers.controls.PanelScreen;
-import feathers.events.FeathersEventType;
-import feathers.examples.layoutExplorer.data.TiledColumnsLayoutSettings;
-import feathers.layout.Direction;
-import feathers.layout.TiledColumnsLayout;
-import feathers.system.DeviceCapabilities;
+import feathers.starling.controls.Button;
+import feathers.starling.controls.Header;
+import feathers.starling.controls.PanelScreen;
+import feathers.starling.controls.ScrollPolicy;
+import feathers.starling.events.FeathersEventType;
+import feathers.starling.examples.layoutExplorer.data.VerticalLayoutSettings;
+import feathers.starling.layout.VerticalLayout;
+import feathers.starling.system.DeviceCapabilities;
 import starling.core.Starling;
 import starling.display.Quad;
 import starling.events.Event;
 
-class TiledColumnsLayoutScreen extends PanelScreen 
+class VerticalLayoutScreen extends PanelScreen 
 {
 	public static inline var SHOW_SETTINGS:String = "showSettings";
 	
@@ -21,31 +21,28 @@ class TiledColumnsLayoutScreen extends PanelScreen
 		super();
 	}
 	
-	public var settings:TiledColumnsLayoutSettings;
-
+	public var settings:VerticalLayoutSettings;
+	
 	override function initialize():Void
 	{
 		//never forget to call super.initialize()
 		super.initialize();
 		
-		this.title = "Tiled Columns Layout";
+		this.title = "Vertical Layout";
 		
-		var layout:TiledColumnsLayout = new TiledColumnsLayout();
-		layout.paging = this.settings.paging;
-		layout.requestedRowCount = this.settings.requestedRowCount;
-		layout.horizontalGap = this.settings.horizontalGap;
-		layout.verticalGap = this.settings.verticalGap;
+		var layout:VerticalLayout = new VerticalLayout();
+		layout.gap = this.settings.gap;
 		layout.paddingTop = this.settings.paddingTop;
 		layout.paddingRight = this.settings.paddingRight;
 		layout.paddingBottom = this.settings.paddingBottom;
 		layout.paddingLeft = this.settings.paddingLeft;
 		layout.horizontalAlign = this.settings.horizontalAlign;
 		layout.verticalAlign = this.settings.verticalAlign;
-		layout.tileHorizontalAlign = this.settings.tileHorizontalAlign;
-		layout.tileVerticalAlign = this.settings.tileVerticalAlign;
 		
 		this.layout = layout;
-		this.snapToPages = this.settings.paging != Direction.NONE;
+		//when the scroll policy is set to on, the "elastic" edges will be
+		//active even when the max scroll position is zero
+		this.verticalScrollPolicy = ScrollPolicy.ON;
 		this.snapScrollPositionsToPixels = true;
 		
 		var minQuadSize:Float = Math.min(Starling.current.stage.stageWidth, Starling.current.stage.stageHeight) / 15;
@@ -53,7 +50,7 @@ class TiledColumnsLayoutScreen extends PanelScreen
 		var quad:Quad;
 		for (i in 0...this.settings.itemCount)
 		{
-			size = minQuadSize + minQuadSize * 2 * Math.random();
+			size = (minQuadSize + minQuadSize * 2 * Math.random());
 			quad = new Quad(size, size, 0xff8800);
 			this.addChild(quad);
 		}
@@ -66,8 +63,6 @@ class TiledColumnsLayoutScreen extends PanelScreen
 		{
 			this.backButtonHandler = this.onBackButton;
 		}
-		
-		this.headerFactory = this.customHeaderFactory;
 		
 		this.addEventListener(FeathersEventType.TRANSITION_IN_COMPLETE, transitionInCompleteHandler);
 	}
@@ -97,7 +92,7 @@ class TiledColumnsLayoutScreen extends PanelScreen
 		];
 		return header;
 	}
-
+	
 	private function onBackButton():Void
 	{
 		this.dispatchEventWith(Event.COMPLETE);

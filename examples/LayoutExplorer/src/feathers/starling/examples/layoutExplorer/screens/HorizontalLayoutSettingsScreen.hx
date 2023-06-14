@@ -1,43 +1,40 @@
-package feathers.examples.layoutExplorer.screens;
+package feathers.starling.examples.layoutExplorer.screens;
 
-import feathers.controls.Button;
-import feathers.controls.Header;
-import feathers.controls.List;
-import feathers.controls.NumericStepper;
-import feathers.controls.PanelScreen;
-import feathers.controls.PickerList;
-import feathers.data.ArrayCollection;
-import feathers.examples.layoutExplorer.data.FlowLayoutSettings;
-import feathers.layout.AnchorLayout;
-import feathers.layout.AnchorLayoutData;
-import feathers.layout.HorizontalAlign;
-import feathers.layout.VerticalAlign;
+import feathers.starling.controls.Button;
+import feathers.starling.controls.Header;
+import feathers.starling.controls.List;
+import feathers.starling.controls.NumericStepper;
+import feathers.starling.controls.PanelScreen;
+import feathers.starling.controls.PickerList;
+import feathers.starling.data.ArrayCollection;
+import feathers.starling.examples.layoutExplorer.data.HorizontalLayoutSettings;
+import feathers.starling.layout.AnchorLayout;
+import feathers.starling.layout.AnchorLayoutData;
+import feathers.starling.layout.HorizontalAlign;
+import feathers.starling.layout.VerticalAlign;
 import starling.display.DisplayObject;
 import starling.events.Event;
 
-class FlowLayoutSettingsScreen extends PanelScreen 
+class HorizontalLayoutSettingsScreen extends PanelScreen 
 {
 	public function new() 
 	{
 		super();
-		
 	}
 	
-	public var settings:FlowLayoutSettings;
+	public var settings:HorizontalLayoutSettings;
 	
 	private var _list:List;
 	
 	private var _itemCountStepper:NumericStepper;
-	private var _horizontalGapStepper:NumericStepper;
-	private var _verticalGapStepper:NumericStepper;
+	private var _gapStepper:NumericStepper;
 	private var _paddingTopStepper:NumericStepper;
 	private var _paddingRightStepper:NumericStepper;
 	private var _paddingBottomStepper:NumericStepper;
 	private var _paddingLeftStepper:NumericStepper;
 	private var _horizontalAlignPicker:PickerList;
 	private var _verticalAlignPicker:PickerList;
-	private var _rowVerticalAlignPicker:PickerList;
-	
+
 	override public function dispose():Void
 	{
 		//icon and accessory display objects in the list's data provider
@@ -56,7 +53,7 @@ class FlowLayoutSettingsScreen extends PanelScreen
 		//never forget to call super.initialize()
 		super.initialize();
 		
-		this.title = "Flow Layout Settings";
+		this.title = "Horizontal Layout Settings";
 		
 		this.layout = new AnchorLayout();
 		
@@ -86,35 +83,18 @@ class FlowLayoutSettingsScreen extends PanelScreen
 			VerticalAlign.TOP,
 			VerticalAlign.MIDDLE,
 			VerticalAlign.BOTTOM,
+			VerticalAlign.JUSTIFY
 		]);
 		this._verticalAlignPicker.selectedItem = this.settings.verticalAlign;
 		this._verticalAlignPicker.addEventListener(Event.CHANGE, verticalAlignPicker_changeHandler);
 		
-		this._rowVerticalAlignPicker = new PickerList();
-		this._rowVerticalAlignPicker.typicalItem = VerticalAlign.BOTTOM;
-		this._rowVerticalAlignPicker.dataProvider = new ArrayCollection(
-		[
-			VerticalAlign.TOP,
-			VerticalAlign.MIDDLE,
-			VerticalAlign.BOTTOM,
-		]);
-		this._rowVerticalAlignPicker.selectedItem = this.settings.rowVerticalAlign;
-		this._rowVerticalAlignPicker.addEventListener(Event.CHANGE, rowVerticalAlignPicker_changeHandler);
-		
-		this._horizontalGapStepper = new NumericStepper();
-		this._horizontalGapStepper.minimum = 0;
+		this._gapStepper = new NumericStepper();
+		this._gapStepper.minimum = 0;
 		//these maximum values are completely arbitrary
-		this._horizontalGapStepper.maximum = 100;
-		this._horizontalGapStepper.step = 1;
-		this._horizontalGapStepper.value = this.settings.horizontalGap;
-		this._horizontalGapStepper.addEventListener(Event.CHANGE, horizontalGapStepper_changeHandler);
-		
-		this._verticalGapStepper = new NumericStepper();
-		this._verticalGapStepper.minimum = 0;
-		this._verticalGapStepper.maximum = 100;
-		this._verticalGapStepper.step = 1;
-		this._verticalGapStepper.value = this.settings.verticalGap;
-		this._verticalGapStepper.addEventListener(Event.CHANGE, verticalGapStepper_changeHandler);
+		this._gapStepper.maximum = 100;
+		this._gapStepper.step = 1;
+		this._gapStepper.value = this.settings.gap;
+		this._gapStepper.addEventListener(Event.CHANGE, gapStepper_changeHandler);
 		
 		this._paddingTopStepper = new NumericStepper();
 		this._paddingTopStepper.minimum = 0;
@@ -151,9 +131,7 @@ class FlowLayoutSettingsScreen extends PanelScreen
 			{ label: "Item Count", accessory: this._itemCountStepper },
 			{ label: "horizontalAlign", accessory: this._horizontalAlignPicker },
 			{ label: "verticalAlign", accessory: this._verticalAlignPicker },
-			{ label: "rowVerticalAlign", accessory: this._rowVerticalAlignPicker },
-			{ label: "horizontalGap", accessory: this._horizontalGapStepper },
-			{ label: "verticalGap", accessory: this._verticalGapStepper },
+			{ label: "gap", accessory: this._gapStepper },
 			{ label: "paddingTop", accessory: this._paddingTopStepper },
 			{ label: "paddingRight", accessory: this._paddingRightStepper },
 			{ label: "paddingBottom", accessory: this._paddingBottomStepper },
@@ -179,67 +157,57 @@ class FlowLayoutSettingsScreen extends PanelScreen
 		];
 		return header;
 	}
-	
+
 	private function disposeItemAccessory(item:Dynamic):Void
 	{
 		cast(item.accessory, DisplayObject).dispose();
 	}
-	
+
 	private function onBackButton():Void
 	{
 		this.dispatchEventWith(Event.COMPLETE);
 	}
-	
+
 	private function doneButton_triggeredHandler(event:Event):Void
 	{
 		this.onBackButton();
 	}
-	
+
 	private function itemCountStepper_changeHandler(event:Event):Void
 	{
 		this.settings.itemCount = Std.int(this._itemCountStepper.value);
 	}
-	
+
 	private function horizontalAlignPicker_changeHandler(event:Event):Void
 	{
 		this.settings.horizontalAlign = this._horizontalAlignPicker.selectedItem;
 	}
-	
+
 	private function verticalAlignPicker_changeHandler(event:Event):Void
 	{
 		this.settings.verticalAlign = this._verticalAlignPicker.selectedItem;
 	}
-	
-	private function rowVerticalAlignPicker_changeHandler(event:Event):Void
+
+	private function gapStepper_changeHandler(event:Event):Void
 	{
-		this.settings.rowVerticalAlign = this._rowVerticalAlignPicker.selectedItem;
+		this.settings.gap = this._gapStepper.value;
 	}
-	
-	private function horizontalGapStepper_changeHandler(event:Event):Void
-	{
-		this.settings.horizontalGap = this._horizontalGapStepper.value;
-	}
-	
-	private function verticalGapStepper_changeHandler(event:Event):Void
-	{
-		this.settings.verticalGap = this._verticalGapStepper.value;
-	}
-	
+
 	private function paddingTopStepper_changeHandler(event:Event):Void
 	{
 		this.settings.paddingTop = this._paddingTopStepper.value;
 	}
-	
+
 	private function paddingRightStepper_changeHandler(event:Event):Void
 	{
 		this.settings.paddingRight = this._paddingRightStepper.value;
 	}
-	
+
 	private function paddingBottomStepper_changeHandler(event:Event):Void
 	{
 		this.settings.paddingBottom = this._paddingBottomStepper.value;
 	}
-	
+
 	private function paddingLeftStepper_changeHandler(event:Event):Void
 	{
 		this.settings.paddingLeft = this._paddingLeftStepper.value;

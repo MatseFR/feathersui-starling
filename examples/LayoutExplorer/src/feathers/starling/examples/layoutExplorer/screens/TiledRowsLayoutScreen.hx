@@ -1,57 +1,63 @@
-package feathers.examples.layoutExplorer.screens;
+package feathers.starling.examples.layoutExplorer.screens;
 
-import feathers.controls.Button;
-import feathers.controls.Header;
-import feathers.controls.PanelScreen;
-import feathers.events.FeathersEventType;
-import feathers.examples.layoutExplorer.data.SlideShowLayoutSettings;
-import feathers.layout.SlideShowLayout;
-import feathers.system.DeviceCapabilities;
+import feathers.starling.controls.Button;
+import feathers.starling.controls.Header;
+import feathers.starling.controls.PanelScreen;
+import feathers.starling.events.FeathersEventType;
+import feathers.starling.examples.layoutExplorer.data.TiledRowsLayoutSettings;
+import feathers.starling.layout.Direction;
+import feathers.starling.layout.TiledRowsLayout;
+import feathers.starling.system.DeviceCapabilities;
 import starling.core.Starling;
 import starling.display.Quad;
 import starling.events.Event;
 
-class SlideShowLayoutScreen extends PanelScreen 
+class TiledRowsLayoutScreen extends PanelScreen 
 {
 	public static inline var SHOW_SETTINGS:String = "showSettings";
 	
 	public function new() 
 	{
 		super();
+		
 	}
 	
-	public var settings:SlideShowLayoutSettings;
+	public var settings:TiledRowsLayoutSettings;
 	
 	override function initialize():Void
 	{
 		//never forget to call super.initialize()
 		super.initialize();
 		
-		this.title = "Slide Show Layout";
+		this.title = "Tiled Rows Layout";
 		
-		this.layout = new SlideShowLayout();
-		//with this layout, you should always snap to pages
-		this.snapToPages = true;
-		
-		var layout:SlideShowLayout = new SlideShowLayout();
+		var layout:TiledRowsLayout = new TiledRowsLayout();
+		layout.paging = this.settings.paging;
+		layout.requestedColumnCount = this.settings.requestedColumnCount;
+		layout.horizontalGap = this.settings.horizontalGap;
+		layout.verticalGap = this.settings.verticalGap;
 		layout.paddingTop = this.settings.paddingTop;
 		layout.paddingRight = this.settings.paddingRight;
 		layout.paddingBottom = this.settings.paddingBottom;
 		layout.paddingLeft = this.settings.paddingLeft;
 		layout.horizontalAlign = this.settings.horizontalAlign;
 		layout.verticalAlign = this.settings.verticalAlign;
+		layout.tileHorizontalAlign = this.settings.tileHorizontalAlign;
+		layout.tileVerticalAlign = this.settings.tileVerticalAlign;
 		
-		var minQuadSize:Float = Math.min(Starling.current.stage.stageWidth, Starling.current.stage.stageHeight) / 2;
+		this.layout = layout;
+		this.snapToPages = this.settings.paging != Direction.NONE;
+		this.snapScrollPositionsToPixels = true;
+		
+		var minQuadSize:Float = Math.min(Starling.current.stage.stageWidth, Starling.current.stage.stageHeight) / 15;
 		var size:Float;
 		var quad:Quad;
 		for (i in 0...this.settings.itemCount)
 		{
-			size = (minQuadSize + minQuadSize * 0.5 * Math.random());
+			size = (minQuadSize + minQuadSize * 2 * Math.random());
 			quad = new Quad(size, size, 0xff8800);
 			this.addChild(quad);
 		}
-		
-		this.layout = layout;
 		
 		this.headerFactory = this.customHeaderFactory;
 		
@@ -61,6 +67,8 @@ class SlideShowLayoutScreen extends PanelScreen
 		{
 			this.backButtonHandler = this.onBackButton;
 		}
+		
+		this.headerFactory = this.customHeaderFactory;
 		
 		this.addEventListener(FeathersEventType.TRANSITION_IN_COMPLETE, transitionInCompleteHandler);
 	}
@@ -90,7 +98,7 @@ class SlideShowLayoutScreen extends PanelScreen
 		];
 		return header;
 	}
-	
+
 	private function onBackButton():Void
 	{
 		this.dispatchEventWith(Event.COMPLETE);

@@ -1,12 +1,12 @@
-package feathers.examples.layoutExplorer.screens;
+package feathers.starling.examples.layoutExplorer.screens;
 
-import feathers.controls.Button;
-import feathers.controls.Header;
-import feathers.controls.PanelScreen;
-import feathers.events.FeathersEventType;
-import feathers.examples.layoutExplorer.data.WaterfallLayoutSettings;
-import feathers.layout.WaterfallLayout;
-import feathers.system.DeviceCapabilities;
+import feathers.starling.controls.Button;
+import feathers.starling.controls.Header;
+import feathers.starling.controls.PanelScreen;
+import feathers.starling.events.FeathersEventType;
+import feathers.starling.examples.layoutExplorer.data.WaterfallLayoutSettings;
+import feathers.starling.layout.WaterfallLayout;
+import feathers.starling.system.DeviceCapabilities;
 import starling.core.Starling;
 import starling.display.Quad;
 import starling.events.Event;

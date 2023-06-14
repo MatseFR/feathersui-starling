@@ -1,12 +1,12 @@
-package feathers.examples.layoutExplorer.screens;
+package feathers.starling.examples.layoutExplorer.screens;
 
-import feathers.controls.Button;
-import feathers.controls.Header;
-import feathers.controls.Label;
-import feathers.controls.PanelScreen;
-import feathers.layout.AnchorLayout;
-import feathers.layout.AnchorLayoutData;
-import feathers.system.DeviceCapabilities;
+import feathers.starling.controls.Button;
+import feathers.starling.controls.Header;
+import feathers.starling.controls.Label;
+import feathers.starling.controls.PanelScreen;
+import feathers.starling.layout.AnchorLayout;
+import feathers.starling.layout.AnchorLayoutData;
+import feathers.starling.system.DeviceCapabilities;
 import starling.core.Starling;
 import starling.events.Event;
 
