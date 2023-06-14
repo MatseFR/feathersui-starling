@@ -1,10 +1,10 @@
-package feathers.examples.magic8.themes;
+package feathers.starling.examples.magic8.themes;
 
-import feathers.controls.renderers.DefaultListItemRenderer;
-import feathers.controls.text.TextFieldTextRenderer;
-import feathers.layout.HorizontalAlign;
-import feathers.layout.RelativePosition;
-import feathers.themes.MetalWorksMobileTheme;
+import feathers.starling.controls.renderers.DefaultListItemRenderer;
+import feathers.starling.controls.text.TextFieldTextRenderer;
+import feathers.starling.layout.HorizontalAlign;
+import feathers.starling.layout.RelativePosition;
+import feathers.starling.themes.MetalWorksMobileTheme;
 import openfl.utils.Assets;
 import starling.display.Image;
 import starling.textures.Texture;

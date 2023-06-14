@@ -1,25 +1,25 @@
-package feathers.examples.magic8;
+package feathers.starling.examples.magic8;
 
-import feathers.controls.Button;
-import feathers.controls.LayoutGroup;
-import feathers.controls.List;
-import feathers.controls.PanelScreen;
-import feathers.controls.TextInput;
-import feathers.controls.renderers.DefaultListItemRenderer;
-import feathers.controls.renderers.IListItemRenderer;
-import feathers.controls.text.TextFieldTextEditor;
-import feathers.core.ITextEditor;
-import feathers.data.ArrayCollection;
-import feathers.events.FeathersEventType;
-import feathers.examples.magic8.data.ChatMessage;
-import feathers.examples.magic8.themes.Magic8ChatTheme;
-import feathers.examples.magic8.themes.StyleNames;
-import feathers.layout.AnchorLayout;
-import feathers.layout.AnchorLayoutData;
-import feathers.layout.HorizontalAlign;
-import feathers.layout.HorizontalLayoutData;
-import feathers.layout.VerticalAlign;
-import feathers.layout.VerticalLayout;
+import feathers.starling.controls.Button;
+import feathers.starling.controls.LayoutGroup;
+import feathers.starling.controls.List;
+import feathers.starling.controls.PanelScreen;
+import feathers.starling.controls.TextInput;
+import feathers.starling.controls.renderers.DefaultListItemRenderer;
+import feathers.starling.controls.renderers.IListItemRenderer;
+import feathers.starling.controls.text.TextFieldTextEditor;
+import feathers.starling.core.ITextEditor;
+import feathers.starling.data.ArrayCollection;
+import feathers.starling.events.FeathersEventType;
+import feathers.starling.examples.magic8.data.ChatMessage;
+import feathers.starling.examples.magic8.themes.Magic8ChatTheme;
+import feathers.starling.examples.magic8.themes.StyleNames;
+import feathers.starling.layout.AnchorLayout;
+import feathers.starling.layout.AnchorLayoutData;
+import feathers.starling.layout.HorizontalAlign;
+import feathers.starling.layout.HorizontalLayoutData;
+import feathers.starling.layout.VerticalAlign;
+import feathers.starling.layout.VerticalLayout;
 import starling.events.Event;
 
 class Main extends PanelScreen 

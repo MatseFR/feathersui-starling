@@ -1,4 +1,4 @@
-package feathers.examples.magic8.data;
+package feathers.starling.examples.magic8.data;
 
 class ChatMessage 
 {

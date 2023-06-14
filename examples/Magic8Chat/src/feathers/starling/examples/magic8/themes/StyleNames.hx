@@ -1,4 +1,4 @@
-package feathers.examples.magic8.themes;
+package feathers.starling.examples.magic8.themes;
 
 class StyleNames 
 {
