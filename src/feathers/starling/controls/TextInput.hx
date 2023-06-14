@@ -904,6 +904,32 @@ class TextInput extends FeathersControl implements ITextBaselineControl implemen
 		return this._promptProperties;
 	}
 	
+	/**
+	 * A function used to instantiate the error text callout. If null,
+	 * <code>new TextCallout()</code> is used instead.
+	 * The error text callout must be an instance of
+	 * <code>TextCallout</code>. This factory can be used to change
+	 * properties on the callout when it is first created. For instance, if
+	 * you are skinning Feathers components without a theme, you might use
+	 * this factory to set styles on the callout.
+	 *
+	 * <p>The factory should have the following function signature:</p>
+	 * <pre>function():TextCallout</pre>
+	 *
+	 * <p>In the following example, a custom error callout factory is passed to the
+	 * text input:</p>
+	 *
+	 * <listing version="3.0">
+	 * input.errorCalloutFactory = function():TextCallout
+	 * {
+	 *     return new TextCallout();
+	 * };</listing>
+	 *
+	 * @default null
+	 *
+	 * @see #errorString
+	 * @see feathers.controls.TextCallout
+	 */
 	public var errorCalloutFactory(get, set):Void->TextCallout;
 	private var _errorCalloutFactory:Void->TextCallout;
 	private function get_errorCalloutFactory():Void->TextCallout { return this._errorCalloutFactory; }
