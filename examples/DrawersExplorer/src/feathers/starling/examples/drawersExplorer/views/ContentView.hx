@@ -1,16 +1,16 @@
-package feathers.examples.drawersExplorer.views;
+package feathers.starling.examples.drawersExplorer.views;
 
-import feathers.controls.Button;
-import feathers.controls.List;
-import feathers.controls.Panel;
-import feathers.controls.PickerList;
-import feathers.controls.ScrollContainer;
-import feathers.data.ArrayCollection;
-import feathers.layout.AnchorLayout;
-import feathers.layout.AnchorLayoutData;
-import feathers.layout.RelativeDepth;
-import feathers.layout.VerticalLayout;
-import feathers.skins.IStyleProvider;
+import feathers.starling.controls.Button;
+import feathers.starling.controls.List;
+import feathers.starling.controls.Panel;
+import feathers.starling.controls.PickerList;
+import feathers.starling.controls.ScrollContainer;
+import feathers.starling.data.ArrayCollection;
+import feathers.starling.layout.AnchorLayout;
+import feathers.starling.layout.AnchorLayoutData;
+import feathers.starling.layout.RelativeDepth;
+import feathers.starling.layout.VerticalLayout;
+import feathers.starling.skins.IStyleProvider;
 import starling.events.Event;
 
 class ContentView extends ScrollContainer 

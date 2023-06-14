@@ -1,11 +1,11 @@
-package feathers.examples.drawersExplorer;
+package feathers.starling.examples.drawersExplorer;
 
-import feathers.controls.DragGesture;
-import feathers.controls.Drawers;
-import feathers.examples.drawersExplorer.skins.DrawersExplorerTheme;
-import feathers.examples.drawersExplorer.views.ContentView;
-import feathers.examples.drawersExplorer.views.DrawerView;
-import feathers.layout.Orientation;
+import feathers.starling.controls.DragGesture;
+import feathers.starling.controls.Drawers;
+import feathers.starling.examples.drawersExplorer.skins.DrawersExplorerTheme;
+import feathers.starling.examples.drawersExplorer.views.ContentView;
+import feathers.starling.examples.drawersExplorer.views.DrawerView;
+import feathers.starling.layout.Orientation;
 import starling.core.Starling;
 import starling.display.Sprite;
 import starling.events.Event;

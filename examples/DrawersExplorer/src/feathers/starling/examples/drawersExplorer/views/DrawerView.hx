@@ -1,9 +1,9 @@
-package feathers.examples.drawersExplorer.views;
+package feathers.starling.examples.drawersExplorer.views;
 
-import feathers.controls.Check;
-import feathers.controls.Label;
-import feathers.controls.ScrollContainer;
-import feathers.skins.IStyleProvider;
+import feathers.starling.controls.Check;
+import feathers.starling.controls.Label;
+import feathers.starling.controls.ScrollContainer;
+import feathers.starling.skins.IStyleProvider;
 import starling.events.Event;
 
 class DrawerView extends ScrollContainer 

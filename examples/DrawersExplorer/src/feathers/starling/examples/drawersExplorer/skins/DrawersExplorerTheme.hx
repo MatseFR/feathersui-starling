@@ -1,13 +1,13 @@
-package feathers.examples.drawersExplorer.skins;
+package feathers.starling.examples.drawersExplorer.skins;
 
-import feathers.examples.drawersExplorer.views.ContentView;
-import feathers.examples.drawersExplorer.views.DrawerView;
-import feathers.layout.HorizontalAlign;
-import feathers.layout.HorizontalLayout;
-import feathers.layout.VerticalAlign;
-import feathers.layout.VerticalLayout;
-import feathers.themes.BaseMetalWorksMobileTheme;
-import feathers.themes.MetalWorksMobileTheme;
+import feathers.starling.examples.drawersExplorer.views.ContentView;
+import feathers.starling.examples.drawersExplorer.views.DrawerView;
+import feathers.starling.layout.HorizontalAlign;
+import feathers.starling.layout.HorizontalLayout;
+import feathers.starling.layout.VerticalAlign;
+import feathers.starling.layout.VerticalLayout;
+import feathers.starling.themes.BaseMetalWorksMobileTheme;
+import feathers.starling.themes.MetalWorksMobileTheme;
 import starling.display.Quad;
 
 class DrawersExplorerTheme extends MetalWorksMobileTheme 
